@@ -1,0 +1,14 @@
+@charset "UTF-8";
+footer{
+	text-align:center;
+}
+.footer-totop{
+	width:50px;
+	opacity:0.4;
+	right: 40px;
+	bottom: 100px;
+	position:fixed;
+}
+.footer-hr{
+	margin-top:50px;
+}

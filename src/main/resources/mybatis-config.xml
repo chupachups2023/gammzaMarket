@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL" />
+		<setting name="mapUnderscoreToCamelCase" value="true"/>	<!-- user_id를 userId로 자동으로 매칭시켜줌 -->
+	</settings>
+	
+	<!-- 지정한 패키지 하위의 모든 클래스를 소문자로 시작하는 별칭으로 등록 -->
+	<typeAliases>
+		<!-- <typeAlias type="com.kh.spring.demo.model.vo.Dev" alias="dev"/> -->
+		<package name="com.gammza.chupachups"/>
+	</typeAliases>
+	
+	<!-- <typeHandlers>
+		<typeHandler handler="com.kh.spring.common.typehandler.StringArrayTypeHandler"/>
+	</typeHandlers> -->
+</configuration>
