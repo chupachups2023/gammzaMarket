@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gammza.chupachups.common.model.vo.PageInfo;
 import com.gammza.chupachups.common.template.Pagination;
-import com.gammza.chupachups.notice.model.service.noticeService;
-import com.gammza.chupachups.notice.model.vo.notice;
+import com.gammza.chupachups.notice.model.service.NoticeService;
+import com.gammza.chupachups.notice.model.vo.Notice;
 
 
 
@@ -23,7 +23,7 @@ import com.gammza.chupachups.notice.model.vo.notice;
 public class NoticeController {
 	
 	@Autowired
-	private noticeService noticeService;
+	private NoticeService noticeService;
 	
 	@GetMapping("/noticeList.bo")
 	public void noticeList(@RequestParam(defaultValue="1") int nowPage, Model model) {
@@ -35,7 +35,7 @@ public class NoticeController {
 		
 		PageInfo pi = Pagination.getPageInfo(totalRecord, nowPage, limit, 3);
 		
-		List<notice> noticeList = noticeService.selectnoticeList(rowBounds);
+		List<Notice> noticeList = noticeService.selectnoticeList(rowBounds);
 
 		model.addAttribute("noticeList", noticeList);
 		model.addAttribute("pi", pi);
