@@ -51,7 +51,7 @@
       <table align="right">
         <tr>
           <td> 
-            <button onclick="href=''">글 작성</button>
+            <button onclick="href='writeNotice.do'">글 작성</button>
           </td>
         </tr>
       </table>
