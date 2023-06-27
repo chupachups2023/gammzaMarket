@@ -8,6 +8,7 @@
 </jsp:include>
 
 <a href="${pageContext.request.contextPath}/gonggu/ggEnd.re" class="button">마감공구로</a>	
-테스트 아무거나..
+테스트 아무거나.. 
+테스트 17:40
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
