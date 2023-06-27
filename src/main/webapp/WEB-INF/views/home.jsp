@@ -98,6 +98,7 @@
 <jsp:include page="/WEB-INF/views/gonggu/ggListView.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
+
 <style>
 	/* 메인화면 검색바 */
 	.mainSearchSec {
@@ -152,3 +153,4 @@
 		
 	}
 </style>
+
