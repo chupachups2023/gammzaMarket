@@ -62,7 +62,6 @@
 	}
 </style>
 
-
 	<div class="mainSearchSec">
 		<h2>어떤 공구를 찾으세요?</h2>
 		<form action="">
