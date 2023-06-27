@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
@@ -15,5 +14,34 @@
 		select count(*)
 		  from notice
 	</select>
+	<insert id="writeNotice">
+		insert into
+			notice
+		value (
+			sql_notice_notice_no.nextval,
+			#{noticeWriter},
+			#{noticeTitle},
+			#{noticeContent},
+			sql_notice_notice_no.currval,
+			default		
+		)
+	</insert>
+	<delete id="delateNotice">
+		delete from
+			notice
+		where
+			notice_no = #{noticeNo}
+	</delete>
+	<select id="selectOneNotice" resultMap="noticeMap">
+		select *
+		  from notice
+		 where notice_no = #{noticeNo}
+	</select>
+	<update id="updateNotice">
+		update notice
+		   set notice_title = #{noticeTitle},
+		   	   notice_content = #{noticeContent}
+		 where notice_no = #{noticeNo}	
+	</update>
 </mapper>
 
