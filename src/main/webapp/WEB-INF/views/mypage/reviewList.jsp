@@ -157,7 +157,7 @@
         </table>
         
 
-        <!-- 
+        <%-- 
         <table class="allGGListTable">
             <c:forEach >
                 <tr class="allGGt">
@@ -176,7 +176,7 @@
             <c:forEach>
         </table>
 
-         -->
+         --%>
 </div>
 
 
