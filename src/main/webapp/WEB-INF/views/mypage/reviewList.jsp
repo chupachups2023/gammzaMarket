@@ -3,15 +3,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="제목" name="title"/>
+	<jsp:param value="마이 리뷰게시판" name="title"/>
 </jsp:include>
-<<<<<<< Updated upstream
 
-*제목 수정하기
-*내용 들어갈 곳
-*내가 받은 리뷰 리스트
-=======
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/reviewList.css">
+
 
 <div class="allGGList">
     <div id="reviewCategory">
@@ -61,7 +57,9 @@
         </table>
         
 
+
         <%-- 
+
         <table class="allGGListTable">
             <c:forEach >
                 <tr class="allGGt">
@@ -77,10 +75,12 @@
                     <td width="10%">게시날짜</td>
                     
                 </tr>
+
             </c:forEach>
         </table>
 
          --%>
+
 </div>
 
 
@@ -125,7 +125,7 @@
  		$('.modalR-dialog').removeClass('show');
  	};
 </script>
->>>>>>> Stashed changes
+
 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
