@@ -60,11 +60,6 @@ public class NoticeController {
 		return "adminpage/insertNotice.do";	
 	}
 	
-	@PostMapping("/insertNotice.do")
-	public String writeNotice(Notice notice, RedirectAttributes rd) {
-		int result = noticeService.writeNotice(notice, rd);
-		return "adminpage/notice";		
-	}
 	
 	@PostMapping("/deleteNotice.do")
 	public String deleteNotice(int noticeNo, RedirectAttributes rd) {
