@@ -6,53 +6,73 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="제목" name="title"/>
 </jsp:include>
-<!-- 
-*제목 수정하기
-*내용 들어갈 곳
-*문의 답변
- -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
 </head>
 <style>
     * {margin: 0 10%;}
+  .qnaAns{
+    width: 1100px;
+  }
+  .ansTable {
+	width:800px;
+	border-collapse: collapse;
+	}
+  .ansTable thead {
+	border-bottom: 2px solid;
+	font-size: 20px;
+  }
+  .ansTable tbody tr {
+	border-bottom: 1px solid rgb(214, 214, 214);
+	font-size: 15px;
+  }
+  
 </style>
 <body>
-<div id="title">
-  <h1>1대1 답변</h1>
-</div>
+<div id="qnaAns">
+  <h1>1대1 답변</h1><br><br>
+
 <form action="insertAnswer">
-    <table class="table">
+    <table class="ansTable">
         <thead>
           <tr>
-            <th scope="col" width="100px">NO</th>
-            <th scope="col" width="400px">제목</th>
-            <th scope="col" width="200px">작성자</th>
-            <th scope="col">날짜</th>
+            <th width="100px">NO</th>
+            <th width="400px">제목</th>
+            <th width="200px">작성자</th>
+            <th width="100px">날짜</th>
           </tr>
         </thead>
-        <tbody class="table-group-divider">
-          <tr>
-            <th scope="row">1</th>
-            <td>문의문의문의문의</td>
-            <td>작성자작성자</td>
-            <td>날짜</td>
-          </tr>
-          <tr>
-            <th scope="row">문의 내용 </th>
-            <td colspan="3">문의문의문의문의문의문의문의</td><p/>
-          </tr>
-          <tr>
-            <th scope="row">답변 내용</th>
-            <td colspan="3"><textarea name="" id="" cols="65" rows="10" style="resize: none;"></textarea></td>
+        <tbody>
+			<tr style="height:40px">
+	            <th>${qna.qnaNo}</th>
+	            <td>${qna.qnaTitle}</td>
+	            <td>${qna.qnaWriter}</td>
+	            <td>${qna.createAt}</td>
+         	</tr>
+        	<tr style="height:250px">
+	            <th>문의 내용 </th>
+	            <td colspan="2"><textarea cols="65" rows="15" style="resize: none;" readonly>${qna.qnaContent}</textarea></td>
+				<td></td>
+       		</tr>
+			<tr style="height:250px">
+	            <th>답변 내용</th>
+	            <td colspan="2"><textarea name="qAnswer" cols="65" rows="15" style="resize: none;"></textarea></td>
+				<td></td>
+			</tr>
+			<tr style="border-bottom: none;">
+				<td colspan="3"></td>
+				<td align="right">
+	                <input type="submit" value="작성" onclick="">
+					<input type="reset" value="취소">
+				</td>
           </tr>
         </tbody>
-      </table>
-      <table align="right">
-        <tr>
-            <td><input type="submit" value="작성"></td>
-            <td><input type="button" value="취소" onclick="href='#'"></td>
-        </tr>
+        <input type="hidden" name="qnaNo" value="${qna.qnaNo}">
       </table>
 </form>      
+</div>
 
+
+<script>
+	console.log(${qna.qnaNo});
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
