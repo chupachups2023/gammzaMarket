@@ -1,16 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>${param.title }</title>
-<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/header/shorcuticon.png">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/header.css?<%=System.currentTimeMillis() %>">
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/resources/img/header/shorcuticon.png">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/common/header.css?<%=System.currentTimeMillis() %>">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/login.css?<%=System.currentTimeMillis() %>">
 
 <!-- DB에 저장이 잘 되었다면 alert창 띄우기 -->
 <c:if test="${not empty msg}">
@@ -22,57 +26,136 @@
 <body>
 	<header>
 		<div class="header-top">
-	        <div class="header-head">
-	            <div class="header-logos">
-	                <img src="${pageContext.request.contextPath}/resources/img/header/감자마켓.png" alt="logo" class="header-gamza"> 
-	                <img src="${pageContext.request.contextPath}/resources/img/header/한글로고2.png" alt="korlogo" class="header-korlogo">
-	            </div>
-	            <c:choose>
-	            	<c:when test="${empty login }">
-			            <button class="header-login btn" id="open-modal">로그인</button>
-			            <button class="header-login btn">회원가입</button>
-	            	</c:when>
-	            	<c:otherwise>
-			            <img src="${pageContext.request.contextPath}/resources/img/header/login.png" alt="korlogo" class="header-login">
-	            	</c:otherwise>
-	            </c:choose>
-	        </div>
-	    </div>
-	    <div class="header-midout">
-	        <div class="header-mid">
-	            <div class="header-category">
-	                <img src="${pageContext.request.contextPath}/resources/img/header/menu.png" alt="logo" class="header-catemenu"> 
-	                <a class="header-menu headder-cateA">카테고리</a>
-	            </div>
-	            <a href="" class="header-menu">공구보기</a>
-	            <a href="" class="header-menu">요청게시판</a>
-	            <a href="" class="header-menu">장소인증</a>
-	            <a href="" class="header-menu">공구 글쓰기</a>
-	        </div>
-	        <form action="">
-	            <div class="header-searchbox">
-	                <img src="${pageContext.request.contextPath}/resources/img/header/search.png" alt="" class="header-searchicon" onclick="search();">
-	                <input type="text" class="header-search">
-	            </div>
-	        </form>
-	    </div>
-	    <div class="category-drop">
-	        <div class="category-list category-top">
-	            <a href="" class="category-menu cloth">의류</a>
-	            <a href="" class="category-menu makeup">화장품/미용</a>
-	            <a href="" class="category-menu food">식품/농산물</a>
-	            <a href="" class="category-menu furniture">가구/인테리어</a>
-	        </div>
-	        <div class="category-list category-bottom">
-	            <a href="" class="category-menu delivery">배달음식</a>
-	            <a href="" class="category-menu baby">유아동</a>
-	            <a href="" class="category-menu homeware">생활용품</a>
-	            <a href="" class="category-menu pet">반려동물용품</a>
-	        </div>
-	    </div>
-	    
-	   <!-- 로그인 모달창 -->
+			<div class="header-head">
+				<div class="header-logos">
+					<img
+						src="${pageContext.request.contextPath}/resources/img/header/감자마켓.png"
+						alt="logo" class="header-gamza"> <img
+						src="${pageContext.request.contextPath}/resources/img/header/한글로고2.png"
+						alt="korlogo" class="header-korlogo">
+				</div>
+				<c:choose>
+					<c:when test="${empty login }">
+						<button class="header-login btn" id="open-modal">로그인</button>
+					</c:when>
+					<c:otherwise>
+						<img
+							src="${pageContext.request.contextPath}/resources/img/header/login.png"
+							alt="korlogo" class="header-login">
+					</c:otherwise>
+				</c:choose>
+				
+				<!-- 230627 -->
+				<c:if test="${not empty loginMember}">
+		      			<a href="${pageContext.request.contextPath}/member/memberDetail.me">${loginMember.userName}님 반갑습니다.</a>&emsp; 
+		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
+		      	</c:if>
+				
+			</div>
+		</div>
+		<div class="header-midout">
+			<div class="header-mid">
+				<div class="header-category">
+					<img
+						src="${pageContext.request.contextPath}/resources/img/header/menu.png"
+						alt="logo" class="header-catemenu"> <a
+						class="header-menu headder-cateA">카테고리</a>
+				</div>
+				<a href="" class="header-menu">공구보기</a> <a href=""
+					class="header-menu">요청게시판</a> <a href="" class="header-menu">장소인증</a>
+				<a href="" class="header-menu">공구 글쓰기</a>
+			</div>
+			<form action="">
+				<div class="header-searchbox">
+					<img
+						src="${pageContext.request.contextPath}/resources/img/header/search.png"
+						alt="" class="header-searchicon" onclick="search();"> <input
+						type="text" class="header-search">
+				</div>
+			</form>
+		</div>
+		<div class="category-drop">
+			<div class="category-list category-top">
+				<a href="" class="category-menu cloth">의류</a> <a href=""
+					class="category-menu makeup">화장품/미용</a> <a href=""
+					class="category-menu food">식품/농산물</a> <a href=""
+					class="category-menu furniture">가구/인테리어</a>
+			</div>
+			<div class="category-list category-bottom">
+				<a href="" class="category-menu delivery">배달음식</a> <a href=""
+					class="category-menu baby">유아동</a> <a href=""
+					class="category-menu homeware">생활용품</a> <a href=""
+					class="category-menu pet">반려동물용품</a>
+			</div>
+		</div>
+
+
+		<!--로그인 모달창 수정본 -->
 		<div class="modal" tabindex="-1" id="modal">
+			<div class="modal-dialog">
+				<!-- <div class="modal-content"> -->
+					<div class="modal-header">
+						<h5 class="modal-title">로그인</h5>
+					</div>
+
+
+					<form action="${pageContext.request.contextPath}/member/memberLogin.me" method="post">
+						<div class="modal-login">
+							<!-- modal-hidden -->
+							<div class="modal-bg"></div>
+							<!-- 모달 배경 -->
+							<!-- <button>닫기</button> -->
+							<div class="modal-content">
+								<h2>로그인</h2>
+								<ul class="login-top">
+									<li class="login-info">
+										<input type="text" placeholder="아이디 입력">
+									</li>
+									<li class="login-info">
+										<input type="password" placeholder="비밀번호 입력">
+									</li>
+									<li class="login-chkbox">
+										<input type="checkbox" id="chk1">
+										<label for="chk1">아이디 저장</label>
+									</li>
+									<li class="login-input modal-footer">
+										<input type="submit" class="login-btn" value="로그인" id="login-modal">
+									</li>
+								</ul>
+								<ul class="login-bottom">
+									<li><a href="#">회원가입</a></li>
+									<li><a href="#">아이디/비밀번호 찾기</a></li>
+								</ul>
+								<div class="social-container">
+									<h3>간편 로그인</h3>
+									<div class="social-icon">
+										<ul>
+											<!-- <li class="login-kakao">
+                                        <a href="#">
+                                            <!-- <img src="kakao_login_large_ko_resize.png" alt="카카오톡아이콘"> </li> -->
+
+											<li class="login-naver"><a href="#"> 
+												<img src="${pageContext.request.contextPath}/resources/img/login/btnG_축약형.png" alt="네이버아이콘">
+											</li>
+										</ul>
+										<br>
+										<button type="button" id="close-modal">임시닫기버튼</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+
+				<!-- </div> -->
+			</div>
+		</div>
+
+
+
+
+		<!-- 로그인 모달창 원본 -->
+
+		<!-- <div class="modal" tabindex="-1" id="modal">
 			<div class="modal-dialog">
 				<div class="modal-content">
 				    <div class="modal-header">
@@ -103,9 +186,9 @@
 			      
 				</div>
 			</div>
-		</div>
-	    
-	    <script>
+		</div> -->
+
+		<script>
 	        $(function(){
 	            $(".header-category").click(function(){
 	                const p1 = $(".category-drop");
@@ -139,4 +222,3 @@
 	    </script>
 	</header>
 	<section>
-	
