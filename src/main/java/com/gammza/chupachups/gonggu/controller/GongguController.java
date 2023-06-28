@@ -12,9 +12,10 @@ public class GongguController {
 	@GetMapping("ggEnd.re")
 	public void ggEnd() {}
 	
-	@PostMapping("/ggWriteRequestEnroll.go")
-	public String ggWriteRequestEnroll() {
+	@GetMapping("/ggRead_Partic.go")
+	public String ggRead_Partic() {
 		
 		return null;
 	}
+	
 }
