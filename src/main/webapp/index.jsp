@@ -10,15 +10,13 @@
 <title>Insert title here</title>
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+	<jsp:param value="감자마켓" name="title"/>
+</jsp:include>
+<a href="${pageContext.request.contextPath}/notice/noticeList.bo">관리자 공지사항</a>
+<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 	<%-- <jsp:forward page="WEB-INF/views/home.jsp"/> --%>
-<a href="${pageContext.request.contextPath}/adminpage/noticeList.bo">관리자 공지사항</a>
 </body>
 </html>
 
 <%-- <jsp:forward page="/WEB-INF/views/home.jsp"/> --%>
-<jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="감자마켓" name="title"/>
-</jsp:include>
-
-
-<jsp:include page="/WEB-INF/views/common/footer.jsp" />

@@ -42,15 +42,15 @@ public class NoticeController {
 		model.addAttribute("pi", pi);
 	}
 	
-	@GetMapping("/writeNotice.do")
-	public String writeNotice() {
+	@GetMapping("/insertNotice.do")
+	public String insertNotice() {
 		return "adminpage/insertNotice";
 	}
 	
-	@PostMapping("/writeNotice.do")
-	public String writeNotice(Notice notice, RedirectAttributes rd) {
-		int result = noticeService.writeNotice(notice, rd);
-		return "adminpage/writeNotice.do";		
+	@PostMapping("/insertNotice.do")
+	public String insertNotice(Notice notice, RedirectAttributes rd) {
+		int result = noticeService.insertNotice(notice, rd);
+		return "adminpage/insertNotice.do";		
 	}
 	
 	@PostMapping("/deleteNotice.do")

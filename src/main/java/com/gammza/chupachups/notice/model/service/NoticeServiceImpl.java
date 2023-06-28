@@ -27,8 +27,8 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public int writeNotice(Notice notice, RedirectAttributes rd) {
-		return noticeDao.writeNotice(notice, rd);
+	public int insertNotice(Notice notice, RedirectAttributes rd) {
+		return noticeDao.insertNotice(notice, rd);
 	}
 
 	@Override

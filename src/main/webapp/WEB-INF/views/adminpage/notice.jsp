@@ -13,9 +13,6 @@
 *내용 들어갈 곳
 *관리자페이지 공지사항
  -->
-<style>
-    * {margin: 0 10%}
-</style>
 <div id="title" align="center">
   <h1>공지사항</h1>
 </div>
@@ -67,7 +64,7 @@
       <table align="right">
         <tr>
           <td> 
-            <button onclick='${pageContext.request.contextPath}/notice/writeNotice.do'>글 작성</button>
+            <button onclick='${pageContext.request.contextPath}/notice/insertNotice.do'>글 작성</button>
           </td>
         </tr>
       </table>
