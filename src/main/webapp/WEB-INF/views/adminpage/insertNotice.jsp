@@ -6,10 +6,6 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="제목" name="title"/>
 </jsp:include>
-<style>
-    * {margin-left: 10%;
-       margin-right: 15%;}
-</style>
 
 <body>
 <div id="title">
