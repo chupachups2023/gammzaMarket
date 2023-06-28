@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/ggWrite.css">
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="제목" name="title"/>
+	<jsp:param value="공구 글 작성하기" name="title"/>
 </jsp:include>
 
 <!-- 
