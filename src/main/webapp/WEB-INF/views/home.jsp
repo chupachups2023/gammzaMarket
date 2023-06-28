@@ -20,7 +20,7 @@
 	</div>
 	
 	<div class="main-listSec">
-		<div class="list-gg" onclick="location.href='#';">
+		<div class="list-gg" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead_Partic.go';">
 			<div class="ggImg"><img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg" alt="이미지 없음"></div>
 			<div class="ggTitle">물품이름</div>
 			<div><b>30,000원</b></div>

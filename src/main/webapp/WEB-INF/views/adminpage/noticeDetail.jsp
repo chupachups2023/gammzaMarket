@@ -11,16 +11,12 @@
 *내용 들어갈 곳
 *관리자 공지사항 글 상세보기
  -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
-<style>
-    * {margin: 0 10%;}
-</style>
 <body>
 <div id="title">
-  <h1>공지사항 상세보기</h1>
+  <h1 align="center">공지사항 상세보기</h1>
 </div>
-<form action="insertNotice">
+
     <table class="table">
         <thead>
           <tr>
@@ -30,12 +26,14 @@
         </thead>
         <tbody class="table-group-divider">
           <tr>
-            <th >${ noticeTitle }</th>
-            <th >${ noticeCreate }</th>
+
+            <th scope="col" width="600px">${ notice.noticeTitle }</th>
+            <th scope="col">${ notice.noticeCreate }</th>
           </tr>
           <tr>
             <td colspan="2">
-            	${ noticeContent }
+            	${ notice.noticeContent }
+
             </td>
           </tr>
         </tbody>
@@ -47,17 +45,18 @@
 			<td><input type="button" onclick='deleteNotice(${notice.noticeNo});' value="삭제"></td>
         </tr>
       </table>
-</form>      
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 <script type="text/javascript">
 	function updateNotice(no) {
-		location.href = '${ pageContext.request.contextPath }/notice/updateNotice.do?noticeNo='+noticeNo;
+
+		location.href = '${ pageContext.request.contextPath }/adminpage/updateNotice.do?noticeNo='+noticeNo;
 		
 	}
 	function deleteNotice(no) {
-		location.href = '${ pageContext.request.contextPath }/demo/updateNotice.do?noticeNo='+noticeNo;
+		location.href = '${ pageContext.request.contextPath }/adminpage/updateNotice.do?noticeNo='+noticeNo;
+
 		
 	}
 </script>

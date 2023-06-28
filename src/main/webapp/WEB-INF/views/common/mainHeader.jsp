@@ -31,7 +31,7 @@
 	            <c:choose>
 	            	<c:when test="${empty login }">
 			            <button class="header-login btn" id="open-modal">로그인</button>
-			            <button class="header-login btn">회원가입</button>
+			            <button class="header-login btn" onclick="location.href='${pageContext.request.contextPath}/member/memberEnroll.me'">회원가입</button>
 	            	</c:when>
 	            	<c:otherwise>
 			            <img src="${pageContext.request.contextPath}/resources/img/header/login.png" alt="korlogo" class="header-login">

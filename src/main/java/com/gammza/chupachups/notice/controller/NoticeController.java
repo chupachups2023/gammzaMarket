@@ -18,9 +18,8 @@ import com.gammza.chupachups.notice.model.service.NoticeService;
 import com.gammza.chupachups.notice.model.vo.Notice;
 
 
-
 @Controller
-@RequestMapping("/notice")
+@RequestMapping("/adminpage")
 //@SessionAttributes
 public class NoticeController {
 	
@@ -28,7 +27,7 @@ public class NoticeController {
 	private NoticeService noticeService;
 	
 	@GetMapping("/noticeList.bo")
-	public void noticeList(@RequestParam(defaultValue="1") int nowPage, Model model) {
+	public String noticeList(@RequestParam(defaultValue="1") int nowPage, Model model) {
 		int totalRecord = noticeService.selectTotalRecord();
 		int limit = 5;
 		int offset = (nowPage -1 ) * limit;
@@ -40,11 +39,25 @@ public class NoticeController {
 		List<Notice> noticeList = noticeService.selectnoticeList(rowBounds);
 		model.addAttribute("noticeList", noticeList);
 		model.addAttribute("pi", pi);
+		return "adminpage/notice";
+	}
+	
+
+	@GetMapping("/noticeDetail.bo")
+	public void noticeDetail(@RequestParam int noticeNo, Model model) {
+		
+		Object notice = noticeService.selectOneNotice(noticeNo);
+	
+		model.addAttribute("notice", notice);
 	}
 	
 	@GetMapping("/insertNotice.do")
-	public String writeNotice() {
-		return "adminpage/insertNotice";
+	public void insertNotice() {}
+	
+	@PostMapping("/insertNotice.do")
+	public String insertNotice(Notice notice, RedirectAttributes rd) {
+		int result = noticeService.insertNotice(notice, rd);
+		return "adminpage/insertNotice.do";	
 	}
 	
 	@PostMapping("/insertNotice.do")
@@ -56,7 +69,8 @@ public class NoticeController {
 	@PostMapping("/deleteNotice.do")
 	public String deleteNotice(int noticeNo, RedirectAttributes rd) {
 		int result = noticeService.deleteNotice(noticeNo, rd);
-		return "adminpage/notice";
+		return "adminpage/deleteNotice";
+
 	}
 	
 	@GetMapping("/updateNotice.do")
