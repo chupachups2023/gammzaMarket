@@ -13,28 +13,6 @@
 전화 1544-9796고객문의 cs@daangnservice.com</pre>
 	
 		</footer>
-		<script>
-$(document).ready(function(){
-
-	// 일단 버튼을 숨긴다
-	$("#totop").hide();
-
-	// 스크롤이 되면 버튼이 나타난다. 
-	$(function () {
-	   $(window).scroll(function () {
-	        if ($(this).scrollTop() > 100) {
-	              $('#totop').fadeIn();
-	         } else {
-	              $('#back-top').fadeOut();
-	         }
-		});
-	
-	});
-
-});
-</script>
-[출처] 스크롤하면 나타나는 버튼 / 맨 위로(Top)이동|작성자 NMD
-
 		
 	</body>
 </html>

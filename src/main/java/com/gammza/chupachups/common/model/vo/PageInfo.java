@@ -1,6 +1,7 @@
 package com.gammza.chupachups.common.model.vo;
 
 public class PageInfo {
+
 	private int totalRecord;	
 	private int nowPage;	
 	private int numPerPage;	
@@ -17,6 +18,7 @@ public class PageInfo {
 	public PageInfo(int totalRecord, int nowPage, int numPerPage, int pagePerBlock, int totalPage, int startPage,
 			int endPage) {
 		super();
+
 		this.totalRecord = totalRecord;
 		this.nowPage = nowPage;
 		this.numPerPage = numPerPage;
@@ -69,6 +71,7 @@ public class PageInfo {
 		this.endPage = endPage;
 	}
 
+
 	@Override
 	public String toString() {
 		return "PageInfo [totalRecord=" + totalRecord + ", nowPage=" + nowPage + ", numPerPage=" + numPerPage
@@ -78,3 +81,4 @@ public class PageInfo {
 
 	
 }
+
