@@ -23,7 +23,9 @@
     </div>
 
     <div class="write-container">
-        <form action="" method="">
+
+        <form action="${pageContext.request.contextPath }/gonggu/ggWriteRequestEnroll.go" method="post">
+
             <div class="write-category">
                 <input class="write-stuff" type="text" placeholder="공구 요청할 물건">
                 <select name="" id="">
