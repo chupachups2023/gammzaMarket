@@ -45,12 +45,29 @@ public class NoticeController {
 	@GetMapping("/insertNotice.do")
 	public String insertNotice() {
 		return "adminpage/insertNotice";
+=======
+	@GetMapping("/noticeDetail.bo")
+	public void noticeDetail(@RequestParam int noticeNo, Model model) {
+		
+		Object notice = noticeService.selectOneNotice(noticeNo);
+		
+		model.addAttribute("notice", notice);
+>>>>>>> Stashed changes
 	}
 	
+	@GetMapping("/insertNotice.do")
+	public void insertNotice() {}
+	
 	@PostMapping("/insertNotice.do")
+<<<<<<< Updated upstream
 	public String insertNotice(Notice notice, RedirectAttributes rd) {
 		int result = noticeService.insertNotice(notice, rd);
 		return "adminpage/insertNotice.do";		
+=======
+	public String writeNotice(Notice notice, RedirectAttributes rd) {
+		int result = noticeService.insertNotice(notice, rd);
+		return "adminpage/notice";		
+>>>>>>> Stashed changes
 	}
 	
 	@PostMapping("/deleteNotice.do")

@@ -8,6 +8,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="제목" name="title"/>
 </jsp:include>
+
 <!-- 
 *제목 수정하기
 *내용 들어갈 곳
@@ -16,20 +17,19 @@
 <div id="title" align="center">
   <h1>공지사항</h1>
 </div>
-    <table class="table" align="center">
+    <table class="table">
         <thead>
-          <tr>
-            <th scope="col">NO</th>
-            <th scope="col">제목</th>
-            <th scope="col" width="20%">작성일</th>
-
+          <tr align="center">
+            <th scope="col" >NO</th>
+            <th scope="col" width="230px">제목</th>
+            <th scope="col">작성일</th>
           </tr>
         </thead>
         <tbody class="table-group-divider">
 		<c:forEach items="${noticeList}" var="notice">
 			<tr>
 				<td>${notice.noticeNo}</td>
-				<td>${notice.noticeTitle}</td>
+				<td><a href="${pageContext.request.contextPath}/adminpage/noticeDetail.bo?noticeNo=${notice.noticeNo}">${notice.noticeTitle}</a></td>
 				<td>${notice.noticeCreate}</td>
 			</tr>
 		</c:forEach>	
@@ -39,32 +39,36 @@
 		<ul class="pagination justify-content-center">
 			<c:if test="${ pi.nowPage ne 1 }">
 				<li class="page-item">
-					<a class="page-link" tabindex="-1" aria-disabled="false" href="${pageContext.request.contextPath}/notice/noticeList.bo?nowPage=${ pi.nowPage - 1 }">[이전]</a>
+					<a class="page-link" tabindex="-1" aria-disabled="false" href="${pageContext.request.contextPath}/adminpage/noticeList.bo?nowPage=${ pi.nowPage - 1 }">[이전]</a>
 				</li>
 			</c:if>
 			<c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage }">
 				<c:choose>
 					<c:when test="${p eq pi.nowPage }">
 						<li class="page-item active">
-							<a class="page-link" href="${pageContext.request.contextPath}/notice/noticeList.bo?nowPage=${ p }">${ p }</a>
+							<a class="page-link" href="${pageContext.request.contextPath}/adminpage/noticeList.bo?nowPage=${ p }">${ p }</a>
 						<li>
 					</c:when>
 					<c:otherwise>
 						<li class="page-item">
-							<a class="page-link" href="${pageContext.request.contextPath}/notice/noticeList.bo?nowPage=${ p }">${ p }</a>
+							<a class="page-link" href="${pageContext.request.contextPath}/adminpage/noticeList.bo?nowPage=${ p }">${ p }</a>
 						</li>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
 			<c:if test="${ pi.nowPage ne pi.totalPage }">
-				<a class="page-link" href="${pageContext.request.contextPath}/notice/noticeList.bo?nowPage=${ pi.nowPage + 1 }">[다음]</a>
+				<a class="page-link" href="${pageContext.request.contextPath}/adminpage/noticeList.bo?nowPage=${ pi.nowPage + 1 }">[다음]</a>
 			</c:if>
 		</ul>
 	</nav>
       <table align="right">
         <tr>
           <td> 
+<<<<<<< Updated upstream
             <button onclick='${pageContext.request.contextPath}/notice/insertNotice.do'>글 작성</button>
+=======
+            <button onclick='${pageContext.request.contextPath}/adminpage/insertNotice.do'>글 작성</button>
+>>>>>>> Stashed changes
           </td>
         </tr>
       </table>

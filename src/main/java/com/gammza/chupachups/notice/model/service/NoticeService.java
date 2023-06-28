@@ -12,7 +12,11 @@ public interface NoticeService {
 	List<Notice> selectnoticeList(RowBounds rowBounds);
 	
 	int selectTotalRecord();
+<<<<<<< Updated upstream
 	
+=======
+
+>>>>>>> Stashed changes
 	int insertNotice(Notice notice, RedirectAttributes rd);
 
 	int deleteNotice(int noticeNo, RedirectAttributes rd);
