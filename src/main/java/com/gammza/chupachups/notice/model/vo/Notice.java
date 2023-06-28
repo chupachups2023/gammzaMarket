@@ -11,7 +11,7 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor 
-public class notice {
+public class Notice {
 	@NonNull
 	private int noticeNo;
 	@NonNull

@@ -3,8 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggRead.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggRead_End.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggRead_Partic.css">
+
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="공구 이름 들어갈 곳" name="title"/>
 </jsp:include>
@@ -23,9 +24,9 @@
             <div class="ggRead-slider-wrap">
                 <div class="ggRead-slider-img">
                     <div class="ggRead-slider-inner">
-                        <div class="ggRead-img-slider"><img src="${pageContext.request.contextPath}/resources/upload/ggRead/sample1.jpg"></div>
-                        <div class="ggRead-img-slider"><img src="${pageContext.request.contextPath}/resources/upload/ggRead/sample2.jpg"></div>
-                        <div class="ggRead-img-slider"><img src="${pageContext.request.contextPath}/resources/upload/ggRead/sample3.jpg"></div>
+                        <div class="ggRead-img-slider"><img src="${pageContext.request.contextPath}/resources/upload/sample1.jpg"></div>
+                        <div class="ggRead-img-slider"><img src="${pageContext.request.contextPath}/resources/upload/sample2.jpg"></div>
+                        <div class="ggRead-img-slider"><img src="${pageContext.request.contextPath}/resources/upload/sample3.jpg"></div>
                     </div>
                 </div>
                 <div class="ggRead-slider-dot">
@@ -46,7 +47,7 @@
             <div><a href='https://smartstore.naver.com/ssage/products/2526266507' target="_blank" class="ggRead-link">물건의 자세한 정보는 여기서 볼 수 있어요</a></div>
             <div class="ggRead-map">
                 <div>여기서 나눠드려요</div>
-                <img src="${pageContext.request.contextPath}/resources/upload/ggRead/image.png" class="ggRead-mapp">
+                <img src="${pageContext.request.contextPath}/resources/upload/image.png" class="ggRead-mapp">
             </div>
         </div>
         <div class="ggRead-end">
