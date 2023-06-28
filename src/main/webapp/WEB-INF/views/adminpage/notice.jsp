@@ -4,7 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="제목" name="title"/>
 </jsp:include>
@@ -16,8 +15,6 @@
  -->
 
 <div id="title" align="center">
-
-
   <h1>공지사항</h1>
 </div>
     <table class="table">
@@ -77,7 +74,7 @@
         <tr>
           <td> 
 
-            <button onclick='${pageContext.request.contextPath}/adminpage/insertNotice.do'>글 작성</button>
+            <button onclick="location.href='${pageContext.request.contextPath}/adminpage/insertNotice.do'">글 작성</button>
 
           </td>
         </tr>

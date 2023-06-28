@@ -8,6 +8,7 @@ import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 
 @Service
 public class GongguServiceImpl implements GongguService {
+
 	@Autowired
 	private GongguDao gongguDao;
 

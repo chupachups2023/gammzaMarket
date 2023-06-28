@@ -1,7 +1,6 @@
 package com.gammza.chupachups.gonggu.controller;
 
-<<<<<<< Updated upstream
-=======
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,7 +8,7 @@ import java.util.Collections;
 
 import javax.servlet.ServletContext;
 
->>>>>>> Stashed changes
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
@@ -22,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.gammza.chupachups.common.ChangeDBTypeDate;
 import com.gammza.chupachups.common.SpringUtils;
 import com.gammza.chupachups.gonggu.model.service.GongguService;
+import com.gammza.chupachups.gonggu.model.vo.Gonggu;
+
 import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 
 @Controller
@@ -44,7 +45,7 @@ public class GongguController {
 
 	@GetMapping("/ggRead_Partic.go")
 	public String ggRead_Partic() {
-		
+	
 		return null;
 	}
 

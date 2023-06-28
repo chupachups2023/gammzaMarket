@@ -49,4 +49,8 @@ public class QnaController {
 		Qna qna = qnaService.selectOneQna(qnaNo);
 		model.addAttribute("qna", qna);
 	}
+	@GetMapping("/QAnswerInsert.do")
+	public void QAnswerInsert() {
+		
+	}
 }
