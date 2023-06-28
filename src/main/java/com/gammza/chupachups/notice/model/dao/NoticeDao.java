@@ -1,4 +1,4 @@
-package com.gammza.chupachups.notice.controller.model.dao;
+package com.gammza.chupachups.notice.model.dao;
 
 import java.util.List;
 
@@ -6,7 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.gammza.chupachups.notice.controller.model.vo.Notice;
+import com.gammza.chupachups.notice.model.vo.Notice;
+
 
 
 

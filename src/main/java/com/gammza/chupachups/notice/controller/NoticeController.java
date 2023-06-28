@@ -14,8 +14,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gammza.chupachups.common.model.vo.PageInfo;
 import com.gammza.chupachups.common.template.Pagination;
-import com.gammza.chupachups.notice.controller.model.service.NoticeService;
-import com.gammza.chupachups.notice.controller.model.vo.Notice;
+import com.gammza.chupachups.notice.model.service.NoticeService;
+import com.gammza.chupachups.notice.model.vo.Notice;
 
 
 

@@ -1,4 +1,4 @@
-package com.gammza.chupachups.notice.controller.model.vo;
+package com.gammza.chupachups.notice.model.vo;
 
 import java.sql.Date;
 import lombok.AllArgsConstructor;
