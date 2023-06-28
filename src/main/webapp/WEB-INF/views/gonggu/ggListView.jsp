@@ -73,9 +73,6 @@
 		</div>
 	</div>
 	
-	<a title="공구 글쓰기" href='글쓰기' class="GGlist-a">
-		<div id="GGWriteBtn">+</div>
-	</a>
 	
 
 </div>

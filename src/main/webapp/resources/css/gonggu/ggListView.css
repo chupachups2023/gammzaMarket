@@ -40,22 +40,5 @@
 		font-size: 15px;
 	}
 
-	/* 글쓰기 버튼 */
-	#GGWriteBtn {
-		background: rgba(95, 186, 24, 0.72);
 
-		position: fixed;
-		width: 40px;
-		height: 40px;
-		right: 5%; 
-		bottom: 10%;
-
-		border: 5px solid rgba(123, 123, 123, 0.28);
-		border-radius: 50px;
-		text-align: center;
-		vertical-align: middle;
-		line-height: 25px;
-		font-size: 60px;
-		color: rgb(78, 160, 15);
-	}
 
