@@ -22,6 +22,14 @@ public class GongguController {
 	@GetMapping("/ggListView.go")
 	public void ggListView() {}
 	
+
+	@GetMapping("/ggRead_Partic.go")
+	public String ggRead_Partic() {
+		
+		return null;
+	}
+	
+
 	@PostMapping("/ggEnrollFrm.go")
 	public String ggWriteRequestEnroll(Gonggu gonggu, MultipartFile upFile) {
 		System.out.println(gonggu);
@@ -29,5 +37,6 @@ public class GongguController {
 	}
 	
 	
+
 
 }
