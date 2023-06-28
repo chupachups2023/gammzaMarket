@@ -8,9 +8,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gammza.chupachups.notice.model.vo.Notice;
 
-
-
-
 @Mapper
 public interface NoticeDao {
 	List<Notice> selectnoticeList(RowBounds rowBounds);
