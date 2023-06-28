@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.gammza.chupachups.notice.model.dao.NoticeDao">
+
+	<resultMap type="com.gammza.chupachups.notice.model.vo.Notice" id="noticeMap">
+		<result column="notice_no" property="noticeNo"/>
+		<result column="notice_writer" property="noticeWriter"/>
+		<result column="notice_title" property="noticeTitle"/>
+		<result column="notice_content" property="noticeContent"/>
+		<result column="notice_create" property="noticeCreate"/>
+	</resultMap>
+	<select id="selectTotalRecord" resultType="_int">
+		select count(*)
+		  from notice
+	</select>
+	<select id="selectnoticeList" resultMap="noticeMap">
+		select *
+		  from notice
+		 order by notice_no desc
+	</select>
+	<insert id="writeNotice">
+		insert into
+			notice
+		values (
+			notice_seq_notice_no.nextval,
+			#{noticeWriter},
+			#{noticeTitle},
+			#{noticeContent},
+			notice_seq_notice_no.currval,
+			default		
+		)
+	</insert>
+	<delete id="deleteNotice">
+		delete from
+			notice
+		where
+			notice_no = #{noticeNo}
+	</delete>
+	<select id="selectOneNotice" resultMap="noticeMap">
+		select *
+		  from notice
+		 where notice_no = #{noticeNo}
+	</select>
+	<update id="updateNotice">
+		update notice
+		   set notice_title = #{noticeTitle},
+		   	   notice_content = #{noticeContent}
+		 where notice_no = #{noticeNo}	
+	</update>
+</mapper>
+

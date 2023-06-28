@@ -10,6 +10,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.gammza.chupachups.notice.model.dao.NoticeDao;
 import com.gammza.chupachups.notice.model.vo.Notice;
 
+
 @Service
 public class NoticeServiceImpl implements NoticeService {
 
@@ -29,6 +30,7 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public int insertNotice(Notice notice, RedirectAttributes rd) {
 		return noticeDao.insertNotice(notice, rd);
+
 	}
 
 	@Override

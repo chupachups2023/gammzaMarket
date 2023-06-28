@@ -9,14 +9,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.gammza.chupachups.notice.model.vo.Notice;
 
 
-
 @Mapper
 public interface NoticeDao {	
+
 	List<Notice> selectnoticeList(RowBounds rowBounds);
 	
 	int selectTotalRecord();
 
 	int insertNotice(Notice notice, RedirectAttributes rd);
+
 
 	int deleteNotice(int noticeNo, RedirectAttributes rd);
 

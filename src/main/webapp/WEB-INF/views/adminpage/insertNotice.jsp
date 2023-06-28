@@ -10,6 +10,7 @@
     * {margin-left: 10%;
        margin-right: 15%;}
 </style>
+
 <body>
 <div id="title">
   <h1>공지사항 작성</h1>
