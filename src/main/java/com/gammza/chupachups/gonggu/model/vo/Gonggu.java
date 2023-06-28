@@ -24,8 +24,11 @@ public class Gonggu {
 	private String link;
 	private String createAt;
 	private String sendTime;
+	private String sendDate;
 	private String openTime;
+	private String openDate;
 	private String endTime;
+	private String endDate;
 	private String latitude;
 	private String longitude;
 	private int count;
