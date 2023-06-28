@@ -23,9 +23,9 @@
             <div class="ggRead-slider-wrap">
                 <div class="ggRead-slider-img">
                     <div class="ggRead-slider-inner">
-                        <div class="ggRead-img-slider"><img src="${pageContext.request.contextPath}/resources/upload/ggRead/sample1.jpg"></div>
-                        <div class="ggRead-img-slider"><img src="${pageContext.request.contextPath}/resources/upload/ggRead/sample2.jpg"></div>
-                        <div class="ggRead-img-slider"><img src="${pageContext.request.contextPath}/resources/upload/ggRead/sample3.jpg"></div>
+                        <div class="ggRead-img-slider"><img src="${pageContext.request.contextPath}/resources/upload/sample1.jpg"></div>
+                        <div class="ggRead-img-slider"><img src="${pageContext.request.contextPath}/resources/upload/sample2.jpg"></div>
+                        <div class="ggRead-img-slider"><img src="${pageContext.request.contextPath}/resources/upload/sample3.jpg"></div>
                     </div>
                 </div>
                 <div class="ggRead-slider-dot">
@@ -46,7 +46,7 @@
             <div><a href='https://smartstore.naver.com/ssage/products/2526266507' target="_blank" class="ggRead-link">물건의 자세한 정보는 여기서 볼 수 있어요</a></div>
             <div class="ggRead-map">
                 <div>여기서 나눠드려요</div>
-                <img src="${pageContext.request.contextPath}/resources/upload/ggRead/image.png" class="ggRead-mapp">
+                <img src="${pageContext.request.contextPath}/resources/upload/image.png" class="ggRead-mapp">
             </div>
         </div>
         <div class="ggRead-end">
