@@ -18,11 +18,11 @@
 		insert into
 			notice
 		value (
-			sql_notice_notice_no.nextval,
+			notice_seq_notice_no.nextval,
 			#{noticeWriter},
 			#{noticeTitle},
 			#{noticeContent},
-			sql_notice_notice_no.currval,
+			notice_seq_notice_no.currval,
 			default		
 		)
 	</insert>

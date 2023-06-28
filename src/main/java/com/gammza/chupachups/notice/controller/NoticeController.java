@@ -38,7 +38,6 @@ public class NoticeController {
 		PageInfo pi = Pagination.getPageInfo(totalRecord, nowPage, limit, 3);
 		
 		List<Notice> noticeList = noticeService.selectnoticeList(rowBounds);
-
 		model.addAttribute("noticeList", noticeList);
 		model.addAttribute("pi", pi);
 	}
