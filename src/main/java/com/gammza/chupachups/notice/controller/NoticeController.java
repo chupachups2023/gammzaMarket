@@ -17,10 +17,8 @@ import com.gammza.chupachups.common.template.Pagination;
 import com.gammza.chupachups.notice.model.service.NoticeService;
 import com.gammza.chupachups.notice.model.vo.Notice;
 
-
-
 @Controller
-@RequestMapping("/notice")
+@RequestMapping("/adminpage")
 //@SessionAttributes
 public class NoticeController {
 	
@@ -28,7 +26,7 @@ public class NoticeController {
 	private NoticeService noticeService;
 	
 	@GetMapping("/noticeList.bo")
-	public void noticeList(@RequestParam(defaultValue="1") int nowPage, Model model) {
+	public String noticeList(@RequestParam(defaultValue="1") int nowPage, Model model) {
 		int totalRecord = noticeService.selectTotalRecord();
 		int limit = 5;
 		int offset = (nowPage -1 ) * limit;
@@ -40,6 +38,7 @@ public class NoticeController {
 		List<Notice> noticeList = noticeService.selectnoticeList(rowBounds);
 		model.addAttribute("noticeList", noticeList);
 		model.addAttribute("pi", pi);
+		return "adminpage/notice";
 	}
 	
 	@GetMapping("/insertNotice.do")
