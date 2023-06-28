@@ -22,9 +22,20 @@ public class GongguController {
 	@GetMapping("/ggListView.go")
 	public void ggListView() {}
 	
+<<<<<<< Updated upstream
+=======
+
+	@GetMapping("/ggRead_Partic.go")
+	public String ggRead_Partic() {
+		
+		return null;
+	}
+
+>>>>>>> Stashed changes
 	@PostMapping("/ggEnrollFrm.go")
-	public String ggWriteRequestEnroll(Gonggu gonggu, MultipartFile upFile) {
+	public String ggEnrollFrm(Gonggu gonggu, MultipartFile upFile) {
 		System.out.println(gonggu);
+		
 		return null;
 	}
 	
