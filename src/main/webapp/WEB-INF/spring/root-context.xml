@@ -16,14 +16,14 @@
 		<property name="username" value="${datasource.username}"/>
 		<property name="password" value="${datasource.password}" />
 	</bean>
-	<!-- <bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactoryBean">
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
 		<property name="configLocation" value="classpath:mybatis-config.xml" />
 		<property name="mapperLocations" value="classpath:mapper/**/*-mapper.xml" />
 	</bean>
  	<bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactoryBean" />
-	</bean> -->
+	</bean>
 	
 	<!-- #6.2 해당 인터페이스 구현 객체를 동적으로 생성하여 빈으로 사용(Dao를 동적으로 만들어줌) 전체 적용됨-->
 	<mybatis-spring:scan base-package="com.gammza.chupachups.**.dao"/>

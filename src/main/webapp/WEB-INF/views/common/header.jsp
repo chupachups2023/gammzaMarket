@@ -26,6 +26,7 @@
 <body>
 	<header>
 		<div class="header-top">
+
 			<div class="header-head">
 				<div class="header-logos">
 					<img
@@ -91,6 +92,7 @@
 
 
 		<!--로그인 모달창 수정본 -->
+
 		<div class="modal" tabindex="-1" id="modal">
 			<div class="modal-dialog">
 				<!-- <div class="modal-content"> -->
