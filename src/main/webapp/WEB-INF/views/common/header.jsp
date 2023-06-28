@@ -14,7 +14,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/common/header.css?<%=System.currentTimeMillis() %>">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/login.css?<%=System.currentTimeMillis() %>">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/login.css?<%=System.currentTimeMillis() %>">
 
 <!-- DB에 저장이 잘 되었다면 alert창 띄우기 -->
 <c:if test="${not empty msg}">
@@ -26,7 +26,6 @@
 <body>
 	<header>
 		<div class="header-top">
-
 			<div class="header-head">
 				<div class="header-logos">
 					<img
@@ -92,7 +91,6 @@
 
 
 		<!--로그인 모달창 수정본 -->
-
 		<div class="modal" tabindex="-1" id="modal">
 			<div class="modal-dialog">
 				<!-- <div class="modal-content"> -->
@@ -155,7 +153,7 @@
 
 
 
-		<!-- 로그인 모달창 원본.. -->
+		<!-- 로그인 모달창 원본 -->
 
 		<!-- <div class="modal" tabindex="-1" id="modal">
 			<div class="modal-dialog">
