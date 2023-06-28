@@ -44,32 +44,32 @@ public class NoticeController {
 	
 	@GetMapping("/writeNotice.do")
 	public String writeNotice() {
-		return "notice";
+		return "adminpage/insertNotice";
 	}
 	
 	@PostMapping("/writeNotice.do")
 	public String writeNotice(Notice notice, RedirectAttributes rd) {
 		int result = noticeService.writeNotice(notice, rd);
-		return "redirect:/notice/writeNotice.do";		
+		return "adminpage/writeNotice.do";		
 	}
 	
 	@PostMapping("/deleteNotice.do")
 	public String deleteNotice(int noticeNo, RedirectAttributes rd) {
 		int result = noticeService.deleteNotice(noticeNo, rd);
-		return "deleteNotice";
+		return "adminpage/deleteNotice";
 	}
 	
 	@GetMapping("/updateNotice.do")
 	public String updateNotice(@RequestParam int noticeNo, Model model) {
 		model.addAttribute("notice", noticeService.selectOneNotice(noticeNo));
-		return "/noticeUpdateFrom";
+		return "adminpage/noticeUpdateFrom";
 	}
 	
 	@PostMapping("/updateNotice.do")
 	public String updateNotice(Notice notice, RedirectAttributes rd) {
 		int result = noticeService.updateNotice(notice);
 		rd.addFlashAttribute("msg", "공지사항 수정완료");
-		return "/notice";
+		return "adminpage/notice";
 	}
 	
 
