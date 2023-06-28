@@ -6,25 +6,58 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="1:1문의" name="title" />
 </jsp:include>
-	#container {
-		width:1000px;
-		margin:auto;
+<style>
+
+	#qnaBoard {
+		width:1100px;
+		text-align: center;
+		margin: auto;
 	}
-	.qTable a {text-decoration:none; color:black; cursor:pointer;}
-  .qTable {text-align: center;}
+  	.qTable {
+		text-align: center;
+		border-collapse: collapse;
+		width: 900px;
+		margin: auto;
+	}
+	.qTable a {
+		text-decoration:none; 
+		color:black; 
+		cursor:pointer;
+	}
+	.qTable tr, td{
+		
+	}
+	thead {
+		border-bottom: 3px solid;
+	}
   #qnaWriteBtn {
+  	width: 70px;
+  	height: 30px;
     margin-left: 90%;
     border: none;
     background-color: gray;
     color: white;
     border-radius: 5px;
   }
+  .qnaPaging {
+	list-style-type: none;
+  }
+  .qnaPaging a{
+	text-decoration: none;
+	color: black;
+  }
+  .qnaPaging li {
+	display: inline;
+  }
+  #pagingNav {
+
+  }
 </style>
-<div id="title">
-	<h1>문의 사항</h1>
-</div>
-<br/>
-<div id="container">
+<div id="qnaBoard">
+	<h1 id="title">문의 사항</h1>
+
+	<br/>	
+
 	<table class="qTable">
 		<thead>
 			<tr>
@@ -35,39 +68,21 @@
 			</tr>
 		</thead>
 		
-		<tbody class="table-group-divider">
+		<tbody>
 			<c:forEach items="${questionList}" var="qna">
 				<tr>
-					<td>${qna.qnaNo}</td>
-					<td><a href="${pageContext.request.contextPath}/qna/qnaDetail.do?qnaNo=${qna.qnaNo }">${qna.qnaTitle}</a></td>
+					<th>${qna.qnaNo}</th>
+					<td><a href="${pageContext.request.contextPath}/adminpage/questionAnswer.do?qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a></td>
 					<td>${qna.qnaWriter}</td>
 					<td>${qna.createAt}</td>
 				</tr>
 			</c:forEach>
-			<tr>
-				<th scope="row">1</th>
-				<td>문의문의문의문의</td>
-				<td>작성자작성자</td>
-				<td>날짜</td>
-			</tr>
-			<tr>
-				<th scope="row">2</th>
-				<td>문의문의문의문의</td>
-				<td>작성자작성자</td>
-				<td>날짜</td>
-			</tr>
-			<tr>
-				<th scope="row">3</th>
-				<td>문의문의문의문의</td>
-				<td>작성자작성자</td>
-				<td>날짜</td>
-			</tr>
 		</tbody>
 	</table>
   <br/>
 	
-	<nav aria-label="Page navigation example">
-		<ul class="pagination justify-content-center">
+	<nav id="pagingNav">
+		<ul class="qnaPaging">
 			<c:if test="${pi.nowPage ne 1}">
 				<li class="page-item disabled"><a class="page-link"
 					href="${pageContext.request.contextPath}/qna/questionList.do?nowPage=${p}"
@@ -91,16 +106,14 @@
 			</c:if>
 		</ul>
 	</nav>
-
+<!-- 
 	<button type="button" id="qnaWriteBtn">글쓰기</button>
-	
+	 -->
 
 </div>
-
-
 <script>
-	document.querySelector("#qnaWriteBtn").addEventListener('click', (e) => {
+/* 	document.querySelector("#qnaWriteBtn").addEventListener('click', (e) => {
 		location.href='${pageContext.request.contextPath}/qna/QnaForm.do';
-	});
+	}); */
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

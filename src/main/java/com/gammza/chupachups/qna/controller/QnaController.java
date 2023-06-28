@@ -43,4 +43,10 @@ public class QnaController {
 		model.addAttribute("questionList", questionList);
 		model.addAttribute("pi", pi);
 	}
+	
+	@GetMapping("/questionAnswer.do")
+	public void questionAnswer(@RequestParam int qnaNo, Model model) {
+		Qna qna = qnaService.selectOneQna(qnaNo);
+		model.addAttribute("qna", qna);
+	}
 }

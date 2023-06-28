@@ -25,4 +25,9 @@ public class QnaServiceImpl implements QnaService {
 		return qnaDao.selectQuestionList(rowBounds);
 	}
 
+	@Override
+	public Qna selectOneQna(int qnaNo) {
+		return qnaDao.selectOneQna(qnaNo);
+	}
+
 }

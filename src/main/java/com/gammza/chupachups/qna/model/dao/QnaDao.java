@@ -14,4 +14,6 @@ public interface QnaDao {
 
 	List<Qna> selectQuestionList(RowBounds rowBounds);
 
+	Qna selectOneQna(int qnoNo);
+
 }

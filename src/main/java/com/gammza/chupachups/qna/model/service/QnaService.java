@@ -12,4 +12,6 @@ public interface QnaService {
 
 	List<Qna> selectQuestionList(RowBounds rowBounds);
 
+	Qna selectOneQna(int qnaNo);
+
 }
