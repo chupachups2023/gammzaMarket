@@ -58,21 +58,14 @@
 	            <td colspan="2"><textarea name="qAnswer" cols="65" rows="15" style="resize: none;"></textarea></td>
 				<td></td>
 			</tr>
-			<tr style="border-bottom: none;">
-				<td colspan="3"></td>
-				<td align="right">
-	                <input type="submit" value="작성" onclick="">
-					<input type="reset" value="취소">
-				</td>
-          </tr>
         </tbody>
-        <input type="hidden" name="qnaNo" value="${qna.qnaNo}">
       </table>
+	  <div style="display: inline;">
+		  <input type="submit" value="작성" onclick="location.href="QAnswerInsert.do"><input type="reset" value="취소">
+	  </div>
+	  <input type="hidden" name="qnaNo" value="${qna.qnaNo}">
 </form>      
 </div>
 
 
-<script>
-	console.log(${qna.qnaNo});
-</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
