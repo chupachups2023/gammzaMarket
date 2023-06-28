@@ -12,9 +12,6 @@
 *공지사항 목록
 -->
 
-<style>
-    * {margin: 0 10%}
-</style>
 <div id="title">
   <h1>공지사항</h1>
 </div>
