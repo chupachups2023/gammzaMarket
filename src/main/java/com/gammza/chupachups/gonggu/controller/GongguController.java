@@ -1,5 +1,6 @@
 package com.gammza.chupachups.gonggu.controller;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.gammza.chupachups.gonggu.model.service.GongguService;
+import com.gammza.chupachups.gonggu.model.vo.Gonggu;
+
 import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 
 @Controller
@@ -26,7 +29,7 @@ public class GongguController {
 
 	@GetMapping("/ggRead_Partic.go")
 	public String ggRead_Partic() {
-		
+	
 		return null;
 	}
 
