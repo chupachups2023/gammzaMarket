@@ -5,7 +5,7 @@
 hr {
     width: 800px;
 }
-#container {
+.container {
     text-align: center; 
     width: 350px; 
     margin:auto; 
@@ -14,7 +14,6 @@ hr {
     border: 1px solid #E9D296; 
     border-radius: 30px;
     height: 120px;
-    테스트 테스트 
 }    
 #lo {
     width: 350px; 
@@ -28,7 +27,7 @@ th, td {
     width: 500px;
     padding: 7px;
 }
-#table {
+#table1 {
     text-align: center;
     margin: auto;
     margin-top: 20px;
