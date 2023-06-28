@@ -29,19 +29,23 @@ public class MemberController {
 	@GetMapping("/memberEnroll.me")
 	public void memberEnroll() {}  // => /member/memberEnroll
 	
-	@PostMapping("/memberEnroll.me")
-	public String memberEnroll(Member member) {
-		System.out.println("userPass = " + member);
+	
+	 @PostMapping("/memberEnroll.me") 
+	 public String memberEnroll(Member member) {
+		 System.out.println("userPass = " + member);
+	 
+		
 		
 		// 비밀번호 암호화
-				String rawPassword = member.getUserPwd();
-				String encodedPassword = passwordEncoder.encode(rawPassword);
-				member.setUserPwd(encodedPassword);
-				System.out.println("changePass = " + member);
-				
-				int result = memberService.insertMember(member);
-				return "redirect:/";
-			}
+		String rawPassword = member.getUserPwd();
+		String encodedPassword = passwordEncoder.encode(rawPassword);
+		member.setUserPwd(encodedPassword);
+		System.out.println("changePass = " + member);
+		
+		int result = memberService.insertMember(member);
+		return "redirect:/";
+	}
+		
 	
 	@GetMapping("/memberLogin.me")
 	public String memberLogin() {
@@ -54,7 +58,7 @@ public class MemberController {
 		System.out.println("userPwd = " + userPwd);
 		
 		Member member = memberService.selectOneMember(userId);
-		System.out.println("member = " + member);
+		// System.out.println("member = " + member);
 		
 		// 인증
 		if(member != null && passwordEncoder.matches(userPwd, member.getUserPwd())) {
@@ -118,51 +122,5 @@ public class MemberController {
 	}
 	
 }
-	
-		
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*
-	 * @GetMapping("/memberLogin.me") public String memberLogin() { return
-	 * "member/memberLogin"; }
-	 */
-
-	/*
-	@PostMapping("/memberLogin.me")
-	public String memberLogin(String userId, String userPwd, Model model, RedirectAttributes redirectAttr) {
-		System.out.println("userId" + userId);
-		System.out.println("userIwd" + userPwd);
-		
-		Member member = memberService.selectOneMember(userId);
-		System.out.println("member = " + member);
-		/*
-		// 인증 
-		if (member != null && passwordEncoder.matches(userPwd, member.getUserPwd())) {
-			model.addAllAttributes("loginMember", member);
-		} else {
-			redirectAttr.addFlashAttribute("msg", "아이디 또는 비밀번호가 맞지 않습니다.");
-		}
-		return "redirect:/";
-	}
-	// 사용자 정보를 한꺼번에 member 빈에 저장 
-
-	*/
 
 

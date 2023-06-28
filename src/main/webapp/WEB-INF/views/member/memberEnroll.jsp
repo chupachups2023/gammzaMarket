@@ -69,5 +69,41 @@
            </div>
        </form>
    </div>
+   
+   <script type="text/javascript">
+		document.querySelector("#userId").addEventListener("keyup", (e) => {
+			const ok = document.querySelector(".ok");
+			const error = document.querySelector(".error");
+			const userId = e.target;
+			
+			if (userId.value.length < 4) {
+				ok.style.display = "none";
+				error.style.display = "none";
+				return;
+			}
+			
+			
+			$.ajax({
+				url: "${pageContext.request.contextPath}/member/checkId.do",
+				data: {userId: userId.value},
+				method: "get",
+				dataType: "json",
+				success(result) {
+					console.log(result);
+					const {userId, available} = result; // unpacking 
+					
+					if (available) {
+						ok.style.display = "inline";
+						error.style.display = "none";
+					} else {
+						ok.style.display = "none";
+						error.style.display = "inline";
+					}
+				},
+				error: console.log
+			});
+		});
+	
+	</script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
