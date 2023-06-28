@@ -6,6 +6,62 @@
 <jsp:include page="/WEB-INF/views/common/mainHeader.jsp" >
 	<jsp:param value="main" name="title"/>
 </jsp:include>
+
+<style>
+	/* 메인화면 검색바 */
+	.mainSearchSec {
+		background-color: #F9E8D0; 
+		height: 150px;
+		padding: 50px 150px;
+	}
+	.mainHeader-search{
+	    border-radius: 10px;
+	    height: 40px;
+	    width: 400px;
+	    padding-left: 35px;
+	    border: rgb(175, 175, 175) solid 2px;
+	}
+	/* 메인화면 공구게시글 */
+	.main-listSec {
+		width: 1200px;
+		margin: 30px auto;
+	}
+	.list-gg {
+		width:250px;
+		height:350px;
+		display:inline-block;
+		margin: 10px 0px 0px 35px;
+	}
+	.ggImg{
+		height:250px;
+	}
+	.ggImg>img {
+		width:100%;
+		height:100%;
+		border-radius: 5px;
+	}
+	.ggTitle{
+		font-size:30px;
+		font-weight : bold;
+	}
+	/* 더보기 버튼 */
+	.moreBtnBox {
+		text-align: center;
+	}
+	.moreBtn{
+		height: 40px;
+        width: 100px;
+
+        background: rgba(94, 177, 98, 0.75);
+        border: none;
+        border-radius: 15px;
+        color: aliceblue;
+        font-size: large;
+        font-weight: bold;
+		
+	}
+</style>
+
 	<div class="mainSearchSec">
 		<h2>어떤 공구를 찾으세요?</h2>
 		<form action="">
@@ -95,62 +151,5 @@
 	
 	 --%>
 		<hr>
-<jsp:include page="/WEB-INF/views/gonggu/ggListView.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
-
-
-<style>
-	/* 메인화면 검색바 */
-	.mainSearchSec {
-		background-color: #F9E8D0; 
-		height: 150px;
-		padding: 50px 150px;
-	}
-	.mainHeader-search{
-	    border-radius: 10px;
-	    height: 40px;
-	    width: 400px;
-	    padding-left: 35px;
-	    border: rgb(175, 175, 175) solid 2px;
-	}
-	/* 메인화면 공구게시글 */
-	.main-listSec {
-		width: 1200px;
-		margin: 30px auto;
-	}
-	.list-gg {
-		width:250px;
-		height:350px;
-		display:inline-block;
-		margin: 10px 0px 0px 35px;
-	}
-	.ggImg{
-		height:250px;
-	}
-	.ggImg>img {
-		width:100%;
-		height:100%;
-		border-radius: 5px;
-	}
-	.ggTitle{
-		font-size:30px;
-		font-weight : bold;
-	}
-	/* 더보기 버튼 */
-	.moreBtnBox {
-		text-align: center;
-	}
-	.moreBtn{
-		height: 40px;
-        width: 100px;
-
-        background: rgba(94, 177, 98, 0.75);
-        border: none;
-        border-radius: 15px;
-        color: aliceblue;
-        font-size: large;
-        font-weight: bold;
-		
-	}
-</style>
 

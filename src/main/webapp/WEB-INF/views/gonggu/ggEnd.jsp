@@ -5,6 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggRead.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggRead_End.css">
+
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="공구 이름 들어갈 곳" name="title"/>
 </jsp:include>

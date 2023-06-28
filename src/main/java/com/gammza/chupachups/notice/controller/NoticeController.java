@@ -10,28 +10,33 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.gammza.chupachups.notice.model.service.noticeService;
-import com.gammza.chupachups.notice.model.vo.notice;
-import com.kh.spring.common.model.vo.PageInfo;
-import com.kh.spring.common.template.Pagination;
+
+import com.gammza.chupachups.common.model.vo.PageInfo;
+import com.gammza.chupachups.common.template.Pagination;
+import com.gammza.chupachups.notice.model.service.NoticeService;
+import com.gammza.chupachups.notice.model.vo.Notice;
+
+
 
 @Controller
 @RequestMapping("/notice")
 public class NoticeController {
 	
 	@Autowired
-	private noticeService noticeService;
+	private NoticeService noticeService;
 	
 	@GetMapping("/noticeList.bo")
 	public void noticeList(@RequestParam(defaultValue="1") int nowPage, Model model) {
 		int totalRecord = noticeService.selectTotalRecord();
 		int limit = 5;
 		int offset = (nowPage -1 ) * limit;
-		RowBounds rowBounds = new RowNounds(offset, limit);
+
+		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		PageInfo pi = Pagination.getPageInfo(totalRecord, nowPage, limit, 3);
 		
-		List<notice> noticeList = noticeService.selectBoardList(rowBounds);
+		List<Notice> noticeList = noticeService.selectnoticeList(rowBounds);
+
 		model.addAttribute("noticeList", noticeList);
 		model.addAttribute("pi", pi);
 	}

@@ -1,5 +1,13 @@
 package com.gammza.chupachups.notice.model.dao;
 
-public class noticeDao {
+import java.util.List;
+
+import com.gammza.chupachups.notice.model.vo.Notice;
+
+public interface NoticeDao {
+
+	List<Notice> selectnoticeList();
+
+	int selectTotalRecord();
 
 }
