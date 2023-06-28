@@ -16,7 +16,7 @@
 <style>
     * {margin: 0 10%}
 </style>
-<div id="title">
+<div id="title" align="center">
   <h1>공지사항</h1>
 </div>
     <table class="table" align="center">
