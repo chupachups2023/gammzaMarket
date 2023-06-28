@@ -11,9 +11,6 @@
 *내용 들어갈 곳
 *관리자페이지 공지사항
  -->
-  <style>
-    * {margin: 0 10%}
-  </style>
 <div id="title">
   <h1>공지사항</h1>
 </div>
@@ -27,31 +24,45 @@
           </tr>
         </thead>
         <tbody class="table-group-divider">
-          <tr>
-            <th scope="row">1</th>
-            <td>[공지]공지공지공지공지</td>
-            <td>날짜날짜날짜날짜</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>[공지]공지공지공지공지</td>
-            <td>날짜날짜날짜날짜</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>[공지]공지공지공지공지</td>
-            <td>날짜날짜날짜날짜</td>
-          </tr>
-        </tbody>
-        
-        <tr>
-            <td colspan="3" align="center">[이전]...[1][2][3]...[다음]</td>
-        </tr>        
+		<c:forEach items="${noticeList}" var="notice">
+			<tr>
+				<td>${notice.noticeNo}</td>
+				<td>${notice.noticeTitle}</td>
+				<td>${notice.noticeCreate}</td>
+			</tr>
+		</c:forEach>	
+        </tbody>     
       </table>
+      	<nav aria-label="Page navigation example">
+		<ul class="pagination justify-content-center">
+			<c:if test="${ pi.nowPage ne 1 }">
+				<li class="page-item">
+					<a class="page-link" tabindex="-1" aria-disabled="false" href="${pageContext.request.contextPath}/notice/noticeList.bo?nowPage=${ pi.nowPage - 1 }">[이전]</a>
+				</li>
+			</c:if>
+			<c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage }">
+				<c:choose>
+					<c:when test="${p eq pi.nowPage }">
+						<li class="page-item active">
+							<a class="page-link" href="${pageContext.request.contextPath}/notice/noticeList.bo?nowPage=${ p }">${ p }</a>
+						<li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item">
+							<a class="page-link" href="${pageContext.request.contextPath}/notice/noticeList.bo?nowPage=${ p }">${ p }</a>
+						</li>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+			<c:if test="${ pi.nowPage ne pi.totalPage }">
+				<a class="page-link" href="${pageContext.request.contextPath}/notice/noticeList.bo?nowPage=${ pi.nowPage + 1 }">[다음]</a>
+			</c:if>
+		</ul>
+	</nav>
       <table align="right">
         <tr>
           <td> 
-            <button onclick="href='writeNotice.do'">글 작성</button>
+            <button onclick='${pageContext.request.contextPath}/notice/writeNotice.do'>글 작성</button>
           </td>
         </tr>
       </table>

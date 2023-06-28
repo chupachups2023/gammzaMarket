@@ -27,21 +27,16 @@
 	<header>
 		<div class="header-top">
 			<div class="header-head">
-				<div class="header-logos">
-					<img
-						src="${pageContext.request.contextPath}/resources/img/header/감자마켓.png"
-						alt="logo" class="header-gamza"> <img
-						src="${pageContext.request.contextPath}/resources/img/header/한글로고2.png"
-						alt="korlogo" class="header-korlogo">
-				</div>
+				<a class="header-logos" href="${pageContext.request.contextPath}/">
+					<img src="${pageContext.request.contextPath}/resources/img/header/감자마켓.png" alt="logo" class="header-gamza"> 
+					<img src="${pageContext.request.contextPath}/resources/img/header/한글로고2.png" alt="korlogo" class="header-korlogo">
+				</a>
 				<c:choose>
 					<c:when test="${empty login }">
 						<button class="header-login btn" id="open-modal">로그인</button>
 					</c:when>
 					<c:otherwise>
-						<img
-							src="${pageContext.request.contextPath}/resources/img/header/login.png"
-							alt="korlogo" class="header-login">
+						<img src="${pageContext.request.contextPath}/resources/img/header/login.png" alt="korlogo" class="header-login">
 					</c:otherwise>
 				</c:choose>
 				
@@ -56,36 +51,33 @@
 		<div class="header-midout">
 			<div class="header-mid">
 				<div class="header-category">
-					<img
-						src="${pageContext.request.contextPath}/resources/img/header/menu.png"
-						alt="logo" class="header-catemenu"> <a
-						class="header-menu headder-cateA">카테고리</a>
+					<img src="${pageContext.request.contextPath}/resources/img/header/menu.png"	alt="logo" class="header-catemenu"> 
+					<a class="header-menu headder-cateA">카테고리</a>
 				</div>
-				<a href="" class="header-menu">공구보기</a> <a href=""
-					class="header-menu">요청게시판</a> <a href="" class="header-menu">장소인증</a>
-				<a href="" class="header-menu">공구 글쓰기</a>
+				<a href="${pageContext.request.contextPath}/gonggu/ggListView.go" class="header-menu">공구보기</a> 
+				<a href="" class="header-menu">요청게시판</a> 
+				<a href="" class="header-menu">장소인증</a>
+				<a href="${pageContext.request.contextPath}/gonggu/ggWrite.go" class="header-menu">공구 글쓰기</a>
 			</div>
 			<form action="">
 				<div class="header-searchbox">
-					<img
-						src="${pageContext.request.contextPath}/resources/img/header/search.png"
-						alt="" class="header-searchicon" onclick="search();"> <input
-						type="text" class="header-search">
+					<img src="${pageContext.request.contextPath}/resources/img/header/search.png" alt="" class="header-searchicon" onclick="search();"> 
+					<input type="text" class="header-search">
 				</div>
 			</form>
 		</div>
 		<div class="category-drop">
 			<div class="category-list category-top">
-				<a href="" class="category-menu cloth">의류</a> <a href=""
-					class="category-menu makeup">화장품/미용</a> <a href=""
-					class="category-menu food">식품/농산물</a> <a href=""
-					class="category-menu furniture">가구/인테리어</a>
+				<a href="" class="category-menu cloth">의류</a>
+				 <a href=""	class="category-menu makeup">화장품/미용</a> 
+				 <a href="" class="category-menu food">식품/농산물</a> 
+				 <a href="" class="category-menu furniture">가구/인테리어</a>
 			</div>
 			<div class="category-list category-bottom">
-				<a href="" class="category-menu delivery">배달음식</a> <a href=""
-					class="category-menu baby">유아동</a> <a href=""
-					class="category-menu homeware">생활용품</a> <a href=""
-					class="category-menu pet">반려동물용품</a>
+				<a href="" class="category-menu delivery">배달음식</a> 
+				<a href="" class="category-menu baby">유아동</a> 
+				<a href="" class="category-menu homeware">생활용품</a> 
+				<a href="" class="category-menu pet">반려동물용품</a>
 			</div>
 		</div>
 
@@ -134,7 +126,7 @@
                                         <a href="#">
                                             <!-- <img src="kakao_login_large_ko_resize.png" alt="카카오톡아이콘"> </li> -->
 
-											<li class="login-naver"><a href="#"> 
+											<li class="login-naver"><a href="#"> </a>
 												<img src="${pageContext.request.contextPath}/resources/img/login/btnG_축약형.png" alt="네이버아이콘">
 											</li>
 										</ul>
