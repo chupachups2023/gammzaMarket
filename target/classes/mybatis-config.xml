@@ -15,5 +15,6 @@
 	
 	<typeHandlers>
 		<typeHandler handler="com.gammza.chupachups.common.typehandler.StringArrayTypeHandler"/>
+		<package name="com.gammza.chupachups.common.typehandler"/>
 	</typeHandlers>
 </configuration>

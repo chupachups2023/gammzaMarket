@@ -23,7 +23,7 @@
         <form action="${pageContext.request.contextPath}/gonggu/ggEnrollFrm.go" method="post" enctype="multipart/form-data" name="ggEnrollFrm">
             <div class="write-category">
                 <input class="write-stuff" type="text" placeholder="공구할 물건" name="gongguName">
-                <select name="category" id="">
+                <select name="category">
                     <option value="1">카테고리</option>
                     <option value="2">의류</option>
                     <option value="3">화장품/미용</option>
@@ -49,9 +49,9 @@
                 
                 <!-- 사진 파일 첨부 -->
                 <div>
-                    <input type="file" name="photo1">
-                    <input type="file" name="photo2">
-                    <input type="file" name="photo3">
+                    <input type="file" name="upPhoto1">
+                    <input type="file" name="upPhoto2">
+                    <input type="file" name="upPhoto3">
                 </div>
             </div>
 
@@ -108,7 +108,9 @@ function time(){
 	function success(position) {
 	    const latitude = position.coords.latitude;   // 위도(37.xxxx)
 	    const longitude = position.coords.longitude; // 경도
-	    
+	    document.getElementById('lon').value=latitude;
+		document.getElementById('lat').value=longitude;
+		
 	  //kakao REST API에 get 요청을 보낸다.
         //파라미터 x,y에 lon,lat을 넣어주고 API_KEY를 Authorization헤더에 넣어준다.
         
