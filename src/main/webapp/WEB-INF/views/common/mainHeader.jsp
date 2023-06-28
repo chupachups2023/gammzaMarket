@@ -24,10 +24,10 @@
 	<header>
 		<div class="header-top">
 	        <div class="header-head">
-	            <div class="header-logos">
+	            <a class="header-logos" href="${pageContext.request.contextPath}/">
 	                <img src="${pageContext.request.contextPath}/resources/img/header/감자마켓.png" alt="logo" class="header-gamza"> 
 	                <img src="${pageContext.request.contextPath}/resources/img/header/한글로고2.png" alt="korlogo" class="header-korlogo">
-	            </div>
+	            </a>
 	            <c:choose>
 	            	<c:when test="${empty login }">
 			            <button class="header-login btn" id="open-modal">로그인</button>
@@ -45,10 +45,10 @@
 	                <img src="${pageContext.request.contextPath}/resources/img/header/menu.png" alt="logo" class="header-catemenu"> 
 	                <a class="header-menu headder-cateA">카테고리</a>
 	            </div>
-	            <a href="" class="header-menu">공구보기</a>
+	            <a href="${pageContext.request.contextPath}/gonggu/ggListView.go" class="header-menu">공구보기</a> 
 	            <a href="" class="header-menu">요청게시판</a>
 	            <a href="" class="header-menu">장소인증</a>
-	            <a href="" class="header-menu">공구 글쓰기</a>
+	            <a href="${pageContext.request.contextPath}/gonggu/ggWrite.go" class="header-menu">공구 글쓰기</a>
 	        </div>
 	    </div>
 	    <div class="category-drop">
