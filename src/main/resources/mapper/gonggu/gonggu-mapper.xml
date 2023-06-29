@@ -32,7 +32,10 @@
 			default
 		)
 	</insert>
-	<select id="selectOneParti_Tb" resultMap="gongguMap">
+	<select id="selectLastNum" resultType="_int">
+		select gonggu_seq.currval from dual
+	</select>
+	<select id="selectOneGonggu" resultMap="gongguMap">
         select *
         	from gonggu
           where gonggu_no = #{gongguNo}
