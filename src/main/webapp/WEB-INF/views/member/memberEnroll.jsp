@@ -38,7 +38,7 @@
                    <tr>
                        <th>
                            <input type="checkbox" class="checkbox-round" style="margin-top: 20px;"/><span>이메일 인증</span><br><br>
-                           <input name="" placeholder="입력해주세요" required>
+                           <input name="email" placeholder="입력해주세요" required>
                            <button type="submit" class="header-login btn">인증</button>
                        </th>
                    </tr>

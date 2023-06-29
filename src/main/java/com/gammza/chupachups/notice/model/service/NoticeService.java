@@ -14,12 +14,13 @@ public interface NoticeService {
 	
 	int selectTotalRecord();
 
-	int insertNotice(Notice notice, RedirectAttributes rd);
+	int insertNotice(Notice notice);
 
-	int deleteNotice(int noticeNo, RedirectAttributes rd);
+	int deleteNotice(int noticeNo);
 
 	Object selectOneNotice(int noticeNo);
 
 	int updateNotice(Notice notice);
+
 
 }

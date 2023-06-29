@@ -32,7 +32,6 @@
 			default
 		)
 	</insert>
-
 	<select id="selectOneParti_Tb" resultMap="gongguMap">
         select *
         	from gonggu
@@ -43,6 +42,7 @@
     	select *
     		from gonggu
     </select>
+
 
 </mapper>  
 

@@ -5,13 +5,7 @@
   
 <mapper namespace="com.gammza.chupachups.notice.model.dao.NoticeDao">
 
-	<resultMap type="com.gammza.chupachups.notice.model.vo.Notice" id="noticeMap">
-		<result column="notice_no" property="noticeNo"/>
-		<result column="notice_writer" property="noticeWriter"/>
-		<result column="notice_title" property="noticeTitle"/>
-		<result column="notice_content" property="noticeContent"/>
-		<result column="notice_create" property="noticeCreate"/>
-	</resultMap>
+	<resultMap type="notice" id="noticeMap"></resultMap>
 	<select id="selectTotalRecord" resultType="_int">
 		select count(*)
 		  from notice
@@ -21,15 +15,15 @@
 		  from notice
 		 order by notice_no desc
 	</select>
-	<insert id="writeNotice">
+	<insert id="insertNotice">
 		insert into
 			notice
 		values (
 			notice_seq.nextval,
-			#{noticeWriter},
+			default,
 			#{noticeTitle},
 			#{noticeContent},
-			notice_seq_notice_no.currval,
+			default,
 			default		
 		)
 	</insert>
@@ -44,6 +38,7 @@
 		  from notice
 		 where notice_no = #{noticeNo}
 	</select>
+
 	<update id="updateNotice">
 		update notice
 		   set notice_title = #{noticeTitle},

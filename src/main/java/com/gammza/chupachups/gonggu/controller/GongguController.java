@@ -62,7 +62,6 @@ public class GongguController {
 	 	return "ggRead_Partic"; 
 	 }
 	 
-
 	@PostMapping("/ggEnrollFrm.go")
 	public String ggEnrollFrm(Gonggu gonggu, @RequestParam MultipartFile upPhoto1, @RequestParam MultipartFile upPhoto2,
 			@RequestParam MultipartFile upPhoto3) {
@@ -102,7 +101,7 @@ public class GongguController {
 			String changeFilename=SpringUtils.changeMultipartFile(upPhoto2);
 			System.out.println("photo2: "+changeFilename);
 			
-			photo.add(1, changeFilename);
+			photo.add(changeFilename);
 			
 			File destFile=new File(saveDirectory, changeFilename);
 
@@ -116,7 +115,7 @@ public class GongguController {
 			String changeFilename=SpringUtils.changeMultipartFile(upPhoto3);
 			System.out.println("photo3: "+changeFilename);
 			
-			photo.add(2, changeFilename);
+			photo.add(changeFilename);
 			
 			File destFile=new File(saveDirectory, changeFilename);
 			try {
