@@ -38,6 +38,16 @@
 		  from notice
 		 where notice_no = #{noticeNo}
 	</select>
+	<insert id="insertNotice">
+		insert into notice values(
+			notice_seq.nextval,
+			default,
+			#{noticeTitle},
+			#{noticeContent},
+			0,
+			default
+		)
+	</insert>
 	<update id="updateNotice">
 		update notice
 		   set notice_title = #{noticeTitle},

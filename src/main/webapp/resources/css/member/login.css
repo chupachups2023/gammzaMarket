@@ -68,7 +68,7 @@ dl,dt,dd,table,thead,tbody,tfoot,label,caption,th,td,form,fieldset,legend,hr,inp
   padding-bottom: 5px;
 }
 
-.login-info input[type=text], input[type=password] {
+.login-info input[type=text],.login-info  input[type=password] {
   text-indent: 10px;
 }
 .login-info input:focus { 
@@ -82,7 +82,7 @@ input::-webkit-input-placeholder {
 }
 
 
-input[type=tel],
+/* .input[type=tel],
 input[type=time],
 input[type=text],
 input[type=password],
@@ -101,8 +101,8 @@ input[type=date],textarea {
   background:#fff; 
   border-radius: 5px; 
   vertical-align:middle;
-  /* transition: all 0.5s;  */
-}
+  transition: all 0.5s; 
+} */
 
 
 
@@ -162,12 +162,12 @@ input[type=email][disabled]{background:#eaeaea; border-color:#c0c0c0; color:#666
   font-size: 20px;
 }
 
-table {
+/* table {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
+} */
 
 .login-chkbox {
   text-align: start;
