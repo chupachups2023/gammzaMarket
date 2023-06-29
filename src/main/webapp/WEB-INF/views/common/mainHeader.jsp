@@ -90,7 +90,7 @@
 										<input type="text" placeholder="아이디 입력">
 									</li>
 									<li class="login-info">
-										<input type="password" placeholder="비밀번호 입력">
+										<input type="password" placeholder="비밀번호 입력" autocomplete="off">
 									</li>
 									<li class="login-chkbox">
 										<input type="checkbox" id="chk1">

@@ -79,7 +79,7 @@ public class GongguController {
 			String changeFilename=SpringUtils.changeMultipartFile(upPhoto1);
 			System.out.println("photo1: "+changeFilename);
 			
-			photo.add(0, changeFilename);
+			photo.add(changeFilename);
 			
 			File destFile=new File(saveDirectory, changeFilename);
 			try {
@@ -92,7 +92,7 @@ public class GongguController {
 			String changeFilename=SpringUtils.changeMultipartFile(upPhoto2);
 			System.out.println("photo2: "+changeFilename);
 			
-			photo.add(1, changeFilename);
+			photo.add(changeFilename);
 			
 			File destFile=new File(saveDirectory, changeFilename);
 			try {
@@ -105,7 +105,7 @@ public class GongguController {
 			String changeFilename=SpringUtils.changeMultipartFile(upPhoto3);
 			System.out.println("photo3: "+changeFilename);
 			
-			photo.add(2, changeFilename);
+			photo.add(changeFilename);
 			
 			File destFile=new File(saveDirectory, changeFilename);
 			try {

@@ -55,10 +55,10 @@
                 </div>
             </div>
 			<div>
-				<pre><textarea name="content"></textarea></pre>
+				<pre><textarea name="content" placeholder="공구 예정자들에게 전달할 내용이 있나요?"></textarea></pre>
 			</div>
 			<div>
-				<input name="link">
+				구매 예정 링크: <input name="link">
 			</div>
             <!-- date/time -->
             <div class="write-info2">
@@ -66,19 +66,19 @@
                     <table class="write-tb">
                         <tr>
                             <td>공구 오픈 날짜</td>
-                            <td><input type="datetime-local" name="openTime" id="openTime" onfocusout="mngEndTime();"></td>
-                        </tr>
-                        <tr>
-                            <td>공구 마감 날짜</td>
-                            <td><input type="datetime-local" name="endTime" ></td>
-                        </tr>
-                        <tr>
-                            <td>물건 나눌 날짜</td>
-                            <td><input type="datetime-local" name="sendTime" ></td>
+                            <td><input type="datetime-local" name="openTime" id="openTime"></td>
                         </tr>
                         <tr>
                             <td></td>
-                            <td><input type="checkbox" id="chk2" name="open_Time" value="sysdate"><label for="chk2">바로 시작하기</label></td>
+                            <td><input type="checkbox" id="sysdate" value="sysdate" ><label for="sysdate">바로 시작하기</label></td>
+                        </tr>
+                        <tr>
+                            <td>공구 마감 날짜</td>
+                            <td><input type="datetime-local" name="endTime" id="endTime"></td>
+                        </tr>
+                        <tr>
+                            <td>물건 나눌 날짜</td>
+                            <td><input type="datetime-local" name="sendTime" id="sendTime"></td>
                         </tr>
                     </table>
                 </div>
@@ -99,6 +99,7 @@
 	var today = new Date(now_utc-timeOff).toISOString().substring(0, 16);
 	console.log("today: "+today);
 	document.getElementById("openTime").setAttribute("min", today);
+	document.getElementById("endTime").setAttribute("min", today);
 </script>
 
 <script src="${pageContext.request.contextPath}/resources/js/gonggu/ggWriteMap.js"></script>

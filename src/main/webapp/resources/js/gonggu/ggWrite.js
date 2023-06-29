@@ -1,22 +1,19 @@
-	function mngEndTime(){
-		//document.getElementById('endTime').setAttribute("value","");
+	document.querySelector("#openTime").addEventListener('focusout',(e)=>{
+		document.getElementById('endTime').setAttribute("value","");
+		document.getElementById('sendTime').setAttribute("value","");
 		var openTime=ggEnrollFrm.openTime.value;
-		console.log("openTime: "+openTime);
 		document.getElementById("endTime").setAttribute("min", openTime);
-	};
-	
+	});
 	
 	
 	document.querySelector("#endTime").addEventListener('focusout',(e)=>{
-		ggEnrollFrm.endTime.value="";
+		ggEnrollFrm.sendTime.value="";
 		var endTime=ggEnrollFrm.endTime.value;
 		document.getElementById("sendTime").setAttribute("min", endTime);
 	});
 	
 
 	function ggEnrollFrmSubmit(){
-		console.log("오픈타임: "+ggEnrollFrm.openTime.value);
-		
 		if(ggEnrollFrm.gongguName.value=="" || ggEnrollFrm.gongguName.value==null){
 			alert("어떤걸 공구하시나요?");
 			return;
@@ -35,10 +32,29 @@
 		}else if(ggEnrollFrm.upPhoto1.value==null && ggEnrollFrm.upPhoto2.value==null && ggEnrollFrm.upPhoto3.value==null&&ggEnrollFrm.upPhoto1.value=="" && ggEnrollFrm.upPhoto2.value==""&&ggEnrollFrm.upPhoto3.value==""){
 			alert("사진은 하나 이상 들어가야합니다!");
 			return;
-		}
-		
-		if(open<today){
-			alert("오픈 일시는 지금 이후여야합니다!");
+		}else if(ggEnrollFrm.openTime.value=="" && ggEnrollFrm.openTime.value==null&&ggEnrollFrm.sysdate.value=="" && ggEnrollFrm.sysdate.value==null){
+			alert("공구 오픈 예정 일시를 입력해주세요");
 			return;
+		}else if(ggEnrollFrm.endTime.value==""||ggEnrollFrm.endTime.value==null){
+			alert("공구 마감 예정 일시를 입력해주세요");
+			return;
+		}else if(ggEnrollFrm.sendTime.value=="" || ggEnrollFrm.sendTime.value==null){
+			alert("물건을 언제 나눌지 입력해주세요");
+			return;
+		}else{
+			ggEnrollFrm.submit();
 		}
 	}
+	
+	
+	document.querySelector("#sysdate").addEventListener('change',(e)=>{
+	
+		if ($("#sysdate").is(':checked')) {
+			$("#openTime").prop("disabled", true);
+			$("#sysdate").attr("name", "openTime");
+		} else {
+			$("#openTime").prop("disabled", false);
+			$("#sysdate").attr("name", "");
+		}
+	
+	});
