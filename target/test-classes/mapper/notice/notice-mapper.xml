@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.gammza.chupachups.notice.model.dao.NoticeDao">
-	<resultMap type="com.gammza.chupachups.notice.model.vo.Notice" id="noticeMap"></resultMap>
+	<resultMap type="notice" id="noticeMap"></resultMap>
 	<select id="selectnoticeList" resultMap="noticeMap">
 		select *
 		  from notice
@@ -18,12 +18,12 @@
 		insert into
 			notice
 		values (
-			notice_seq_notice_no.nextval,
-			#{noticeWriter},
+			notice_seq.nextval,
+			default,
 			#{noticeTitle},
 			#{noticeContent},
-			notice_seq_notice_no.currval,
-			default		
+			default,
+			default
 		)
 	</insert>
 	<delete id="deleteNotice">

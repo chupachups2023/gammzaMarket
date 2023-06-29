@@ -16,4 +16,8 @@ public interface QnaDao {
 
 	Qna selectOneQna(int qnoNo);
 
+	Qna selectOneQAns(int qnaNo);
+
+	int InsertQAnswer(Qna qna);
+
 }

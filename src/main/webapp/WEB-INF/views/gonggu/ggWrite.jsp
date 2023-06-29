@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=44e2b21ec219944c6d834fff124a603d&libraries=services,clusterer"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/ggWrite.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggWrite.css">
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="공구 글 작성하기" name="title"/>

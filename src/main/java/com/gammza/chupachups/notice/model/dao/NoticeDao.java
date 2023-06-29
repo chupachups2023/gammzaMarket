@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.gammza.chupachups.notice.model.vo.Notice;
 
 
@@ -16,10 +14,9 @@ public interface NoticeDao {
 	
 	int selectTotalRecord();
 
-	int insertNotice(Notice notice, RedirectAttributes rd);
+	int insertNotice(Notice notice);
 
-
-	int deleteNotice(int noticeNo, RedirectAttributes rd);
+	int deleteNotice(int noticeNo);
 
 	Object selectOneNotice(int noticeNo);
 

@@ -13,7 +13,7 @@
     <div class="ggRead-head">
         <div class="ggRead-title">
             <div class="ggRead-writer ggRead-writer-none">감자감자</div>
-            <div class="ggRead-name">도브 비누 화이트 뷰티바</div>
+            <div class="ggRead-name">${gonggu.gongguName}</div>
             <div class="ggRead-writer" onclick="">감자감자</div>
         </div>
     </div>

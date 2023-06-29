@@ -9,27 +9,34 @@
 <style>
 
 	#qnaBoard {
-		width:1100px;
-		text-align: center;
-		margin: auto;
+	    width: 1100px;
+	    margin: auto;
 	}
   	.qTable {
-		text-align: center;
+	  	margin: auto;
+		width:900px;
 		border-collapse: collapse;
-		width: 900px;
-		margin: auto;
+		text-align:center;
 	}
 	.qTable a {
 		text-decoration:none; 
 		color:black; 
 		cursor:pointer;
 	}
-	.qTable tr, td{
-		
+	.qTable th,tr, td{
+		text-align: center;
+		height:30px;
 	}
 	thead {
 		border-bottom: 3px solid;
+		width:100%;
 	}
+	tbody {width:100%}
+	.Qtitle {
+		width:450px;
+		text-align: left;
+	}
+	
   #qnaWriteBtn {
   	width: 70px;
   	height: 30px;
@@ -50,7 +57,7 @@
 	display: inline;
   }
   #pagingNav {
-
+	text-align:center;
   }
 </style>
 <div id="qnaBoard">
@@ -61,20 +68,19 @@
 	<table class="qTable">
 		<thead>
 			<tr>
-				<th width="5%">NO</th>
-				<th width="55%">제목</th>
-				<th width="20%">작성자</th>
-				<th width="20%">날짜</th>
+				<th width="100px">NO</th>
+				<th width="450px">제목</th>
+				<th width="200px">작성자</th>
+				<th width="150px">날짜</th>
 			</tr>
 		</thead>
-		
 		<tbody>
-			<c:forEach items="${questionList}" var="qna">
+			<c:forEach items="${questionList}" var="qna" varStatus="s">
 				<tr>
-					<th>${qna.qnaNo}</th>
-					<td><a href="${pageContext.request.contextPath}/adminpage/questionAnswer.do?qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a></td>
-					<td>${qna.qnaWriter}</td>
-					<td>${qna.createAt}</td>
+					<td width="100px">${pi.totalRecord - ((pi.nowPage-1)*pi.numPerPage)-s.index}</td>
+					<td class="Qtitle"><a href="${pageContext.request.contextPath}/adminpage/questionAnswer.do?nowPage=${pi.nowPage}&qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a></td>
+					<td width="200px">${qna.qnaWriter}</td>
+					<td width="150px">${qna.createAt}</td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -84,36 +90,30 @@
 	<nav id="pagingNav">
 		<ul class="qnaPaging">
 			<c:if test="${pi.nowPage ne 1}">
-				<li class="page-item disabled"><a class="page-link"
-					href="${pageContext.request.contextPath}/qna/questionList.do?nowPage=${p}"
-					tabindex="-1" aria-disabled="false">이전</a></li>
+				<li>
+					<a href="${pageContext.request.contextPath}/adminpage/questionList.do?nowPage=${pi.nowPage-1}"
+					tabindex="-1" aria-disabled="false">이전</a>
+				</li>
 			</c:if>
 			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
 				<c:choose>
 					<c:when test="${p eq pi.nowPage }">
-						<li class="page-item active"><a class="page-link"
-							href="${pageContext.request.contextPath}/qna/questionList.do?nowPage=${pi.nowPage-1}">${p}</a></li>
+						<li>
+							<a href="${pageContext.request.contextPath}/adminpage/questionList.do?nowPage=${p}">${p}</a>
+						</li>
 					</c:when>
 					<c:otherwise>
-						<li class="page-item"><a class="page-link"
-							href="${pageContext.request.contextPath}/qna/questionList.do?nowPage=${p}">${p}</a></li>
+						<li>
+							<a href="${pageContext.request.contextPath}/adminpage/questionList.do?nowPage=${p}">${p}</a>
+						</li>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
 			<c:if test="${pi.nowPage ne pi.totalPage }">
-				<li class="page-item"><a class="page-link"
-					href="${pageContext.request.contextPath}/qna/questionList.do?nowPage=${pi.nowPage+1}">다음</a></li>
+				<li><a href="${pageContext.request.contextPath}/adminpage/questionList.do?nowPage=${pi.nowPage+1}">다음</a></li>
 			</c:if>
 		</ul>
 	</nav>
-<!-- 
-	<button type="button" id="qnaWriteBtn">글쓰기</button>
-	 -->
-
 </div>
-<script>
-/* 	document.querySelector("#qnaWriteBtn").addEventListener('click', (e) => {
-		location.href='${pageContext.request.contextPath}/qna/QnaForm.do';
-	}); */
-</script>
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

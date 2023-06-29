@@ -1,8 +1,5 @@
-body {
-  font-size: 18px;
-}
-
 .write-container {
+  font-size: 18px;
   display: flex;
   justify-content: center;
   padding: 40px 0 0 100px;
@@ -13,7 +10,7 @@ body {
   padding-bottom: 40px;
 }
 
-table {
+.write-container table {
   display: block;
 }
 
@@ -58,8 +55,9 @@ table {
 }
 
 
-input[type=date],
-input[type=time] {
+.write-container input[type=datetime-local],
+.write-container input[type=date],
+.write-container input[type=time] {
   border: 2px solid #ddd;
   width: 180px;
   height: 30px;
@@ -68,10 +66,10 @@ input[type=time] {
   padding-left:5px;
 }
 
-
 .gg-date{
   padding-top:15px;
 }
+
 .write-container select, option {
   border: 2px solid #ddd;
   width: 100px;
@@ -107,6 +105,7 @@ input[type=time] {
 	border-radius:20px;
 	font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
 }
+
 .write-container table tr td:first-child {
   padding-right: 35px;
 }
@@ -147,7 +146,6 @@ input[type=time] {
   border-bottom: 3px solid #ddd;
   font-size: 20px;
   padding-left: 5px;
-
 }
 
 .ggWrite_map{

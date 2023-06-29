@@ -10,6 +10,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -45,12 +46,24 @@ public class QnaController {
 	}
 	
 	@GetMapping("/questionAnswer.do")
-	public void questionAnswer(@RequestParam int qnaNo, Model model) {
+	public void questionAnswer(@RequestParam int qnaNo, @RequestParam int nowPage, Model model) {
 		Qna qna = qnaService.selectOneQna(qnaNo);
-		model.addAttribute("qna", qna);
-	}
-	@GetMapping("/QAnswerInsert.do")
-	public void QAnswerInsert() {
+		Qna qAns = qnaService.selectOneQAns(qnaNo);
 		
+		model.addAttribute("qna", qna);
+		model.addAttribute("qAns", qAns);
+		model.addAttribute("nowPage", nowPage);
+	}
+	
+	
+	@PostMapping("/QAnswerInsert.do")
+	public String QAnswerInsert(@RequestParam int qnaNo, Qna qna, @RequestParam int nowPage, @RequestParam String qAnswer) {
+		qna.setQnaContent(qAnswer);
+		qna.setQnaWriter("admin");
+		qna.setQnaTitle("re: " + qna.getQnaTitle());
+		System.out.println(qna);
+		
+		int result = qnaService.InsertQAnswer(qna);
+		return "redirect:/adminpage/questionAnswer.do?nowPage="+nowPage+"&qnaNo="+qnaNo;
 	}
 }

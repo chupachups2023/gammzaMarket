@@ -69,7 +69,7 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-	// @SessionAttributes + medel 통해 로그인정보를 관리하는 경우
+	// @SessionAttributes + model 통해 로그인정보를 관리하는 경우
 	/*
 	 * SessionStatus객체를 통해 사용완료 처리해야 한다
 	 * 	- session객체를 폐기하지 않고 재사용

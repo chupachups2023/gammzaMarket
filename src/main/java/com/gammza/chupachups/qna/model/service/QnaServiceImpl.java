@@ -30,4 +30,14 @@ public class QnaServiceImpl implements QnaService {
 		return qnaDao.selectOneQna(qnaNo);
 	}
 
+	@Override
+	public Qna selectOneQAns(int qnaNo) {
+		return qnaDao.selectOneQAns(qnaNo);
+	}
+
+	@Override
+	public int InsertQAnswer(Qna qna) {
+		return qnaDao.InsertQAnswer(qna);
+	}
+
 }

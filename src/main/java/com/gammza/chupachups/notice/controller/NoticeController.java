@@ -55,31 +55,33 @@ public class NoticeController {
 	public void insertNotice() {}
 	
 	@PostMapping("/insertNotice.do")
-	public String insertNotice(Notice notice, RedirectAttributes rd) {
-		int result = noticeService.insertNotice(notice, rd);
-		return "adminpage/insertNotice.do";	
+	public String insertNotice(Notice notice) {
+		System.out.println(notice);
+		int result = noticeService.insertNotice(notice);
+
+		return "redirect:/adminpage/noticeList.bo";	
 	}
 	
 	
-	@PostMapping("/deleteNotice.do")
-	public String deleteNotice(int noticeNo, RedirectAttributes rd) {
-		int result = noticeService.deleteNotice(noticeNo, rd);
-		return "adminpage/deleteNotice";
+	@RequestMapping("/deleteNotice.do")
+	public String deleteNotice(int noticeNo) {
+		int result = noticeService.deleteNotice(noticeNo);
+		return "redirect:/adminpage/noticeList.bo";
 
 	}
 	
 	@GetMapping("/updateNotice.do")
 	public String updateNotice(@RequestParam int noticeNo, Model model) {
 		model.addAttribute("notice", noticeService.selectOneNotice(noticeNo));
-		return "adminpage/noticeUpdateFrom";
-	}
+		System.out.println(noticeNo);
+		return "adminpage/updateNotice";
+	}	
 	
 	@PostMapping("/updateNotice.do")
-	public String updateNotice(Notice notice, RedirectAttributes rd) {
+	public String updateNotice(Notice notice, Model model) {
 		int result = noticeService.updateNotice(notice);
-		rd.addFlashAttribute("msg", "공지사항 수정완료");
-		return "adminpage/notice";
+		model.addAttribute("result", result);
+		return "redirect:/adminpage/noticeList.bo";
 	}
-	
 
 }
