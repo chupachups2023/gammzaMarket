@@ -76,24 +76,12 @@
 		</thead>
 		<tbody>
 			<c:forEach items="${questionList}" var="qna" varStatus="s">
-				<c:choose>
-					<c:when test="${qna.depth eq '1'}">
-						<tr>
-							<td width="100px">${pi.totalRecord - ((pi.nowPage-1)*pi.numPerPage)-s.index}</td>
-							<td class="Qtitle">>> <a href="${pageContext.request.contextPath}/adminpage/questionAnswer.do?qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a></td>
-							<td width="200px">${qna.qnaWriter}</td>
-							<td width="150px">${qna.createAt}</td>
-						</tr>
-					</c:when>
-					<c:otherwise>
-						<tr>
-							<td width="100px">${pi.totalRecord - ((pi.nowPage-1)*pi.numPerPage)-s.index}</td>
-							<td class="Qtitle"><a href="${pageContext.request.contextPath}/adminpage/questionAnswer.do?qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a></td>
-							<td width="200px">${qna.qnaWriter}</td>
-							<td width="150px">${qna.createAt}</td>
-						</tr>
-					</c:otherwise>
-				</c:choose>
+				<tr>
+					<td width="100px">${pi.totalRecord - ((pi.nowPage-1)*pi.numPerPage)-s.index}</td>
+					<td class="Qtitle"><a href="${pageContext.request.contextPath}/adminpage/questionAnswer.do?nowPage=${pi.nowPage}&qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a></td>
+					<td width="200px">${qna.qnaWriter}</td>
+					<td width="150px">${qna.createAt}</td>
+				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
@@ -126,6 +114,6 @@
 			</c:if>
 		</ul>
 	</nav>
-
 </div>
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

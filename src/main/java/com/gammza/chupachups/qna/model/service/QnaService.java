@@ -14,4 +14,8 @@ public interface QnaService {
 
 	Qna selectOneQna(int qnaNo);
 
+	Qna selectOneQAns(int qnaNo);
+
+	int InsertQAnswer(Qna qna);
+
 }
