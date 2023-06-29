@@ -32,7 +32,7 @@
 					<img src="${pageContext.request.contextPath}/resources/img/header/한글로고2.png" alt="korlogo" class="header-korlogo">
 				</a>
 				<c:choose>
-					<c:when test="${empty login }">
+					<c:when test="${empty loginMember }">
 						<button class="header-login btn" id="open-modal">로그인</button>
 					</c:when>
 					<c:otherwise>
@@ -42,7 +42,7 @@
 				
 				<!-- 230627 -->
 				<c:if test="${not empty loginMember}">
-		      			<a href="${pageContext.request.contextPath}/member/memberDetail.me">${loginMember.userName}님 반갑습니다.</a>&emsp; 
+		      			<a href="${pageContext.request.contextPath}/member/memberDetail.me">${loginMember.name}님 반갑습니다.</a>&emsp; 
 		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
 		      	</c:if>
 				
@@ -115,7 +115,7 @@
 									</li>
 								</ul>
 								<ul class="login-bottom">
-									<li><a href="#">회원가입</a></li>
+									<li><a href="${pageContext.request.contextPath}/member/memberEnroll.me">회원가입</a></li>
 									<li><a href="#">아이디/비밀번호 찾기</a></li>
 								</ul>
 								<div class="social-container">
