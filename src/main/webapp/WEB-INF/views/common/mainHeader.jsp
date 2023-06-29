@@ -35,7 +35,7 @@
 			            <button class="header-login btn" onclick="location.href='${pageContext.request.contextPath}/member/memberEnroll.me'">회원가입</button>
 	            	</c:when>
 	            	<c:otherwise>
-			            <img src="${pageContext.request.contextPath}/resources/img/header/login.png" alt="korlogo" class="header-login">
+			            <img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login">
 	            	</c:otherwise>
 	            </c:choose>
 	        </div>
@@ -73,6 +73,7 @@
 				<!-- <div class="modal-content"> -->
 					<div class="modal-header">
 						<h5 class="modal-title">로그인</h5>
+
 					</div>
 
 
@@ -112,7 +113,8 @@
                                             <!-- <img src="kakao_login_large_ko_resize.png" alt="카카오톡아이콘"> </li> -->
 
 											<li class="login-naver"><a href="#"> </a>
-												<img src="${pageContext.request.contextPath}/resources/img/login/btnG_축약형.png" alt="네이버아이콘">
+												<img src="${pageContext.request.contextPath}/resources/img/header/btnG_축약형.png" alt="네이버아이콘">
+
 											</li>
 										</ul>
 										<br>

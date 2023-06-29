@@ -8,7 +8,6 @@ import java.util.Collections;
 
 import javax.servlet.ServletContext;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
@@ -21,8 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.gammza.chupachups.common.ChangeDBTypeDate;
 import com.gammza.chupachups.common.SpringUtils;
 import com.gammza.chupachups.gonggu.model.service.GongguService;
-import com.gammza.chupachups.gonggu.model.vo.Gonggu;
-
 import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 
 @Controller
@@ -53,6 +50,9 @@ public class GongguController {
 	@PostMapping("/ggEnrollFrm.go")
 	public String ggEnrollFrm(Gonggu gonggu, @RequestParam MultipartFile upPhoto1, @RequestParam MultipartFile upPhoto2, @RequestParam MultipartFile upPhoto3) {
 		gonggu.setGongguWriter("USER01");
+		System.out.println(gonggu.getEndTime());
+		System.out.println(gonggu.getOpenTime());
+		System.out.println(gonggu.getSendTime());
 		if(gonggu.getOpenTime().equals("sysdate")) {
 			gonggu.setEndTime(ChangeDBTypeDate.chageDate(gonggu.getEndTime()));
 			gonggu.setSendTime(ChangeDBTypeDate.chageDate(gonggu.getSendTime()));
