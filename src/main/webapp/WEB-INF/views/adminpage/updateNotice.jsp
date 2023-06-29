@@ -9,8 +9,6 @@
 <!-- 
 *관리자 공지사항 글 수정
  -->
-</head>
-<body>
 	<div id="title">
 		<h1 align="center">공지사항 수정</h1>
 	</div>
@@ -45,6 +43,6 @@
 				</td>
 			</tr>
 		</table>
-		<input type="hidden" name="notice.noticeNo" value="${notice.noticeNo}">
+		<input type="hidden" name="noticeNo" value="${notice.noticeNo}">
 	</form>
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
