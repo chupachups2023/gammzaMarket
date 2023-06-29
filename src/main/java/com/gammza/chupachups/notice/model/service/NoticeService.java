@@ -8,18 +8,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.gammza.chupachups.notice.model.vo.Notice;
 
 
-
 public interface NoticeService {
 	
 	List<Notice> selectnoticeList(RowBounds rowBounds);
 	
 	int selectTotalRecord();
 
-	int writeNotice(Notice notice, RedirectAttributes rd);
+	int insertNotice(Notice notice);
 
-	int deleteNotice(int noticeNo, RedirectAttributes rd);
+	int deleteNotice(int noticeNo);
 
 	Object selectOneNotice(int noticeNo);
 
 	int updateNotice(Notice notice);
+
+
 }

@@ -36,7 +36,7 @@
 			            <button class="header-login btn" onclick="location.href='${pageContext.request.contextPath}/member/memberEnroll.me'">회원가입</button>
 	            	</c:when>
 	            	<c:otherwise>
-			            <img src="${pageContext.request.contextPath}/resources/img/header/login.png" alt="korlogo" class="header-login">
+			            <img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login">
 	            	</c:otherwise>
 	            </c:choose>
 	            
@@ -109,6 +109,7 @@
 								<h3>간편 로그인</h3>
 								<div class="social-icon">
 									<ul>
+
 											<!-- <li class="login-kakao">
                                         <a href="#">
                                             <!-- <img src="kakao_login_large_ko_resize.png" alt="카카오톡아이콘"> </li> -->
@@ -119,6 +120,7 @@
 									</ul>
 									<br>
 									<button type="button" id="close-modal">임시닫기버튼</button>
+
 								</div>
 							</div>
 						</div>

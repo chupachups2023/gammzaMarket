@@ -17,6 +17,7 @@ import com.gammza.chupachups.common.template.Pagination;
 import com.gammza.chupachups.notice.model.service.NoticeService;
 import com.gammza.chupachups.notice.model.vo.Notice;
 
+
 @Controller
 @RequestMapping("/adminpage")
 //@SessionAttributes
@@ -41,34 +42,45 @@ public class NoticeController {
 		return "adminpage/notice";
 	}
 	
-	@GetMapping("/insertNotice.do")
-	public String writeNotice() {
-		return "adminpage/insertNotice";
+
+	@GetMapping("/noticeDetail.bo")
+	public void noticeDetail(@RequestParam int noticeNo, Model model) {
+		
+		Object notice = noticeService.selectOneNotice(noticeNo);
+	
+		model.addAttribute("notice", notice);
 	}
+	
+	@GetMapping("/insertNotice.do")
+	public void insertNotice() {}
 	
 	@PostMapping("/insertNotice.do")
-	public String writeNotice(Notice notice, RedirectAttributes rd) {
-		int result = noticeService.writeNotice(notice, rd);
-		return "adminpage/notice";		
+	public String insertNotice(Notice notice) {
+		System.out.println(notice);
+		int result = noticeService.insertNotice(notice);
+
+		return "redirect:/adminpage/noticeList.bo";	
 	}
 	
-	@PostMapping("/deleteNotice.do")
-	public String deleteNotice(int noticeNo, RedirectAttributes rd) {
-		int result = noticeService.deleteNotice(noticeNo, rd);
-		return "adminpage/notice";
+	
+	@RequestMapping("/deleteNotice.do")
+	public String deleteNotice(int noticeNo) {
+		int result = noticeService.deleteNotice(noticeNo);
+		return "redirect:/adminpage/noticeList.bo";
+
 	}
 	
 	@GetMapping("/updateNotice.do")
 	public String updateNotice(@RequestParam int noticeNo, Model model) {
 		model.addAttribute("notice", noticeService.selectOneNotice(noticeNo));
-		return "adminpage/noticeUpdateFrom";
+		return "adminpage/updateNotice";
 	}
 	
 	@PostMapping("/updateNotice.do")
-	public String updateNotice(Notice notice, RedirectAttributes rd) {
+	public String updateNotice(Notice notice, Model model) {
 		int result = noticeService.updateNotice(notice);
-		rd.addFlashAttribute("msg", "공지사항 수정완료");
-		return "adminpage/notice";
+		model.addAttribute("result", result);
+		return "redirect:/adminpage/noticeList.bo";
 	}
 	
 

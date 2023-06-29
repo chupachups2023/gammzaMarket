@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggRead.css">
+
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="제목" name="title"/>
 </jsp:include>
@@ -22,9 +23,9 @@
             <div class="ggRead-slider-wrap">
                 <div class="ggRead-slider-img">
                     <div class="ggRead-slider-inner">
-                        <div class="ggRead-img-slider"><img src="${pageContext.request.contextPath}/resources/upload/sample1.jpg""></div>
+                        <div class="ggRead-img-slider"><img src="${pageContext.request.contextPath}/resources/upload/sample1.jpg"></div>
                         <div class="ggRead-img-slider"><img src="${pageContext.request.contextPath}/resources/upload/sample2.jpg"></div>
-                        <div class="ggRead-img-slider"><img src="${pageContext.request.contextPath}/resources/upload/sample3.jpg""></div>
+                        <div class="ggRead-img-slider"><img src="${pageContext.request.contextPath}/resources/upload/sample3.jpg"></div>
                     </div>
                 </div>
                 <div class="ggRead-slider-dot">

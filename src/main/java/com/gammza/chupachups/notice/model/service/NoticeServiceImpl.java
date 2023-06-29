@@ -11,7 +11,6 @@ import com.gammza.chupachups.notice.model.dao.NoticeDao;
 import com.gammza.chupachups.notice.model.vo.Notice;
 
 
-
 @Service
 public class NoticeServiceImpl implements NoticeService {
 
@@ -29,13 +28,15 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public int writeNotice(Notice notice, RedirectAttributes rd) {
-		return noticeDao.writeNotice(notice, rd);
+	public int insertNotice(Notice notice) {
+		System.out.println(notice);
+		return noticeDao.insertNotice(notice);
+
 	}
 
 	@Override
-	public int deleteNotice(int noticeNo, RedirectAttributes rd) {
-		return noticeDao.deleteNotice(noticeNo, rd);
+	public int deleteNotice(int noticeNo) {
+		return noticeDao.deleteNotice(noticeNo);
 	}
 
 	@Override
@@ -45,6 +46,8 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public int updateNotice(Notice notice) {
+		System.out.println(notice);
 		return noticeDao.updateNotice(notice);
 	}
+
 }

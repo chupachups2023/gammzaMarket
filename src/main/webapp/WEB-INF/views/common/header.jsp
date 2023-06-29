@@ -6,14 +6,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <meta charset="UTF-8">
 <title>${param.title }</title>
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/img/header/shorcuticon.png">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/common/header.css?<%=System.currentTimeMillis() %>">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/header.css?<%=System.currentTimeMillis() %>">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/login.css?<%=System.currentTimeMillis() %>">
 
 <!-- DB에 저장이 잘 되었다면 alert창 띄우기 -->
@@ -36,7 +34,7 @@
 						<button class="header-login btn" id="open-modal">로그인</button>
 					</c:when>
 					<c:otherwise>
-						<img src="${pageContext.request.contextPath}/resources/img/header/login.png" alt="korlogo" class="header-login">
+						<img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login">
 					</c:otherwise>
 				</c:choose>
 				
@@ -84,6 +82,7 @@
 		<!--로그인 모달창 수정본 -->
 		<div class="modal" tabindex="-1" id="modal">
 			<div class="modal-dialog">
+
 				<div class="modal-header">
 					<h5 class="modal-title">로그인</h5>
 				</div>
@@ -116,9 +115,12 @@
 								<h3>간편 로그인</h3>
 								<div class="social-icon">
 									<ul>
+
+
 											<!-- <li class="login-kakao">
                                         <a href="#">
                                             <!-- <img src="kakao_login_large_ko_resize.png" alt="카카오톡아이콘"> </li> -->
+
 
 										<li class="login-naver"><a href="#"> </a>
 											<img src="${pageContext.request.contextPath}/resources/img/login/btnG_축약형.png" alt="네이버아이콘">
@@ -126,6 +128,7 @@
 									</ul>
 									<br>
 									<button type="button" id="close-modal">임시닫기버튼</button>
+
 								</div>
 							</div>
 						</div>
@@ -137,7 +140,7 @@
 
 		<!-- 로그인 모달창 원본 -->
 
-		<!-- <div class="modal" tabindex="-1" id="modal">
+		<%-- <div class="modal" tabindex="-1" id="modal">
 			<div class="modal-dialog">
 				<div class="modal-content">
 				    <div class="modal-header">
@@ -168,7 +171,7 @@
 			      
 				</div>
 			</div>
-		</div> -->
+		</div> --%>
 
 		<script>
 	        $(function(){
