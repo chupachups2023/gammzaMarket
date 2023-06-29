@@ -28,8 +28,7 @@
 			${endTime},
 			#{latitude},
 			#{longitude},
-			default,
-			default
+			default,default,null,null
 		)
 	</insert>
 	<select id="selectLastNum" resultType="_int">
