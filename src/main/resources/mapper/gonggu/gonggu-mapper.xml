@@ -32,6 +32,7 @@
 			default
 		)
 	</insert>
+<<<<<<< Updated upstream
 
 	
 	<select id="selectOneParti_Tb" resultMap="gongguMap">
@@ -47,6 +48,19 @@
 		<result column="reg_at" property="regAt" />
 		<result column="location_code" property="locationCode" />
 	</resultMap>
+=======
+	
+	<select id="selectOneParti_Tb" resultMap="gongguMap">
+        select *
+        	from gonggu
+          where gonggu_no = #{gongguNo}
+    </select>
+    
+    <select id="selectOneHomeList" resultMap="gongguMap">
+    	select *
+    		from gonggu
+    </select>
+>>>>>>> Stashed changes
 
 </mapper>  
 
