@@ -49,13 +49,12 @@
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 <script type="text/javascript">
-	function updateNotice(no) {
-
-		location.href = '${ pageContext.request.contextPath }/adminpage/updateNotice.do?noticeNo='+noticeNo;
+	function updateNotice(noticeNo) {
+		location.href = '${ pageContext.request.contextPath }/adminpage/updateNotice.do?noticeNo='+${notice.noticeNo};
 		
 	}
-	function deleteNotice(no) {
-		location.href = '${ pageContext.request.contextPath }/adminpage/updateNotice.do?noticeNo='+noticeNo;
+	function deleteNotice(noticeNo) {
+		location.href = '${ pageContext.request.contextPath }/adminpage/deleteNotice.do?noticeNo='+${notice.noticeNo};
 
 		
 	}

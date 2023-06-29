@@ -19,10 +19,10 @@
 			notice
 		values (
 			notice_seq_notice_no.nextval,
-			#{noticeWriter},
+			default,
 			#{noticeTitle},
 			#{noticeContent},
-			notice_seq_notice_no.currval,
+			0,
 			default		
 		)
 	</insert>
