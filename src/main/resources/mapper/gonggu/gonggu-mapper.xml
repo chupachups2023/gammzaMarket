@@ -32,6 +32,16 @@
 			default
 		)
 	</insert>
+	<select id="selectOneParti_Tb" resultMap="gongguMap">
+        select *
+        	from gonggu
+          where gonggu_no = #{gongguNo}
+    </select>
+    
+    <select id="selectOneHomeList" resultMap="gongguMap">
+    	select *
+    		from gonggu
+    </select>
 
 
 </mapper>  
