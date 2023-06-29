@@ -14,15 +14,15 @@
 		select count(*)
 		  from notice
 	</select>
-	<insert id="insertNotice">
+	<insert id="insertNotice" parameterType="notice">
 		insert into
 			notice
 		values (
-			notice_seq_notice_no.nextval,
-			#{noticeWriter},
+			notice_seq.nextval,
+			default,
 			#{noticeTitle},
 			#{noticeContent},
-			notice_seq_notice_no.currval,
+			default,
 			default		
 		)
 	</insert>
@@ -38,7 +38,7 @@
 		 where notice_no = #{noticeNo}
 	</select>
 	<update id="updateNotice">
-		update notice
+		update notice_title, notice_content
 		   set notice_title = #{noticeTitle},
 		   	   notice_content = #{noticeContent}
 		 where notice_no = #{noticeNo}	
