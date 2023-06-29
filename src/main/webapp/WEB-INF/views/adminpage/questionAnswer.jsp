@@ -64,6 +64,19 @@
 		  <input type="submit" value="작성" onclick="location.href="QAnswerInsert.do"><input type="reset" value="취소">
 	  </div>
 	  <input type="hidden" name="qnaNo" value="${qna.qnaNo}">
+			<tr style="border-bottom: none;">
+				<td colspan="3"></td>
+				<td align="right">
+	                <input type="submit" value="작성">
+					<input type="reset" value="취소">
+				</td>
+          </tr>
+        </tbody>
+      </table>
+       <input type="hidden" name="qnaNo" value="${qna.qnaNo}">
+		<!-- 부모글의 정보 -->
+		<input type="hidden" name="ref" value="${qna.ref}">
+		<input type="hidden" name="depth" value="${qna.depth}">
 </form>      
 </div>
 
