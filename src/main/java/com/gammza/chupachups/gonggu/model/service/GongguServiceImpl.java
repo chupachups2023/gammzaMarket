@@ -10,8 +10,6 @@ import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 
 import com.gammza.chupachups.gonggu.model.vo.Parti_Tb;
 
-
-
 @Service
 public class GongguServiceImpl implements GongguService {
 
@@ -23,10 +21,13 @@ public class GongguServiceImpl implements GongguService {
 		return gongguDao.insertGonggu(gonggu);
 	}
 
-
 	@Override
-	public Parti_Tb selectOneParti_Tb(int gongguNo) {
-		return gongguDao.selectOneParti_Tb(gongguNo);
+	public Gonggu selectOneGonggu(Gonggu gonggu) {
+		return gongguDao.selectOneGonggu(gonggu);
 	}
 
+	@Override
+	public Gonggu selectOneHomeList() {
+		return gongguDao.selectOneHomeList();
+	}
 }
