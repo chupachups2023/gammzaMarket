@@ -97,5 +97,8 @@
 	</script>
 	
 	 --%>
+	 <a href="${pageContext.request.contextPath}/adminpage/questionList.do">문의</a>
+	 
+	 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 

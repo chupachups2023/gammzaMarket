@@ -9,7 +9,8 @@
 	<select id="selectQuestionList" resultMap="qnaMap">
 		select *
 		from qna
-		order by ref desc, depth
+		where depth = '0'
+		order by ref desc
 	</select>
 	<select id="selectTotalRecord" resultType="_int">
 		select count(*)
@@ -21,4 +22,25 @@
 		from qna
 		where qna_no = #{qnaNo}
 	</select>
+	
+	<select id="selectOneQAns" resultMap="qnaMap">
+		select *
+		from qna
+		where ref = (select ref from qna where qna_no = #{qnaNo} ) 
+			and depth = '1'
+	</select>
+	<!-- 작성자를 로그인한 사람으로 바꾸기(로그인제한하면) -->
+	<insert id="InsertQAnswer">
+		insert into qna
+			values(
+				QNA_SEQ.NEXTVAL,
+				#{qnaCategory},
+				#{qnaWriter},
+				#{qnaTitle},
+				#{qnaContent},
+				SYSDATE,
+				#{ref},
+				1
+			)
+	</insert>
 </mapper>
