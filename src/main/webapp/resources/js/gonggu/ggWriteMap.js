@@ -25,8 +25,8 @@
             	//마커 초기화(초기화 시 지도에 미리 지정 가능 : 카카오맵 API 문서 참조)
             	const marker = new kakao.maps.Marker();
         		
-            	document.getElementById('lon').value=latitude;
-        		document.getElementById('lat').value=longitude;
+            	document.getElementById('lon').value=longitude;
+        		document.getElementById('lat').value=latitude;
         		console.log(document.getElementById('lon'));
 
             	//카카오맵 클릭 이벤트 추가

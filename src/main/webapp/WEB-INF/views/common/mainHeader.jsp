@@ -37,14 +37,11 @@
 	            	</c:when>
 	            	<c:otherwise>
 			            <img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login">
-	            	</c:otherwise>
-	            </c:choose>
-	            
-	            <!-- 230627 -->
-				<c:if test="${not empty loginMember}">
+	            		<!-- 230627 -->
 		      			<a href="${pageContext.request.contextPath}/member/memberDetail.me">${loginMember.userId}님 반갑습니다.</a>&emsp; 
 		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
-		      	</c:if>
+	            	</c:otherwise>
+	            </c:choose>
 	        </div>
 	    </div>
 	    <div class="header-midout">
