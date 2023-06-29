@@ -28,14 +28,14 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public int insertNotice(Notice notice, RedirectAttributes rd) {
-		return noticeDao.insertNotice(notice, rd);
+	public int insertNotice(Notice notice) {
+		return noticeDao.insertNotice(notice);
 
 	}
 
 	@Override
-	public int deleteNotice(int noticeNo, RedirectAttributes rd) {
-		return noticeDao.deleteNotice(noticeNo, rd);
+	public int deleteNotice(int noticeNo) {
+		return noticeDao.deleteNotice(noticeNo);
 	}
 
 	@Override
@@ -47,4 +47,5 @@ public class NoticeServiceImpl implements NoticeService {
 	public int updateNotice(Notice notice) {
 		return noticeDao.updateNotice(notice);
 	}
+
 }
