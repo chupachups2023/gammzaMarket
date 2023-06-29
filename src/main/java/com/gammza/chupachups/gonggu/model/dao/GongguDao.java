@@ -8,13 +8,12 @@ import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 
 import com.gammza.chupachups.gonggu.model.vo.Parti_Tb;
 
-
 @Mapper
 public interface GongguDao {
 
 	int insertGonggu(Gonggu gonggu);
 
+	Gonggu selectOneGonggu(Gonggu gonggu);
 
-	Parti_Tb selectOneParti_Tb(int gongguNo);
-
+	Gonggu selectOneHomeList();
 }
