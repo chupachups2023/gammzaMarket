@@ -12,6 +12,7 @@
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/header/shorcuticon.png">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/header.css?<%=System.currentTimeMillis() %>">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/login.css?<%=System.currentTimeMillis() %>">
 
 <!-- DB에 저장이 잘 되었다면 alert창 띄우기 -->
 <c:if test="${not empty msg}">
@@ -30,7 +31,7 @@
 	            </a>
 	            <c:choose>
 	            	<c:when test="${empty login }">
-			            <button class="header-login btn" id="open-modal">로그인</button>
+			            <button type="button" class="header-login btn" id="open-modal">로그인</button>
 			            <button class="header-login btn" onclick="location.href='${pageContext.request.contextPath}/member/memberEnroll.me'">회원가입</button>
 	            	</c:when>
 	            	<c:otherwise>
@@ -66,36 +67,13 @@
 	        </div>
 	    </div>
 	    
-	   <!-- 로그인 모달창 -->
+	   <!--로그인 모달창 수정본 -->
 		<div class="modal" tabindex="-1" id="modal">
 			<div class="modal-dialog">
-				<div class="modal-content">
-				    <div class="modal-header">
+				<!-- <div class="modal-content"> -->
+					<div class="modal-header">
 						<h5 class="modal-title">로그인</h5>
-<<<<<<< Updated upstream
-				    </div>
-			   		<form action="" method="post" name="loginFrm">
-				      	<div class="modal-body">
-				        	<table class="table">
-								<tr>
-									<td scope="col">아이디</td>
-									<td scope="col">
-										<input type="text" name="userId" placeholder="아이디를 입력하세요">
-									</td>
-								</tr>
-								<tr>
-									<td scope="col">비밀번호</td>
-									<td scope="col">
-										<input type="password" name="userPwd" placeholder="비밀번호를 입력하세요">
-									</td>
-								</tr>
-							</table>
-				      	</div>
-				      	<div class="modal-footer">
-					        <button type="button" id="login-modal">로그인</button>
-					        <button type="button" id="close-modal">닫기</button>
-				    	</div>
-=======
+
 					</div>
 
 
@@ -136,6 +114,7 @@
 
 											<li class="login-naver"><a href="#"> </a>
 												<img src="${pageContext.request.contextPath}/resources/img/header/btnG_축약형.png" alt="네이버아이콘">
+
 											</li>
 										</ul>
 										<br>
@@ -144,10 +123,9 @@
 								</div>
 							</div>
 						</div>
->>>>>>> Stashed changes
 					</form>
-			      
-				</div>
+
+				<!-- </div> -->
 			</div>
 		</div>
 	    
