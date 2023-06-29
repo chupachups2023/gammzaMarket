@@ -32,6 +32,22 @@
 			default
 		)
 	</insert>
+
+	
+	<select id="selectOneParti_Tb" resultMap="gongguMap">
+		select *
+			from parti_tb
+		  where gonggu_no = #{gongguNo}
+	</select>
+	
+	<resultMap id="gongguMap" type="Parti_Tb">
+		<result column="gonggu_no" property="gongguNo" />
+		<result column="parti_member" property="partiMember" />
+		<result column="num" property="num" />
+		<result column="reg_at" property="regAt" />
+		<result column="location_code" property="locationCode" />
+	</resultMap>
+
 </mapper>  
 
 
