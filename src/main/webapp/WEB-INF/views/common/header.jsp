@@ -36,7 +36,7 @@
 						<button class="header-login btn" id="open-modal">로그인</button>
 					</c:when>
 					<c:otherwise>
-						<img src="${pageContext.request.contextPath}/resources/img/header/login.png" alt="korlogo" class="header-login">
+						<img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login">
 					</c:otherwise>
 				</c:choose>
 				
@@ -104,7 +104,7 @@
 										<input type="text" placeholder="아이디 입력">
 									</li>
 									<li class="login-info">
-										<input type="password" placeholder="비밀번호 입력">
+										<input type="password" placeholder="비밀번호 입력" autocomplete="off">
 									</li>
 									<li class="login-chkbox">
 										<input type="checkbox" id="chk1">
@@ -127,7 +127,7 @@
                                             <!-- <img src="kakao_login_large_ko_resize.png" alt="카카오톡아이콘"> </li> -->
 
 											<li class="login-naver"><a href="#"> </a>
-												<img src="${pageContext.request.contextPath}/resources/img/login/btnG_축약형.png" alt="네이버아이콘">
+												<img src="${pageContext.request.contextPath}/resources/img/header/btnG_축약형.png" alt="네이버아이콘">
 											</li>
 										</ul>
 										<br>
@@ -147,7 +147,7 @@
 
 		<!-- 로그인 모달창 원본 -->
 
-		<!-- <div class="modal" tabindex="-1" id="modal">
+		<%-- <div class="modal" tabindex="-1" id="modal">
 			<div class="modal-dialog">
 				<div class="modal-content">
 				    <div class="modal-header">
@@ -178,7 +178,7 @@
 			      
 				</div>
 			</div>
-		</div> -->
+		</div> --%>
 
 		<script>
 	        $(function(){

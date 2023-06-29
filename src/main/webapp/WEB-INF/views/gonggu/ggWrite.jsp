@@ -65,16 +65,16 @@
                 <div class="write-date">
                     <table class="write-tb">
                         <tr>
-                            <td>물건 나눌 날짜</td>
-                            <td><input type="datetime-local" name="sendTime" ></td>
+                            <td>공구 오픈 날짜</td>
+                            <td><input type="datetime-local" name="openTime" id="openTime" onfocusout="mngEndTime();"></td>
                         </tr>
                         <tr>
                             <td>공구 마감 날짜</td>
                             <td><input type="datetime-local" name="endTime" ></td>
                         </tr>
                         <tr>
-                            <td>공구 오픈 날짜</td>
-                            <td><input type="datetime-local" name="openTime" ></td>
+                            <td>물건 나눌 날짜</td>
+                            <td><input type="datetime-local" name="sendTime" ></td>
                         </tr>
                         <tr>
                             <td></td>
@@ -87,13 +87,20 @@
                     <div id="map" class="ggWrite_map"></div>
                 </div>
             </div>
-<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggWrite.js"></script>
             <input type="hidden" name="latitude" id="lat">
             <input type="hidden" name="longitude" id="lon">
             <input type="hidden" name="gongguWriter" value="${loginMember.userId }">
             <div class="ggStart-btn"><input type="button" value="공구 시작" onclick="ggEnrollFrmSubmit();"></div>
         </form>
     </div>
+<script>
+	var now_utc = Date.now();
+	var timeOff = new Date().getTimezoneOffset()*60000;
+	var today = new Date(now_utc-timeOff).toISOString().substring(0, 16);
+	console.log("today: "+today);
+	document.getElementById("openTime").setAttribute("min", today);
+</script>
 
-
+<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggWriteMap.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggWrite.js"></script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
