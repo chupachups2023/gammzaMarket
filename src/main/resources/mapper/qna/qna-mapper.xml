@@ -9,7 +9,7 @@
 	<select id="selectQuestionList" resultMap="qnaMap">
 		select *
 		from qna
-		order by qna_no desc
+		order by ref desc, depth
 	</select>
 	<select id="selectTotalRecord" resultType="_int">
 		select count(*)
