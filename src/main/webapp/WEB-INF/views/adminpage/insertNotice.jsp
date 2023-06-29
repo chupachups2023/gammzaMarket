@@ -15,11 +15,10 @@
             <tbody class="table-group-divider">
             <tr>
             <th>제목</th>
-                    <th scope="row"><input type="text" id="noticeTitle" value="${ notice.noticeTitle }"></th>
+                    <th scope="row"><input type="text" id="noticeTitle" name="noticeTitle" value="${ notice.noticeTitle }"></th>
                     </tr>
              <tr>
-             <td><input name="noticeWriter" id="noticeWriter" value="${ notice.noticeWriter }" readonly></td>
-            	    <td><input name="noticeCreate" id="noticeCreate" value="${ notice.noticeCreate }" readonly></td>
+             <td><input name="noticeWriter" id="noticeWriter" value="admin" readonly></td>
             </tr>
                 <tr>
                     <td colspan="3"><textarea name="noticeContent" id="noticeContent" cols="75" rows="10" placeholder="공지사항 내용을 작성해주세요." style="resize:none"></textarea></td>

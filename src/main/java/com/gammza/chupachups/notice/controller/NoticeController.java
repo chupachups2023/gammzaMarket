@@ -56,6 +56,7 @@ public class NoticeController {
 	
 	@PostMapping("/insertNotice.do")
 	public String insertNotice(Notice notice, Model model) {
+		System.out.println(notice);
 		int result = noticeService.insertNotice(notice);
 		
 		model.addAttribute("result", result);
@@ -77,8 +78,9 @@ public class NoticeController {
 	}
 	
 	@PostMapping("/updateNotice.do")
-	public String updateNotice(Notice notice) {
+	public String updateNotice(Notice notice, Model model) {
 		int result = noticeService.updateNotice(notice);
+		model.addAttribute("result", result);
 		return "redirect:/adminpage/noticeList.bo";
 	}
 	
