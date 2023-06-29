@@ -73,14 +73,14 @@ public class NoticeController {
 	@GetMapping("/updateNotice.do")
 	public String updateNotice(@RequestParam int noticeNo, Model model) {
 		model.addAttribute("notice", noticeService.selectOneNotice(noticeNo));
+		System.out.println(noticeNo);
 		return "adminpage/updateNotice";
-	}
+	}	
 	
 	@PostMapping("/updateNotice.do")
 	public String updateNotice(Notice notice) {
 		int result = noticeService.updateNotice(notice);
 		return "redirect:/adminpage/noticeList.bo";
 	}
-	
 
 }
