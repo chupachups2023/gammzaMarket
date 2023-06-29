@@ -78,20 +78,6 @@ public class GongguController {
 			gonggu.setEndTime(ChangeDBTypeDate.chageDate(gonggu.getEndTime()));
 			gonggu.setSendTime(ChangeDBTypeDate.chageDate(gonggu.getSendTime()));
 		}
-<<<<<<< Updated upstream
-		
-		String saveDirectory=application.getRealPath("/resources/upload");
-		
-		ArrayList<String> photo=new ArrayList<String>();
-		
-		if(upPhoto1.getSize()>0) {
-			String changeFilename=SpringUtils.changeMultipartFile(upPhoto1);
-			System.out.println("photo1: "+changeFilename);
-			
-			photo.add(0, changeFilename);
-			
-			File destFile=new File(saveDirectory, changeFilename);
-=======
 
 		String saveDirectory = application.getRealPath("/resources/upload");
 
@@ -104,14 +90,14 @@ public class GongguController {
 			photo.add(changeFilename);
 
 			File destFile = new File(saveDirectory, changeFilename);
->>>>>>> Stashed changes
+
 			try {
 				upPhoto1.transferTo(destFile); // 실제로 저장
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-<<<<<<< Updated upstream
+
 		if(upPhoto2.getSize()>0) {
 			String changeFilename=SpringUtils.changeMultipartFile(upPhoto2);
 			System.out.println("photo2: "+changeFilename);
@@ -119,22 +105,13 @@ public class GongguController {
 			photo.add(1, changeFilename);
 			
 			File destFile=new File(saveDirectory, changeFilename);
-=======
-		if (upPhoto2.getSize() > 0) {
-			String changeFilename = SpringUtils.changeMultipartFile(upPhoto2);
-			System.out.println("photo2: " + changeFilename);
 
-			photo.add(changeFilename);
-
-			File destFile = new File(saveDirectory, changeFilename);
->>>>>>> Stashed changes
 			try {
 				upPhoto2.transferTo(destFile); // 실제로 저장
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-<<<<<<< Updated upstream
 		if(upPhoto3.getSize()>0) {
 			String changeFilename=SpringUtils.changeMultipartFile(upPhoto3);
 			System.out.println("photo3: "+changeFilename);
@@ -142,15 +119,6 @@ public class GongguController {
 			photo.add(2, changeFilename);
 			
 			File destFile=new File(saveDirectory, changeFilename);
-=======
-		if (upPhoto3.getSize() > 0) {
-			String changeFilename = SpringUtils.changeMultipartFile(upPhoto3);
-			System.out.println("photo3: " + changeFilename);
-
-			photo.add(changeFilename);
-
-			File destFile = new File(saveDirectory, changeFilename);
->>>>>>> Stashed changes
 			try {
 				upPhoto3.transferTo(destFile); // 실제로 저장
 			} catch (IOException e) {
