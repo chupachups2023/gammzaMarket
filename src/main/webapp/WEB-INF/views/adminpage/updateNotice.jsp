@@ -18,26 +18,31 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th scope="col" width="600px">제목</th>
+					<th scope="col" width="600px" align="left">제목</th>
 					<th scope="col">날짜</th>
 				</tr>
 			</thead>
 			<tbody class="table-group-divider">
 				<tr>
-					<th scope="col" width="600px"><input type="text" id="noticeTitle" placeholder="${ notice.noticeTitle }"></th>
+					<th scope="col"><input type="text" id="noticeTitle" name="noticeTitle" placeholder="${ notice.noticeTitle }"></th>
 					<th scope="col">${ notice.noticeCreate }</th>
 				</tr>
 				<tr>
-					<td colspan="2"> <input type="text" id="noticeContent" placeholder="${ notice.noticeContent }"></td>
+					<td colspan="2"><input type="text" id="noticeWriter" name="noticeWriter" value="admin" readonly></td>
+				</tr>
+				<tr>
+					<td colspan="2"> <input type="text" id="noticeContent" name="noticeContent" placeholder="${ notice.noticeContent }"></td>
 				</tr>
 			</tbody>
 		</table>
 		<table align="center">
 			<tr>
-				<td><input type="submit"
-					 value="수정 완료"></td>
-				<td><input type="button"
-					onclick='history.back()' value="취소"></td>
+				<td>
+					<input type="submit" value="수정 완료">
+				</td>
+				<td>
+					<input type="button" onclick='history.back()' value="취소">
+				</td>
 			</tr>
 		</table>
 		<input type="hidden" name="notice.noticeNo" value="${notice.noticeNo}">

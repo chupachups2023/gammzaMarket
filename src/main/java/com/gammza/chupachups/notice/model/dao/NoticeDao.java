@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.gammza.chupachups.notice.model.vo.Notice;
 
 

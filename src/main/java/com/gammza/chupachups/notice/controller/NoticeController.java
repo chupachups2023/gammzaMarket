@@ -55,11 +55,10 @@ public class NoticeController {
 	public void insertNotice() {}
 	
 	@PostMapping("/insertNotice.do")
-	public String insertNotice(Notice notice, Model model) {
+	public String insertNotice(Notice notice) {
 		System.out.println(notice);
 		int result = noticeService.insertNotice(notice);
-		
-		model.addAttribute("result", result);
+
 		return "redirect:/adminpage/noticeList.bo";	
 	}
 	
