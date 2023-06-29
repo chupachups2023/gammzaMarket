@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.gammza.chupachups.gonggu.model.dao.GongguDao">
+	<resultMap type="gonggu" id="gongguMap"></resultMap>
+	<select id="selectGongguList">
+	
+	</select>
+	<insert id="insertGonggu">
+		insert into gonggu values(
+			gonggu_seq.nextval,
+			#{gongguName},
+			#{gongguWriter},
+			#{price},
+			#{type},
+			#{num},
+			#{category},
+			#{content},
+			#{photo1},
+			#{photo2},
+			#{photo3},
+			#{link},
+			sysdate,
+			${sendTime},
+			${openTime},
+			${endTime},
+			#{latitude},
+			#{longitude},
+			default,
+			default
+		)
+	</insert>
+	
+	<select id="selectOneParti_Tb" resultMap="gongguMap">
+		select *
+			from parti_tb
+		  where gonggu_no = #{gongguNo}
+	</select>
+	
+	<resultMap id="gongguMap" type="Parti_Tb">
+		<result column="gonggu_no" property="gongguNo" />
+		<result column="parti_member" property="partiMember" />
+		<result column="num" property="num" />
+		<result column="reg_at" property="regAt" />
+		<result column="location_code" property="locationCode" />
+	</resultMap>
+</mapper>  
+
+
