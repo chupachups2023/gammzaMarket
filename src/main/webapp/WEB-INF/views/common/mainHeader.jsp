@@ -99,7 +99,7 @@
 							</ul>
 							<ul class="login-bottom">
 								<li><a href="${pageContext.request.contextPath}/member/memberEnroll.me">회원가입</a></li>
-								<li><a href="#">아이디/비밀번호 찾기</a></li>
+								<li><a href="${pageContext.request.contextPath}/member/findId.me">아이디/비밀번호 찾기</a></li>
 							</ul>
 									
 							<div class="social-container">

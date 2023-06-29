@@ -30,9 +30,9 @@ public class MemberController {
 	public void memberEnroll() {}  // => /member/memberEnroll
 	
 	
-	 @PostMapping("/memberEnroll.me") 
-	 public String memberEnroll(Member member) {
-		 System.out.println("userPass = " + member);
+	@PostMapping("/memberEnroll.me") 
+	public String memberEnroll(Member member) {
+		System.out.println("userPass = " + member);
 	 
 		
 		
@@ -61,7 +61,7 @@ public class MemberController {
 		// System.out.println("member = " + member);
 		
 		// 인증
-		if(member != null && passwordEncoder.matches(userPwd, member.getUserPwd())) {
+		if (member != null && passwordEncoder.matches(userPwd, member.getUserPwd())) {
 			model.addAttribute("loginMember", member);	// requestScope => sessionScope 바꾸기
 		} else {
 			redirectAtt.addFlashAttribute("msg", "아이디 또는 비밀번호가 맞지 않습니다.");
@@ -76,9 +76,8 @@ public class MemberController {
 	 */	
 	@GetMapping("/memberLogout.me")
 	public String memberLogout(SessionStatus status) {
-		if(!status.isComplete())
+		if (!status.isComplete())
 			status.setComplete();
-		
 		return "redirect:/";
 	}
 	
@@ -119,6 +118,18 @@ public class MemberController {
 		model.addAttribute("available", available);
 		
 		return "jsonView";
+	}
+	
+	
+	// 아이디/비밀번호 찾기 
+	@GetMapping("/findId.me")
+	public String findId() {
+		return "member/findId";
+	}
+
+	@GetMapping("/findPwd.me")
+	public String findPwd() {
+		return "member/findPwd";
 	}
 	
 }
