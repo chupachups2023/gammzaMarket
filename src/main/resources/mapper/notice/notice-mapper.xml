@@ -25,7 +25,7 @@
 		insert into
 			notice
 		values (
-			notice_seq_notice_no.nextval,
+			notice_seq.nextval,
 			#{noticeWriter},
 			#{noticeTitle},
 			#{noticeContent},

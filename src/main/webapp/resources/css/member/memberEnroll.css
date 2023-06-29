@@ -5,7 +5,7 @@
 hr {
     width: 800px;
 }
-#container {
+.container {
     text-align: center; 
     width: 350px; 
     margin:auto; 
@@ -27,7 +27,7 @@ th, td {
     width: 500px;
     padding: 7px;
 }
-#table {
+#table1 {
     text-align: center;
     margin: auto;
     margin-top: 20px;

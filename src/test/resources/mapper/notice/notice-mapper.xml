@@ -3,8 +3,8 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="com.gammza.chupachups.notice.model.dao.noticeDao">
-	<resultMap type="notice" id="noticeMap"></resultMap>
+<mapper namespace="com.gammza.chupachups.notice.model.dao.NoticeDao">
+	<resultMap type="com.gammza.chupachups.notice.model.vo.Notice" id="noticeMap"></resultMap>
 	<select id="selectnoticeList" resultMap="noticeMap">
 		select *
 		  from notice
@@ -14,5 +14,34 @@
 		select count(*)
 		  from notice
 	</select>
+	<insert id="insertNotice">
+		insert into
+			notice
+		values (
+			notice_seq_notice_no.nextval,
+			#{noticeWriter},
+			#{noticeTitle},
+			#{noticeContent},
+			notice_seq_notice_no.currval,
+			default		
+		)
+	</insert>
+	<delete id="deleteNotice">
+		delete from
+			notice
+		where
+			notice_no = #{noticeNo}
+	</delete>
+	<select id="selectOneNotice" resultMap="noticeMap">
+		select *
+		  from notice
+		 where notice_no = #{noticeNo}
+	</select>
+	<update id="updateNotice">
+		update notice
+		   set notice_title = #{noticeTitle},
+		   	   notice_content = #{noticeContent}
+		 where notice_no = #{noticeNo}	
+	</update>
 </mapper>
 

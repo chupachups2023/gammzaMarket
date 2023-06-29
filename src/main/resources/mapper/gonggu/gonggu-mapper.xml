@@ -32,6 +32,7 @@
 			default
 		)
 	</insert>
+
 	
 	<select id="selectOneParti_Tb" resultMap="gongguMap">
 		select *
@@ -46,6 +47,7 @@
 		<result column="reg_at" property="regAt" />
 		<result column="location_code" property="locationCode" />
 	</resultMap>
+
 </mapper>  
 
 

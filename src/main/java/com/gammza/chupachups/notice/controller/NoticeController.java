@@ -17,6 +17,7 @@ import com.gammza.chupachups.common.template.Pagination;
 import com.gammza.chupachups.notice.model.service.NoticeService;
 import com.gammza.chupachups.notice.model.vo.Notice;
 
+
 @Controller
 @RequestMapping("/adminpage")
 //@SessionAttributes
@@ -41,21 +42,30 @@ public class NoticeController {
 		return "adminpage/notice";
 	}
 	
-	@GetMapping("/insertNotice.do")
-	public String writeNotice() {
-		return "adminpage/insertNotice";
+
+	@GetMapping("/noticeDetail.bo")
+	public void noticeDetail(@RequestParam int noticeNo, Model model) {
+		
+		Object notice = noticeService.selectOneNotice(noticeNo);
+	
+		model.addAttribute("notice", notice);
 	}
 	
+	@GetMapping("/insertNotice.do")
+	public void insertNotice() {}
+	
 	@PostMapping("/insertNotice.do")
-	public String writeNotice(Notice notice, RedirectAttributes rd) {
-		int result = noticeService.writeNotice(notice, rd);
-		return "adminpage/notice";		
+	public String insertNotice(Notice notice, RedirectAttributes rd) {
+		int result = noticeService.insertNotice(notice, rd);
+		return "adminpage/insertNotice.do";	
 	}
+	
 	
 	@PostMapping("/deleteNotice.do")
 	public String deleteNotice(int noticeNo, RedirectAttributes rd) {
 		int result = noticeService.deleteNotice(noticeNo, rd);
-		return "adminpage/notice";
+		return "adminpage/deleteNotice";
+
 	}
 	
 	@GetMapping("/updateNotice.do")
