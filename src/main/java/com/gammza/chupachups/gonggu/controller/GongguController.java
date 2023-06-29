@@ -1,15 +1,14 @@
 package com.gammza.chupachups.gonggu.controller;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-
 import java.util.List;
 
-
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -18,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,9 +25,7 @@ import com.gammza.chupachups.common.ChangeDBTypeDate;
 import com.gammza.chupachups.common.SpringUtils;
 import com.gammza.chupachups.gonggu.model.service.GongguService;
 import com.gammza.chupachups.gonggu.model.vo.Gonggu;
-
 import com.gammza.chupachups.gonggu.model.vo.Parti_Tb;
-
 
 @Controller
 @RequestMapping("/gonggu")
@@ -38,38 +36,49 @@ public class GongguController {
 	private ServletContext application;
 	@Autowired
 	private ResourceLoader resourceLoader;
-	
+
 	@GetMapping("/ggWrite.go")
-	public void ggWrite() {}
-	
-	@GetMapping("/ggListView.go")
-	public void ggListView() {}
-	
-
-
-	@GetMapping("/ggRead_Partic.go")
-	public String ggRead_Partic(Model model, @RequestParam int gongguNo) {
-
-		Parti_Tb parti_tb  = gongguService.selectOneParti_Tb(gongguNo);
-		model.addAttribute("parti_tb", parti_tb);
-		return "ggRead_Partic";
+	public void ggWrite() {
 	}
 
+	@GetMapping("/ggListView.go")
+	public void ggListView() {
+	}
+
+	@GetMapping("/home.go")
+	public String homeList() {
+		
+		Gonggu homeList = gongguService.selectOneHomeList();
+		
+		return "home";
+	}
 	
+	 @GetMapping("/ggRead_Partic.go") 
+	 public String ggRead_Partic(Gonggu gonggu, Model model) {
+	 
+	 Gonggu result = gongguService.selectOneGonggu(gonggu);
+	 model.addAttribute("result", result);
+	 
+	 	return "ggRead_Partic"; 
+	 }
+	 
+
 	@PostMapping("/ggEnrollFrm.go")
-	public String ggEnrollFrm(Gonggu gonggu, @RequestParam MultipartFile upPhoto1, @RequestParam MultipartFile upPhoto2, @RequestParam MultipartFile upPhoto3) {
+	public String ggEnrollFrm(Gonggu gonggu, @RequestParam MultipartFile upPhoto1, @RequestParam MultipartFile upPhoto2,
+			@RequestParam MultipartFile upPhoto3) {
 		gonggu.setGongguWriter("USER01");
 		System.out.println(gonggu.getEndTime());
 		System.out.println(gonggu.getOpenTime());
 		System.out.println(gonggu.getSendTime());
-		if(gonggu.getOpenTime().equals("sysdate")) {
+		if (gonggu.getOpenTime().equals("sysdate")) {
 			gonggu.setEndTime(ChangeDBTypeDate.chageDate(gonggu.getEndTime()));
 			gonggu.setSendTime(ChangeDBTypeDate.chageDate(gonggu.getSendTime()));
-		}else {
+		} else {
 			gonggu.setOpenTime(ChangeDBTypeDate.chageDate(gonggu.getOpenTime()));
 			gonggu.setEndTime(ChangeDBTypeDate.chageDate(gonggu.getEndTime()));
 			gonggu.setSendTime(ChangeDBTypeDate.chageDate(gonggu.getSendTime()));
 		}
+<<<<<<< Updated upstream
 		
 		String saveDirectory=application.getRealPath("/resources/upload");
 		
@@ -82,12 +91,27 @@ public class GongguController {
 			photo.add(0, changeFilename);
 			
 			File destFile=new File(saveDirectory, changeFilename);
+=======
+
+		String saveDirectory = application.getRealPath("/resources/upload");
+
+		ArrayList<String> photo = new ArrayList<String>();
+
+		if (upPhoto1.getSize() > 0) {
+			String changeFilename = SpringUtils.changeMultipartFile(upPhoto1);
+			System.out.println("photo1: " + changeFilename);
+
+			photo.add(changeFilename);
+
+			File destFile = new File(saveDirectory, changeFilename);
+>>>>>>> Stashed changes
 			try {
-				upPhoto1.transferTo(destFile);	//실제로 저장
+				upPhoto1.transferTo(destFile); // 실제로 저장
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
+<<<<<<< Updated upstream
 		if(upPhoto2.getSize()>0) {
 			String changeFilename=SpringUtils.changeMultipartFile(upPhoto2);
 			System.out.println("photo2: "+changeFilename);
@@ -95,12 +119,22 @@ public class GongguController {
 			photo.add(1, changeFilename);
 			
 			File destFile=new File(saveDirectory, changeFilename);
+=======
+		if (upPhoto2.getSize() > 0) {
+			String changeFilename = SpringUtils.changeMultipartFile(upPhoto2);
+			System.out.println("photo2: " + changeFilename);
+
+			photo.add(changeFilename);
+
+			File destFile = new File(saveDirectory, changeFilename);
+>>>>>>> Stashed changes
 			try {
-				upPhoto2.transferTo(destFile);	//실제로 저장
+				upPhoto2.transferTo(destFile); // 실제로 저장
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
+<<<<<<< Updated upstream
 		if(upPhoto3.getSize()>0) {
 			String changeFilename=SpringUtils.changeMultipartFile(upPhoto3);
 			System.out.println("photo3: "+changeFilename);
@@ -108,39 +142,46 @@ public class GongguController {
 			photo.add(2, changeFilename);
 			
 			File destFile=new File(saveDirectory, changeFilename);
+=======
+		if (upPhoto3.getSize() > 0) {
+			String changeFilename = SpringUtils.changeMultipartFile(upPhoto3);
+			System.out.println("photo3: " + changeFilename);
+
+			photo.add(changeFilename);
+
+			File destFile = new File(saveDirectory, changeFilename);
+>>>>>>> Stashed changes
 			try {
-				upPhoto3.transferTo(destFile);	//실제로 저장
+				upPhoto3.transferTo(destFile); // 실제로 저장
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-		for(int i=0;i<photo.size();i++) {
+		for (int i = 0; i < photo.size(); i++) {
 			System.out.println(photo.get(i));
 		}
-		if(!photo.isEmpty()) {
+		if (!photo.isEmpty()) {
 			Collections.sort(photo);
-			
+
 			photo.remove(null);
-			
-			if(photo.size()==1) {
+
+			if (photo.size() == 1) {
 				gonggu.setPhoto1(photo.get(0));
-			}else if(photo.size()==2) {
+			} else if (photo.size() == 2) {
 				gonggu.setPhoto1(photo.get(0));
 				gonggu.setPhoto2(photo.get(1));
-			}else {
+			} else {
 				gonggu.setPhoto1(photo.get(0));
 				gonggu.setPhoto2(photo.get(1));
 				gonggu.setPhoto3(photo.get(2));
 			}
 		}
-		
+
 		System.out.println(gonggu);
-		
-		int result=gongguService.insertGonggu(gonggu);
-		
+
+		int result = gongguService.insertGonggu(gonggu);
+
 		return null;
 	}
-	
-
 
 }
