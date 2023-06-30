@@ -122,7 +122,7 @@ body{
 }
 .button {
     display: inline-block;
-    width: 120px;
+    width: 130px;
     height: 50px;
     padding: 0;
     margin: 10px 20px 10px 0;
@@ -131,9 +131,13 @@ body{
     border-radius: 20px;
     transition: all 0.2s ;
     background: #60b565b7;
+    border:solid 1px #60b565b7;
+    color:white;
+    font-weight:bold;
   }
-  .button:hover {
+  .button:hover{
     background: rgb(35, 117, 84);
+    cursor:pointer;
   }
   
 #modal {

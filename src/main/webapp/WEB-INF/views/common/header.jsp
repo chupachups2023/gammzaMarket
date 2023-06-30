@@ -11,8 +11,8 @@
 <title>${param.title }</title>
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/img/header/shorcuticon.png">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/header.css?<%=System.currentTimeMillis() %>">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/login.css?<%=System.currentTimeMillis() %>">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/header.css?<%=System.currentTimeMillis() %>">
 
 <!-- DB에 저장이 잘 되었다면 alert창 띄우기 -->
 <c:if test="${not empty msg}">
@@ -34,9 +34,9 @@
 						<button class="header-login btn" id="open-modal">로그인</button>
 					</c:when>
 					<c:otherwise>
-						<img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login">
+						<img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login" onclick="location.herf='${pageContext.request.contextPath}/mypage/mypageMain.me'">
 					<!-- 230627 -->
-		      			<a href="${pageContext.request.contextPath}/member/memberDetail.me">${loginMember.userId}님 반갑습니다.</a>&emsp; 
+		      			<a href="${pageContext.request.contextPath}/mypage/mypageMain.me">${loginMember.userId}님 반갑습니다.</a>&emsp;
 		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
 					</c:otherwise>
 				</c:choose>
