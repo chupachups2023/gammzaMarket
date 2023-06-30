@@ -52,11 +52,11 @@ public class MyQnaController {
 		qna.setQnaContent(qna.getQnaContent());
 		
 		int result = qnaService.updateMyQuestion(qna);
-		//Àß µÇ¾ú´Ù´Â alertÃ¢ 
+
 		if(result > 0) {
-			redirectAttr.addFlashAttribute("msg", "¼öÁ¤¿Ï·á");
+			redirectAttr.addFlashAttribute("msg", "ìˆ˜ì •ì™„ë£Œ");
 		}else {
-			redirectAttr.addFlashAttribute("msg", "¼öÁ¤½ÇÆÐ");
+			redirectAttr.addFlashAttribute("msg", "ìˆ˜ì •ì‹¤íŒ¨");
 		}
 		
 		return "redirect:/mypage/myQuestionAnswer.do?nowPage="+nowPage+"&qnaNo="+qnaNo;
