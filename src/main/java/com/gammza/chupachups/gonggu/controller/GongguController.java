@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -20,6 +21,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gammza.chupachups.common.ChangeDate;
 import com.gammza.chupachups.common.SpringUtils;
+import com.gammza.chupachups.common.model.vo.PageInfo;
+import com.gammza.chupachups.common.template.Pagination;
 import com.gammza.chupachups.gonggu.model.service.GongguService;
 import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 import com.gammza.chupachups.member.model.vo.Member;
@@ -46,15 +49,19 @@ public class GongguController {
 	public String homeList(Model model) {
 		System.out.println("공구들어옴");
 		ArrayList<Gonggu> homeList = gongguService.selectHomeList();
-		System.out.println("최신 공구1: "+homeList.get(0));
 		model.addAttribute("homeList", homeList);
+		
+		int totalRecord=gongguService.selectTotalRecored();
+		
+		PageInfo pi=Pagination.getPageInfo(totalRecord, 1, 1, 8);
+		model.addAttribute("pi", pi);
 		
 		return "/home";
 	}
 	
 	 @GetMapping("/ggRead.go") 
-	 public String ggRead_Partic(@RequestParam int gongguNo, Model model) {
-		 Member loginMember=(Member)model.getAttribute("loginMember");
+	 public String ggRead_Partic(@RequestParam int gongguNo, Model model, HttpSession session) {
+		 Member loginMember=(Member)session.getAttribute("loginMember");
 		 Gonggu gonggu = gongguService.selectOneGonggu(gongguNo);
 		 model.addAttribute("gonggu", gonggu);
 	 

@@ -34,4 +34,9 @@ public class GongguServiceImpl implements GongguService {
 	public int selectLastNum() {
 		return gongguDao.selectLastNum();
 	}
+
+	@Override
+	public int selectTotalRecored() {
+		return gongguDao.selectTotalRecored();
+	}
 }

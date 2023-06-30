@@ -122,6 +122,7 @@ body{
     font-weight: bold;
 }
 .button {
+	font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
     display: inline-block;
     width: 130px;
     height: 50px;

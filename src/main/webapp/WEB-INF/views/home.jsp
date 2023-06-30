@@ -17,78 +17,45 @@
 		</form>
 	</div>
 	
-<%-- 	<div class="main-listSec">
-		<div class="list-gg" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead_Partic.go';">
-			<div class="ggImg"><img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg" alt="이미지 없음"></div>
-			<div class="ggTitle">물품이름</div>
-			<div><b>30,000원</b></div>
-			<div><small>서울시 영등포구 당산동</small></div>
-		</div>
-		<div class="list-gg">
-			<div class="ggImg"><img src="${pageContext.request.contextPath}/resources/img/testImg/verticalBig.png"></div>
-			<div class="ggTitle">물품이름</div>
-			<div><b>30,000원</b></div>
-			<div><small>서울시 영등포구 당산동</small></div>
-		</div>
-		<div class="list-gg">
-			<div class="ggImg"><img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg"></div>
-			<div class="ggTitle">물품이름</div>
-			<div><b>30,000원</b></div>
-			<div><small>서울시 영등포구 당산동</small></div>
-		</div>
-		<div class="list-gg">
-			<div class="ggImg"><img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg"></div>
-			<div class="ggTitle">물품이름</div>
-			<div><b>30,000원</b></div>
-			<div><small>서울시 영등포구 당산동</small></div>
-		</div>
-		<div class="list-gg">
-			<div class="ggImg"><img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg"></div>
-			<div class="ggTitle">물품이름</div>
-			<div><b>30,000원</b></div>
-			<div><small>서울시 영등포구 당산동</small></div>
-		</div>
-		<div class="list-gg">
-			<div class="ggImg"><img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg"></div>
-			<div class="ggTitle">물품이름</div>
-			<div><b>30,000원</b></div>
-			<div><small>서울시 영등포구 당산동</small></div>
-		</div>
-		<div class="list-gg">
-			<div class="ggImg"><img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg"></div>
-			<div class="ggTitle">물품이름</div>
-			<div><b>30,000원</b></div>
-			<div><small>서울시 영등포구 당산동</small></div>
-		</div>
-		<div class="list-gg">
-			<div class="ggImg"><img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg"></div>
-			<div class="ggTitle">물품이름</div>
-			<div><b>30,000원</b></div>
-			<div><small>서울시 영등포구 당산동</small></div>
-		</div>
-		
-        <div class="moreBtnBox"><button type="button" class="btn moreBtn">더보기</button></div>
-	</div> --%>
  	<div class="main-listSec">
-        <c:forEach items="${homeList}" var="list" varStatus="status">
-			<div class="list-goods">
-				<div class="ggImg"><img src="${pageContext.request.contextPath}/resources/upload/${list.photo1}" alt="이미지 없음"></div>
-				<div class="ggTitle">
-					<c:choose>
-						<c:when test="${fn:length(list.gongguName) gt 10 }">
-							${fn:substring(list.gongguName,0,10)}...
-						</c:when>
-						<c:otherwise>
-							${list.gongguName }
-						</c:otherwise>
-					</c:choose>
-				</div>
-				<div><b><fmt:formatNumber type="number" maxFractionDigits="3" value="${gonggu.price}" /></b></div>
-				<div><small>동네</small></div>
-			</div>
+ 	
+<div class="list-column">
+        <c:forEach begin="0" end="${fn:length(homeList)/4 - 1}" varStatus="i">
+            <div class="list-row">
+                <c:forEach begin="${i.index*4}" end="${(i.index+1)*4 - 1}" items="${homeList}" var="list" varStatus="j">
+                    <div class="list-goods" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${list.gongguNo }'">
+                        <div class="ggImg">
+                            <img src="${pageContext.request.contextPath}/resources/upload/${list.photo1}" alt="이미지 없음">
+                        </div>
+                        <div class="ggTitle">
+                            <c:choose>
+                                <c:when test="${fn:length(list.gongguName) gt 10}">
+                                    ${fn:substring(list.gongguName, 0, 10)}...
+                                </c:when>
+                                <c:otherwise>
+                                    ${list.gongguName}
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                        <div>
+                            <b>
+                                <fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" />
+                            </b>
+                        </div>
+                        <div>
+                            <small>동네</small>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
         </c:forEach>
-        <div class="moreBtnBox"><button type="button" class="btn moreBtn">더보기</button></div>
+    </div>
+        
+        
+        
+        <div class="moreBtnBox"><button type="button" class="moreBtn button">더보기</button></div>
 	</div>
+	
 <!-- 	<script>
 		$(function(){
 			$(".main-listSec  .list-goods").hide();

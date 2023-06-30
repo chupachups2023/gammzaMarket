@@ -15,4 +15,6 @@ public interface GongguService {
 	ArrayList<Gonggu> selectHomeList();
 
 	int selectLastNum();
+
+	int selectTotalRecored();
 }
