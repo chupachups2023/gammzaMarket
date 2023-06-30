@@ -3,6 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<% 
+	String nowPage = request.getParameter("nowPage");	
+%>
+
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="제목" name="title" />
 </jsp:include>
@@ -38,7 +42,7 @@
 	</table>
 	<table align="center">
 		<tr>
-			<td><input type="button" onclick='history.back()' value="목록"></td>
+			<td><input type="button" onclick="location.href='${pageContext.request.contextPath}/adminpage/noticeList.bo?nowPage=<%= nowPage %>'" value="목록"></td>						
 			<div>
 				<c:if test="${loginMember.userId eq 'admin'}">
 					<td><input type="button"

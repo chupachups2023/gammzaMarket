@@ -22,5 +22,7 @@ public interface NoticeService {
 
 	int updateNotice(Notice notice);
 
+	int updateCountNotice(int noticeNo);
+
 
 }
