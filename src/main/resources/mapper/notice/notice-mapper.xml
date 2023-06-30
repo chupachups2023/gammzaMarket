@@ -5,11 +5,6 @@
   
 <mapper namespace="com.gammza.chupachups.notice.model.dao.NoticeDao">
 	<resultMap type="notice" id="noticeMap"></resultMap>
-		<update id="updateCountNotice">
-		update notice
-		   set count = count + 1
-		 where notice_no = #{noticeNo}  
-	</update>
 	<select id="selectTotalRecord" resultType="_int">
 		select count(*)
 		  from notice
@@ -47,6 +42,11 @@
 		   set notice_title = #{noticeTitle},
 		   	   notice_content = #{noticeContent}
 		 where notice_no = #{noticeNo}	
+	</update>
+		<update id="updateCountNotice">
+		update notice
+		   set count = count + 1
+		 where notice_no = #{noticeNo}  
 	</update>
 </mapper>
 
