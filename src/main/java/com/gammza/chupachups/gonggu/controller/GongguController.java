@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -20,8 +21,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gammza.chupachups.common.ChangeDate;
 import com.gammza.chupachups.common.SpringUtils;
+import com.gammza.chupachups.common.model.vo.PageInfo;
+import com.gammza.chupachups.common.template.Pagination;
 import com.gammza.chupachups.gonggu.model.service.GongguService;
 import com.gammza.chupachups.gonggu.model.vo.Gonggu;
+import com.gammza.chupachups.member.model.vo.Member;
 
 @Controller
 @RequestMapping("/gonggu")
@@ -40,29 +44,40 @@ public class GongguController {
 	@GetMapping("/ggListView.go")
 	public void ggListView() {
 	}
-
-	@GetMapping("/home.go")
+	
+	@GetMapping("/homeList.go")
 	public String homeList(Model model) {
-		
-		Gonggu homeList = gongguService.selectOneHomeList();
+		ArrayList<Gonggu> homeList = gongguService.selectHomeList();
 		model.addAttribute("homeList", homeList);
 		
-		return "home";
+		int totalRecord=gongguService.selectTotalRecored();
+		
+		PageInfo pi=Pagination.getPageInfo(totalRecord, 1, 1, 8);
+		model.addAttribute("pi", pi);
+		
+		return "/home";
 	}
 	
-	 @GetMapping("/ggRead_Partic.go") 
-	 public String ggRead_Partic(int gongguNo, Model model) {
-	 
-	 Gonggu result = gongguService.selectOneGonggu(gongguNo);
-	 model.addAttribute("gonggu", result);
-	 
-	 	return "ggRead_Partic"; 
+	 @GetMapping("/ggRead.go") 
+	 public String ggRead_Partic(@RequestParam int gongguNo, Model model, HttpSession session) {
+		 Member loginMember=(Member)session.getAttribute("loginMember");
+		 Gonggu gonggu = gongguService.selectOneGonggu(gongguNo);
+		 model.addAttribute("gonggu", gonggu);
+
+		 if(loginMember != null) {	//로그인 한 사람일 경우
+			 if(gonggu.getGongguWriter().equals(loginMember.getUserId())) { //글쓴사람이면
+				 return "/gonggu/ggRead_Leader"; 
+			 }else { //글쓴사람 아니면
+				 return "/gonggu/ggRead_Partic"; 
+			 }
+		 }else {				//로그인 안한 사람
+			 return "/gonggu/ggRead_Partic"; 
+		 }
 	 }
 	 
 	@PostMapping("/ggEnrollFrm.go")
 	public String ggEnrollFrm(Gonggu gonggu, @RequestParam MultipartFile upPhoto1, @RequestParam MultipartFile upPhoto2,
 			@RequestParam MultipartFile upPhoto3, Model model,RedirectAttributes redirectAttr) {
-		System.out.println(gonggu);
 		if (gonggu.getOpenTime().equals("sysdate")) {
 			gonggu.setEndTime(ChangeDate.chageDate(gonggu.getEndTime()));
 			gonggu.setSendTime(ChangeDate.chageDate(gonggu.getSendTime()));

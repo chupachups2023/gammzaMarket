@@ -1,5 +1,7 @@
 package com.gammza.chupachups.gonggu.model.dao;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.gammza.chupachups.gonggu.model.vo.Gonggu;
@@ -11,7 +13,9 @@ public interface GongguDao {
 
 	Gonggu selectOneGonggu(int gongguNo);
 
-	Gonggu selectOneHomeList();
+	ArrayList<Gonggu> selectHomeList();
 
 	int selectLastNum();
+
+	int selectTotalRecored();
 }

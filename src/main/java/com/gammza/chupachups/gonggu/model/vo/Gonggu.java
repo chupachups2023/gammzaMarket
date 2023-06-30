@@ -30,4 +30,6 @@ public class Gonggu {
 	private String longitude;
 	private int count;
 	private int status;
+	private String updateAt;
+	private String pullupAt;
 }

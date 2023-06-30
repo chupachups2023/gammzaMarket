@@ -1,5 +1,7 @@
 package com.gammza.chupachups.gonggu.model.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,12 +25,17 @@ public class GongguServiceImpl implements GongguService {
 	}
 
 	@Override
-	public Gonggu selectOneHomeList() {
-		return gongguDao.selectOneHomeList();
+	public ArrayList<Gonggu> selectHomeList() {
+		return gongguDao.selectHomeList();
 	}
 
 	@Override
 	public int selectLastNum() {
 		return gongguDao.selectLastNum();
+	}
+
+	@Override
+	public int selectTotalRecored() {
+		return gongguDao.selectTotalRecored();
 	}
 }

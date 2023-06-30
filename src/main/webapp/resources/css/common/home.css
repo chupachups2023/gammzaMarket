@@ -25,10 +25,12 @@
 	}
 	.ggImg{
 		height:250px;
+		width:250px;
+		  margin-bottom:7px;
 	}
 	.ggImg>img {
-		width:100%;
-		height:100%;
+		height:250px;
+		width:250px;
 		border-radius: 5px;
 	}
 	.ggTitle{
@@ -51,3 +53,34 @@
         font-weight: bold;
 		
 	}
+	
+		
+	
+	.list-row {
+  display: flex; /* Display the elements in a flex container */
+  justify-content: space-between; /* Distribute the elements evenly along the row */
+  margin-bottom: 20px; /* Add some spacing between rows */
+  justify-content: flex-start;
+}
+
+.list-goods {
+  /* Add styles for each "list-goods" element */
+  width: 280px; /* Set the width to occupy 25% of the container with some spacing */
+  padding: 10px; /* Add some padding around each element */
+}
+
+.ggImg img {
+  max-width: 100%; /* Ensure the image fits within the container */
+}
+
+.ggTitle {
+  font-weight: bold; /* Make the title text bold */
+}
+
+.list-goods small {
+  color: gray; /* Style the "동네" text with gray color */
+}
+
+.gghover *,.gghover :hover{
+	cursor:pointer
+}

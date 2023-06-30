@@ -3,12 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/home.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/home.css?<%=System.currentTimeMillis() %>">
 <jsp:include page="/WEB-INF/views/common/mainHeader.jsp" >
 	<jsp:param value="main" name="title"/>
 </jsp:include>
-
-
 	<div class="mainSearchSec">
 		<h2>어떤 공구를 찾으세요?</h2>
 		<form action="">
@@ -19,70 +17,46 @@
 		</form>
 	</div>
 	
-	<div class="main-listSec">
-		<div class="list-gg" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead_Partic.go';">
-			<div class="ggImg"><img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg" alt="이미지 없음"></div>
-			<div class="ggTitle">물품이름</div>
-			<div><b>30,000원</b></div>
-			<div><small>서울시 영등포구 당산동</small></div>
-		</div>
-		<div class="list-gg">
-			<div class="ggImg"><img src="${pageContext.request.contextPath}/resources/img/testImg/verticalBig.png"></div>
-			<div class="ggTitle">물품이름</div>
-			<div><b>30,000원</b></div>
-			<div><small>서울시 영등포구 당산동</small></div>
-		</div>
-		<div class="list-gg">
-			<div class="ggImg"><img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg"></div>
-			<div class="ggTitle">물품이름</div>
-			<div><b>30,000원</b></div>
-			<div><small>서울시 영등포구 당산동</small></div>
-		</div>
-		<div class="list-gg">
-			<div class="ggImg"><img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg"></div>
-			<div class="ggTitle">물품이름</div>
-			<div><b>30,000원</b></div>
-			<div><small>서울시 영등포구 당산동</small></div>
-		</div>
-		<div class="list-gg">
-			<div class="ggImg"><img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg"></div>
-			<div class="ggTitle">물품이름</div>
-			<div><b>30,000원</b></div>
-			<div><small>서울시 영등포구 당산동</small></div>
-		</div>
-		<div class="list-gg">
-			<div class="ggImg"><img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg"></div>
-			<div class="ggTitle">물품이름</div>
-			<div><b>30,000원</b></div>
-			<div><small>서울시 영등포구 당산동</small></div>
-		</div>
-		<div class="list-gg">
-			<div class="ggImg"><img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg"></div>
-			<div class="ggTitle">물품이름</div>
-			<div><b>30,000원</b></div>
-			<div><small>서울시 영등포구 당산동</small></div>
-		</div>
-		<div class="list-gg">
-			<div class="ggImg"><img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg"></div>
-			<div class="ggTitle">물품이름</div>
-			<div><b>30,000원</b></div>
-			<div><small>서울시 영등포구 당산동</small></div>
-		</div>
-		
-        <div class="moreBtnBox"><button type="button" class="btn moreBtn">더보기</button></div>
-	</div>
-<%-- 	<div class="main-listSec">
-        <c:forEach items="${list}" var="list" varStatus="status">
-			<div class="list-goods">
-				<div class="ggImg"><img src="${pageContext.request.contextPath}/이미지파일 올리는 경로/${list.photo1}" alt="이미지 없음"></div>
-				<div class="ggTitle">${list.제목}</div>
-				<div><b>${list.가격}</b></div>
-				<div><small>${list.주소}</small></div>
-			</div>
+ 	<div class="main-listSec">
+ 	
+<div class="list-column">
+        <c:forEach begin="0" end="${fn:length(homeList)/4 }" varStatus="i">
+            <div class="list-row">
+                <c:forEach begin="${i.index*4}" end="${(i.index+1)*4 - 1}" items="${homeList}" var="list" varStatus="j">
+                    <div class="list-goods" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${list.gongguNo }'">
+                        <div class="ggImg gghover">
+                            <img src="${pageContext.request.contextPath}/resources/upload/${list.photo1}" alt="이미지 없음">
+                        </div>
+                        <div class="ggTitle gghover">
+                            <c:choose>
+                                <c:when test="${fn:length(list.gongguName) gt 10}">
+                                    ${fn:substring(list.gongguName, 0, 10)}...
+                                </c:when>
+                                <c:otherwise>
+                                    ${list.gongguName}
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                        <div class="gghover">
+                            <b>
+                                <fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" />
+                            </b>
+                        </div>
+                        <div class="gghover">
+                            <small>동네</small>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
         </c:forEach>
-        <div class="moreBtnBox"><button type="button" class="btn moreBtn">더보기</button></div>
+    </div>
+        
+        
+        
+        <div class="moreBtnBox"><button type="button" class="moreBtn button">더보기</button></div>
 	</div>
-	<script>
+	
+<!-- 	<script>
 		$(function(){
 			$(".main-listSec  .list-goods").hide();
 			$(".main-listSec  .list-goods").slice(0, 8).css({display:inline-block;}); 
@@ -94,9 +68,9 @@
 				}
 			});
 		});
-	</script>
+	</script> -->
 	
-	 --%>
+	 
 	 <a href="${pageContext.request.contextPath}/adminpage/questionList.do">문의</a>
 	 
 	 
