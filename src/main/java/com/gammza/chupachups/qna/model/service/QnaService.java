@@ -26,4 +26,6 @@ public interface QnaService {
 
 	int selectMyQnaTotalRecord(String userId);
 
+	int insertQuestion(Qna qna);
+
 }

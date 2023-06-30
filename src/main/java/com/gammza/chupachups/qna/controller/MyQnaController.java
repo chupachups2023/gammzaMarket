@@ -70,19 +70,16 @@ public class MyQnaController {
 	@GetMapping("/questionForm.do")
 	public void questionForm() {}
 	
-	@PostMapping("/updateQuestion.do")
-	public String updateQuestion(Qna qna, @RequestParam String qAnswer,  RedirectAttributes redirectAttr) {
-		Qna qnaOrigin = new Qna();
-		qnaOrigin.setQnaTitle(qna.getQnaTitle() + " (답변완료)");
-		qnaOrigin.setQnaNo(qna.getQnaNo());
+	@PostMapping("/insertQuestion.do")
+	public String insertQuestion(Qna qna, HttpSession session, RedirectAttributes redirectAttr) {
 		
-		qna.setQnaContent(qAnswer);
-		qna.setQnaWriter("admin");
-		qna.setQnaTitle("re: " + qna.getQnaTitle());
+		//category 0이 나오면 돌려보내기 만들기
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		String userId = loginMember.getUserId();
 		
-		
-		int result = qnaService.insertQAnswer(qna);
-		int result2 = qnaService.updateReplyMark(qnaOrigin);
+		qna.setQnaWriter(userId);
+
+		int result = qnaService.insertQuestion(qna);
 		//잘 되었다는 alert창 
 		if(result > 0) {
 			redirectAttr.addFlashAttribute("msg", "문의완료");

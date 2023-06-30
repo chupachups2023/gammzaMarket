@@ -64,8 +64,8 @@
 			</c:if>
 		</ul>
 	</nav>
-	<div class="replyBtnBox">
-		<button class="replyBtn" onclick="location.href='${pageContext.request.contextPath}/mypage/questionForm.do'">글쓰기</button>
+	<div class="qnaBtnBox">
+		<button class="qnaBtn" onclick="location.href='${pageContext.request.contextPath}/mypage/questionForm.do'">글쓰기</button>
 	</div>
 </div>
 

@@ -60,10 +60,10 @@
 			</table>
 			
 			 <br>
-			<div class="replyBtnBox">
-				<button class="replyBtn" id="updateQ" type="submit">수정</button>
-				<button class="replyBtn" type="button" onclick="#">삭제</button>
-				<button class="replyBtn" type="button"
+			<div class="qnaBtnBox">
+				<button class="qnaBtn" id="updateQ" type="submit">수정</button>
+				<button class="qnaBtn" type="button" onclick="#">삭제</button>
+				<button class="qnaBtn" type="button"
 					onclick="location.href='${pageContext.request.contextPath}/mypage/myQuestionList.do?nowPage=${nowPage}'">목록</button>
 			</div>
 			<input type="hidden" name="qnaNo" value="${qna.qnaNo }">
