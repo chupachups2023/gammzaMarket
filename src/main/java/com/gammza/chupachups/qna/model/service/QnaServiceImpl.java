@@ -41,8 +41,8 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 	@Override
-	public List<Qna> selectMyQuestionList(RowBounds rowBounds) {
-		return qnaDao.selectMyQuestionList(rowBounds);
+	public List<Qna> selectMyQuestionList(String userId, RowBounds rowBounds) {
+		return qnaDao.selectMyQuestionList(userId, rowBounds);
 	}
 
 	@Override
@@ -54,6 +54,11 @@ public class QnaServiceImpl implements QnaService {
 	public int updateReplyMark(Qna qnaOrigin) {
 		return qnaDao.updateReplyMark(qnaOrigin);
 		
+	}
+
+	@Override
+	public int selectMyQnaTotalRecord(String userId) {
+		return qnaDao.selectMyQnaTotalRecord(userId);
 	}
 
 }

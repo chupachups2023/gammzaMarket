@@ -15,13 +15,18 @@
 	<select id="selectMyQuestionList" resultMap="qnaMap">
 		select *
 		from qna
-		where qna_writer = #{qnaWriter} and depth = '0'
+		where qna_writer = #{userId} and depth = '0'
 		order by ref desc
 	</select>
 	<select id="selectTotalRecord" resultType="_int">
 		select count(*)
 		from qna
 		where depth = '0'
+	</select>
+	<select id="selectMyQnaTotalRecord" resultType="_int">
+		select count(*)
+		from qna
+		where qna_writer = #{userId} and depth = '0'
 	</select>
 	<select id="selectOneQna" resultMap="qnaMap">
 		select *
