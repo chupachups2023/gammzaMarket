@@ -14,17 +14,28 @@
     margin-bottom: 50px;
     margin-top: 50px;
 }
+.maypageMain-point{
+	text-decoration: underline;
+	text-underline-position: under;
+}
+.mypageTitle{
+	width:600px;
+	display:flex;
+	flex-direction:row;
+	justify-content: space-between;
+	align-items: center;
+}
 .point {
     width: 160px;
     color: rgba(0,0,0,1);
-    padding: 165px;
+    padding-right: 165px;
     font-weight: bold;
     font-size: 30px;
 }
 .point2 {
     width: 179px;
     color: rgba(0,0,0,1);
-    padding: 165px;
+    padding-left: 165px;
     font-weight: bold;
     font-size: 30px;
 }
@@ -57,3 +68,36 @@
     border-bottom-right-radius: 20px;
     overflow: hidden;
 }
+.button-long {
+    display: inline-block;
+    width: 150px;
+    height: 50px;
+    padding: 0;
+    margin: 10px 20px 10px 0;
+    text-align: center;
+    line-height: 50px;
+    border-radius: 20px;
+    transition: all 0.2s ;
+    background: #60b565b7;
+    border:solid 1px #60b565b7;
+    color:white;
+    font-weight:bold;
+  }
+  .button-long:hover {
+    background: rgb(35, 117, 84);
+    cursor:pointer;
+  }
+  .mainPage-title{
+  	padding-top:40px
+  }
+  .qna-potato{
+  	display:flex;
+  	flex-direction:column;
+  	align-items: center;
+  	position: fixed;
+  	right: 30px;
+  	top: 45%
+  }
+    .qna-potato:hover{
+    	cursor:pointer;
+    }

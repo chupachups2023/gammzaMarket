@@ -11,8 +11,8 @@
 <title>${param.title }</title>
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/header/shorcuticon.png">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/header.css?<%=System.currentTimeMillis() %>">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/login.css?<%=System.currentTimeMillis() %>">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/header.css?<%=System.currentTimeMillis() %>">
 
 <!-- DB에 저장이 잘 되었다면 alert창 띄우기 -->
 <c:if test="${not empty msg}">
@@ -106,7 +106,7 @@
 							</ul>
 							<ul class="login-bottom">
 								<li><a href="${pageContext.request.contextPath}/member/memberEnroll.me">회원가입</a></li>
-								<li><a href="#">아이디/비밀번호 찾기</a></li>
+								<li><a href="${pageContext.request.contextPath}/member/findId.me">아이디/비밀번호 찾기</a></li>
 							</ul>
 									
 							<div class="social-container">

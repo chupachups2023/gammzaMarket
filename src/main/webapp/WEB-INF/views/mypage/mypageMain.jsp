@@ -3,14 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/mainPage.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/mainPage.css?<%=System.currentTimeMillis() %>">
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="제목" name="title"/>
+	<jsp:param value="${loginMember.name }님의 마이페이지" name="title"/>
 </jsp:include>
 
-<div align="center">
-		<h1>O O O 님 안녕하세요💚</h1>
+	<div align="center" class="mainPage-title">
+		<h1>${loginMember.name} 님 안녕하세요💚</h1>
 	</div>
 	<div align="center" class="db">
 		<div class="mypageTitle">
@@ -27,12 +27,15 @@
 		</div>
 	</div>
 	<div align="center">
-		<button type="submit" href="" class="bo">참여한 공구 보기</button>&emsp;
-		<button type="submit" href="" class="bo">채팅 보기</button>&emsp;
-		<button type="submit" href="" class="bo">리뷰 보기</button><br><br><br>
-		<button type="submit" href="" class="bo">참여한 공구 보기</button>&emsp;
-		<button type="submit" href="" class="bo">참여한 공구 보기</button>&emsp;
-		<button type="submit" href="" class="bo">참여한 공구 보기</button>
+		<a href="" class="button-long">참여한 공구 보기</a>&emsp;
+		<a href="" class="button">채팅 보기</a>&emsp;
+		<a href="" class="button">리뷰 보기</a><br><br><br>
+		<a href="" class="button-long">내가 연 공구 보기</a>&emsp;
+		<a href="" class="button">찜한 공구 보기</a>&emsp;
+		<a href="" class="button">공지사항</a>
 	</div>
-
+	<div class="qna-potato" onclick="location.href='${pageContext.request.contextPath}/adminpage/questionList.do'">
+		<img src="${pageContext.request.contextPath}/resources/img/mypage/qna.png" width="120px" >
+		<div>1:1문의</div>
+	</div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

@@ -16,19 +16,19 @@
                <table>
                    <tr>
                        <th scope="col" id="add">
-                           <input name="userId" placeholder="아이디 입력" id="userId" required>
+                           <input name="userId" placeholder="아이디 입력" id="userId">
                            <span class="guide ok">아이디 사용가능</span>
                            <span class="guide error">아이디 사용불가</span>
                        </th>
                    </tr>
                    <tr>
                        <th scope="col" id="add">
-                           <input type="password" placeholder="비밀번호 입력" name="userPwd" required>
+                           <input type="password" placeholder="비밀번호 입력" name="userPwd">
                        </th>
                    </tr>
                    <tr>
                        <th scope="col" id="add">
-                           <input type="password" placeholder="비밀번호 확인" name="pwdCheck" required>
+                           <input type="password" placeholder="비밀번호 확인" name="pwdCheck">
                        </th>
                    </tr>
                </table>
@@ -38,7 +38,7 @@
                    <tr>
                        <th>
                            <input type="checkbox" class="checkbox-round" style="margin-top: 20px;"/><span>이메일 인증</span><br><br>
-                           <input name="email" placeholder="입력해주세요" required>
+                           <input name="email" placeholder="입력해주세요">
                            <button type="submit" class="header-login btn">인증</button>
                        </th>
                    </tr>
@@ -48,7 +48,7 @@
                <table>
                    <tr>
                        <td scope="col" id="add" align="center">
-                           <input name="birthday" placeholder="생년월일 입력" style="margin-top: 25px;" required>
+                           <input name="birthday" placeholder="생년월일 입력" style="margin-top: 25px;">
                        </td>
                    </tr>
                    <tr>

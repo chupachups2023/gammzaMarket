@@ -36,9 +36,16 @@
                 <div class="ggRead-slider-dot">
                 </div>
             </div>
-            <div class="ggRead-content">
-                ${gonggu.content }
-            </div>
+            <c:choose>
+            	<c:when test="${empty gonggu.content }">
+            		<div class="ggRead-content-empty"></div>
+            	</c:when>
+            	<c:otherwise>
+		            <div class="ggRead-content">
+		                ${gonggu.content }
+		            </div>
+            	</c:otherwise>
+            </c:choose>
         </div>
         <div class="ggRead-detail">
             <div class="ggRead-price">개당 <fmt:formatNumber type="number" maxFractionDigits="3" value="${gonggu.price}" /> 포인트</div>
@@ -49,7 +56,14 @@
             <fmt:parseDate value="${gonggu.endTime }" var="endTime" pattern="yyyy-MM-dd HH:mm"/>
             <div class="ggRead-endtime"><fmt:formatDate value="${endTime }" pattern="yyyy년 MM월 dd일 HH시 mm분"/>까지 기다려요</div>
             <div class="ggRead-lefttime">2일 23시간 15분 남았어요</div>
-            <div><a href="${gonggu.link}" target="_blank" class="ggRead-link">물건의 자세한 정보는 여기서 볼 수 있어요</a></div>
+            <c:choose>
+            	<c:when test="${empty gonggu.link }">
+		            <div><a class="ggRead-link-empty"> </a></div>
+            	</c:when>
+            	<c:otherwise>
+		            <div><a href='${gonggu.link}"' target="_blank" class="ggRead-link">물건의 자세한 정보는 여기서 볼 수 있어요</a></div>
+            	</c:otherwise>
+            </c:choose>
             <div class="ggRead-map">
                 <div>여기서 나눠드려요</div>
                 <img src="${pageContext.request.contextPath}/resources/upload/image.png" class="ggRead-mapp">
@@ -69,6 +83,7 @@
 	            <div class="ggRead-date">끌올 2023년 6월 20일</div>
             </c:otherwise>
         </c:choose>
+        	<div><img src="https://cdn-icons-png.flaticon.com/512/138/138533.png" alt="zzim" id="zzim"></div>
             <div><img src="https://cdn-icons-png.flaticon.com/512/2089/2089736.png" alt="share"></div>
         </div>
         <div class="ggRead-button">

@@ -3,11 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/adminpage/qna.css">
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="1:1문의 상세보기" name="title" />
 </jsp:include>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/adminpage/qna.css">
 
 <body>
 	<div id="qnaAns">
@@ -15,7 +15,7 @@
 		<br>
 		<br>
 
-		<form method="post" action="${pageContext.request.contextPath}/adminpage/QAnswerInsert.do">
+		<form method="post" action="${pageContext.request.contextPath}/mypage/myQuestionUpdate.do">
 			<table class="ansTable">
 				<thead>
 					<tr>
@@ -34,8 +34,8 @@
 					</tr>
 					<tr style="height: 250px">
 						<th>문의 내용</th>
-						<td colspan="2"><textarea style="resize: none; height: 200px; width:400px;"
-								readonly>${qna.qnaContent}</textarea></td>
+						<td colspan="2"><textarea id="myQC" style="resize: none; height: 200px; width:400px;"
+								>${qna.qnaContent}</textarea></td>
 						<td></td>
 					</tr>
 
@@ -44,7 +44,7 @@
 							<tr style="height: 250px">
 								<th>답변 내용</th>
 								<td colspan="2"><textarea name="qAnswer"
-										style="resize: none; height: 200px; width:400px;"></textarea></td>
+										style="resize: none; height: 200px; width:400px;" readonly></textarea></td>
 								<td></td>
 							</tr>
 						</c:when>
@@ -63,27 +63,22 @@
 			
 			 <br>
 			<div class="replyBtnBox">
-				<c:choose>
-					<c:when test="${empty qAns.qnaNo}">
-						<button class="replyBtn" type="submit">작성</button>
-						<button class="replyBtn" type="reset">취소</button>
-						<button class="replyBtn" type="button"
-							onclick="location.href='${pageContext.request.contextPath}/adminpage/questionList.do?nowPage=${nowPage}'">목록</button>
-					</c:when>
-					<c:otherwise>
-						<button class="replyBtn" type="button"
-							onclick="location.href='#'">수정</button>
-						<button class="replyBtn" type="button" onclick="#">삭제</button>
-						<button class="replyBtn" type="button"
-							onclick="location.href='${pageContext.request.contextPath}/adminpage/questionList.do?nowPage=${nowPage}'">목록</button>
-					</c:otherwise>
-				</c:choose>
+				<button class="replyBtn" id="updateQ" type="submit">수정</button>
+				<button class="replyBtn" type="button" onclick="#">삭제</button>
+				<button class="replyBtn" type="button"
+					onclick="location.href='${pageContext.request.contextPath}/mypage/myQuestionList.do?nowPage=${nowPage}'">목록</button>
 			</div>
+			<input type="hidden" name="qnaNo" value="${qna.qnaNo }">
 			<input type="hidden" name="nowPage" value="${nowPage }">
-			<input type="hidden" name="qnaNo" value="${qna.qnaNo}">
-			<input type="hidden" name="qnaTitle" value="${qna.qnaTitle}">
-			<input type="hidden" name="qnaCategory" value="${qna.qnaCategory}">
-			<input type="hidden" name="ref" value="${qna.ref}">
 		</form>
 	</div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
+
+<script>
+	$(document).ready(function() {
+		if(${qAns.qnaNo} == null) {
+			$("#myQC").attr("readonly", true);
+			$("#updateQ").attr("disabled", true);
+		}
+	})
+</script>
