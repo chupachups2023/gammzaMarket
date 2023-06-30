@@ -11,8 +11,8 @@
 <title>${param.title }</title>
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/img/header/shorcuticon.png">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/login.css?<%=System.currentTimeMillis() %>">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/header.css?<%=System.currentTimeMillis() %>">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/login.css?<%=System.currentTimeMillis() %>">
 
 <!-- DB에 저장이 잘 되었다면 alert창 띄우기 -->
 <c:if test="${not empty msg}">
