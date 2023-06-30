@@ -34,3 +34,4 @@ web.xml
 servlet-context.xml
 root-context.xml
 security-context.xml
+target/m2e-wtp/web-resources/META-INF/maven/com.gammza/chupachups/pom.properties
