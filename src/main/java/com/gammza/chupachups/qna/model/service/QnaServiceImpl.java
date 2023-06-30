@@ -51,8 +51,8 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 	@Override
-	public int updateReplyMark(Qna qna, String replyMark) {
-		return qnaDao.updateReplyMark(qna, replyMark);
+	public int updateReplyMark(Qna qnaOrigin) {
+		return qnaDao.updateReplyMark(qnaOrigin);
 		
 	}
 

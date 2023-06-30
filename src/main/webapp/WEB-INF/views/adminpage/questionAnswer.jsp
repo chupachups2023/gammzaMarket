@@ -11,7 +11,7 @@
 
 <body>
 	<div id="qnaAns">
-		<h1>1대1 답변</h1>
+		<h1 align="center">1대1 답변</h1>
 		<br>
 		<br>
 
@@ -19,23 +19,22 @@
 			<table class="ansTable">
 				<thead>
 					<tr>
-						<th width="100px">문의 번호</th>
-						<th width="400px">제목</th>
-						<th width="200px">작성자</th>
-						<th width="100px">날짜</th>
+						<th class="td1">문의 번호</th>
+						<th class="td2">제목</th>
+						<th class="td3">작성자</th>
+						<th class="td4">날짜</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr style="height: 40px">
-						<th width="100px">${qna.qnaNo}</th>
-						<td width="400px">${qna.qnaTitle}</td>
-						<td width="200px">${qna.qnaWriter}</td>
-						<td width="100px">${qna.createAt}</td>
+						<th class="td1">${qna.qnaNo}</th>
+						<td class="td2">${qna.qnaTitle}</td>
+						<td class="td3">${qna.qnaWriter}</td>
+						<td class="td4">${qna.createAt}</td>
 					</tr>
 					<tr style="height: 250px">
 						<th>문의 내용</th>
-						<td colspan="2"><textarea style="resize: none; height: 200px; width:400px;"
-								readonly>${qna.qnaContent}</textarea></td>
+						<td colspan="2">&emsp;<textarea class="textbox" readonly>${qna.qnaContent}</textarea></td>
 						<td></td>
 					</tr>
 
@@ -43,16 +42,14 @@
 						<c:when test="${empty qAns.qnaNo}">
 							<tr style="height: 250px">
 								<th>답변 내용</th>
-								<td colspan="2"><textarea name="qAnswer"
-										style="resize: none; height: 200px; width:400px;"></textarea></td>
+								<td colspan="2">&emsp;<textarea class="textbox" name="qAnswer" required></textarea></td>
 								<td></td>
 							</tr>
 						</c:when>
 						<c:otherwise>
 							<tr style="height: 250px">
 								<th>답변 내용</th>
-								<td colspan="2">
-									<textarea style="resize: none; height: 200px; width:400px;" readonly>${qAns.qnaContent }</textarea>
+								<td colspan="2">&emsp;<textarea class="textbox" readonly>${qAns.qnaContent }</textarea>
 								</td>
 								<td></td>
 							</tr>

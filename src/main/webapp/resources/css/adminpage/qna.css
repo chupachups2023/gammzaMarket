@@ -2,8 +2,9 @@
 
 #qnaBoard {
 	width: 1100px;
-	margin: auto;
+	margin: 50px auto;
 }
+
 
 .qTable {
 	margin: auto;
@@ -67,13 +68,14 @@ tbody {
 /* questAnswer */
 #qnaAns {
 	width: 1100px;
-	margin: auto;
+	margin: 50px auto;
 }
 
 .ansTable {
 	margin: auto;
 	border-collapse: collapse;
 	text-align: center;
+	width:900px;
 }
 
 .ansTable thead {
@@ -85,6 +87,24 @@ tbody {
 	border-bottom: 1px solid rgb(214, 214, 214);
 	font-size: 15px;
 }
+
+.td1{
+	width:15%;
+}
+.td2{
+	width:45%;	
+}
+.td3{
+	width:20%;
+}
+.td4{
+	width:10%;
+}
+.textbox{
+	 resize: none;
+	 height: 200px; width:650px;
+}
+
 
 .replyBtnBox {
 	float: right;
