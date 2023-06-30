@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggRead.css">
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/gonggu/ggRead.css">
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="제목" name="title"/>
+	<jsp:param value="제목" name="title" />
 </jsp:include>
 
 <div class="ggRead-section">
@@ -99,7 +100,58 @@
         </div>
     </div>
 </div>
-<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggRead_Partic.js"></script>
+<%-- 
+<div class="report" tabindex="-1" id="report">
+	<div class="modal-dialog">
 
+		<div class="modal-header">
+			<h5 class="modal-title">신고하기</h5>
+		</div>
+		<form action="${pageContext.request.contextPath}/report/report.do" method="post" id="reportFrm">
+			<div class="modal-login">
+				<div class="modal-bg"></div>
+				<div class="modal-content">
+					<h2>신고하기</h2>
+					<ul class="login-top">
+						<li class="login-info"><input type="text"
+							value="${gonggu.gongguWriter}"></li>
+						<li class="login-info"><textarea rows="" cols="" name=""
+								placeholder="신고내용을 적어주세요"></textarea></li>
+						<li class="report-input modal-footer"><input type="button"
+							class="report-btn" value="신고하기" id="report-modal"></li>
+					</ul>
+					<br>
+					<button type="button" id="close-modal">취소</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div> --%>
+<script
+	src="${pageContext.request.contextPath}/resources/js/gonggu/ggRead_Partic.js"></script>
+
+<!-- 신고 모달창 -->
+<script>
+const report = document.getElementById("report");
+const openReportBtn = document.getElementById("open-modal");
+const closeReportBtn = document.getElementById("close-modal");
+const reportModalBtn = document.getElementById("report-modal");
+// 모달창 열기
+openReportBtn.addEventListener("click", () => {
+	report.style.display = "block";
+	document.body.style.overflow = "hidden";
+});
+// 모달창 닫기
+closeReportBtn.addEventListener("click", () => {
+	report.style.display = "none";
+	document.body.style.overflow = "auto"; 
+});
+// 모달창 닫기
+reportModalBtn.addEventListener("click", () => {
+	report.style.display = "none";
+	document.body.style.overflow = "auto";
+	reportFrm.submit();
+});
+</script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
