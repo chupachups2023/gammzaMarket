@@ -74,7 +74,7 @@
     <div class="ggRead-btn">
         <div class="ggRead-title-right">
             <c:choose>
-        		<c:when test="${empty gonggu.pullupAt }">
+        		<c:when test="${gonggu.pullupAt eq gonggu.createAt}">
         			<fmt:parseDate value="${gonggu.createAt }" var="createAt" pattern="yyyy-MM-dd"/>
 		            <div class="ggRead-date">작성 <fmt:formatDate value="${createAt }" pattern="yyyy년 MM월 dd일"/></div>
         		</c:when>

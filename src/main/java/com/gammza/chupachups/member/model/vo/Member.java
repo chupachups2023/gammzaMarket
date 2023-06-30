@@ -30,7 +30,7 @@ public class Member {
 	private LocalDateTime updateAt;
 	private boolean status;
 	private int point;
-	private int temperature;
+	private double temperature;
 	private int kakaoIdkey;
 	private int naverIdkey;
 	private int category;

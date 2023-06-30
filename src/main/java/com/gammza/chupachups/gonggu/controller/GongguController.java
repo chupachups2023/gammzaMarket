@@ -22,6 +22,7 @@ import com.gammza.chupachups.common.ChangeDate;
 import com.gammza.chupachups.common.SpringUtils;
 import com.gammza.chupachups.gonggu.model.service.GongguService;
 import com.gammza.chupachups.gonggu.model.vo.Gonggu;
+import com.gammza.chupachups.member.model.vo.Member;
 
 @Controller
 @RequestMapping("/gonggu")
@@ -40,23 +41,28 @@ public class GongguController {
 	@GetMapping("/ggListView.go")
 	public void ggListView() {
 	}
-
-	@GetMapping("/home.go")
+	
+	@GetMapping("/homeList.go")
 	public String homeList(Model model) {
-		
-		Gonggu homeList = gongguService.selectOneHomeList();
+		System.out.println("공구들어옴");
+		ArrayList<Gonggu> homeList = gongguService.selectHomeList();
+		System.out.println("최신 공구1: "+homeList.get(0));
 		model.addAttribute("homeList", homeList);
 		
-		return "home";
+		return "/home";
 	}
 	
-	 @GetMapping("/ggRead_Partic.go") 
-	 public String ggRead_Partic(int gongguNo, Model model) {
+	 @GetMapping("/ggRead.go") 
+	 public String ggRead_Partic(@RequestParam int gongguNo, Model model) {
+		 Member loginMember=(Member)model.getAttribute("loginMember");
+		 Gonggu gonggu = gongguService.selectOneGonggu(gongguNo);
+		 model.addAttribute("gonggu", gonggu);
 	 
-	 Gonggu result = gongguService.selectOneGonggu(gongguNo);
-	 model.addAttribute("gonggu", result);
-	 
-	 	return "ggRead_Partic"; 
+		 if(gonggu.getGongguWriter().equals(loginMember.getUserId())) {
+			 return "ggRead_Leader"; 
+		 }else {
+			 return "ggRead_Partic"; 
+		 }
 	 }
 	 
 	@PostMapping("/ggEnrollFrm.go")
