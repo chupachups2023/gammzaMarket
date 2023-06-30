@@ -142,7 +142,7 @@ body{
     cursor:pointer;
   }
   
-#modal {
+/* #modal {
   position: fixed;
   z-index: 1;
   left: 0;
@@ -152,14 +152,15 @@ body{
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
   display: none;
-}
+} */
+/*
 .modal-content {
   background-color: #fefefe;
   margin: 15% auto;
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
-}
+} */
 .close {
   color: #aaa;
   float: right;
