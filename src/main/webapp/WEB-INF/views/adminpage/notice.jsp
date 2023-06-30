@@ -22,7 +22,7 @@
           <tr align="center">
             <th scope="col" >NO</th>
             <th scope="col" width="230px">제목</th>
-            <th scope="col">작성일</th>
+            <th scope="col" calspan="2">작성일</th>
           </tr>
         </thead>
         <tbody class="table-group-divider">
@@ -33,6 +33,8 @@
 				<td><a href="${pageContext.request.contextPath}/adminpage/noticeDetail.bo?noticeNo=${notice.noticeNo}">${notice.noticeTitle}</a></td>
 
 				<td>${notice.noticeCreate}</td>
+				
+				<td>${notice.count}</td>
 			</tr>
 		</c:forEach>	
         </tbody>     
