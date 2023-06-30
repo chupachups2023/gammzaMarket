@@ -26,7 +26,7 @@
 			#{latitude},
 			#{longitude},
 			default,
-			default, sysdate, null
+			default,  null,sysdate
 		)
 	</insert>
 	<select id="selectLastNum" resultType="_int">

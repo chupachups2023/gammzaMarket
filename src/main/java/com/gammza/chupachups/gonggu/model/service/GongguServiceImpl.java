@@ -26,7 +26,6 @@ public class GongguServiceImpl implements GongguService {
 
 	@Override
 	public ArrayList<Gonggu> selectHomeList() {
-		System.out.println("공구 서비스 들어옴");
 		return gongguDao.selectHomeList();
 	}
 
