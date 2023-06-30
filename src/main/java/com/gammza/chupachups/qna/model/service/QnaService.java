@@ -22,6 +22,6 @@ public interface QnaService {
 
 	int updateMyQuestion(Qna qna);
 
-	int updateReplyMark(Qna qna, String replyMark);
+	int updateReplyMark(Qna qnaOrigin);
 
 }
