@@ -37,12 +37,16 @@
 		  from notice
 		 where notice_no = #{noticeNo}
 	</select>
-
 	<update id="updateNotice">
 		update notice
 		   set notice_title = #{noticeTitle},
 		   	   notice_content = #{noticeContent}
 		 where notice_no = #{noticeNo}	
+	</update>
+		<update id="updateCountNotice">
+		update notice
+		   set count = count + 1
+		 where notice_no = #{noticeNo}  
 	</update>
 </mapper>
 

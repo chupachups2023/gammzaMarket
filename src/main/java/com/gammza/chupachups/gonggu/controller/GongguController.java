@@ -72,7 +72,6 @@ public class GongguController {
 			 }
 		 }else {				//로그인 안한 사람
 			 return "/gonggu/ggRead_Partic"; 
-
 		 }
 	 }
 	 

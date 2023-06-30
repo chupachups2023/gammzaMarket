@@ -10,31 +10,31 @@
 </jsp:include>
 
 <body>
-	<div id="qnaAns">
-		<h1>1대1 답변</h1>
+	<div id="questionForm">
+		<h1 align="center">1대1 답변</h1>
 		<br>
-		<br>
-
 		<form method="post" action="${pageContext.request.contextPath}/mypage/updateQuestion.do">
-			<table class="ansTable">
-				<thead>
-					<tr>
-						<th width="400px">제목</th>
-						<th width="200px">카테고리</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr style="height: 40px">
-						<td width="400px"><input name="qnaTitle"></td>
-						<td width="200px"><input name="qnaCategory"></td>
-					</tr>
-					<tr style="height: 250px">
-						<th>문의 내용</th>
-						<td colspan="2"><textarea name="qnaContent" style="resize: none; height: 200px; width:400px;"
-								></textarea></td>
-						<td></td>
-					</tr>
-				</tbody>
+			<table id="myQuestionT">
+				<tr class="myQtr">
+					<th class="myQtd1">문의제목</th>
+					<td class="myQtd2"><input name="qnaTitle" style="width:400px;" required></td>
+				</tr>
+				<tr class="myQtr">
+					<th class="myQtd1"> 문의 카테고리</th>
+					<td class="myQtd2">
+						<select name="qnaCategory" id="cate1" required>
+							<option selected>*선택해주세요</option>
+							<option value="1">포인트</option>
+							<option value="2">공구총대</option>
+							<option value="3">공구참여</option>
+							<option value="4">공구요청</option>
+						</select>
+					</td>
+				</tr>
+				<tr id="myQtrB">
+					<th class="myQtd1">문의 내용</th>
+					<td class="myQtd2"><textarea class="myQTextbox" required></textarea></td>
+				</tr>
 			</table>
 			
 			 <br>
@@ -42,9 +42,8 @@
 				<button class="replyBtn" type="submit">작성</button>
 				<button class="replyBtn" type="reset">취소</button>
 				<button class="replyBtn" type="button"
-					onclick="location.href='${pageContext.request.contextPath}/mypage/myQuestionList.do?nowPage=${nowPage}'">목록</button>
+					onclick="location.href='${pageContext.request.contextPath}/mypage/myQuestionList.do'">목록</button>
 			</div>
-			<input type="hidden" name="userId" value="${loginMember.userId}">
 			<input type="hidden" name="nowPage" value="${nowPage }">
 			<input type="hidden" name="nowPage" value="${nowPage }">
 			<input type="hidden" name="nowPage" value="${nowPage }">

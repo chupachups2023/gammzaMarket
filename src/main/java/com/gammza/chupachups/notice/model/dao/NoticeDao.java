@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.gammza.chupachups.notice.model.vo.Notice;
 
 
@@ -21,5 +23,7 @@ public interface NoticeDao {
 	Object selectOneNotice(int noticeNo);
 
 	int updateNotice(Notice notice);
+
+	int updateCountNotice(int noticeNo);
 
 }

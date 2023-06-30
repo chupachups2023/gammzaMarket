@@ -2,6 +2,8 @@ package com.gammza.chupachups.qna.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gammza.chupachups.common.model.vo.PageInfo;
 import com.gammza.chupachups.common.template.Pagination;
+import com.gammza.chupachups.member.model.vo.Member;
 import com.gammza.chupachups.qna.model.service.QnaService;
 import com.gammza.chupachups.qna.model.vo.Qna;
 
@@ -24,15 +27,17 @@ public class MyQnaController {
 	private QnaService qnaService;
 
 	@GetMapping("/myQuestionList.do")
-	public void myQnaList(@RequestParam(defaultValue="1") int nowPage, Model model) {
-		int totalRecord = qnaService.selectTotalRecord();
+	public void myQnaList(@RequestParam(defaultValue="1") int nowPage, Model model, HttpSession session) {
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		String userId = loginMember.getUserId();
+		int totalRecord = qnaService.selectMyQnaTotalRecord(userId);
 		int limit = 5;
 		int offset = (nowPage -1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		PageInfo pi = Pagination.getPageInfo(totalRecord, nowPage, limit, 3);
 		
-		List<Qna> myQuestionList = qnaService.selectMyQuestionList(rowBounds);
+		List<Qna> myQuestionList = qnaService.selectMyQuestionList(userId, rowBounds);
 		model.addAttribute("myQuestionList", myQuestionList);
 		model.addAttribute("pi", pi);
 	}
@@ -61,4 +66,30 @@ public class MyQnaController {
 		
 		return "redirect:/mypage/myQuestionAnswer.do?nowPage="+nowPage+"&qnaNo="+qnaNo;
 	}
+	
+	@GetMapping("/questionForm.do")
+	public void questionForm() {}
+	
+	@PostMapping("/updateQuestion.do")
+	public String updateQuestion(Qna qna, @RequestParam String qAnswer,  RedirectAttributes redirectAttr) {
+		Qna qnaOrigin = new Qna();
+		qnaOrigin.setQnaTitle(qna.getQnaTitle() + " (답변완료)");
+		qnaOrigin.setQnaNo(qna.getQnaNo());
+		
+		qna.setQnaContent(qAnswer);
+		qna.setQnaWriter("admin");
+		qna.setQnaTitle("re: " + qna.getQnaTitle());
+		
+		
+		int result = qnaService.insertQAnswer(qna);
+		int result2 = qnaService.updateReplyMark(qnaOrigin);
+		//잘 되었다는 alert창 
+		if(result > 0) {
+			redirectAttr.addFlashAttribute("msg", "문의완료");
+		}else {
+			redirectAttr.addFlashAttribute("msg", "문의실패");
+		}
+		return "redirect:/mypage/myQuestionList.do";
+	}
+	
 }

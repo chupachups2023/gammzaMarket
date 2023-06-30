@@ -52,20 +52,24 @@ public class QnaController {
 	
 	
 	@PostMapping("/QAnswerInsert.do")
-	public String QAnswerInsert(@RequestParam int qnaNo, Qna qna, @RequestParam int nowPage, @RequestParam String qAnswer,  RedirectAttributes redirectAttr) {
+	public String QAnswerInsert(Qna qna, @RequestParam int nowPage, @RequestParam String qAnswer,  RedirectAttributes redirectAttr) {
+		Qna qnaOrigin = new Qna();
+		qnaOrigin.setQnaTitle(qna.getQnaTitle() + " (답변완료)");
+		qnaOrigin.setQnaNo(qna.getQnaNo());
+		
 		qna.setQnaContent(qAnswer);
 		qna.setQnaWriter("admin");
-		String replyMark = qna.getQnaTitle() + " (답변완료)";
 		qna.setQnaTitle("re: " + qna.getQnaTitle());
 		
+		
 		int result = qnaService.insertQAnswer(qna);
-		int result2 = qnaService.updateReplyMark(qna, replyMark);
+		int result2 = qnaService.updateReplyMark(qnaOrigin);
 		//잘 되었다는 alert창 
 		if(result > 0) {
 			redirectAttr.addFlashAttribute("msg", "답변완료");
 		}else {
 			redirectAttr.addFlashAttribute("msg", "답변실패");
 		}
-		return "redirect:/adminpage/questionAnswer.do?nowPage="+nowPage+"&qnaNo="+qnaNo;
+		return "redirect:/adminpage/questionAnswer.do?nowPage="+nowPage+"&qnaNo="+qna.getQnaNo();
 	}
 }

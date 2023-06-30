@@ -10,7 +10,7 @@
 </jsp:include>
 
 <div id="qnaBoard">
-	<h1>문의 사항</h1>
+	<h1 align="center">문의 사항</h1>
 
 	<br/>	
 
