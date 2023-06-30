@@ -81,6 +81,15 @@
   color: gray; /* Style the "동네" text with gray color */
 }
 
+<<<<<<< Updated upstream
 .gghover *,.gghover :hover{
 	cursor:pointer
+=======
+.list-goods:hover{
+	cursor:porinter
+}
+
+.gghover, .gghover *:hover{
+	cursor:pointer;
+>>>>>>> Stashed changes
 }

@@ -7,6 +7,7 @@
 <html>
 <head>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=44e2b21ec219944c6d834fff124a603d&libraries=services,clusterer"></script>
 <meta charset="UTF-8">
 <title>${param.title }</title>
 <link rel="shortcut icon"
@@ -55,7 +56,7 @@
 				</div>
 				<a href="${pageContext.request.contextPath}/gonggu/ggListView.go" class="header-menu">공구보기</a> 
 				<a href="" class="header-menu">요청게시판</a> 
-				<a href="" class="header-menu">장소인증</a>
+				<a href="${pageContext.request.contextPath}/common/location.lo" class="header-menu">장소인증</a>
 				<a href="${pageContext.request.contextPath}/gonggu/ggWrite.go" class="header-menu">공구 글쓰기</a>
 			</div>
 			<form action="">
@@ -123,10 +124,15 @@
 											</a> 
 										</li>
 
-										<li class="login-naver">
-											<a href="#">
-												<img src="${pageContext.request.contextPath}/resources/img/header/icon_naver_long_resize.png." alt="네이버로그인버튼">
-											</a> 
+
+											<!-- <li class="login-kakao">
+                                        <a href="#">
+                                            <!-- <img src="kakao_login_large_ko_resize.png" alt="카카오톡아이콘"> </li> -->
+
+
+										<li class="login-naver"><a href="#"> </a>
+											<img src="${pageContext.request.contextPath}/resources/img/login/naver_icon_short.png" alt="네이버아이콘">
+
 										</li>
 									</ul>
 									<br>

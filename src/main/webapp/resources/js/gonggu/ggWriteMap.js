@@ -1,4 +1,4 @@
-	    
+
 	function success(position) {
 	    const latitude = position.coords.latitude;   // 위도(37.xxxx)
 	    const longitude = position.coords.longitude; // 경도
@@ -19,7 +19,6 @@
             		level: 3 //지도의 레벨(확대, 축소 정도);
             		
             	};
-            	console.log("들어는옴");
             	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
             	
             	//마커 초기화(초기화 시 지도에 미리 지정 가능 : 카카오맵 API 문서 참조)
@@ -39,7 +38,6 @@
             		
             		//마커 위치를 클릭한 위치로 이동
             		marker.setPosition(latlng);
-            		console.log(latlng);
             		marker.setMap(map);
             		
             	});
@@ -59,3 +57,4 @@
 	}
 	
 	getUserLocation();
+	
