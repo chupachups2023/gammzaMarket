@@ -41,9 +41,14 @@
     <select id="selectHomeList" resultMap="gongguMap">
     	select *
     		from gonggu
+    		where status=1
     	order by pullup_at desc
     </select>
-
+	<select id="selectTotalRecored" resultType="_int">
+		select count(*)
+		from gonggu
+		where status=1
+	</select>
 
 </mapper>  
 

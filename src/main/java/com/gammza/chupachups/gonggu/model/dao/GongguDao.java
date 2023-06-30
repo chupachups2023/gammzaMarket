@@ -16,4 +16,6 @@ public interface GongguDao {
 	ArrayList<Gonggu> selectHomeList();
 
 	int selectLastNum();
+
+	int selectTotalRecored();
 }
