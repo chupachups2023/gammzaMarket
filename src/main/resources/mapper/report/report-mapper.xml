@@ -5,3 +5,6 @@
   
 <mapper namespace="com.gammza.chupachups.report.model.dao.ReportDao">
 	<resultMap type="report" id="reportMap"></resultMap>
+	
+	
+</mapper>	

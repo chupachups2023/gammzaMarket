@@ -68,7 +68,6 @@
             <a href="" class="button">참여자확인</a>
         </div>
         <div>
-            <div class="ggRead-report"><a href="#">신고</a></div>
             <div class="ggRead-info">
                 <div>관심 수 <span>?</span> · </div>
                 <div>조회 수 <span>${gonggu.count }</span></div>
