@@ -78,3 +78,7 @@
 .list-goods small {
   color: gray; /* Style the "동네" text with gray color */
 }
+
+.list-goods:hover{
+	cursor:porinter
+}

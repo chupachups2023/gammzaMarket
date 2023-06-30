@@ -64,11 +64,15 @@ public class GongguController {
 		 Member loginMember=(Member)session.getAttribute("loginMember");
 		 Gonggu gonggu = gongguService.selectOneGonggu(gongguNo);
 		 model.addAttribute("gonggu", gonggu);
-	 
-		 if(gonggu.getGongguWriter().equals(loginMember.getUserId())) {
-			 return "ggRead_Leader"; 
-		 }else {
-			 return "ggRead_Partic"; 
+		 
+		 if(loginMember != null) {	//로그인 한 사람일 경우
+			 if(gonggu.getGongguWriter().equals(loginMember.getUserId())) { //글쓴사람이면
+				 return "ggRead_Leader"; 
+			 }else { //글쓴사람 아니면
+				 return "/gonggu/ggRead_Partic"; 
+			 }
+		 }else {				//로그인 안한 사람
+			 return "/gonggu/ggRead_Partic"; 
 		 }
 	 }
 	 
