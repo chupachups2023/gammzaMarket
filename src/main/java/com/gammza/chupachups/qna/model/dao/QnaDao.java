@@ -18,6 +18,12 @@ public interface QnaDao {
 
 	Qna selectOneQAns(int qnaNo);
 
-	int InsertQAnswer(Qna qna);
+	int insertQAnswer(Qna qna);
+
+	List<Qna> selectMyQuestionList(RowBounds rowBounds);
+
+	int updateMyQuestion(Qna qna);
+
+	int updateReplyMark(Qna qna, String replyMark);
 
 }

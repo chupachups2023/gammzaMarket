@@ -8,7 +8,6 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="1:1문의" name="title" />
 </jsp:include>
-
 <div id="qnaBoard">
 	<h1>문의 사항</h1>
 
@@ -24,10 +23,10 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${questionList}" var="qna" varStatus="s">
+			<c:forEach items="${myQuestionList}" var="qna" varStatus="s">
 				<tr>
 					<td width="100px">${pi.totalRecord - ((pi.nowPage-1)*pi.numPerPage)-s.index}</td>
-					<td class="Qtitle"><a href="${pageContext.request.contextPath}/adminpage/questionAnswer.do?nowPage=${pi.nowPage}&qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a></td>
+					<td class="Qtitle"><a href="${pageContext.request.contextPath}/mypage/myQuestionAnswer.do?nowPage=${pi.nowPage}&qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a></td>
 					<td width="200px">${qna.qnaWriter}</td>
 					<td width="150px">${qna.createAt}</td>
 				</tr>
@@ -40,7 +39,7 @@
 		<ul class="qnaPaging">
 			<c:if test="${pi.nowPage ne 1}">
 				<li>
-					<a href="${pageContext.request.contextPath}/adminpage/questionList.do?nowPage=${pi.nowPage-1}"
+					<a href="${pageContext.request.contextPath}/mypage/myQuestionList.do?nowPage=${pi.nowPage-1}"
 					tabindex="-1" aria-disabled="false">이전</a>
 				</li>
 			</c:if>
@@ -48,21 +47,24 @@
 				<c:choose>
 					<c:when test="${p eq pi.nowPage }">
 						<li>
-							<a href="${pageContext.request.contextPath}/adminpage/questionList.do?nowPage=${p}">${p}</a>
+							<a href="${pageContext.request.contextPath}/mypage/myQuestionList.do?nowPage=${p}">${p}</a>
 						</li>
 					</c:when>
 					<c:otherwise>
 						<li>
-							<a href="${pageContext.request.contextPath}/adminpage/questionList.do?nowPage=${p}">${p}</a>
+							<a href="${pageContext.request.contextPath}/mypage/myQuestionList.do?nowPage=${p}">${p}</a>
 						</li>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
 			<c:if test="${pi.nowPage ne pi.totalPage }">
-				<li><a href="${pageContext.request.contextPath}/adminpage/questionList.do?nowPage=${pi.nowPage+1}">다음</a></li>
+				<li><a href="${pageContext.request.contextPath}/mypage/myQuestionList.do?nowPage=${pi.nowPage+1}">다음</a></li>
 			</c:if>
 		</ul>
 	</nav>
+	<div class="replyBtnBox">
+		<button class="replyBtn" onclick="location.href='${pageContext.request.contextPath}/mypage/questionForm.do'">글쓰기</button>
+	</div>
 </div>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
