@@ -2,11 +2,8 @@ package com.gammza.chupachups.qna.controller;
 
 import java.util.List;
 
-import javax.servlet.ServletContext;
-
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,13 +18,13 @@ import com.gammza.chupachups.qna.model.service.QnaService;
 import com.gammza.chupachups.qna.model.vo.Qna;
 
 @Controller
-@RequestMapping("/adminpage")
-public class QnaController {
+@RequestMapping("/mypage")
+public class MyQnaController {
 	@Autowired
 	private QnaService qnaService;
-	
-	@GetMapping("/questionList.do")
-	public void qnaList(@RequestParam(defaultValue="1") int nowPage, Model model) {
+
+	@GetMapping("/myQuestionList.do")
+	public void myQnaList(@RequestParam(defaultValue="1") int nowPage, Model model) {
 		int totalRecord = qnaService.selectTotalRecord();
 		int limit = 5;
 		int offset = (nowPage -1) * limit;
@@ -35,13 +32,13 @@ public class QnaController {
 		
 		PageInfo pi = Pagination.getPageInfo(totalRecord, nowPage, limit, 3);
 		
-		List<Qna> questionList = qnaService.selectQuestionList(rowBounds);
-		model.addAttribute("questionList", questionList);
+		List<Qna> myQuestionList = qnaService.selectMyQuestionList(rowBounds);
+		model.addAttribute("myQuestionList", myQuestionList);
 		model.addAttribute("pi", pi);
 	}
 	
-	@GetMapping("/questionAnswer.do")
-	public void questionAnswer(@RequestParam int qnaNo, @RequestParam int nowPage, Model model) {
+	@GetMapping("/myQuestionAnswer.do")
+	public void myQuestionAnswer(@RequestParam int qnaNo, @RequestParam int nowPage, Model model) {
 		Qna qna = qnaService.selectOneQna(qnaNo);
 		Qna qAns = qnaService.selectOneQAns(qnaNo);
 		
@@ -50,22 +47,18 @@ public class QnaController {
 		model.addAttribute("nowPage", nowPage);
 	}
 	
-	
-	@PostMapping("/QAnswerInsert.do")
-	public String QAnswerInsert(@RequestParam int qnaNo, Qna qna, @RequestParam int nowPage, @RequestParam String qAnswer,  RedirectAttributes redirectAttr) {
-		qna.setQnaContent(qAnswer);
-		qna.setQnaWriter("admin");
-		String replyMark = qna.getQnaTitle() + " (ë‹µë³€ì™„ë£Œ)";
-		qna.setQnaTitle("re: " + qna.getQnaTitle());
+	@PostMapping("/myQuestionUpdate.do")
+	public String myQuestionUpdate(@RequestParam int qnaNo, Qna qna, @RequestParam int nowPage, Model model, RedirectAttributes redirectAttr) {
+		qna.setQnaContent(qna.getQnaContent());
 		
-		int result = qnaService.insertQAnswer(qna);
-		int result2 = qnaService.updateReplyMark(qna, replyMark);
-		//ìž˜ ë˜ì—ˆë‹¤ëŠ” alertì°½ 
+		int result = qnaService.updateMyQuestion(qna);
+		//Àß µÇ¾ú´Ù´Â alertÃ¢ 
 		if(result > 0) {
-			redirectAttr.addFlashAttribute("msg", "ë‹µë³€ì™„ë£Œ");
+			redirectAttr.addFlashAttribute("msg", "¼öÁ¤¿Ï·á");
 		}else {
-			redirectAttr.addFlashAttribute("msg", "ë‹µë³€ì‹¤íŒ¨");
+			redirectAttr.addFlashAttribute("msg", "¼öÁ¤½ÇÆÐ");
 		}
-		return "redirect:/adminpage/questionAnswer.do?nowPage="+nowPage+"&qnaNo="+qnaNo;
+		
+		return "redirect:/mypage/myQuestionAnswer.do?nowPage="+nowPage+"&qnaNo="+qnaNo;
 	}
 }
