@@ -22,11 +22,14 @@
 			</thead>
 			<tbody class="table-group-divider">
 				<tr>
-					<th scope="col" width="600px"><input type="text" id="noticeTitle" placeholder="${ notice.noticeTitle }"></th>
+					<th scope="col"><input type="text" id="noticeTitle" name="noticeTitle" value="${ notice.noticeTitle }" required></th>
 					<th scope="col">${ notice.noticeCreate }</th>
 				</tr>
 				<tr>
-					<td colspan="2"> <input type="text" id="noticeContent" placeholder="${ notice.noticeContent }"></td>
+					<td colspan="2"><input type="text" id="noticeWriter" name="noticeWriter" value="admin" readonly></td>
+				</tr>
+				<tr>
+					<td colspan="2"> <input type="text" id="noticeContent" name="noticeContent" value="${ notice.noticeContent }" required></td>
 				</tr>
 			</tbody>
 		</table>
