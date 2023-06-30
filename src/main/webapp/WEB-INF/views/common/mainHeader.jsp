@@ -59,7 +59,7 @@
 	            </div>
 	            <a href="${pageContext.request.contextPath}/gonggu/ggListView.go" class="header-menu">공구보기</a> 
 	            <a href="" class="header-menu">요청게시판</a>
-	            <a href="" class="header-menu">장소인증</a>
+	            <a href="${pageContext.request.contextPath}/common/location.lo" class="header-menu">장소인증</a>
 	            <a href="${pageContext.request.contextPath}/gonggu/ggWrite.go" class="header-menu">공구 글쓰기</a>
 	        </div>
 	    </div>
