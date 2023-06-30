@@ -52,7 +52,7 @@
 	                <div class="ggWrite_fileupload_out">
 					    <div class="ggWirte_upload_icon" onclick="openFileUpload('1');">
 					        <img src="https://cdn-icons-png.flaticon.com/512/1237/1237946.png" class="ggWrite_plus">
-					        <div type="button" class="ggWrite_file">
+					        <div class="ggWrite_file">
 					            <img src="" alt="" id="preview-image1" class="preview-image">
 					            <input type="file" accept=".jpg, .png, jpeg" class="hidden" id="hiddenFile1" name="upPhoto1">
 					        </div>
@@ -60,15 +60,15 @@
 					
 					    <div class="ggWirte_upload_icon" onclick="openFileUpload('2');">
 					        <img src="https://cdn-icons-png.flaticon.com/512/1237/1237946.png" class="ggWrite_plus">
-					        <div type="button" class="ggWrite_file">
-					            <input type="file" accept=".jpg, .png, jpeg" class="hidden" id="hiddenFile2" name="upPhoto2">
+					        <div class="ggWrite_file">
 					            <img src="" alt="" id="preview-image2" class="preview-image">
+					            <input type="file" accept=".jpg, .png, jpeg" class="hidden" id="hiddenFile2" name="upPhoto2">
 					        </div>
 					    </div>
 					    
 					    <div class="ggWirte_upload_icon" onclick="openFileUpload('3');">
 					        <img src="https://cdn-icons-png.flaticon.com/512/1237/1237946.png" class="ggWrite_plus">
-					        <div type="button" class="ggWrite_file">
+					        <div class="ggWrite_file">
 					            <img src="" alt="" id="preview-image3" class="preview-image">
 					            <input type="file" accept=".jpg, .png, jpeg" class="hidden" id="hiddenFile3" name="upPhoto3">
 					        </div>
