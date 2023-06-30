@@ -19,10 +19,14 @@
 </div>
 <table class="table">
 	<thead>
+		<tr>
+			<th colspan="4"><hr id="line"></th>
+		</tr>
 		<tr align="center">
 			<th scope="col">NO</th>
-			<th scope="col" width="230px">제목</th>
-			<th scope="col" calspan="2">작성일</th>
+			<th scope="col">제목</th>
+			<th scope="col">작성일</th>
+			<th scope="col">조회수</th>
 		</tr>
 	</thead>
 	<tbody class="table-group-divider">
@@ -31,8 +35,7 @@
 				<td>${notice.noticeNo}</td>
 
 				<td><a
-					href="${pageContext.request.contextPath}/adminpage/noticeDetail.bo?noticeNo=${notice.noticeNo}">${notice.noticeTitle}</a></td>
-
+					href="${pageContext.request.contextPath}/adminpage/noticeDetail.bo?noticeNo=${notice.noticeNo}&nowPage=${pi.nowPage}">${notice.noticeTitle}</a></td>
 				<td>${notice.noticeCreate}</td>
 
 				<td>${notice.count}</td>
@@ -79,5 +82,6 @@
 			작성</button>
 	</c:if>
 </div>
+<%-- <input type="hidden" name="nowPage" id="nowPage" value="${pi.nowPage }"> --%>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
