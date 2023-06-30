@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.gammza.chupachups.qna.model.dao.QnaDao">
+	<resultMap type="qna" id="qnaMap"/>
+
+	<select id="selectQuestionList" resultMap="qnaMap">
+		select *
+		from qna
+		where depth = '0'
+		order by ref desc
+	</select>
+	<select id="selectMyQuestionList" resultMap="qnaMap">
+		select *
+		from qna
+		where qna_writer = #{qnaWriter} and depth = '0'
+		order by ref desc
+	</select>
+	<select id="selectTotalRecord" resultType="_int">
+		select count(*)
+		from qna
+	</select>
+
+	<select id="selectOneQna" resultMap="qnaMap">
+		select *
+		from qna
+		where qna_no = #{qnaNo}
+	</select>
+	
+	<select id="selectOneQAns" resultMap="qnaMap">
+		select *
+		from qna
+		where ref = (select ref from qna where qna_no = #{qnaNo} ) 
+			and depth = '1'
+	</select>
+	<!-- 작성자를 로그인한 사람으로 바꾸기(로그인제한하면) -->
+	<insert id="insertQAnswer">
+		insert into qna
+			values(
+				QNA_SEQ.NEXTVAL,
+				#{qnaCategory},
+				#{qnaWriter},
+				#{qnaTitle},
+				#{qnaContent},
+				SYSDATE,
+				#{ref},
+				1
+			)
+	</insert>
+	<update id="updateReplyMark">
+		update qna
+		set qna_title = #{replyMark}
+		where qna_no = #{qnaNo} and depth = '0'
+	</update>
+	<update id="updateMyQuestion">
+		update qna
+		set qna_content = #{qnaContent}
+		where qna_no = #{qnaNo}
+	</update>
+</mapper>

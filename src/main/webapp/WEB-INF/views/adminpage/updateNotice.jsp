@@ -16,7 +16,7 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th scope="col" width="600px">제목</th>
+					<th scope="col" width="600px" align="left">제목</th>
 					<th scope="col">날짜</th>
 				</tr>
 			</thead>
@@ -35,10 +35,12 @@
 		</table>
 		<table align="center">
 			<tr>
-				<td><input type="submit"
-					 value="수정 완료"></td>
-				<td><input type="button"
-					onclick='history.back()' value="취소"></td>
+				<td>
+					<input type="submit" value="수정 완료">
+				</td>
+				<td>
+					<input type="button" onclick='history.back()' value="취소">
+				</td>
 			</tr>
 		</table>
 		<input type="hidden" name="noticeNo" value="${notice.noticeNo}">

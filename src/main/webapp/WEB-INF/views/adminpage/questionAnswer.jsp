@@ -1,58 +1,89 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="제목" name="title"/>
+	<jsp:param value="1:1문의 상세보기" name="title" />
 </jsp:include>
-<!-- 
-*제목 수정하기
-*내용 들어갈 곳
-*문의 답변
- -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-</head>
-<style>
-    * {margin: 0 10%;}
-</style>
-<body>
-<div id="title">
-  <h1>1대1 답변</h1>
-</div>
-<form action="insertAnswer">
-    <table class="table">
-        <thead>
-          <tr>
-            <th scope="col" width="100px">NO</th>
-            <th scope="col" width="400px">제목</th>
-            <th scope="col" width="200px">작성자</th>
-            <th scope="col">날짜</th>
-          </tr>
-        </thead>
-        <tbody class="table-group-divider">
-          <tr>
-            <th scope="row">1</th>
-            <td>문의문의문의문의</td>
-            <td>작성자작성자</td>
-            <td>날짜</td>
-          </tr>
-          <tr>
-            <th scope="row">문의 내용 </th>
-            <td colspan="3">문의문의문의문의문의문의문의</td><p/>
-          </tr>
-          <tr>
-            <th scope="row">답변 내용</th>
-            <td colspan="3"><textarea name="" id="" cols="65" rows="10" style="resize: none;"></textarea></td>
-          </tr>
-        </tbody>
-      </table>
-      <table align="right">
-        <tr>
-            <td><input type="submit" value="작성"></td>
-            <td><input type="button" value="취소" onclick="href='#'"></td>
-        </tr>
-      </table>
-</form>      
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/adminpage/qna.css">
 
+<body>
+	<div id="qnaAns">
+		<h1>1대1 답변</h1>
+		<br>
+		<br>
+
+		<form method="post" action="${pageContext.request.contextPath}/adminpage/QAnswerInsert.do">
+			<table class="ansTable">
+				<thead>
+					<tr>
+						<th width="100px">문의 번호</th>
+						<th width="400px">제목</th>
+						<th width="200px">작성자</th>
+						<th width="100px">날짜</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr style="height: 40px">
+						<th width="100px">${qna.qnaNo}</th>
+						<td width="400px">${qna.qnaTitle}</td>
+						<td width="200px">${qna.qnaWriter}</td>
+						<td width="100px">${qna.createAt}</td>
+					</tr>
+					<tr style="height: 250px">
+						<th>문의 내용</th>
+						<td colspan="2"><textarea style="resize: none; height: 200px; width:400px;"
+								readonly>${qna.qnaContent}</textarea></td>
+						<td></td>
+					</tr>
+
+					<c:choose>
+						<c:when test="${empty qAns.qnaNo}">
+							<tr style="height: 250px">
+								<th>답변 내용</th>
+								<td colspan="2"><textarea name="qAnswer"
+										style="resize: none; height: 200px; width:400px;"></textarea></td>
+								<td></td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<tr style="height: 250px">
+								<th>답변 내용</th>
+								<td colspan="2">
+									<textarea style="resize: none; height: 200px; width:400px;" readonly>${qAns.qnaContent }</textarea>
+								</td>
+								<td></td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
+				</tbody>
+			</table>
+			
+			 <br>
+			<div class="replyBtnBox">
+				<c:choose>
+					<c:when test="${empty qAns.qnaNo}">
+						<button class="replyBtn" type="submit">작성</button>
+						<button class="replyBtn" type="reset">취소</button>
+						<button class="replyBtn" type="button"
+							onclick="location.href='${pageContext.request.contextPath}/adminpage/questionList.do?nowPage=${nowPage}'">목록</button>
+					</c:when>
+					<c:otherwise>
+						<button class="replyBtn" type="button"
+							onclick="location.href='#'">수정</button>
+						<button class="replyBtn" type="button" onclick="#">삭제</button>
+						<button class="replyBtn" type="button"
+							onclick="location.href='${pageContext.request.contextPath}/adminpage/questionList.do?nowPage=${nowPage}'">목록</button>
+					</c:otherwise>
+				</c:choose>
+			</div>
+			<input type="hidden" name="nowPage" value="${nowPage }">
+			<input type="hidden" name="qnaNo" value="${qna.qnaNo}">
+			<input type="hidden" name="qnaTitle" value="${qna.qnaTitle}">
+			<input type="hidden" name="qnaCategory" value="${qna.qnaCategory}">
+			<input type="hidden" name="ref" value="${qna.ref}">
+		</form>
+	</div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

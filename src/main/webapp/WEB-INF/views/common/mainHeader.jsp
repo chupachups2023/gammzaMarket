@@ -12,6 +12,7 @@
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/header/shorcuticon.png">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/header.css?<%=System.currentTimeMillis() %>">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/login.css?<%=System.currentTimeMillis() %>">
 
 <!-- DB에 저장이 잘 되었다면 alert창 띄우기 -->
 <c:if test="${not empty msg}">
@@ -28,13 +29,17 @@
 	                <img src="${pageContext.request.contextPath}/resources/img/header/감자마켓.png" alt="logo" class="header-gamza"> 
 	                <img src="${pageContext.request.contextPath}/resources/img/header/한글로고2.png" alt="korlogo" class="header-korlogo">
 	            </a>
+	            
 	            <c:choose>
-	            	<c:when test="${empty login }">
-			            <button class="header-login btn" id="open-modal">로그인</button>
+	            	<c:when test="${empty loginMember}">
+			            <button type="button" class="header-login btn" id="open-modal">로그인</button>
 			            <button class="header-login btn" onclick="location.href='${pageContext.request.contextPath}/member/memberEnroll.me'">회원가입</button>
 	            	</c:when>
 	            	<c:otherwise>
-			            <img src="${pageContext.request.contextPath}/resources/img/header/login.png" alt="korlogo" class="header-login">
+			            <img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login">
+	            		<!-- 230627 -->
+		      			<a href="${pageContext.request.contextPath}/member/memberDetail.me">${loginMember.userId}님 반갑습니다.</a>&emsp; 
+		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
 	            	</c:otherwise>
 	            </c:choose>
 	        </div>
@@ -66,37 +71,58 @@
 	        </div>
 	    </div>
 	    
-	   <!-- 로그인 모달창 -->
+	   <!--로그인 모달창 수정본 -->
 		<div class="modal" tabindex="-1" id="modal">
 			<div class="modal-dialog">
-				<div class="modal-content">
-				    <div class="modal-header">
-						<h5 class="modal-title">로그인</h5>
-				    </div>
-			   		<form action="" method="post" name="loginFrm">
-				      	<div class="modal-body">
-				        	<table class="table">
-								<tr>
-									<td scope="col">아이디</td>
-									<td scope="col">
-										<input type="text" name="userId" placeholder="아이디를 입력하세요">
-									</td>
-								</tr>
-								<tr>
-									<td scope="col">비밀번호</td>
-									<td scope="col">
-										<input type="password" name="userPwd" placeholder="비밀번호를 입력하세요">
-									</td>
-								</tr>
-							</table>
-				      	</div>
-				      	<div class="modal-footer">
-					        <button type="button" id="login-modal">로그인</button>
-					        <button type="button" id="close-modal">닫기</button>
-				    	</div>
-					</form>
-			      
+				<div class="modal-header">
+					<h5 class="modal-title">로그인</h5>
 				</div>
+				<form action="${pageContext.request.contextPath}/member/memberLogin.me" method="post" id="loginFrm">
+					<div class="modal-login">
+						<div class="modal-bg"></div>
+						<div class="modal-content">
+							<h2>로그인</h2>
+							<ul class="login-top">
+								<li class="login-info">
+									<input type="text" placeholder="아이디 입력!" name="userId">
+								</li>
+								<li class="login-info">
+									<input type="password" placeholder="비밀번호 입력" name="userPwd">
+								</li>
+								<li class="login-chkbox">
+									<input type="checkbox" id="chk1">
+									<label for="chk1">아이디 저장</label>
+								</li>
+								<li class="login-input modal-footer">
+									<input type="button" class="login-btn" value="로그인" id="login-modal">
+								</li>
+							</ul>
+							<ul class="login-bottom">
+								<li><a href="${pageContext.request.contextPath}/member/memberEnroll.me">회원가입</a></li>
+								<li><a href="${pageContext.request.contextPath}/member/findId.me">아이디/비밀번호 찾기</a></li>
+							</ul>
+									
+							<div class="social-container">
+								<h3>간편 로그인</h3>
+								<div class="social-icon">
+									<ul>
+
+											<!-- <li class="login-kakao">
+                                        <a href="#">
+                                            <!-- <img src="kakao_login_large_ko_resize.png" alt="카카오톡아이콘"> </li> -->
+
+										<li class="login-naver"><a href="#"> </a>
+											<img src="${pageContext.request.contextPath}/resources/img/login/btnG_축약형.png" alt="네이버아이콘">
+										</li>
+									</ul>
+									<br>
+									<button type="button" id="close-modal">임시닫기버튼</button>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
 	    

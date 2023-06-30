@@ -11,9 +11,9 @@
 <div class="ggRead-section">
     <div class="ggRead-head">
         <div class="ggRead-title">
-            <div class="ggRead-writer ggRead-writer-none">감자감자</div>
-            <div class="ggRead-name">도브 비누 화이트 뷰티바</div>
-            <div class="ggRead-writer" onclick="">감자감자</div>
+            <div class="ggRead-writer ggRead-writer-none">${gonggu.gongguWriter }</div>
+            <div class="ggRead-name">${gonggu.gongguName }</div>
+            <div class="ggRead-writer" onclick="">${gonggu.gongguWriter }</div>
         </div>
     </div>
     <hr class="ggRead-hr">
@@ -22,27 +22,34 @@
             <div class="ggRead-slider-wrap">
                 <div class="ggRead-slider-img">
                     <div class="ggRead-slider-inner">
-                        <div class="ggRead-img-slider"><img src="${pageContext.request.contextPath}/resources/upload/sample1.jpg"></div>
-                        <div class="ggRead-img-slider"><img src="${pageContext.request.contextPath}/resources/upload/sample2.jpg"></div>
-                        <div class="ggRead-img-slider"><img src="${pageContext.request.contextPath}/resources/upload/sample3.jpg"></div>
+                    	<c:if test="${not empty gonggu.photo1 }">
+	                        <div class="ggRead-img-slider"><img src="${pageContext.request.contextPath}/resources/upload/${gonggu.photo1 }"></div>
+                    	</c:if>
+                    	<c:if test="${not empty gonggu.photo2 }">
+	                        <div class="ggRead-img-slider"><img src="${pageContext.request.contextPath}/resources/upload/${gonggu.photo2 }"></div>
+                    	</c:if>
+                    	<c:if test="${not empty gonggu.photo3 }">
+	                        <div class="ggRead-img-slider"><img src="${pageContext.request.contextPath}/resources/upload/${gonggu.photo3 }"></div>
+                    	</c:if>
                     </div>
                 </div>
                 <div class="ggRead-slider-dot">
                 </div>
             </div>
             <div class="ggRead-content">
-                같이 사서 나눠요!
+                ${gonggu.content }
             </div>
         </div>
         <div class="ggRead-detail">
-            <div class="ggRead-price">개당 1,250 포인트</div>
+            <div class="ggRead-price">개당 <fmt:formatNumber type="number" maxFractionDigits="3" value="${gonggu.price}" /> 포인트</div>
             <div class="ggRead-num">
-                <div>8개 나눠요<span>/</span></div>
-                <div class="ggRead-on"> 아직 <span>5개</span> 남았어요</div>
+                <div>${gonggu.num}개 나눠요<span>/</span></div>
+                <div class="ggRead-on"> 아직 <span>${gonggu.num - 0}개</span> 남았어요</div>
             </div>
-            <div class="ggRead-endtime">2023년 6월 10일 12시 00분까지 기다려요</div>
-            <div class="ggRead-lefttime">2일 23시간 15분 22초 남았어요</div>
-            <div><a href='https://smartstore.naver.com/ssage/products/2526266507' target="_blank" class="ggRead-link">물건의 자세한 정보는 여기서 볼 수 있어요</a></div>
+            <fmt:parseDate value="${gonggu.endTime }" var="endTime" pattern="yyyy-MM-dd HH:mm"/>
+            <div class="ggRead-endtime"><fmt:formatDate value="${endTime }" pattern="yyyy년 MM월 dd일 HH시 mm분"/>까지 기다려요</div>
+            <div class="ggRead-lefttime">2일 23시간 15분 남았어요</div>
+            <div><a href="${gonggu.link}" target="_blank" class="ggRead-link">물건의 자세한 정보는 여기서 볼 수 있어요</a></div>
             <div class="ggRead-map">
                 <div>여기서 나눠드려요</div>
                 <img src="${pageContext.request.contextPath}/resources/upload/image.png" class="ggRead-mapp">
@@ -63,8 +70,8 @@
         <div>
             <div class="ggRead-report"><a href="#">신고</a></div>
             <div class="ggRead-info">
-                <div>관심 수 <span>5</span> · </div>
-                <div>조회 수 <span>5</span></div>
+                <div>관심 수 <span>?</span> · </div>
+                <div>조회 수 <span>${gonggu.count }</span></div>
             </div>
         </div>
     </div>

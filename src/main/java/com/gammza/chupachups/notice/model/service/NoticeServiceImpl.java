@@ -29,6 +29,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public int insertNotice(Notice notice) {
+		System.out.println(notice);
 		return noticeDao.insertNotice(notice);
 
 	}
@@ -45,6 +46,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public int updateNotice(Notice notice) {
+		System.out.println(notice);
 		return noticeDao.updateNotice(notice);
 	}
 
