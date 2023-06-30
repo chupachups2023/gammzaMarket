@@ -20,14 +20,14 @@
  	<div class="main-listSec">
  	
 <div class="list-column">
-        <c:forEach begin="0" end="${fn:length(homeList)/4 - 1}" varStatus="i">
+        <c:forEach begin="0" end="${fn:length(homeList)/4 }" varStatus="i">
             <div class="list-row">
                 <c:forEach begin="${i.index*4}" end="${(i.index+1)*4 - 1}" items="${homeList}" var="list" varStatus="j">
                     <div class="list-goods" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${list.gongguNo }'">
-                        <div class="ggImg">
+                        <div class="ggImg gghover">
                             <img src="${pageContext.request.contextPath}/resources/upload/${list.photo1}" alt="이미지 없음">
                         </div>
-                        <div class="ggTitle">
+                        <div class="ggTitle gghover">
                             <c:choose>
                                 <c:when test="${fn:length(list.gongguName) gt 10}">
                                     ${fn:substring(list.gongguName, 0, 10)}...
@@ -37,12 +37,12 @@
                                 </c:otherwise>
                             </c:choose>
                         </div>
-                        <div>
+                        <div class="gghover">
                             <b>
                                 <fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" />
                             </b>
                         </div>
-                        <div>
+                        <div class="gghover">
                             <small>동네</small>
                         </div>
                     </div>

@@ -47,7 +47,6 @@ public class GongguController {
 	
 	@GetMapping("/homeList.go")
 	public String homeList(Model model) {
-		System.out.println("공구들어옴");
 		ArrayList<Gonggu> homeList = gongguService.selectHomeList();
 		model.addAttribute("homeList", homeList);
 		
@@ -64,10 +63,10 @@ public class GongguController {
 		 Member loginMember=(Member)session.getAttribute("loginMember");
 		 Gonggu gonggu = gongguService.selectOneGonggu(gongguNo);
 		 model.addAttribute("gonggu", gonggu);
-		 
+
 		 if(loginMember != null) {	//로그인 한 사람일 경우
 			 if(gonggu.getGongguWriter().equals(loginMember.getUserId())) { //글쓴사람이면
-				 return "ggRead_Leader"; 
+				 return "/gonggu/ggRead_Leader"; 
 			 }else { //글쓴사람 아니면
 				 return "/gonggu/ggRead_Partic"; 
 			 }
@@ -79,7 +78,6 @@ public class GongguController {
 	@PostMapping("/ggEnrollFrm.go")
 	public String ggEnrollFrm(Gonggu gonggu, @RequestParam MultipartFile upPhoto1, @RequestParam MultipartFile upPhoto2,
 			@RequestParam MultipartFile upPhoto3, Model model,RedirectAttributes redirectAttr) {
-		System.out.println(gonggu);
 		if (gonggu.getOpenTime().equals("sysdate")) {
 			gonggu.setEndTime(ChangeDate.chageDate(gonggu.getEndTime()));
 			gonggu.setSendTime(ChangeDate.chageDate(gonggu.getSendTime()));
