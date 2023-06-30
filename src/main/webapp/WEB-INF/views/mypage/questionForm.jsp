@@ -13,7 +13,7 @@
 	<div id="questionForm">
 		<h1 align="center">1대1 답변</h1>
 		<br>
-		<form method="post" action="${pageContext.request.contextPath}/mypage/updateQuestion.do">
+		<form method="post" action="${pageContext.request.contextPath}/mypage/insertQuestion.do">
 			<table id="myQuestionT">
 				<tr class="myQtr">
 					<th class="myQtd1">문의제목</th>
@@ -33,20 +33,17 @@
 				</tr>
 				<tr id="myQtrB">
 					<th class="myQtd1">문의 내용</th>
-					<td class="myQtd2"><textarea class="myQTextbox" required></textarea></td>
+					<td class="myQtd2"><textarea class="myQTextbox" name="qnaContent" required></textarea></td>
 				</tr>
 			</table>
 			
 			 <br>
-			<div class="replyBtnBox">
-				<button class="replyBtn" type="submit">작성</button>
-				<button class="replyBtn" type="reset">취소</button>
-				<button class="replyBtn" type="button"
+			<div class="qnaBtnBox">
+				<button class="qnaBtn" type="submit">작성</button>
+				<button class="qnaBtn" type="reset">취소</button>
+				<button class="qnaBtn" type="button"
 					onclick="location.href='${pageContext.request.contextPath}/mypage/myQuestionList.do'">목록</button>
 			</div>
-			<input type="hidden" name="nowPage" value="${nowPage }">
-			<input type="hidden" name="nowPage" value="${nowPage }">
-			<input type="hidden" name="nowPage" value="${nowPage }">
 		</form>
 	</div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

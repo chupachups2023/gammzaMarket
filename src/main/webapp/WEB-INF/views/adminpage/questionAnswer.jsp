@@ -59,19 +59,19 @@
 			</table>
 			
 			 <br>
-			<div class="replyBtnBox">
+			<div class="qnaBtnBox">
 				<c:choose>
 					<c:when test="${empty qAns.qnaNo}">
-						<button class="replyBtn" type="submit">작성</button>
-						<button class="replyBtn" type="reset">취소</button>
-						<button class="replyBtn" type="button"
+						<button class="qnaBtn" type="submit">작성</button>
+						<button class="qnaBtn" type="reset">취소</button>
+						<button class="qnaBtn" type="button"
 							onclick="location.href='${pageContext.request.contextPath}/adminpage/questionList.do?nowPage=${nowPage}'">목록</button>
 					</c:when>
 					<c:otherwise>
-						<button class="replyBtn" type="button"
+						<button class="qnaBtn" type="button"
 							onclick="location.href='#'">수정</button>
-						<button class="replyBtn" type="button" onclick="#">삭제</button>
-						<button class="replyBtn" type="button"
+						<button class="qnaBtn" type="button" onclick="#">삭제</button>
+						<button class="qnaBtn" type="button"
 							onclick="location.href='${pageContext.request.contextPath}/adminpage/questionList.do?nowPage=${nowPage}'">목록</button>
 					</c:otherwise>
 				</c:choose>

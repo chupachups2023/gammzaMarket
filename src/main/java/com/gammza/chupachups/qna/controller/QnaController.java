@@ -3,6 +3,7 @@ package com.gammza.chupachups.qna.controller;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gammza.chupachups.common.model.vo.PageInfo;
 import com.gammza.chupachups.common.template.Pagination;
+import com.gammza.chupachups.member.model.vo.Member;
 import com.gammza.chupachups.qna.model.service.QnaService;
 import com.gammza.chupachups.qna.model.vo.Qna;
 
@@ -52,13 +54,16 @@ public class QnaController {
 	
 	
 	@PostMapping("/QAnswerInsert.do")
-	public String QAnswerInsert(Qna qna, @RequestParam int nowPage, @RequestParam String qAnswer,  RedirectAttributes redirectAttr) {
+	public String QAnswerInsert(Qna qna, @RequestParam int nowPage, @RequestParam String qAnswer,  RedirectAttributes redirectAttr, HttpSession session) {
 		Qna qnaOrigin = new Qna();
 		qnaOrigin.setQnaTitle(qna.getQnaTitle() + " (답변완료)");
 		qnaOrigin.setQnaNo(qna.getQnaNo());
 		
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		String userId = loginMember.getUserId();
+		
+		qna.setQnaWriter(userId);
 		qna.setQnaContent(qAnswer);
-		qna.setQnaWriter("admin");
 		qna.setQnaTitle("re: " + qna.getQnaTitle());
 		
 		

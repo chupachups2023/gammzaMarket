@@ -106,12 +106,12 @@ tbody {
 }
 
 
-.replyBtnBox {
+.qnaBtnBox {
 	float: right;
 	margin-right: 150px;
 }
 
-.replyBtn {
+.qnaBtn {
 	width: 50px;
 	height: 30px;
 	border: 1px solid;
