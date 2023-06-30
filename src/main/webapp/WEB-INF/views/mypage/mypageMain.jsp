@@ -13,9 +13,11 @@
 		<h1>O O O 님 안녕하세요💚</h1>
 	</div>
 	<div align="center" class="db">
-		<h2>현재 보유 포인트&emsp;&emsp;_______________________&emsp;&emsp;&emsp;&emsp;
-			<button type="submit" href="" class="bo">포인트 충전하기</button>
-		</h2>
+		<div class="mypageTitle">
+			<div><h2>현재 보유 포인트</h2></div>
+			<div class="maypageMain-point"><h2>&emsp;<fmt:formatNumber type="number" maxFractionDigits="3" value="${loginMember.point}" />&emsp;</h2></div>
+			<a href="" class="button">포인트 충전하기</a>
+		</div>
 	</div>
 	<div align="center">
 		<span class="point">매너점수</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;

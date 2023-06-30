@@ -29,19 +29,26 @@
 	                <img src="${pageContext.request.contextPath}/resources/img/header/감자마켓.png" alt="logo" class="header-gamza"> 
 	                <img src="${pageContext.request.contextPath}/resources/img/header/한글로고2.png" alt="korlogo" class="header-korlogo">
 	            </a>
-	            
+            	<div>
 	            <c:choose>
 	            	<c:when test="${empty loginMember}">
 			            <button type="button" class="header-login btn" id="open-modal">로그인</button>
 			            <button class="header-login btn" onclick="location.href='${pageContext.request.contextPath}/member/memberEnroll.me'">회원가입</button>
 	            	</c:when>
-	            	<c:otherwise>
+	            	<c:when test="${loginMember eq 'admin'}">
 			            <img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login">
 	            		<!-- 230627 -->
 		      			<a href="${pageContext.request.contextPath}/member/memberDetail.me">${loginMember.userId}님 반갑습니다.</a>&emsp; 
+
 		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
-	            	</c:otherwise>
-	            </c:choose>
+					</c:when>
+					<c:otherwise>
+						<a href="${pageContext.request.contextPath}/mypage/mypageMain.me"><img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login" ></a>
+					<!-- 230627 -->
+		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
+					</c:otherwise>
+				</c:choose>
+				</div>
 	        </div>
 	    </div>
 	    <div class="header-midout">
