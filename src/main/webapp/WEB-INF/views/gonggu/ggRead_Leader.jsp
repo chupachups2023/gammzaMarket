@@ -72,16 +72,17 @@
     </div>
     <div class="ggRead-btn">
         <div class="ggRead-title-right">
-        	<c:choose>
-        		<c:when test="${empty gonggu.pullupAt }">
-        			<fmt:parseDate value="${gonggu.createAt }" var="createAt" pattern="yyyy-MM-dd"/>
-		            <div class="ggRead-date">작성 <fmt:formatDate value="${createAt }" pattern="yyyy년 MM월 dd일"/></div>
-        		</c:when>
-        		<c:otherwise>
-        			<fmt:parseDate value="${gonggu.pullupAt }" var="pullupAt" pattern="yyyy-MM-dd"/>
-		            <div class="ggRead-date">작성 <fmt:formatDate value="${pullupAt }" pattern="yyyy년 MM월 dd일"/></div>
-        		</c:otherwise>
-        	</c:choose>
+        <c:choose>
+        	<c:when test="${empty gonggu.pullupAt }">
+        		<fmt:parseDate value="${gonggu.createAt }" var="creatAt" pattern="yyyy-MM-dd"/>
+            	<div class="ggRead-date">작성 <fmt:formatDate value="${creatAt }" pattern="yyyy년 MM월 dd일"/></div>
+            </c:when>
+            <c:otherwise>
+        		<fmt:parseDate value="${gonggu.pullupAt }" var="pullupAt" pattern="yyyy-MM-dd"/>
+            	<div class="ggRead-date">작성 <fmt:formatDate value="${pullupAt }" pattern="yyyy년 MM월 dd일"/></div>
+	            <div class="ggRead-date">끌올 2023년 6월 20일</div>
+            </c:otherwise>
+        </c:choose>
         	<div><img src="https://cdn-icons-png.flaticon.com/512/138/138533.png" alt="zzim" id="zzim"></div>
             <div><img src="https://cdn-icons-png.flaticon.com/512/2089/2089736.png" alt="share"></div>
         </div>
@@ -89,6 +90,7 @@
             <a href="" class="button">글 수정</a>
             <a href="" class="button">공구삭제</a>
             <a href="" class="button">채팅하기</a>
+            <a href="" class="button">끌올하기</a>
             <a href="" class="button">참여자확인</a>
         </div>
         <div>

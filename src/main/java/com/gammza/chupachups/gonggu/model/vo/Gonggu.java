@@ -32,5 +32,4 @@ public class Gonggu {
 	private int status;
 	private String updateAt;
 	private String pullupAt;
-	
 }
