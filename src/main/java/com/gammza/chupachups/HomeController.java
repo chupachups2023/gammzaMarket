@@ -14,10 +14,10 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(/* Locale locale, Model model */) {
-		
-		return "forward:/index.jsp";
+	public String home() {
+		return "forward:gonggu/homeList.go";
 	}
 	
 }

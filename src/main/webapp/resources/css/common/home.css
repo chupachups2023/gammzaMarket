@@ -25,10 +25,11 @@
 	}
 	.ggImg{
 		height:250px;
+		width:250px;
 	}
 	.ggImg>img {
-		width:100%;
-		height:100%;
+		height:250px;
+		width:250px;
 		border-radius: 5px;
 	}
 	.ggTitle{

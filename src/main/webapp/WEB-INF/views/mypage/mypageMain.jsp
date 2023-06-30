@@ -20,10 +20,10 @@
 		</div>
 	</div>
 	<div align="center">
-		<span class="point">매너점수</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-		<span class="point2">40점 <img src="${pageContext.request.contextPath}/resources/img/mypage/빈감자 1.png" width="35px"></span>
+		<span class="point">매너온도</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+		<span class="point2">${loginMember.temperature }도 <img src="${pageContext.request.contextPath}/resources/img/mypage/빈감자 1.png" width="35px"></span>
 		<div class="bar">	
-			<div class="bar2"></div>
+			<div class="bar2" id="bar"></div>
 		</div>
 	</div>
 	<div align="center">
@@ -38,4 +38,10 @@
 		<img src="${pageContext.request.contextPath}/resources/img/mypage/qna.png" width="120px" >
 		<div>1:1문의</div>
 	</div>
+	<script>
+		$(function(){
+			var wid=700/100*${loginMember.temperature};
+			document.getElementById("bar").style.width=wid;
+		})
+	</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

@@ -1,5 +1,7 @@
 package com.gammza.chupachups.gonggu.model.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +25,9 @@ public class GongguServiceImpl implements GongguService {
 	}
 
 	@Override
-	public Gonggu selectOneHomeList() {
-		return gongguDao.selectOneHomeList();
+	public ArrayList<Gonggu> selectHomeList() {
+		System.out.println("공구 서비스 들어옴");
+		return gongguDao.selectHomeList();
 	}
 
 	@Override
