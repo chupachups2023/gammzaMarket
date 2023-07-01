@@ -97,6 +97,8 @@
             <div class="ggRead-info">
                 <div>관심 수 <span>?</span> · </div>
                 <div>조회 수 <span>${gonggu.count }</span></div>
+                <input type="hidden" value="${gonggu.longitude }" id="longitude">
+                <input type="hidden" value="${gonggu.latitude }" id="latitude">
             </div>
         </div>
     </div>
