@@ -30,4 +30,9 @@ public class GongguServiceImpl implements GongguService {
 	public Gonggu selectOneHomeList() {
 		return gongguDao.selectOneHomeList();
 	}
+
+	@Override
+	public ArrayList<Gonggu> selectggListView() {
+		return gongguDao.selectggListView();
+	}
 }
