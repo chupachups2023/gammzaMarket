@@ -1,1 +1,57 @@
-@charset "UTF-8";
+#navPage {
+	display: flex;
+	justify-content: center;
+	margin-top: 30px;
+}
+
+.page-item {
+	width: 50px;
+	height: 20px;
+	text-align: center;
+}
+
+.pagination {
+	margin-top: 20px;
+	width: 300px;
+	display: flex;
+	justify-content: center;
+}
+
+.col {
+	text-align: center;
+	border-top: groove;
+}
+
+#col-t {
+	font-size: large;
+	font-weight: bolder;
+}
+
+.table {
+	width: 100%;
+	text-align: center;
+}
+
+.bigtable {
+	height: 400px;
+	width: 60%;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	border: 1px solid black;
+}
+
+.notice {
+	width: 80%;
+	margin: 0 auto;
+}
+
+#title {
+	margin-top: 30px;
+	text-align: center;
+}
+
+button {
+	margin-top: 30px;
+}

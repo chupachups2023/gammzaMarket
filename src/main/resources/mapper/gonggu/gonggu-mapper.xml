@@ -5,9 +5,6 @@
   
 <mapper namespace="com.gammza.chupachups.gonggu.model.dao.GongguDao">
 	<resultMap type="gonggu" id="gongguMap"></resultMap>
-	<select id="selectGongguList">
-	
-	</select>
 	<insert id="insertGonggu">
 		insert into gonggu values(
 			gonggu_seq.nextval,
@@ -29,30 +26,31 @@
 			#{latitude},
 			#{longitude},
 			default,
-			default
+			default,  null,sysdate
 		)
 	</insert>
-	<select id="selectOneParti_Tb" resultMap="gongguMap">
+	<select id="selectLastNum" resultType="_int">
+		select gonggu_seq.currval from dual
+	</select>
+	<select id="selectOneGonggu" resultMap="gongguMap">
         select *
         	from gonggu
           where gonggu_no = #{gongguNo}
     </select>
     
-    <select id="selectOneHomeList" resultMap="gongguMap">
+    <select id="selectHomeList" resultMap="gongguMap">
     	select *
     		from gonggu
-<<<<<<< Updated upstream
+    		where status=1
+    	order by pullup_at desc
     </select>
 
-=======
-    		where status=1
-    	--order by pullup_at desc
-    </select>
 	<select id="selectTotalRecored" resultType="_int">
 		select count(*)
 		from gonggu
 		where status=1
 	</select>
+
 	<select id="selectggListView" resultMap="gongguMap">
 		SELECT  GONG.GONGGU_NO
 		            ,GONG.GONGGU_NAME
@@ -65,7 +63,7 @@
 		   FROM   GONGGU   GONG
 		 WHERE GONG.STATUS = 1
 	</select>
->>>>>>> Stashed changes
+
 
 </mapper>  
 

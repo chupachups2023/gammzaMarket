@@ -3,65 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/adminpage/qna.css">
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="1:1문의" name="title" />
 </jsp:include>
-<style>
 
-	#qnaBoard {
-	    width: 1100px;
-	    margin: auto;
-	}
-  	.qTable {
-	  	margin: auto;
-		width:900px;
-		border-collapse: collapse;
-		text-align:center;
-	}
-	.qTable a {
-		text-decoration:none; 
-		color:black; 
-		cursor:pointer;
-	}
-	.qTable th,tr, td{
-		text-align: center;
-		height:30px;
-	}
-	thead {
-		border-bottom: 3px solid;
-		width:100%;
-	}
-	tbody {width:100%}
-	.Qtitle {
-		width:450px;
-		text-align: left;
-	}
-	
-  #qnaWriteBtn {
-  	width: 70px;
-  	height: 30px;
-    margin-left: 90%;
-    border: none;
-    background-color: gray;
-    color: white;
-    border-radius: 5px;
-  }
-  .qnaPaging {
-	list-style-type: none;
-  }
-  .qnaPaging a{
-	text-decoration: none;
-	color: black;
-  }
-  .qnaPaging li {
-	display: inline;
-  }
-  #pagingNav {
-	text-align:center;
-  }
-</style>
 <div id="qnaBoard">
-	<h1 id="title">문의 사항</h1>
+	<h1 align="center">문의 사항</h1>
 
 	<br/>	
 
@@ -76,24 +25,12 @@
 		</thead>
 		<tbody>
 			<c:forEach items="${questionList}" var="qna" varStatus="s">
-				<c:choose>
-					<c:when test="${qna.depth eq '1'}">
-						<tr>
-							<td width="100px">${pi.totalRecord - ((pi.nowPage-1)*pi.numPerPage)-s.index}</td>
-							<td class="Qtitle">>> <a href="${pageContext.request.contextPath}/adminpage/questionAnswer.do?qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a></td>
-							<td width="200px">${qna.qnaWriter}</td>
-							<td width="150px">${qna.createAt}</td>
-						</tr>
-					</c:when>
-					<c:otherwise>
-						<tr>
-							<td width="100px">${pi.totalRecord - ((pi.nowPage-1)*pi.numPerPage)-s.index}</td>
-							<td class="Qtitle"><a href="${pageContext.request.contextPath}/adminpage/questionAnswer.do?qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a></td>
-							<td width="200px">${qna.qnaWriter}</td>
-							<td width="150px">${qna.createAt}</td>
-						</tr>
-					</c:otherwise>
-				</c:choose>
+				<tr>
+					<td width="100px">${pi.totalRecord - ((pi.nowPage-1)*pi.numPerPage)-s.index}</td>
+					<td class="Qtitle"><a href="${pageContext.request.contextPath}/adminpage/questionAnswer.do?nowPage=${pi.nowPage}&qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a></td>
+					<td width="200px">${qna.qnaWriter}</td>
+					<td width="150px">${qna.createAt}</td>
+				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
@@ -126,6 +63,6 @@
 			</c:if>
 		</ul>
 	</nav>
-
 </div>
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

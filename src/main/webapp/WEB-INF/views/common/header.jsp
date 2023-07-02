@@ -7,6 +7,7 @@
 <html>
 <head>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=44e2b21ec219944c6d834fff124a603d&libraries=services,clusterer"></script>
 <meta charset="UTF-8">
 <title>${param.title }</title>
 <link rel="shortcut icon"
@@ -29,20 +30,22 @@
 					<img src="${pageContext.request.contextPath}/resources/img/header/감자마켓.png" alt="logo" class="header-gamza"> 
 					<img src="${pageContext.request.contextPath}/resources/img/header/한글로고2.png" alt="korlogo" class="header-korlogo">
 				</a>
+				<div>
 				<c:choose>
 					<c:when test="${empty loginMember}">
 						<button class="header-login btn" id="open-modal">로그인</button>
 					</c:when>
+					<c:when test="${loginMember.userId eq admin}">
+						<a href="${pageContext.request.contextPath}/admin/adminMain.ad"><img src="https://cdn-icons-png.flaticon.com/512/5909/5909015.png" alt="adminlogo" class="header-login" ></a>
+		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
+					</c:when>
 					<c:otherwise>
-						<img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login">
+						<a href="${pageContext.request.contextPath}/mypage/mypageMain.me"><img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login" ></a>
+					<!-- 230627 -->
+		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
 					</c:otherwise>
 				</c:choose>
-				
-				<!-- 230627 -->
-				<c:if test="${not empty loginMember}">
-		      			<a href="${pageContext.request.contextPath}/member/memberDetail.me">${loginMember.userId}님 반갑습니다.</a>&emsp; 
-		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
-		      	</c:if>
+				</div>
 			</div>
 		</div>
 		<div class="header-midout">
@@ -53,7 +56,7 @@
 				</div>
 				<a href="${pageContext.request.contextPath}/gonggu/ggListView.go" class="header-menu">공구보기</a> 
 				<a href="" class="header-menu">요청게시판</a> 
-				<a href="" class="header-menu">장소인증</a>
+				<a href="${pageContext.request.contextPath}/common/location.lo" class="header-menu">장소인증</a>
 				<a href="${pageContext.request.contextPath}/gonggu/ggWrite.go" class="header-menu">공구 글쓰기</a>
 			</div>
 			<form action="">
@@ -108,13 +111,18 @@
 							</ul>
 							<ul class="login-bottom">
 								<li><a href="${pageContext.request.contextPath}/member/memberEnroll.me">회원가입</a></li>
-								<li><a href="#">아이디/비밀번호 찾기</a></li>
+								<li><a href="${pageContext.request.contextPath}/member/findId.me">아이디/비밀번호 찾기</a></li>
 							</ul>
 									
 							<div class="social-container">
 								<h3>간편 로그인</h3>
 								<div class="social-icon">
 									<ul>
+										<li class="login-kakao">
+											<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=db32886cc653e7c143ebd36f56525b61&redirect_uri=http://localhost:8095/auth/kakao/callback">
+												<img src="${pageContext.request.contextPath}/resources/img/header/icon_kakao_long.png" alt="카카오로그인버튼">
+											</a> 
+										</li>
 
 
 											<!-- <li class="login-kakao">
@@ -123,7 +131,8 @@
 
 
 										<li class="login-naver"><a href="#"> </a>
-											<img src="${pageContext.request.contextPath}/resources/img/login/btnG_축약형.png" alt="네이버아이콘">
+											<img src="${pageContext.request.contextPath}/resources/img/login/naver_icon_short.png" alt="네이버아이콘">
+
 										</li>
 									</ul>
 									<br>

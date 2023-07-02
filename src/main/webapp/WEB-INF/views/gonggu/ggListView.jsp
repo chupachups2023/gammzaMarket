@@ -28,25 +28,6 @@
 </div>
 
 
-<%-- 
-
-	<div class="GGlistSec">
-		<c:forEach items="${공구리스트}" var="공구">
-			<div class="onelineThreebox" onclick="location.href='${pageContext.request.contextPath}찜상세페이지경로?찜번호=${찜번호}';">
-				<div class="onelineThreeImg">
-					<img src="${pageContext.request.contextPath}/공구 경로/${공구.이미지이름}">
-				</div>
-				<div class=""onelineThreeTitle"">
-					<div class="ggTitle">${공구.물품이름}</div>
-					<div><b>${공구.가격}</b></div>
-					<div><small>${공구.주소}</small></div>
-				</div>
-			</div>
-		</c:forEach>
-	</div>
-
- --%>
-
 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

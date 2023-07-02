@@ -24,6 +24,7 @@ body{
     opacity: 0.35;
     margin-right: -7px;
     }
+    
 .header-head{
     display: flex;
     flex-direction: row;
@@ -121,8 +122,9 @@ body{
     font-weight: bold;
 }
 .button {
+	font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
     display: inline-block;
-    width: 120px;
+    width: 130px;
     height: 50px;
     padding: 0;
     margin: 10px 20px 10px 0;
@@ -131,12 +133,16 @@ body{
     border-radius: 20px;
     transition: all 0.2s ;
     background: #60b565b7;
+    border:solid 1px #60b565b7;
+    color:white;
+    font-weight:bold;
   }
-  .button:hover {
+  .button:hover{
     background: rgb(35, 117, 84);
+    cursor:pointer;
   }
   
-#modal {
+/* #modal {
   position: fixed;
   z-index: 1;
   left: 0;
@@ -146,14 +152,15 @@ body{
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
   display: none;
-}
+} */
+/*
 .modal-content {
   background-color: #fefefe;
   margin: 15% auto;
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
-}
+} */
 .close {
   color: #aaa;
   float: right;

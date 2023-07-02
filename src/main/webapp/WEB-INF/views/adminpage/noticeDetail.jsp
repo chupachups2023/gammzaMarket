@@ -1,61 +1,112 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<% 
+	String nowPage = request.getParameter("nowPage");	
+%>
+
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="제목" name="title"/>
+	<jsp:param value="제목" name="title" />
 </jsp:include>
 <!-- 
 *제목 수정하기
 *내용 들어갈 곳
 *관리자 공지사항 글 상세보기
  -->
+<style>
+#title {
+	margin-top: 30px;
+	text-align: center;
+}
+
+.table {
+	margin-top: 30px;
+	width: 55%;
+	margin: 0 auto;
+}
+
+.table-group-divider tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+
+.table-group-divider tr:nth-child(odd) {
+	background-color: #ffffff;
+}
+
+.table th,.table td {
+	padding: 10px;
+	text-align: center;
+}
+
+.button-container {
+	margin-top: 30px;
+	text-align: center;
+}
+
+.button-container input[type="button"] {
+	margin-right: 10px;
+	padding: 10px 20px;
+	font-size: 16px;
+	border: none;
+	border-radius: 4px;
+	background-color: #4caf50;
+	color: white;
+	cursor: pointer;
+}
+
+.button-container input[type="button"]:hover {
+	background-color: #45a049;
+}
+</style>
 </head>
+
 <body>
-<div id="title">
-  <h1 align="center">공지사항 상세보기</h1>
-</div>
+	<div id="title">
+		<h1>공지사항 상세보기</h1>
+	</div>
 
-    <table class="table">
-        <thead>
-          <tr>
-            <th scope="col" width="600px">제목</th>
-            <th scope="col">날짜</th>
-          </tr>
-        </thead>
-        <tbody class="table-group-divider">
-          <tr>
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">제목</th>
+				<th scope="col">날짜</th>
+			</tr>
+		</thead>
+		<tbody class="table-group-divider">
+			<tr>
+				<th scope="col">${ notice.noticeTitle }</th>
+				<th scope="col">${ notice.noticeCreate }</th>
+			</tr>
+			<tr>
+				<td colspan="2">${ notice.noticeContent }</td>
+			</tr>
+		</tbody>
+	</table>
 
-            <th scope="col" width="600px">${ notice.noticeTitle }</th>
-            <th scope="col">${ notice.noticeCreate }</th>
-          </tr>
-          <tr>
-            <td colspan="2">
-            	${ notice.noticeContent }
+	<div class="button-container">
+		<input type="button"
+			onclick="location.href='${pageContext.request.contextPath}/adminpage/noticeList.bo?nowPage=${nowPage}'"
+			value="목록">
+		<c:if test="${loginMember.userId eq 'admin'}">
+			<input type="button" onclick='updateNotice(${notice.noticeNo});'
+				value="수정">
+			<input type="button" onclick='deleteNotice(${notice.noticeNo});'
+				value="삭제">
+		</c:if>
+	</div>
 
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <table align="center">
-        <tr>
-            <td><input type="button" onclick='history.back()' value="목록"></td>
-            <td><input type="button" onclick='updateNotice(${notice.noticeNo});' value="수정"></td>
-			<td><input type="button" onclick='deleteNotice(${notice.noticeNo});' value="삭제"></td>
-        </tr>
-      </table>
+	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
-<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+	<script type="text/javascript">
+		function updateNotice(noticeNo) {
+			location.href = '${ pageContext.request.contextPath }/adminpage/updateNotice.do?noticeNo='
+					+ noticeNo;
+		}
 
-<script type="text/javascript">
-	function updateNotice(noticeNo) {
-		location.href = '${ pageContext.request.contextPath }/adminpage/updateNotice.do?noticeNo='+${notice.noticeNo};
-		
-	}
-	function deleteNotice(noticeNo) {
-		location.href = '${ pageContext.request.contextPath }/adminpage/deleteNotice.do?noticeNo='+${notice.noticeNo};
-
-		
-	}
-</script>
+		function deleteNotice(noticeNo) {
+			location.href = '${ pageContext.request.contextPath }/adminpage/deleteNotice.do?noticeNo='
+					+ noticeNo;
+		}
+	</script>

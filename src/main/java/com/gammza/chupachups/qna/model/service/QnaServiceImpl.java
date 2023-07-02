@@ -30,4 +30,40 @@ public class QnaServiceImpl implements QnaService {
 		return qnaDao.selectOneQna(qnaNo);
 	}
 
+	@Override
+	public Qna selectOneQAns(int qnaNo) {
+		return qnaDao.selectOneQAns(qnaNo);
+	}
+
+	@Override
+	public int insertQAnswer(Qna qna) {
+		return qnaDao.insertQAnswer(qna);
+	}
+
+	@Override
+	public List<Qna> selectMyQuestionList(String userId, RowBounds rowBounds) {
+		return qnaDao.selectMyQuestionList(userId, rowBounds);
+	}
+
+	@Override
+	public int updateMyQuestion(Qna qna) {
+		return qnaDao.updateMyQuestion(qna);
+	}
+
+	@Override
+	public int updateReplyMark(Qna qnaOrigin) {
+		return qnaDao.updateReplyMark(qnaOrigin);
+		
+	}
+
+	@Override
+	public int selectMyQnaTotalRecord(String userId) {
+		return qnaDao.selectMyQnaTotalRecord(userId);
+	}
+
+	@Override
+	public int insertQuestion(Qna qna) {
+		return qnaDao.insertQuestion(qna);
+	}
+
 }

@@ -14,4 +14,18 @@ public interface QnaService {
 
 	Qna selectOneQna(int qnaNo);
 
+	Qna selectOneQAns(int qnaNo);
+
+	int insertQAnswer(Qna qna);
+
+	List<Qna> selectMyQuestionList(String userId, RowBounds rowBounds);
+
+	int updateMyQuestion(Qna qna);
+
+	int updateReplyMark(Qna qnaOrigin);
+
+	int selectMyQnaTotalRecord(String userId);
+
+	int insertQuestion(Qna qna);
+
 }

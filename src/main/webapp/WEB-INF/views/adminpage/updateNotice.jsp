@@ -9,8 +9,6 @@
 <!-- 
 *관리자 공지사항 글 수정
  -->
-</head>
-<body>
 	<div id="title">
 		<h1 align="center">공지사항 수정</h1>
 	</div>
@@ -24,14 +22,14 @@
 			</thead>
 			<tbody class="table-group-divider">
 				<tr>
-					<th scope="col"><input type="text" id="noticeTitle" name="noticeTitle" placeholder="${ notice.noticeTitle }"></th>
+					<th scope="col"><input type="text" id="noticeTitle" name="noticeTitle" value="${ notice.noticeTitle }" required></th>
 					<th scope="col">${ notice.noticeCreate }</th>
 				</tr>
 				<tr>
 					<td colspan="2"><input type="text" id="noticeWriter" name="noticeWriter" value="admin" readonly></td>
 				</tr>
 				<tr>
-					<td colspan="2"> <input type="text" id="noticeContent" name="noticeContent" placeholder="${ notice.noticeContent }"></td>
+					<td colspan="2"> <input type="text" id="noticeContent" name="noticeContent" value="${ notice.noticeContent }" required></td>
 				</tr>
 			</tbody>
 		</table>
@@ -45,6 +43,6 @@
 				</td>
 			</tr>
 		</table>
-		<input type="hidden" name="notice.noticeNo" value="${notice.noticeNo}">
+		<input type="hidden" name="noticeNo" value="${notice.noticeNo}">
 	</form>
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />

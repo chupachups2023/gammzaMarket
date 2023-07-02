@@ -1,6 +1,8 @@
+
+	
 	document.querySelector("#openTime").addEventListener('focusout',(e)=>{
-		document.getElementById('endTime').setAttribute("value","");
-		document.getElementById('sendTime').setAttribute("value","");
+		ggEnrollFrm.endTime.value="";
+		ggEnrollFrm.sendTime.value="";
 		var openTime=ggEnrollFrm.openTime.value;
 		document.getElementById("endTime").setAttribute("min", openTime);
 	});

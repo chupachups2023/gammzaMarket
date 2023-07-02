@@ -29,22 +29,26 @@
 	                <img src="${pageContext.request.contextPath}/resources/img/header/감자마켓.png" alt="logo" class="header-gamza"> 
 	                <img src="${pageContext.request.contextPath}/resources/img/header/한글로고2.png" alt="korlogo" class="header-korlogo">
 	            </a>
-	            
+            	<div>
 	            <c:choose>
 	            	<c:when test="${empty loginMember}">
 			            <button type="button" class="header-login btn" id="open-modal">로그인</button>
 			            <button class="header-login btn" onclick="location.href='${pageContext.request.contextPath}/member/memberEnroll.me'">회원가입</button>
 	            	</c:when>
-	            	<c:otherwise>
+	            	<c:when test="${loginMember eq 'admin'}">
 			            <img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login">
-	            	</c:otherwise>
-	            </c:choose>
-	            
-	            <!-- 230627 -->
-				<c:if test="${not empty loginMember}">
+	            		<!-- 230627 -->
 		      			<a href="${pageContext.request.contextPath}/member/memberDetail.me">${loginMember.userId}님 반갑습니다.</a>&emsp; 
+
 		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
-		      	</c:if>
+					</c:when>
+					<c:otherwise>
+						<a href="${pageContext.request.contextPath}/mypage/mypageMain.me"><img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login" ></a>
+					<!-- 230627 -->
+		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
+					</c:otherwise>
+				</c:choose>
+				</div>
 	        </div>
 	    </div>
 	    <div class="header-midout">
@@ -55,7 +59,7 @@
 	            </div>
 	            <a href="${pageContext.request.contextPath}/gonggu/ggListView.go" class="header-menu">공구보기</a> 
 	            <a href="" class="header-menu">요청게시판</a>
-	            <a href="" class="header-menu">장소인증</a>
+	            <a href="${pageContext.request.contextPath}/common/location.lo" class="header-menu">장소인증</a>
 	            <a href="${pageContext.request.contextPath}/gonggu/ggWrite.go" class="header-menu">공구 글쓰기</a>
 	        </div>
 	    </div>
@@ -77,9 +81,9 @@
 	   <!--로그인 모달창 수정본 -->
 		<div class="modal" tabindex="-1" id="modal">
 			<div class="modal-dialog">
-				<div class="modal-header">
+				<!-- <div class="modal-header">
 					<h5 class="modal-title">로그인</h5>
-				</div>
+				</div> -->
 				<form action="${pageContext.request.contextPath}/member/memberLogin.me" method="post" id="loginFrm">
 					<div class="modal-login">
 						<div class="modal-bg"></div>
@@ -102,20 +106,23 @@
 							</ul>
 							<ul class="login-bottom">
 								<li><a href="${pageContext.request.contextPath}/member/memberEnroll.me">회원가입</a></li>
-								<li><a href="#">아이디/비밀번호 찾기</a></li>
+								<li><a href="${pageContext.request.contextPath}/member/findId.me">아이디/비밀번호 찾기</a></li>
 							</ul>
 									
 							<div class="social-container">
 								<h3>간편 로그인</h3>
 								<div class="social-icon">
 									<ul>
+										<li class="login-kakao">
+											<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=db32886cc653e7c143ebd36f56525b61&redirect_uri=http://localhost:8095/auth/kakao/callback">
+												<img src="${pageContext.request.contextPath}/resources/img/header/icon_kakao_long.png" alt="카카오로그인버튼">
+											</a> 
+										</li>
 
-											<!-- <li class="login-kakao">
-                                        <a href="#">
-                                            <!-- <img src="kakao_login_large_ko_resize.png" alt="카카오톡아이콘"> </li> -->
-
-										<li class="login-naver"><a href="#"> </a>
-											<img src="${pageContext.request.contextPath}/resources/img/login/btnG_축약형.png" alt="네이버아이콘">
+										<li class="login-naver">
+											<a href="#">
+												<img src="${pageContext.request.contextPath}/resources/img/header/icon_naver_long_resize.png." alt="네이버로그인버튼">
+											</a> 
 										</li>
 									</ul>
 									<br>
