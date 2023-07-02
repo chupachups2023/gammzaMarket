@@ -62,7 +62,6 @@
 			 <br>
 			<div class="qnaBtnBox">
 				<button class="qnaBtn" id="updateQ" type="submit">수정</button>
-				<button class="qnaBtn" type="button" onclick="#">삭제</button>
 				<button class="qnaBtn" type="button"
 					onclick="location.href='${pageContext.request.contextPath}/mypage/myQuestionList.do?nowPage=${nowPage}'">목록</button>
 			</div>
