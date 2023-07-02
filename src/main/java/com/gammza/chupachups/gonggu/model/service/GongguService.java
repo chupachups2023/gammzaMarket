@@ -12,9 +12,15 @@ public interface GongguService {
 
 	Gonggu selectOneGonggu(int gongguNo);
 
+
+	Gonggu selectOneHomeList();
+
 	ArrayList<Gonggu> selectHomeList();
 
 	int selectLastNum();
 
 	int selectTotalRecored();
+
+	ArrayList<Gonggu> selectggListView();
+
 }

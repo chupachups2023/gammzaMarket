@@ -38,4 +38,9 @@ public class GongguServiceImpl implements GongguService {
 	public int selectTotalRecored() {
 		return gongguDao.selectTotalRecored();
 	}
+
+	@Override
+	public ArrayList<Gonggu> selectggListView() {
+		return gongguDao.selectggListView();
+	}
 }
