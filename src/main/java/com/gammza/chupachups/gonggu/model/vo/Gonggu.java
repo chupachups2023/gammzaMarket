@@ -30,4 +30,10 @@ public class Gonggu {
 	private String longitude;
 	private int count;
 	private int status;
+<<<<<<< Updated upstream
+=======
+	private String updateAt;
+	private String pullupAt;
+	private String locationName;
+>>>>>>> Stashed changes
 }
