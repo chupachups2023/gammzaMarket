@@ -9,7 +9,7 @@
 	<jsp:param value="1:1문의" name="title" />
 </jsp:include>
 <div id="qnaBoard">
-	<h1 align="center">문의 사항</h1>
+	<h1 align="center">1:1 문의 사항</h1>
 
 	<br/>	
 
@@ -65,7 +65,7 @@
 		</ul>
 	</nav>
 	<div class="qnaBtnBox">
-		<button class="qnaBtn" onclick="location.href='${pageContext.request.contextPath}/mypage/questionForm.do'">글쓰기</button>
+		<button class="qnaBtn" onclick="location.href='${pageContext.request.contextPath}/mypage/questionForm.do'">문의하기</button>
 	</div>
 </div>
 

@@ -72,6 +72,11 @@ public class MyQnaController {
 	
 	@PostMapping("/insertQuestion.do")
 	public String insertQuestion(Qna qna, HttpSession session, RedirectAttributes redirectAttr) {
+		if(qna.getQnaCategory == 0) {
+			alert("카테고리를 골라주세요");
+			return "redirect:/";
+		}
+		
 		
 		//category 0이 나오면 돌려보내기 만들기
 		Member loginMember = (Member) session.getAttribute("loginMember");
