@@ -15,5 +15,17 @@ public interface GongguDao {
 
 	Gonggu selectOneGonggu(Gonggu gonggu);
 
+<<<<<<< Updated upstream
 	Gonggu selectOneHomeList();
+=======
+	ArrayList<Gonggu> selectHomeList();
+
+	int selectLastNum();
+
+	int selectTotalRecored();
+
+	ArrayList<Gonggu> selectggListView();
+
+	
+>>>>>>> Stashed changes
 }
