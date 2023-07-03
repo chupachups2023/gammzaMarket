@@ -6,9 +6,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=44e2b21ec219944c6d834fff124a603d&libraries=services,clusterer"></script>
-<meta charset="UTF-8">
 <title>${param.title }</title>
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/img/header/shorcuticon.png">

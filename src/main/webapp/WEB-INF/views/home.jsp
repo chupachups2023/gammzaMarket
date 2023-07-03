@@ -43,7 +43,7 @@
                             </b>
                         </div>
                         <div class="gghover">
-                            <small>동네</small>
+                            <small>${list.locationName}</small>
                         </div>
                     </div>
                 </c:forEach>

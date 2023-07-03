@@ -13,6 +13,9 @@
         		header.setRequestHeader("Authorization","KakaoAK 840539f3651afe19f12cc19a1dc9e0ab");
             },
             success:function(result){
+            	var address=result.documents[0].address.address_name;
+            	geoCoe(address);
+            	
             	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
             	var options = { //지도를 생성할 때 필요한 기본 옵션
             		center: new kakao.maps.LatLng(latitude, longitude), //지도의 중심좌표.
@@ -26,8 +29,7 @@
         		
             	document.getElementById('lon').value=longitude;
         		document.getElementById('lat').value=latitude;
-        		console.log(document.getElementById('lon'));
-
+            	
             	//카카오맵 클릭 이벤트 추가
             	kakao.maps.event.addListener(map, 'click', (mouseEvent) => {
             		//클릭한 위도, 경도 정보 불러오기
@@ -39,6 +41,22 @@
             		//마커 위치를 클릭한 위치로 이동
             		marker.setPosition(latlng);
             		marker.setMap(map);
+            		
+            		$.ajax({
+			        	type:"get",
+			        	url:"https://dapi.kakao.com/v2/local/geo/coord2address.json?x="+latlng.La+"&y="+latlng.Ma+"&input_coord=WGS84",
+			        	beforeSend: function (header) {
+			        		header.setRequestHeader("Authorization","KakaoAK 840539f3651afe19f12cc19a1dc9e0ab");
+			            },
+			            success:function(clickresult){
+			            	var clickaddress=clickresult.documents[0].address.address_name;
+				            console.log(clickaddress);
+			            	geoCoe(clickaddress);
+			            },
+			            error:function(){
+			            	console.log("실패");
+			            }
+					});
             		
             	});
             },
@@ -56,5 +74,68 @@
 	    }
 	}
 	
-	getUserLocation();
 	
+	
+	//지도 토큰 받아오기
+	var accessToken = 'none';
+	var errCnt=0;
+	getAccessToken();
+	function getAccessToken(){
+		jQuery.ajax({
+			type:'GET',
+			url: 'https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json',
+			data:{
+			consumer_key : 'd063e685682f42c998cc',
+			consumer_secret : '26cef6c7c4f64fe4bea7'
+			},
+			success:function(data){
+				errCnt = 0;																									
+				accessToken = data.result.accessToken;
+				getUserLocation();
+				
+			},
+			error:function(data) {
+			}
+		});
+	};
+	
+	function geoCoe(address){
+     	address = encodeURIComponent(address);
+     	var pagenum = '0';
+     	var resultcount = '1';
+     	$.ajax({
+     		type:'GET',
+     		url: 'https://sgisapi.kostat.go.kr/OpenAPI3/addr/geocode.json',
+     		data:{
+     			accessToken : accessToken,
+     			address : address,
+     			pagenum : pagenum,
+     			resultcount : resultcount,
+     		},
+     		success:function(data){
+     			switch (parseInt(data.errCd)){
+     					case 0:
+		     			var resultdata = data.result.resultdata[0];
+     					document.getElementById('sidoNm').value=resultdata.sido_nm
+     					document.getElementById('sggNm').value=resultdata.sgg_nm
+     					document.getElementById('admNm').value=resultdata.adm_nm
+     					document.getElementById('legNm').value=resultdata.leg_nm
+     					
+     					break;
+     					case -401:
+                         	errCnt ++;
+     						getAccessToken();
+     						console.log(errCnt);
+     						
+     						//window.location.reload()
+     					break;																					
+     					case -100:																					
+     					break;																					
+     			}
+     		},																														
+     		error:function(data) {
+     		}																														
+     	});																		
+   }
+   
+   
