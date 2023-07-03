@@ -139,42 +139,6 @@
 			</div>
 		</div>
 
-
-		<!-- 로그인 모달창 원본 -->
-
-		<%-- <div class="modal" tabindex="-1" id="modal">
-			<div class="modal-dialog">
-				<div class="modal-content">
-				    <div class="modal-header">
-						<h5 class="modal-title">로그인</h5>
-				    </div>
-			   		<form action="" method="post" name="loginFrm">
-				      	<div class="modal-body">
-				        	<table class="table">
-								<tr>
-									<td scope="col">아이디</td>
-									<td scope="col">
-										<input type="text" name="userId" placeholder="아이디를 입력하세요">
-									</td>
-								</tr>
-								<tr>
-									<td scope="col">비밀번호</td>
-									<td scope="col">
-										<input type="password" name="userPwd" placeholder="비밀번호를 입력하세요">
-									</td>
-								</tr>
-							</table>
-				      	</div>
-				      	<div class="modal-footer">
-					        <button type="button" id="login-modal">로그인</button>
-					        <button type="button" id="close-modal">닫기</button>
-				    	</div>
-					</form>
-			      
-				</div>
-			</div>
-		</div> --%>
-
 		<script>
 	        $(function(){
 	            $(".header-category").click(function(){

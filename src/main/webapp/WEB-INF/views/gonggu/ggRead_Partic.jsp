@@ -1,14 +1,61 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggRead.css?<%=System.currentTimeMillis() %> %>" type="text/css" />
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=44e2b21ec219944c6d834fff124a603d&libraries=services,clusterer"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggRead.css">
+<style>
+.modal-report {
+		display:none;
+		}
+.report-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+}
+.report-content {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-49%, -50%);
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        z-index: 10000;
+}
+
+#close-report {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: transparent;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+}
+#reportContent{
+	resize:none;
+	padding:5px;
+}
+.report-gongguName, #reportWriter{
+	border:none;
+	width:500px;
+	font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
+	font-size:16px
+}
+</style>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="제목" name="title" />
+	<jsp:param value="${gonggu.gongguName }" name="title" />
 </jsp:include>
+
 
 <div class="ggRead-section">
     <div class="ggRead-head">
@@ -92,7 +139,14 @@
             <a href="" class="button">채팅하기</a>
         </div>
         <div>
-            <div class="ggRead-report"><a href="#">신고</a></div>
+        <c:choose>
+        	<c:when test="${empty loginMember.userId}">
+        		<div class="ggRead-report"><a id="pzlogin">신고</a></div>
+        	</c:when>
+        	<c:otherwise>
+            	<div class="ggRead-report"><a id="open-report">신고</a></div>
+            </c:otherwise>
+        </c:choose>
             <div class="ggRead-info">
                 <div>관심 수 <span>5</span> · </div>
                 <div>조회 수 <span>${gonggu.count }</span></div>
@@ -102,37 +156,28 @@
         </div>
     </div>
 </div>
-<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggRead_Partic.js"></script>
 
 <!-- 신고 모달창 -->
-<%-- 
-<div class="report" tabindex="-1" id="report">
-	<div class="modal-dialog">
+<div class="modal-report" id="report" tabindex="-1">
+    <form action="${pageContext.request.contextPath}/report/insertReport.do" method="post" id="reportFrm">
 
-		<div class="modal-header">
-			<h5 class="modal-title">신고하기</h5>
-		</div>
-		<form action="${pageContext.request.contextPath}/report/report.do" method="post" id="reportFrm">
-			<div class="modal-login">
-				<div class="modal-bg"></div>
-				<div class="modal-content">
-					<h2>신고하기</h2>
-					<ul class="login-top">
-						<li class="login-info"><input type="text"
-							value="${gonggu.gongguWriter}"></li>
-						<li class="login-info"><textarea rows="" cols="" name=""
-								placeholder="신고내용을 적어주세요"></textarea></li>
-						<li class="report-input modal-footer"><input type="button"
-							class="report-btn" value="신고하기" id="report-modal"></li>
-					</ul>
-					<br>
-					<button type="button" id="close-modal">취소</button>
-				</div>
-			</div>
-		</form>
-	</div>
-</div> --%>
+        <div class="report-bg"></div>
+        <div class="report-content" id="report">
+            <h2>신고하기</h2>
+            <ul class="report-top">
+                <li class="report-info">신고글: <input type="text" class="report-gongguName report-info" value="${gonggu.gongguName}" readonly></li>
+                <li class="report-info">신고자: <input type="text" id="reportWriter" name="reportWriter" value="${loginMember.userId}"></li>
+                <li class="report-info"><span><textarea id="reportContent" rows="20px" cols="90px" name="reportContent" placeholder="신고내용을 적어주세요"></textarea></span></li>
+                <li class="report-input modal-footer"><input type="button" class="report-btn button" value="신고하기" id="report-modal"></li>
+            </ul>
+            <br>
+            <button type="button" id="close-report">취소</button>
+        </div>
+        <input type="hidden" id="gongguNo" name="gongguNo" value="${gonggu.gongguNo}" />
+    </form>
+</div>
 
+<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggRead_Partic.js"></script>
 <script>
 const longitude= document.getElementById('longitude').value;
 const latitude= document.getElementById('latitude').value;
@@ -166,16 +211,21 @@ const latitude= document.getElementById('latitude').value;
     error:function(){
     	console.log("실패");
     }
-}) 
+});
+
   
 const report = document.getElementById("report");
-const openReportBtn = document.getElementById("open-modal");
-const closeReportBtn = document.getElementById("close-modal");
+const openReportBtn = document.getElementById("open-report");
+const closeReportBtn = document.getElementById("close-report");
 const reportModalBtn = document.getElementById("report-modal");
+const pzlogin = document.getElementById("pzlogin");
+const mappppp=document.getElementById('map');
+
 // 모달창 열기
 openReportBtn.addEventListener("click", () => {
 	report.style.display = "block";
 	document.body.style.overflow = "hidden";
+	
 });
 // 모달창 닫기
 closeReportBtn.addEventListener("click", () => {
@@ -187,6 +237,10 @@ reportModalBtn.addEventListener("click", () => {
 	report.style.display = "none";
 	document.body.style.overflow = "auto";
 	reportFrm.submit();
+});
+pzlogin.addEventListener("click", () => {
+	alert("로그인 후 이용가능합니다");
+	location.href="${pageContext.request.contextPath}/";
 });
 </script>
 

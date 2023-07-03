@@ -28,7 +28,7 @@ public class MyQnaController {
 	private QnaService qnaService;
 
 	@GetMapping("/myQuestionList.do")
-	public void myQnaList(@RequestParam(defaultValue="1") int nowPage, Model model, HttpSession session, QnaCategory qnaCat) {
+	public void myQnaList(@RequestParam(defaultValue="1") int nowPage, Model model, HttpSession session) {
 		Member loginMember = (Member) session.getAttribute("loginMember");
 		String userId = loginMember.getUserId();
 		int totalRecord = qnaService.selectMyQnaTotalRecord(userId);
