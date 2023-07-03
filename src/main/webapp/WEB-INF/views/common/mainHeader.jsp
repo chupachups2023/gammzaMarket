@@ -59,7 +59,7 @@
 	            </div>
 	            <a href="${pageContext.request.contextPath}/gonggu/ggListView.go" class="header-menu">공구보기</a> 
 	            <a href="" class="header-menu">요청게시판</a>
-	            <a href="" class="header-menu">장소인증</a>
+	            <a href="${pageContext.request.contextPath}/common/location.lo" class="header-menu">장소인증</a>
 	            <a href="${pageContext.request.contextPath}/gonggu/ggWrite.go" class="header-menu">공구 글쓰기</a>
 	        </div>
 	    </div>
@@ -114,14 +114,14 @@
 								<div class="social-icon">
 									<ul>
 										<li class="login-kakao">
-											<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=db32886cc653e7c143ebd36f56525b61&redirect_uri=http://localhost:8095/auth/kakao/callback">
+											<a href="https://kauth.kakao.com/oauth/authorize?client_id=db32886cc653e7c143ebd36f56525b61&redirect_uri=http://localhost:8095/chupachups/auth/kakao/callback&response_type=code">
 												<img src="${pageContext.request.contextPath}/resources/img/header/icon_kakao_long.png" alt="카카오로그인버튼">
 											</a> 
 										</li>
 
 										<li class="login-naver">
-											<a href="#">
-												<img src="${pageContext.request.contextPath}/resources/img/header/icon_naver_long_resize.png." alt="네이버로그인버튼">
+											<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&state=test&client_id=GQGBjwaCzYQZZ_5XkE2o&state=STATE_STRING&redirect_uri=http://localhost:8095/chupachups/auth/naver/callback">
+												<img src="${pageContext.request.contextPath}/resources/img/header/icon_naver_long_resize.png" alt="네이버로그인버튼">
 											</a> 
 										</li>
 									</ul>

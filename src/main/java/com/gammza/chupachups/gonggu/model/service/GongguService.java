@@ -17,4 +17,7 @@ public interface GongguService {
 	int selectLastNum();
 
 	int selectTotalRecored();
+
+	ArrayList<Gonggu> selectggListView();
+
 }

@@ -27,4 +27,9 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.updateMember(member);
 	}
 
+	public void selectOneMember(Member kakaoMember) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

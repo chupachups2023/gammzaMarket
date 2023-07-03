@@ -9,61 +9,64 @@
 	<jsp:param value="회원가입" name="title"/>
 </jsp:include>
 
-<hr>
-   <div>
-       <form action="${pageContext.request.contextPath}/member/memberEnroll.me" method="post" name="enrollfrm">
-           <div class="container">
-               <table>
-                   <tr>
-                       <th scope="col" id="add">
+    <div class="enroll-title">
+        <h1>회원가입</h1>
+        <hr>
+    </div>
+    <div class="enroll-container">
+        <form action="${pageContext.request.contextPath}/member/memberEnroll.me" method="post" name="enrollfrm">
+            <div class="container">
+                <table class="enroll-section">
+                    <tr>
+                       <td scope="col" class="add" align="center">
                            <input name="userId" placeholder="아이디 입력" id="userId">
-                           <span class="guide ok">아이디 사용가능</span>
-                           <span class="guide error">아이디 사용불가</span>
-                       </th>
+                           <!-- <span class="guide ok">아이디 사용가능</span>
+                           <span class="guide error">아이디 사용불가</span> -->
+                       </td>
                    </tr>
                    <tr>
-                       <th scope="col" id="add">
+                       <td scope="col" class="add">
                            <input type="password" placeholder="비밀번호 입력" name="userPwd">
-                       </th>
+                       </td>
                    </tr>
                    <tr>
-                       <th scope="col" id="add">
+                       <td scope="col" class="add">
                            <input type="password" placeholder="비밀번호 확인" name="pwdCheck">
-                       </th>
+                       </td>
                    </tr>
                </table>
            </div>
            <div class="container">
                <table>
                    <tr>
-                       <th>
-                           <input type="checkbox" class="checkbox-round" style="margin-top: 20px;"/><span>이메일 인증</span><br><br>
+                       <td>
+                           <input type="checkbox" class="checkbox-round"/>이메일 인증
                            <input name="email" placeholder="입력해주세요">
                            <button type="submit" class="header-login btn">인증</button>
-                       </th>
+                       </td>
                    </tr>
                </table>
            </div>
            <div class="container">
                <table>
                    <tr>
-                       <td scope="col" id="add" align="center">
+                       <td scope="col" class="add">
                            <input name="birthday" placeholder="생년월일 입력" style="margin-top: 25px;">
                        </td>
                    </tr>
                    <tr>
-                       <td scope="col" id="add" align="center">
+                       <td scope="col" class="add">
                            <input type="detailAddress" name="address" placeholder="주소 입력">
                        </td>
                    </tr>
                </table>
            </div>
-           <div id="lo">
+           <div class="lo">
                <table>
                    <input type="checkbox" class="checkbox-square" /><span>이용약관에 동의하시겠습니까?</span>
                </table>
            </div>
-           <div id="table">
+           <div class="table1">
                <button type="submit" class="bo">회원가입</button>&emsp;
                <button type="reset" class="bo">초기화</button>
            </div>
