@@ -237,7 +237,7 @@
     text-decoration: none;
     color: black;
     font-size: 15px;
-    text-align: right;
+    text-align: right
 }
 .ggRead-link-empty:hover {
     cursor:default;
