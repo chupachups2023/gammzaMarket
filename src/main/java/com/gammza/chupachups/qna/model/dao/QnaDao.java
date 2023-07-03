@@ -30,4 +30,6 @@ public interface QnaDao {
 
 	int insertQuestion(Qna qna);
 
+	int deleteQuestion(int ref);
+
 }

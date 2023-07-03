@@ -4,17 +4,21 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.gammza.chupachups.qna.model.dao.QnaDao">
-	<resultMap type="qna" id="qnaMap"/>
-
+ 	<resultMap type="qna" id="qnaMap"/>
+	
 	<select id="selectQuestionList" resultMap="qnaMap">
 		select *
 		from qna
+		left join qna_category
+		on qna_category = qna_cat_no
 		where depth = '0'
 		order by ref desc
 	</select>
-	<select id="selectMyQuestionList" resultMap="qnaMap">
+	<select id="selectMyQuestionList" parameterType="qna" resultMap="qnaMap">
 		select *
 		from qna
+		left join qna_category
+		on qna_category = qna_cat_no
 		where qna_writer = #{userId} and depth = '0'
 		order by ref desc
 	</select>
@@ -31,12 +35,16 @@
 	<select id="selectOneQna" resultMap="qnaMap">
 		select *
 		from qna
+		left join qna_category
+		on qna_category = qna_cat_no
 		where qna_no = #{qnaNo}
 	</select>
 	
 	<select id="selectOneQAns" resultMap="qnaMap">
 		select *
 		from qna
+		left join qna_category
+		on qna_category = qna_cat_no
 		where ref = (select ref from qna where qna_no = #{qnaNo} ) 
 			and depth = '1'
 	</select>
@@ -66,6 +74,10 @@
 				0
 			)
 	</insert>
+	<delete id="deleteQuestion">
+		delete from qna
+		where ref = #{ref}
+	</delete>
 	<update id="updateReplyMark">
 		update qna
 		set qna_title = #{qnaTitle}
@@ -73,7 +85,7 @@
 	</update>
 	<update id="updateMyQuestion">
 		update qna
-		set qna_content = #{qnaContent}
+		set qna_content = #{qnaContent}, qna_title = #{qnaTitle}
 		where qna_no = #{qnaNo}
 	</update>
 </mapper>

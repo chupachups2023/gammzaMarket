@@ -34,7 +34,7 @@
 		<a href="" class="button">찜한 공구 보기</a>&emsp;
 		<a href="" class="button">공지사항</a>
 	</div>
-	<div class="qna-potato" onclick="location.href='${pageContext.request.contextPath}/adminpage/questionList.do'">
+	<div class="qna-potato" onclick="location.href='${pageContext.request.contextPath}/mypage/myQuestionList.do'">
 		<img src="${pageContext.request.contextPath}/resources/img/mypage/qna.png" width="120px" >
 		<div>1:1문의</div>
 	</div>

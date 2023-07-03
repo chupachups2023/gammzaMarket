@@ -13,7 +13,7 @@
 	<div id="questionForm">
 		<h1 align="center">1대1 답변</h1>
 		<br>
-		<form method="post" action="${pageContext.request.contextPath}/mypage/insertQuestion.do">
+		<form name="questionFrm" method="post" action="${pageContext.request.contextPath}/mypage/insertQuestion.do">
 			<table id="myQuestionT">
 				<tr class="myQtr">
 					<th class="myQtd1">문의제목</th>
@@ -39,7 +39,7 @@
 			
 			 <br>
 			<div class="qnaBtnBox">
-				<button class="qnaBtn" type="submit">작성</button>
+				<button class="qnaBtn" type="submit" onclick="checkCate();">작성</button>
 				<button class="qnaBtn" type="reset">취소</button>
 				<button class="qnaBtn" type="button"
 					onclick="location.href='${pageContext.request.contextPath}/mypage/myQuestionList.do'">목록</button>
@@ -47,3 +47,11 @@
 		</form>
 	</div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
+<script>
+	function checkCate(){
+		if(questionFrm.qnaCategory.value == "0"){
+			alert("카테고리를 지정해주세요");
+			event.preventDefault();
+		}
+	}
+</script>

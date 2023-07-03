@@ -28,7 +28,7 @@
 				<tbody>
 					<tr style="height: 40px">
 						<th class="td1">${qna.qnaNo}</th>
-						<td class="td2">${qna.qnaTitle}</td>
+						<td class="td2">[${qna.qnaCatName}] ${qna.qnaTitle}</td>
 						<td class="td3">${qna.qnaWriter}</td>
 						<td class="td4">${qna.createAt}</td>
 					</tr>
@@ -63,14 +63,13 @@
 				<c:choose>
 					<c:when test="${empty qAns.qnaNo}">
 						<button class="qnaBtn" type="submit">작성</button>
-						<button class="qnaBtn" type="reset">취소</button>
+						<button class="qnaBtn" type="button" onclick="location.href='${pageContext.request.contextPath}/adminpage/deleteQuestion.do?ref=${qna.ref}'">삭제</button>
 						<button class="qnaBtn" type="button"
 							onclick="location.href='${pageContext.request.contextPath}/adminpage/questionList.do?nowPage=${nowPage}'">목록</button>
 					</c:when>
 					<c:otherwise>
-						<button class="qnaBtn" type="button"
-							onclick="location.href='#'">수정</button>
-						<button class="qnaBtn" type="button" onclick="#">삭제</button>
+						<button class="qnaBtn" type="button" style="width:150px;" disabled>답변된 문의입니다</button>
+						<button class="qnaBtn" type="button" onclick="location.href='${pageContext.request.contextPath}/adminpage/deleteQuestion.do?ref=${qna.ref}'">삭제</button>
 						<button class="qnaBtn" type="button"
 							onclick="location.href='${pageContext.request.contextPath}/adminpage/questionList.do?nowPage=${nowPage}'">목록</button>
 					</c:otherwise>
@@ -78,8 +77,6 @@
 			</div>
 			<input type="hidden" name="nowPage" value="${nowPage }">
 			<input type="hidden" name="qnaNo" value="${qna.qnaNo}">
-			<input type="hidden" name="qnaTitle" value="${qna.qnaTitle}">
-			<input type="hidden" name="qnaCategory" value="${qna.qnaCategory}">
 			<input type="hidden" name="ref" value="${qna.ref}">
 		</form>
 	</div>

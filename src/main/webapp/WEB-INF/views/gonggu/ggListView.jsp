@@ -12,7 +12,7 @@
     <a href="" class="GGlist-a">최신순</a>&emsp;<a href="" class="GGlist-a">마감 임박순</a>
 		<div class="likeList">
         	<c:forEach items="${ggListView}" var="list" varStatus="j">
-				<div class="onelineThreebox" onclick="location.href='#';">
+				<div class="onelineThreebox" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${list.gongguNo }'">
 					<div class="onelineThreeImg">
 						<img src="${pageContext.request.contextPath}/resources/upload/${list.photo1}" alt="이미지 없음">
 					</div>
