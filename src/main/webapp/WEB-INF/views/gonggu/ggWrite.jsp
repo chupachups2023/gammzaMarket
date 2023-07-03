@@ -5,6 +5,10 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=44e2b21ec219944c6d834fff124a603d&libraries=services,clusterer"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggWrite.css?<%=System.currentTimeMillis()  %>">
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>	
+<!-- <script type="text/javascript">
+	
+</script> -->
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="공구 글 작성하기" name="title"/>
@@ -37,7 +41,7 @@
             </div>
             <div>
                 <div class="write-price">
-                    <span>개당</span><input type="number" name="price" id="">￦
+                    <span>개당</span><input type="number" name="price" id="">P
                 </div>
                 <div class="ggWrite-mid-flex">
                 <div>
@@ -112,12 +116,19 @@
             </div>
             <input type="hidden" name="latitude" id="lat">
             <input type="hidden" name="longitude" id="lon">
+            <input type="hidden" name="sidoNm" id="sidoNm">
+            <input type="hidden" name="sggNm" id="sggNm">
+            <input type="hidden" name="admNm" id="admNm">
+            <input type="hidden" name="legNm" id="legNm">
             <input type="hidden" name="gongguWriter" value="${loginMember.userId }">
             <div class="ggStart-btn"><input type="button" value="공구 시작" onclick="ggEnrollFrmSubmit();"></div>
         </form>
     </div>
-	<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggWriteMap.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggWriteMap.js?<%=System.currentTimeMillis() %>"></script>
 <script>
+
+
+	
 	var now_utc = Date.now();
 	var timeOff = new Date().getTimezoneOffset()*60000;
 	var today = new Date(now_utc-timeOff).toISOString().substring(0, 16);
@@ -151,6 +162,8 @@
 	        readImage(e.target)
 	    });
 	}
+	
+	
 </script>
 
 

@@ -25,6 +25,9 @@ import com.gammza.chupachups.common.model.vo.PageInfo;
 import com.gammza.chupachups.common.template.Pagination;
 import com.gammza.chupachups.gonggu.model.service.GongguService;
 import com.gammza.chupachups.gonggu.model.vo.Gonggu;
+import com.gammza.chupachups.location.controller.LocationController;
+import com.gammza.chupachups.location.model.service.LocationService;
+import com.gammza.chupachups.location.model.vo.Location;
 import com.gammza.chupachups.member.model.vo.Member;
 
 @Controller
@@ -36,6 +39,10 @@ public class GongguController {
 	private ServletContext application;
 	@Autowired
 	private ResourceLoader resourceLoader;
+	@Autowired
+	private LocationService locationService;
+	@Autowired
+	private LocationController locationController;
 
 	@GetMapping("/ggWrite.go")
 	public void ggWrite() {
@@ -44,6 +51,11 @@ public class GongguController {
 	@GetMapping("/ggListView.go")
 	public String ggListView(Model model) {
 		ArrayList<Gonggu> ggListView = gongguService.selectggListView();
+		for(int i=0;i<ggListView.size();i++) {
+			Location tempLocal=locationService.selectLocationByNo(ggListView.get(i).getLocationNo());
+			String locationName=locationController.SelectLocationName(tempLocal);
+			ggListView.get(i).setLocationName(locationName);
+		}
 		model.addAttribute("ggListView", ggListView);
 		
 		return "/gonggu/ggListView";
@@ -52,8 +64,12 @@ public class GongguController {
 	@GetMapping("/homeList.go")
 	public String homeList(Model model) {
 		ArrayList<Gonggu> homeList = gongguService.selectHomeList();
+		for(int i=0;i<homeList.size();i++) {
+			Location tempLocal=locationService.selectLocationByNo(homeList.get(i).getLocationNo());
+			String locationName=locationController.SelectLocationName(tempLocal);
+			homeList.get(i).setLocationName(locationName);
+		}
 		model.addAttribute("homeList", homeList);
-		
 		int totalRecord=gongguService.selectTotalRecored();
 		
 		PageInfo pi=Pagination.getPageInfo(totalRecord, 1, 1, 8);
@@ -67,7 +83,9 @@ public class GongguController {
 		 Member loginMember=(Member)session.getAttribute("loginMember");
 		 Gonggu gonggu = gongguService.selectOneGonggu(gongguNo);
 		 model.addAttribute("gonggu", gonggu);
-
+		 
+		 
+		 
 		 if(loginMember != null) {	//로그인 한 사람일 경우
 			 if(gonggu.getGongguWriter().equals(loginMember.getUserId())) { //글쓴사람이면
 				 return "/gonggu/ggRead_Leader"; 
@@ -79,9 +97,15 @@ public class GongguController {
 		 }
 	 }
 	 
-	@PostMapping("/ggEnrollFrm.go")
-	public String ggEnrollFrm(Gonggu gonggu, @RequestParam MultipartFile upPhoto1, @RequestParam MultipartFile upPhoto2,
+	 
+	 
+	 @PostMapping("/ggEnrollFrm.go")
+	 public String ggEnrollFrm(Gonggu gonggu, Location map,@RequestParam MultipartFile upPhoto1, @RequestParam MultipartFile upPhoto2,
 			@RequestParam MultipartFile upPhoto3, Model model,RedirectAttributes redirectAttr) {
+		
+		 System.out.println("들어옴: "+map);
+		 int locationNo=locationService.selectLocation(map).getLocationNo();
+		 gonggu.setLocationNo(locationNo);
 		if (gonggu.getOpenTime().equals("sysdate")) {
 			gonggu.setEndTime(ChangeDate.chageDate(gonggu.getEndTime()));
 			gonggu.setSendTime(ChangeDate.chageDate(gonggu.getSendTime()));

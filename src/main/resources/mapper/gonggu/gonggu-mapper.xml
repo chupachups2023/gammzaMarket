@@ -26,7 +26,8 @@
 			#{latitude},
 			#{longitude},
 			default,
-			default,  null,sysdate
+			default,  null,sysdate,
+			#{locationNo}
 		)
 	</insert>
 	<select id="selectLastNum" resultType="_int">
@@ -55,11 +56,7 @@
 		SELECT  GONG.GONGGU_NO
 		            ,GONG.GONGGU_NAME
 		            ,GONG.PRICE
-		            ,GONG.PHOTO1
-		          , (SELECT MAX(LOCATION_NAME) 
-		               FROM LOCATION LCTN , PARTI_TB PRTB 
-		             WHERE GONG.GONGGU_NO = PRTB.GONGGU_NO 
-		                 AND PRTB.LOCATION_CODE = LCTN.LOCATION_NO) LOCATION_NAME
+		            ,GONG.PHOTO1, GONG.LOCATION_NO
 		   FROM   GONGGU   GONG
 		 WHERE GONG.STATUS = 1
 	</select>
