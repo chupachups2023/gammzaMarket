@@ -44,11 +44,26 @@
     		where status=1
     	order by pullup_at desc
     </select>
+
 	<select id="selectTotalRecored" resultType="_int">
 		select count(*)
 		from gonggu
 		where status=1
 	</select>
+
+	<select id="selectggListView" resultMap="gongguMap">
+		SELECT  GONG.GONGGU_NO
+		            ,GONG.GONGGU_NAME
+		            ,GONG.PRICE
+		            ,GONG.PHOTO1
+		          , (SELECT MAX(LOCATION_NAME) 
+		               FROM LOCATION LCTN , PARTI_TB PRTB 
+		             WHERE GONG.GONGGU_NO = PRTB.GONGGU_NO 
+		                 AND PRTB.LOCATION_CODE = LCTN.LOCATION_NO) LOCATION_NAME
+		   FROM   GONGGU   GONG
+		 WHERE GONG.STATUS = 1
+	</select>
+
 
 </mapper>  
 

@@ -17,5 +17,8 @@ public interface GongguDao {
 
 	int selectLastNum();
 
+	ArrayList<Gonggu> selectggListView();
+
 	int selectTotalRecored();
+
 }

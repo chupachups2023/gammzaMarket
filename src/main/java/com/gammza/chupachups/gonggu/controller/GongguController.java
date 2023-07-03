@@ -42,7 +42,11 @@ public class GongguController {
 	}
 
 	@GetMapping("/ggListView.go")
-	public void ggListView() {
+	public String ggListView(Model model) {
+		ArrayList<Gonggu> ggListView = gongguService.selectggListView();
+		model.addAttribute("ggListView", ggListView);
+		
+		return "/gonggu/ggListView";
 	}
 	
 	@GetMapping("/homeList.go")
