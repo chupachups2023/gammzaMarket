@@ -8,7 +8,7 @@
 	<jsp:param value="장소인증" name="title"/>
 </jsp:include>
 
-<form method="post" action="${pageContext.request.contextPath}/location/EnrollLocation.lo">
+<form method="post" action="${pageContext.request.contextPath}/location/EnrollLocation.lo" name="loactionFrm">
   <div class="location-body">
         <div class="location-map" id="map"></div>
         <div>
@@ -29,13 +29,20 @@
             <input type="hidden" id="lat" name="latitude" >
             
             <div class="location-btn">
-                <input type="submit" value="장소 인증하기" class="button">
+                <input type="button" value="장소 인증하기" class="button" id="location-submit" onclick="locationSubmit();">
             </div>
         </div>
     </div>
 </form>
 <script>
-
+function locationSubmit(){
+	const userId="${loginMember.userId}";
+	if(userId=="" || userId ==null){
+		alert("장소를 인증하려면 먼저 로그인을 해야 합니다!")
+	}else{
+		loactionFrm.submit();
+	}
+}
 function success(position) {
     const latitude = position.coords.latitude;   // 위도(37.xxxx)
     const longitude = position.coords.longitude; // 경도
