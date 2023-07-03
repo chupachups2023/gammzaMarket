@@ -44,4 +44,23 @@
 		</interceptor>
 	</interceptors> -->
 	
+	
+	<!-- oauth2 login -->
+	<beans:bean id="naverClientID" class="java.lang.String">
+	   <beans:constructor-arg value="GQGBjwaCzYQZZ_5XkE2o" />
+    </beans:bean>
+	<beans:bean id="naverClientSecret" class="java.lang.String">
+		<beans:constructor-arg value="y3TAUEyfZu" />
+	</beans:bean>
+	<beans:bean id="naverRedirectUrl" class="java.lang.String">
+		<beans:constructor-arg value="http://localhost:8095/auth/naver/callback" />
+	</beans:bean>
+
+	<beans:bean id="naverSns" class="com.gammza.chupachups.auth.SnsValue">
+		<beans:constructor-arg value="naver" />
+		<beans:constructor-arg ref="naverClientID" />
+		<beans:constructor-arg ref="naverClientSecret" />
+		<beans:constructor-arg ref="naverRedirectUrl" />
+	</beans:bean>
+	
 </beans:beans>

@@ -7,7 +7,7 @@
  	<resultMap type="member" id="memberMap"></resultMap>
  	
  	<insert id="insertMember">
- 		INSERT INTO MEMBER(USER_ID, USER_PWD, NAME, PHONE, ZIPCODE, ADDRESS, ADDRESSDETAIL, LOCATION, EMAIL, CREATE_AT, UPDATE_AT, STATUS, POINT, TEMPERATURE, KAKAO_IDKEY, NAVER_IDKEY, CATEGORY, BIRTHDAY) 
+ 		INSERT INTO MEMBER(USER_ID, USER_PWD, NAME, PHONE, ZIPCODE, ADDRESS, ADDRESSDETAIL, LOCATION, EMAIL, CREATE_AT, UPDATE_AT, STATUS, POINT, TEMPERATURE, KAKAO_IDKEY, NAVER_IDKEY, BIRTHDAY) 
  		VALUES(
  			#{userId},
  			#{userPwd},
@@ -25,7 +25,6 @@
  			DEFAULT,
  			null,
  			null,
- 			1,
  			#{birthday}
  		)
  	</insert>
@@ -35,7 +34,7 @@
  	
  	<select id="selectOneMember" resultMap="memberMap">
  		SELECT * FROM MEMBER
- 		WHERE user_id = #{userId}
+ 		WHERE USER_ID = #{userId}
  	</select>
  
  
