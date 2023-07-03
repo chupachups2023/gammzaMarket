@@ -8,6 +8,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="1:1문의" name="title" />
 </jsp:include>
+
 <div id="qnaBoard">
 	<h1 align="center">문의 사항</h1>
 
@@ -27,7 +28,7 @@
 				<c:if test="${qna.qnaWriter eq loginMember.userId}">
 				<tr>
 					<td width="100px">${pi.totalRecord - ((pi.nowPage-1)*pi.numPerPage)-s.index}</td>
-					<td class="Qtitle"><a href="${pageContext.request.contextPath}/mypage/myQuestionAnswer.do?nowPage=${pi.nowPage}&qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a></td>
+					<td class="Qtitle"><a href="${pageContext.request.contextPath}/mypage/myQuestionAnswer.do?nowPage=${pi.nowPage}&qnaNo=${qna.qnaNo}">[${qna.qnaCatName}] ${qna.qnaTitle}</a></td>
 					<td width="200px">${qna.qnaWriter}</td>
 					<td width="150px">${qna.createAt}</td>
 				</tr>
@@ -65,7 +66,7 @@
 		</ul>
 	</nav>
 	<div class="qnaBtnBox">
-		<button class="qnaBtn" onclick="location.href='${pageContext.request.contextPath}/mypage/questionForm.do'">글쓰기</button>
+		<button class="qnaBtn" onclick="location.href='${pageContext.request.contextPath}/mypage/questionForm.do'" style="width:80px;">문의하기</button>
 	</div>
 </div>
 

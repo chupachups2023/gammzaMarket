@@ -28,4 +28,6 @@ public interface QnaService {
 
 	int insertQuestion(Qna qna);
 
+	int deleteQuestion(int ref);
+
 }

@@ -19,4 +19,6 @@ public class Qna {
 	private Date createAt;
 	private int ref;
 	private int depth;
+	private int qnaCatNo;
+	private String qnaCatName;
 }
