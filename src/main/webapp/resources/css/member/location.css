@@ -34,3 +34,10 @@ a{
 .location-part{
     margin-top: 120px;
 }
+.location-curr{
+	font-size: 20px;
+	width:120px;
+	border:none;
+	font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
+}
+.location-curr:focus {outline:none;}

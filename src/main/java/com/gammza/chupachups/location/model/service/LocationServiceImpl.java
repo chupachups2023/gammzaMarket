@@ -1,5 +1,8 @@
 package com.gammza.chupachups.location.model.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +32,21 @@ public class LocationServiceImpl implements LocationService {
 	@Override
 	public Location selectLocationByNo(int locationNo) {
 		return locationDao.selectLocationByNo(locationNo);
+	}
+
+	@Override
+	public int updateLocation(HashMap<String, String> memUp) {
+		return locationDao.updateLocation(memUp);
+	}
+
+	@Override
+	public ArrayList<Location> selectLocationLess(Location map) {
+		return locationDao.selectLocationLess(map);
+	}
+
+	@Override
+	public ArrayList<Location> selectLocationLest(Location map) {
+		return locationDao.selectLocationLest(map);
 	}
 
 }

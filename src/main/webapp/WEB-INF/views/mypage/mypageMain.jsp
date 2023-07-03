@@ -10,7 +10,7 @@
 </jsp:include>
 
 	<div align="center" class="mainPage-title">
-		<h1>${loginMember.name} 님 안녕하세요💚</h1>
+		<h1><a href="${pageContext.request.contextPath}/member/memberInfo.me" class="myMain-info">${loginMember.name} 님</a> 안녕하세요💚</h1>
 	</div>
 	<div align="center" class="db">
 		<div class="mypageTitle">
