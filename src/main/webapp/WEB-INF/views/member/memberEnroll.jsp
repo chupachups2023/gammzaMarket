@@ -11,7 +11,6 @@
 
     <div class="enroll-title">
         <h1>회원가입</h1>
-        <hr>
     </div>
     <div class="enroll-container">
         <form action="${pageContext.request.contextPath}/member/memberEnroll.me" method="post" name="enrollfrm">
