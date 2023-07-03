@@ -5,4 +5,24 @@
   
 <mapper namespace="com.gammza.chupachups.report.model.dao.ReportDao">
 	<resultMap type="report" id="reportMap"></resultMap>
+	
+	<insert id="insertReport">
+		insert into report
+		values (
+			report_seq.nextval,
+			#{reportWriter},
+			#{reportContent},
+			#{gongguNo},
+			default
+		)		
+	</insert>
+	<select id="selectTotalRecord" resultType="_int">
+		select count(*)
+		  from report
+	</select>
+	<select id="selectreportList" resultMap="reportMap">
+		select *
+		  from report
+		 order by report_no desc
+	</select>
 </mapper>

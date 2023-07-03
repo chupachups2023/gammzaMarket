@@ -19,7 +19,7 @@
 
 <body>
 	<div id="qnaAns">
-		<h1 align="center">문의 답변</h1>
+		<h1 align="center">1대1 답변</h1>
 		<br>
 		<br>
 

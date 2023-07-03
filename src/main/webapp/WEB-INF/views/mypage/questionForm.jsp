@@ -23,7 +23,7 @@
 					<th class="myQtd1"> 문의 카테고리</th>
 					<td class="myQtd2">
 						<select name="qnaCategory" id="cate1" required>
-							<option value="0" selected>*선택해주세요</option>
+							<option selected>*선택해주세요</option>
 							<option value="1">포인트</option>
 							<option value="2">공구총대</option>
 							<option value="3">공구참여</option>
