@@ -1,6 +1,12 @@
 package com.gammza.chupachups.member.controller;
 
+import java.lang.System.Logger;
+
+import javax.inject.Inject;
+
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +18,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.gammza.chupachups.auth.SNSLogin;
+import com.gammza.chupachups.auth.SnsValue;
 import com.gammza.chupachups.member.model.service.MemberService;
 import com.gammza.chupachups.member.model.vo.Member;
 
@@ -20,6 +28,13 @@ import com.gammza.chupachups.member.model.vo.Member;
 @SessionAttributes({"loginMember"})
 
 public class MemberController {
+	
+	// private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+	
+	@Inject
+	private SnsValue naverSns;
+	
+	
 	@Autowired
 	private MemberService memberService;
 	
@@ -52,13 +67,30 @@ public class MemberController {
 		return "member/memberLogin";
 	}
 	
+	
+	/*
+	@GetMapping("/memberLogin.me")
+	public void login(Model model) throws Exception {
+		// Logger.info("login GET .....");
+		
+		SNSLogin snsLogin = new SNSLogin(naverSns);
+		model.addAttribute("naver_url", snsLogin.getNaverAuthURL());
+		
+//		SNSLogin snsLogin = new SNSLogin(naverSns);
+//		model.addAttribute("naver_url", snsLogin.getNaverAuthURL());
+	}
+	*/
+	
+	
+	
+	
 	@PostMapping("/memberLogin.me")
 	public String memberLogin(String userId, String userPwd, Model model, RedirectAttributes redirectAtt) {
 		System.out.println("userId = " + userId);
 		System.out.println("userPwd = " + userPwd);
 		
 		Member member = memberService.selectOneMember(userId);
-		// System.out.println("member = " + member);
+		System.out.println("member = " + member);
 		
 		// 인증
 		if (member != null && passwordEncoder.matches(userPwd, member.getUserPwd())) {
@@ -68,6 +100,10 @@ public class MemberController {
 		}
 		return "redirect:/";
 	}
+	
+	
+	
+	
 	
 	// @SessionAttributes + model 통해 로그인정보를 관리하는 경우
 	/*
@@ -131,6 +167,7 @@ public class MemberController {
 	public String findPwd() {
 		return "member/findPwd";
 	}
+	
 	
 }
 

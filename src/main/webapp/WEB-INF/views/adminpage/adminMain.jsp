@@ -65,15 +65,18 @@
     <h1>관리자 페이지</h1>
     <hr>
     <div class="bigbox">
-        <div class="adminpageBox green" onclick="location.href='#'">
+        <div class="adminpageBox green" onclick="location.href='${pageContext.request.contextPath}/adminpage/noticeList.bo'">
             <div>공지사항</div>
         </div>
         <div class="adminpageBox orange" onclick="location.href='#'">
-            <div>전체공구</div></div>
+            <div>전체공구</div>
+        </div>
         <div class="adminpageBox orange" onclick="location.href='#'">
-            <div>신고목록</div></div>
-        <div class="adminpageBox green" onclick="location.href='#'">
-            <div>1:1 문의</div></div>
+            <div>신고목록</div>
+        </div>
+        <div class="adminpageBox green" onclick="location.href='${pageContext.request.contextPath}/adminpage/questionList.do'">
+            <div>1:1 문의</div>
+        </div>
     </div>
 
 </div>

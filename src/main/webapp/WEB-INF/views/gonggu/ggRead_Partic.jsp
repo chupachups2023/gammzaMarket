@@ -95,7 +95,7 @@
             </div>
             <fmt:parseDate value="${gonggu.endTime }" var="endTime" pattern="yyyy-MM-dd HH:mm"/>
             <div class="ggRead-endtime"><fmt:formatDate value="${endTime }" pattern="yyyy년 MM월 dd일 HH시 mm분"/>까지 기다려요</div>
-            <div class="ggRead-lefttime">2일 23시간 15분 22초 남았어요</div>
+            <div class="ggRead-lefttime">2일 23시간 15분 남았어요</div>
             <c:choose>
             	<c:when test="${empty gonggu.link }">
 		            <div><a class="ggRead-link-empty"> </a></div>
@@ -106,7 +106,7 @@
             </c:choose>
             <div class="ggRead-map">
                 <div>여기서 나눠드려요</div>
-                <img src="${pageContext.request.contextPath}/resources/upload/image.png" class="ggRead-mapp">
+                <div class="ggRead-mapp" id="map"></div>
             </div>
         </div>
     </div>
@@ -141,10 +141,14 @@
             <div class="ggRead-info">
                 <div>관심 수 <span>5</span> · </div>
                 <div>조회 수 <span>${gonggu.count }</span></div>
+                <input type="hidden" value="${gonggu.longitude }" id="longitude">
+                <input type="hidden" value="${gonggu.latitude }" id="latitude">
             </div>
         </div>
     </div>
 </div>
+
+<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggRead_Partic.js"></script>
 <div class="report" tabindex="-1" id="report">
 	<div class="modal-dialog">
 
@@ -170,6 +174,7 @@
 			</div>
 		</form>
 	</div>
+
 </div>
 <script
 	src="${pageContext.request.contextPath}/resources/js/gonggu/ggRead_Partic.js"></script>
@@ -193,6 +198,7 @@
         <input type="hidden" id="gongguNo" name="gongguNo" value="${gonggu.gongguNo}" />
     </form>
 </div>
+
 <script>
 const longitude= document.getElementById('longitude').value;
 const latitude= document.getElementById('latitude').value;
@@ -227,6 +233,7 @@ const latitude= document.getElementById('latitude').value;
     	console.log("실패");
     }
 });
+
   
 const report = document.getElementById("report");
 const openReportBtn = document.getElementById("open-report");

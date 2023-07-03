@@ -19,6 +19,7 @@ import com.gammza.chupachups.common.template.Pagination;
 import com.gammza.chupachups.member.model.vo.Member;
 import com.gammza.chupachups.qna.model.service.QnaService;
 import com.gammza.chupachups.qna.model.vo.Qna;
+import com.gammza.chupachups.qna.model.vo.QnaCategory;
 
 @Controller
 @RequestMapping("/mypage")
@@ -31,11 +32,11 @@ public class MyQnaController {
 		Member loginMember = (Member) session.getAttribute("loginMember");
 		String userId = loginMember.getUserId();
 		int totalRecord = qnaService.selectMyQnaTotalRecord(userId);
-		int limit = 5;
+		int limit = 10;
 		int offset = (nowPage -1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		PageInfo pi = Pagination.getPageInfo(totalRecord, nowPage, limit, 3);
+		PageInfo pi = Pagination.getPageInfo(totalRecord, nowPage, limit, 5);
 		
 		List<Qna> myQuestionList = qnaService.selectMyQuestionList(userId, rowBounds);
 		model.addAttribute("myQuestionList", myQuestionList);
@@ -54,9 +55,11 @@ public class MyQnaController {
 	
 	@PostMapping("/myQuestionUpdate.do")
 	public String myQuestionUpdate(@RequestParam int qnaNo, Qna qna, @RequestParam int nowPage, Model model, RedirectAttributes redirectAttr) {
-		qna.setQnaContent(qna.getQnaContent());
+		Qna qna2 = qnaService.selectOneQna(qnaNo);
+		qna2.setQnaContent(qna.getQnaContent());
+		qna2.setQnaTitle(qna.getQnaTitle());
 		
-		int result = qnaService.updateMyQuestion(qna);
+		int result = qnaService.updateMyQuestion(qna2);
 
 		if(result > 0) {
 			redirectAttr.addFlashAttribute("msg", "수정완료");
@@ -70,19 +73,16 @@ public class MyQnaController {
 	@GetMapping("/questionForm.do")
 	public void questionForm() {}
 	
-	@PostMapping("/updateQuestion.do")
-	public String updateQuestion(Qna qna, @RequestParam String qAnswer,  RedirectAttributes redirectAttr) {
-		Qna qnaOrigin = new Qna();
-		qnaOrigin.setQnaTitle(qna.getQnaTitle() + " (답변완료)");
-		qnaOrigin.setQnaNo(qna.getQnaNo());
+	@PostMapping("/insertQuestion.do")
+	public String insertQuestion(Qna qna, HttpSession session, RedirectAttributes redirectAttr) {
 		
-		qna.setQnaContent(qAnswer);
-		qna.setQnaWriter("admin");
-		qna.setQnaTitle("re: " + qna.getQnaTitle());
+		//category 0이 나오면 돌려보내기 만들기
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		String userId = loginMember.getUserId();
 		
-		
-		int result = qnaService.insertQAnswer(qna);
-		int result2 = qnaService.updateReplyMark(qnaOrigin);
+		qna.setQnaWriter(userId);
+
+		int result = qnaService.insertQuestion(qna);
 		//잘 되었다는 alert창 
 		if(result > 0) {
 			redirectAttr.addFlashAttribute("msg", "문의완료");

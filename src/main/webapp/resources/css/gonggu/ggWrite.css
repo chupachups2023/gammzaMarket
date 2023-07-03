@@ -152,9 +152,7 @@
 	width:400px;
 	height:170px;
 	border-radius:20px;
-	z-index:-1;
 }
-
 .ggWrite_fileupload_out{
     width: 320px;
     display: flex;

@@ -81,6 +81,8 @@
   color: gray; /* Style the "동네" text with gray color */
 }
 
-.gghover *,.gghover :hover{
+
+.gghover *:hover,.gghover:hover{
 	cursor:pointer
+
 }

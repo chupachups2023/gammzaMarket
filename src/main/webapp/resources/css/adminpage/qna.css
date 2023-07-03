@@ -37,6 +37,9 @@ tbody {
 	width: 450px;
 	text-align: left;
 }
+.Qtitle thead {
+	font-size:20px;
+}
 
 #qnaWriteBtn {
 	width: 70px;
@@ -85,7 +88,6 @@ tbody {
 
 .ansTable tbody tr {
 	border-bottom: 1px solid rgb(214, 214, 214);
-	font-size: 15px;
 }
 
 .td1{
@@ -106,12 +108,12 @@ tbody {
 }
 
 
-.replyBtnBox {
+.qnaBtnBox {
 	float: right;
 	margin-right: 150px;
 }
 
-.replyBtn {
+.qnaBtn {
 	width: 50px;
 	height: 30px;
 	border: 1px solid;
@@ -131,6 +133,7 @@ tbody {
 	width:800px;
 	border-collapse: collapse;
 }
+
 
 .myQTextbox{
 	 resize: none;
@@ -157,4 +160,10 @@ tbody {
 }
 #cate1{
 	width:120px;
+}
+
+#myQTitle{
+	border:none;
+	width:400px;
+	font-size:20px;
 }

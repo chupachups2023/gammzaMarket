@@ -61,4 +61,14 @@ public class QnaServiceImpl implements QnaService {
 		return qnaDao.selectMyQnaTotalRecord(userId);
 	}
 
+	@Override
+	public int insertQuestion(Qna qna) {
+		return qnaDao.insertQuestion(qna);
+	}
+
+	@Override
+	public int deleteQuestion(int ref) {
+		return qnaDao.deleteQuestion(ref);
+	}
+
 }

@@ -27,23 +27,21 @@
                         <div class="ggImg gghover">
                             <img src="${pageContext.request.contextPath}/resources/upload/${list.photo1}" alt="이미지 없음">
                         </div>
-                        <div class="ggTitle gghover">
                             <c:choose>
                                 <c:when test="${fn:length(list.gongguName) gt 10}">
-                                    ${fn:substring(list.gongguName, 0, 10)}...
+                        			<div class="ggTitle gghover">${fn:substring(list.gongguName, 0, 10)}...</div>
                                 </c:when>
                                 <c:otherwise>
-                                    ${list.gongguName}
+                                    <div class="ggTitle gghover">${list.gongguName}</div>
                                 </c:otherwise>
                             </c:choose>
-                        </div>
                         <div class="gghover">
                             <b>
                                 <fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" />
                             </b>
                         </div>
                         <div class="gghover">
-                            <small>동네</small>
+                            <small>${list.locationName}</small>
                         </div>
                     </div>
                 </c:forEach>

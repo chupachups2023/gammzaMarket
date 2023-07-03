@@ -26,7 +26,8 @@
 			#{latitude},
 			#{longitude},
 			default,
-			default,  null,sysdate
+			default,  null,sysdate,
+			#{locationNo}
 		)
 	</insert>
 	<select id="selectLastNum" resultType="_int">
@@ -44,11 +45,22 @@
     		where status=1
     	order by pullup_at desc
     </select>
+
 	<select id="selectTotalRecored" resultType="_int">
 		select count(*)
 		from gonggu
 		where status=1
 	</select>
+
+	<select id="selectggListView" resultMap="gongguMap">
+		SELECT  GONG.GONGGU_NO
+		            ,GONG.GONGGU_NAME
+		            ,GONG.PRICE
+		            ,GONG.PHOTO1, GONG.LOCATION_NO
+		   FROM   GONGGU   GONG
+		 WHERE GONG.STATUS = 1
+	</select>
+
 
 </mapper>  
 

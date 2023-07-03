@@ -28,4 +28,8 @@ public interface QnaDao {
 
 	int selectMyQnaTotalRecord(String userId);
 
+	int insertQuestion(Qna qna);
+
+	int deleteQuestion(int ref);
+
 }

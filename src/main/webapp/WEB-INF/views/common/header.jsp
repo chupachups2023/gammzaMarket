@@ -6,8 +6,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <meta charset="UTF-8">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=44e2b21ec219944c6d834fff124a603d&libraries=services,clusterer"></script>
 <title>${param.title }</title>
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/img/header/shorcuticon.png">
@@ -55,7 +56,7 @@
 				</div>
 				<a href="${pageContext.request.contextPath}/gonggu/ggListView.go" class="header-menu">공구보기</a> 
 				<a href="" class="header-menu">요청게시판</a> 
-				<a href="" class="header-menu">장소인증</a>
+				<a href="${pageContext.request.contextPath}/common/location.lo" class="header-menu">장소인증</a>
 				<a href="${pageContext.request.contextPath}/gonggu/ggWrite.go" class="header-menu">공구 글쓰기</a>
 			</div>
 			<form action="">
@@ -117,16 +118,15 @@
 								<h3>간편 로그인</h3>
 								<div class="social-icon">
 									<ul>
-
-
-											<!-- <li class="login-kakao">
-                                        <a href="#">
-                                            <!-- <img src="kakao_login_large_ko_resize.png" alt="카카오톡아이콘"> </li> -->
-
-
-										<li class="login-naver"><a href="#"> </a>
-											<img src="${pageContext.request.contextPath}/resources/img/login/naver_icon_short.png" alt="네이버아이콘">
+										<li class="login-kakao">
+											<a href="https://kauth.kakao.com/oauth/authorize?client_id=db32886cc653e7c143ebd36f56525b61&redirect_uri=http://localhost:8095/chupachups/auth/kakao/callback&response_type=code">
+												<img src="${pageContext.request.contextPath}/resources/img/header/icon_kakao_long.png" alt="카카오로그인버튼">
+											</a> 
 										</li>
+										<li class="login-naver">
+											<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&state=test&client_id=GQGBjwaCzYQZZ_5XkE2o&state=STATE_STRING&redirect_uri=http://localhost:8095/chupachups/auth/naver/callback">
+												<img src="${pageContext.request.contextPath}/resources/img/header/icon_naver_long_resize.png" alt="네이버로그인버튼">
+											</a> 
 									</ul>
 									<br>
 									<button type="button" id="close-modal">임시닫기버튼</button>

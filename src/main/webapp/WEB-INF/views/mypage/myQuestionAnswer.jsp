@@ -9,6 +9,14 @@
 	<jsp:param value="1:1문의 상세보기" name="title" />
 </jsp:include>
 
+<style>
+#myQTitle{
+	border:none;
+	width:400px;
+	font-size:18px;
+}
+</style>
+
 <body>
 	<div id="qnaAns">
 		<h1 align="center">1대1 답변</h1>
@@ -27,14 +35,14 @@
 				</thead>
 				<tbody>
 					<tr style="height: 40px">
-						<th class="td1">${qna.qnaNo}</th>
-						<td class="td2">${qna.qnaTitle}</td>
-						<td class="td3">${qna.qnaWriter}</td>
-						<td class="td4">${qna.createAt}</td>
+						<th>${qna.qnaNo}</th>
+						<td>[${qna.qnaCatName}] <input id="myQTitle" name="qnaTitle" value="${qna.qnaTitle}"></td>
+						<td>${qna.qnaWriter}</td>
+						<td>${qna.createAt}</td>
 					</tr>
 					<tr style="height: 250px">
 						<th>문의 내용</th>
-						<td colspan="2"><textarea id="myQC" class="textbox">${qna.qnaContent}</textarea></td>
+						<td colspan="2"><textarea id="myQC" name="qnaContent" class="textbox">${qna.qnaContent}</textarea></td>
 						<td></td>
 					</tr>
 
@@ -60,10 +68,9 @@
 			</table>
 			
 			 <br>
-			<div class="replyBtnBox">
-				<button class="replyBtn" id="updateQ" type="submit">수정</button>
-				<button class="replyBtn" type="button" onclick="#">삭제</button>
-				<button class="replyBtn" type="button"
+			<div class="qnaBtnBox">
+				<button class="qnaBtn" id="updateQ" type="submit">수정</button>
+				<button class="qnaBtn" type="button"
 					onclick="location.href='${pageContext.request.contextPath}/mypage/myQuestionList.do?nowPage=${nowPage}'">목록</button>
 			</div>
 			<input type="hidden" name="qnaNo" value="${qna.qnaNo }">
@@ -76,7 +83,8 @@
 	$(document).ready(function() {
 		if(${qAns.qnaNo} != null) {
 			$("#myQC").attr("readonly", true);
-			$("#updateQ").attr("disabled", true);
+			$("#updateQ").attr("disabled", true).css("width", "200px").text("답변된 문의는 수정불가");
+			$("#myQTitle").attr("readonly", true);
 		}
 	})
 </script>
