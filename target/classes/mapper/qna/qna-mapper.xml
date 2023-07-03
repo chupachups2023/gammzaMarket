@@ -9,16 +9,71 @@
 	<select id="selectQuestionList" resultMap="qnaMap">
 		select *
 		from qna
-		order by ref desc, depth
+		where depth = '0'
+		order by ref desc
+	</select>
+	<select id="selectMyQuestionList" resultMap="qnaMap">
+		select *
+		from qna
+		where qna_writer = #{userId} and depth = '0'
+		order by ref desc
 	</select>
 	<select id="selectTotalRecord" resultType="_int">
 		select count(*)
 		from qna
+		where depth = '0'
 	</select>
-
+	<select id="selectMyQnaTotalRecord" resultType="_int">
+		select count(*)
+		from qna
+		where qna_writer = #{userId} and depth = '0'
+	</select>
 	<select id="selectOneQna" resultMap="qnaMap">
 		select *
 		from qna
 		where qna_no = #{qnaNo}
 	</select>
+	
+	<select id="selectOneQAns" resultMap="qnaMap">
+		select *
+		from qna
+		where ref = (select ref from qna where qna_no = #{qnaNo} ) 
+			and depth = '1'
+	</select>
+	<insert id="insertQAnswer">
+		insert into qna
+			values(
+				QNA_SEQ.NEXTVAL,
+				#{qnaCategory},
+				#{qnaWriter},
+				#{qnaTitle},
+				#{qnaContent},
+				SYSDATE,
+				#{ref},
+				1
+			)
+	</insert>
+	<insert id="insertQuestion">
+		insert into qna
+			values(
+				QNA_SEQ.NEXTVAL,
+				#{qnaCategory},
+				#{qnaWriter},
+				#{qnaTitle},
+				#{qnaContent},
+				SYSDATE,
+				QNA_SEQ.CURRVAL,
+				0
+			)
+	</insert>
+	<update id="updateReplyMark">
+		update qna
+		set qna_title = #{qnaTitle}
+		where qna_no = #{qnaNo} and depth = '0'
+	</update>
+	<update id="updateMyQuestion">
+		update qna
+		set qna_content = #{qnaContent}
+		where qna_no = #{qnaNo}
+	</update>
 </mapper>

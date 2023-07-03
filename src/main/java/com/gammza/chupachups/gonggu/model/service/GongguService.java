@@ -1,17 +1,23 @@
 package com.gammza.chupachups.gonggu.model.service;
 
 
-import java.util.List;
+import java.util.ArrayList;
 
 import com.gammza.chupachups.gonggu.model.vo.Gonggu;
-import com.gammza.chupachups.gonggu.model.vo.Parti_Tb;
 
 
 public interface GongguService {
 
 	int insertGonggu(Gonggu gonggu);
 
+	Gonggu selectOneGonggu(int gongguNo);
 
-	Parti_Tb selectOneParti_Tb(int gongguNo);
+	ArrayList<Gonggu> selectHomeList();
+
+	int selectLastNum();
+
+	int selectTotalRecored();
+
+	ArrayList<Gonggu> selectggListView();
 
 }

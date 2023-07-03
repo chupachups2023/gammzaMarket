@@ -1,0 +1,47 @@
+#navPage {
+	display: flex;
+	justify-content: center;
+	height: 100px;
+}
+
+.page-item {
+	float: left;
+	width: 50px;
+	height: 20px;
+	text-align: center;
+}
+
+.pagination {
+	margin-top: 50px;
+	width: 300px;
+}
+
+.col {
+	text-align: center;
+	border-top-style: groove;
+}
+
+#col-t {
+	font-size: large;
+	font: bolder;
+}
+
+.table {
+	display: flex;
+	width: 100%;
+	text-align: center;
+	justify-content: space-around;
+}
+
+.bigtable {
+	height: 400px;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.notice {
+	width: 80%;
+	margin: 0 auto;
+}

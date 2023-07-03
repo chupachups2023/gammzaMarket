@@ -1,16 +1,12 @@
 package com.gammza.chupachups.gonggu.model.service;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gammza.chupachups.gonggu.model.dao.GongguDao;
 import com.gammza.chupachups.gonggu.model.vo.Gonggu;
-
-import com.gammza.chupachups.gonggu.model.vo.Parti_Tb;
-
-
 
 @Service
 public class GongguServiceImpl implements GongguService {
@@ -23,10 +19,28 @@ public class GongguServiceImpl implements GongguService {
 		return gongguDao.insertGonggu(gonggu);
 	}
 
-
 	@Override
-	public Parti_Tb selectOneParti_Tb(int gongguNo) {
-		return gongguDao.selectOneParti_Tb(gongguNo);
+	public Gonggu selectOneGonggu(int gongguNo) {
+		return gongguDao.selectOneGonggu(gongguNo);
 	}
 
+	@Override
+	public ArrayList<Gonggu> selectHomeList() {
+		return gongguDao.selectHomeList();
+	}
+
+	@Override
+	public int selectLastNum() {
+		return gongguDao.selectLastNum();
+	}
+
+	@Override
+	public int selectTotalRecored() {
+		return gongguDao.selectTotalRecored();
+	}
+
+	@Override
+	public ArrayList<Gonggu> selectggListView() {
+		return gongguDao.selectggListView();
+	}
 }

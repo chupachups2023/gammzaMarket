@@ -1,9 +1,9 @@
+
 	function success(position) {
 	    const latitude = position.coords.latitude;   // 위도(37.xxxx)
 	    const longitude = position.coords.longitude; // 경도
-	    
 		
-	  //kakao REST API에 get 요청을 보낸다.
+	  	//kakao REST API에 get 요청을 보낸다.
         //파라미터 x,y에 lon,lat을 넣어주고 API_KEY를 Authorization헤더에 넣어준다.
         
         $.ajax({
@@ -16,17 +16,17 @@
             	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
             	var options = { //지도를 생성할 때 필요한 기본 옵션
             		center: new kakao.maps.LatLng(latitude, longitude), //지도의 중심좌표.
-            		level: 3 //지도의 레벨(확대, 축소 정도)
+            		level: 3 //지도의 레벨(확대, 축소 정도);
             		
             	};
-            	
             	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
             	
             	//마커 초기화(초기화 시 지도에 미리 지정 가능 : 카카오맵 API 문서 참조)
             	const marker = new kakao.maps.Marker();
         		
-            	document.getElementById('lon').value=latitude;
-        		document.getElementById('lat').value=longitude;
+            	document.getElementById('lon').value=longitude;
+        		document.getElementById('lat').value=latitude;
+        		console.log(document.getElementById('lon'));
 
             	//카카오맵 클릭 이벤트 추가
             	kakao.maps.event.addListener(map, 'click', (mouseEvent) => {
@@ -38,7 +38,6 @@
             		
             		//마커 위치를 클릭한 위치로 이동
             		marker.setPosition(latlng);
-            		console.log(latlng);
             		marker.setMap(map);
             		
             	});
@@ -58,3 +57,4 @@
 	}
 	
 	getUserLocation();
+	

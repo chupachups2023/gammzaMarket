@@ -10,92 +10,23 @@
 
 <div class="GGlistSec">
     <a href="" class="GGlist-a">최신순</a>&emsp;<a href="" class="GGlist-a">마감 임박순</a>
-	<div class="likeList">
-		<div class="onelineThreebox" onclick="location.href='#';">
-			<div class="onelineThreeImg">
-				<img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg">
-			</div>
-			<div class="onelineThreeTitle">
-				<div class="ggTitle">물품이름</div>
-				<div style="font-size: 20px;"><b>30,000원</b></div>
-				<div><small>서울시 영등포구 당산동</small></div>
-			</div>
-		</div>
-		<div class="onelineThreebox" onclick="location.href='#';">
-			<div class="onelineThreeImg">
-				<img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg">
-			</div>
-			<div class="onelineThreeTitle">
-				<div class="ggTitle">물품이름</div>
-				<div style="font-size: 20px;"><b>30,000원</b></div>
-				<div><small>서울시 영등포구 당산동</small></div>
-			</div>
-		</div>
-		<div class="onelineThreebox" onclick="location.href='#';">
-			<div class="onelineThreeImg">
-				<img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg">
-			</div>
-			<div class="onelineThreeTitle">
-				<div class="ggTitle">물품이름</div>
-				<div style="font-size: 20px;"><b>30,000원</b></div>
-				<div><small>서울시 영등포구 당산동</small></div>
-			</div>
-		</div>
-		<div class="onelineThreebox" onclick="location.href='#';">
-			<div class="onelineThreeImg">
-				<img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg">
-			</div>
-			<div class="onelineThreeTitle">
-				<div class="ggTitle">물품이름</div>
-				<div style="font-size: 20px;"><b>30,000원</b></div>
-				<div><small>서울시 영등포구 당산동</small></div>
-			</div>
-		</div>
-		<div class="onelineThreebox" onclick="location.href='#';">
-			<div class="onelineThreeImg">
-				<img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg">
-			</div>
-			<div class="onelineThreeTitle">
-				<div class="ggTitle">물품이름</div>
-				<div style="font-size: 20px;"><b>30,000원</b></div>
-				<div><small>서울시 영등포구 당산동</small></div>
-			</div>
-		</div>
-		<div class="onelineThreebox" onclick="location.href='#';">
-			<div class="onelineThreeImg">
-				<img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg">
-			</div>
-			<div class="onelineThreeTitle">
-				<div class="ggTitle">물품이름</div>
-				<div style="font-size: 20px;"><b>30,000원</b></div>
-				<div><small>서울시 영등포구 당산동</small></div>
-			</div>
-		</div>
-	</div>
-	
-	
-
+		<div class="likeList">
+        	<c:forEach items="${ggListView}" var="list" varStatus="j">
+				<div class="onelineThreebox" onclick="location.href='#';">
+					<div class="onelineThreeImg">
+						<img src="${pageContext.request.contextPath}/resources/upload/${list.photo1}" alt="이미지 없음">
+					</div>
+					<div class="onelineThreeTitle">
+						<div class="ggTitle">${list.gongguName }</div>
+						<div style="font-size: 20px;"><b>${list.price}</b></div>
+						<div><small>${list.locationName}</small></div>
+					</div>
+				</div>	
+       		 </c:forEach>
+		 </div>
+		 
 </div>
 
-
-<%-- 
-
-	<div class="GGlistSec">
-		<c:forEach items="${공구리스트}" var="공구">
-			<div class="onelineThreebox" onclick="location.href='${pageContext.request.contextPath}찜상세페이지경로?찜번호=${찜번호}';">
-				<div class="onelineThreeImg">
-					<img src="${pageContext.request.contextPath}/공구 경로/${공구.이미지이름}">
-				</div>
-				<div class=""onelineThreeTitle"">
-					<div class="ggTitle">${공구.물품이름}</div>
-					<div><b>${공구.가격}</b></div>
-					<div><small>${공구.주소}</small></div>
-				</div>
-			</div>
-		</c:forEach>
-	</div>
-
- --%>
 
 
 

@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gammza.chupachups.notice.model.dao.NoticeDao;
 import com.gammza.chupachups.notice.model.vo.Notice;
@@ -48,6 +48,11 @@ public class NoticeServiceImpl implements NoticeService {
 	public int updateNotice(Notice notice) {
 		System.out.println(notice);
 		return noticeDao.updateNotice(notice);
+	}
+
+	@Override
+	public int updateCountNotice(int noticeNo) {
+		return noticeDao.updateCountNotice(noticeNo);
 	}
 
 }

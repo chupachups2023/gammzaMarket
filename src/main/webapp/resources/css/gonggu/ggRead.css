@@ -119,6 +119,13 @@
     overflow: auto;
     border-radius: 20px;
 }
+.ggRead-content-empty{
+	width: 450px;
+    height: 50px;
+    padding: 15px 25px;
+    overflow: auto;
+    border-radius: 20px;
+}
 .ggRead-body{
     display: flex;
     flex-direction: row;
@@ -231,6 +238,9 @@
     color: black;
     font-size: 15px;
     text-align: right;
+}
+.ggRead-link-empty:hover {
+    cursor:default;
 }
 .ggRead-link:hover{
     text-decoration: underline;

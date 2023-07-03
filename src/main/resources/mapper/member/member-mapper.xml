@@ -11,7 +11,7 @@
  		VALUES(
  			#{userId},
  			#{userPwd},
- 			null,
+ 			'김감자',
  			'01012345678',
  			12345,
  			#{address},
