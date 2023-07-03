@@ -1,14 +1,52 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/gonggu/ggRead.css">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggRead.css" type="text/css" />
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=44e2b21ec219944c6d834fff124a603d&libraries=services,clusterer"></script>
+<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggRead_Partic.js"></script>
+<style>
+.modal-report {
+		display:none;
+		}
+.report-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+}
+.report-content {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-49%, -50%);
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        z-index: 10000;
+}
+
+#close-report {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: transparent;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+}
+</style>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="제목" name="title" />
 </jsp:include>
+
 
 <div class="ggRead-section">
     <div class="ggRead-head">
@@ -92,7 +130,14 @@
             <a href="" class="button">채팅하기</a>
         </div>
         <div>
-            <div class="ggRead-report"><a href="#">신고</a></div>
+        <c:choose>
+        	<c:when test="${empty loginMember.userId}">
+        	<div class="ggRead-report"><button id="pzlogin">신고</button></div>
+        	</c:when>
+        	<c:otherwise>
+            <div class="ggRead-report"><button id="open-report">신고</button></div>
+            </c:otherwise>
+        </c:choose>
             <div class="ggRead-info">
                 <div>관심 수 <span>5</span> · </div>
                 <div>조회 수 <span>${gonggu.count }</span></div>
@@ -100,7 +145,6 @@
         </div>
     </div>
 </div>
-<%-- 
 <div class="report" tabindex="-1" id="report">
 	<div class="modal-dialog">
 
@@ -126,16 +170,70 @@
 			</div>
 		</form>
 	</div>
-</div> --%>
+</div>
 <script
 	src="${pageContext.request.contextPath}/resources/js/gonggu/ggRead_Partic.js"></script>
 
-<!-- 신고 모달창 -->
 <script>
+<!-- 신고 모달창 -->
+<div class="modal-report" id="report">
+    <form action="${pageContext.request.contextPath}/report/insertReport.do" method="post" id="reportFrm">
+
+        <div class="report-bg"></div>
+        <div class="report-content" id="report">
+            <h2>신고하기</h2>
+            <ul class="report-top">
+                <li class="report-info"><input type="text" id="reportWriter" name="reportWriter" value="${loginMember.userId}"></li>
+                <li class="report-info"><textarea id="reportContent" rows="21px" cols="90px" name="reportContent" placeholder="신고내용을 적어주세요" resize="none"></textarea></li>
+                <li class="report-input modal-footer"><input type="button" class="report-btn" value="신고하기" id="report-modal"></li>
+            </ul>
+            <br>
+            <button type="button" id="close-report">취소</button>
+        </div>
+        <input type="hidden" id="gongguNo" name="gongguNo" value="${gonggu.gongguNo}" />
+    </form>
+</div>
+<script>
+const longitude= document.getElementById('longitude').value;
+const latitude= document.getElementById('latitude').value;
+
+ $.ajax({
+	type:"get",
+	url:"https://dapi.kakao.com/v2/local/geo/coord2address.json?x="+longitude+"&y="+latitude+"&input_coord=WGS84",
+	beforeSend: function (header) {
+		header.setRequestHeader("Authorization","KakaoAK 840539f3651afe19f12cc19a1dc9e0ab");
+    },
+    success:function(result){
+    	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+    	var options = { //지도를 생성할 때 필요한 기본 옵션
+    		center: new kakao.maps.LatLng(latitude, longitude), //지도의 중심좌표.
+    		level: 3 //지도의 레벨(확대, 축소 정도);
+    		
+    	};
+    	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+    	
+    	// 마커가 표시될 위치입니다 
+    	var markerPosition  = new kakao.maps.LatLng(latitude, longitude); 
+
+    	// 마커를 생성합니다
+    	var marker = new kakao.maps.Marker({
+    	    position: markerPosition
+    	});
+
+    	// 마커가 지도 위에 표시되도록 설정합니다
+    	marker.setMap(map);
+    },
+    error:function(){
+    	console.log("실패");
+    }
+});
+  
 const report = document.getElementById("report");
-const openReportBtn = document.getElementById("open-modal");
-const closeReportBtn = document.getElementById("close-modal");
+const openReportBtn = document.getElementById("open-report");
+const closeReportBtn = document.getElementById("close-report");
 const reportModalBtn = document.getElementById("report-modal");
+const pzlogin = document.getElementById("pzlogin");
+
 // 모달창 열기
 openReportBtn.addEventListener("click", () => {
 	report.style.display = "block";
@@ -151,6 +249,10 @@ reportModalBtn.addEventListener("click", () => {
 	report.style.display = "none";
 	document.body.style.overflow = "auto";
 	reportFrm.submit();
+});
+pzlogin.addEventListener("click", () => {
+	alert("로그인 후 이용가능합니다");
+	location.href="${pageContext.request.contextPath}";
 });
 </script>
 
