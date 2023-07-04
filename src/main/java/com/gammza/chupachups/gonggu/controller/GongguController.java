@@ -81,6 +81,7 @@ public class GongguController {
 	 @GetMapping("/ggRead.go") 
 	 public String ggRead_Partic(@RequestParam int gongguNo, Model model, HttpSession session) {
 		 Member loginMember=(Member)session.getAttribute("loginMember");
+		 int countResult=gongguService.updateGongguCount(gongguNo);
 		 Gonggu gonggu = gongguService.selectOneGonggu(gongguNo);
 		 model.addAttribute("gonggu", gonggu);
 		 

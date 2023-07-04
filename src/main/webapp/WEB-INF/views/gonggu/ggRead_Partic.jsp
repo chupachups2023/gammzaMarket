@@ -110,7 +110,7 @@
 		            <div><a class="ggRead-link-empty"> </a></div>
             	</c:when>
             	<c:otherwise>
-		            <div><a href='${gonggu.link}"' target="_blank" class="ggRead-link">물건의 자세한 정보는 여기서 볼 수 있어요</a></div>
+		            <div><a href="${gonggu.link}" target="_blank" class="ggRead-link">물건의 자세한 정보는 여기서 볼 수 있어요</a></div>
             	</c:otherwise>
             </c:choose>
             <div class="ggRead-map">
