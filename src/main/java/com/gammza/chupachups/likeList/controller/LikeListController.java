@@ -49,4 +49,8 @@ public class LikeListController {
 		}
 		return "redirect:/mypage/likeList.do";
 	}
+	
+	public List<Zzim> selectZzim(int gongguNo) {
+		return likeListService.selectZzim(gongguNo);
+	}
 }
