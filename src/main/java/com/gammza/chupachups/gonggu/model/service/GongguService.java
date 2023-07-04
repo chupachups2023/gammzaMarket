@@ -20,4 +20,9 @@ public interface GongguService {
 
 	ArrayList<Gonggu> selectggListView();
 
+	int updateGongguCount(int gongguNo);
+
+	int updateEndStatus(int gongguNo);
+
+
 }

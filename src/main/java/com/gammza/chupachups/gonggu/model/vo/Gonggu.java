@@ -34,4 +34,5 @@ public class Gonggu {
 	private String pullupAt;
 	private int locationNo;
 	private String locationName;
+	private int endStatus;
 }

@@ -101,16 +101,16 @@
             <div class="ggRead-num">
                 <div>${gonggu.num}개 나눠요<span>/</span></div>
                 <div class="ggRead-on"> 아직 <span>${gonggu.num - 1}개</span> 남았어요</div>
-            </div>
+            </div><input type="hidden" id="endtime" value="${gonggu.endTime }">
             <fmt:parseDate value="${gonggu.endTime }" var="endTime" pattern="yyyy-MM-dd HH:mm"/>
             <div class="ggRead-endtime"><fmt:formatDate value="${endTime }" pattern="yyyy년 MM월 dd일 HH시 mm분"/>까지 기다려요</div>
-            <div class="ggRead-lefttime">2일 23시간 15분 남았어요</div>
+            <div class="ggRead-lefttime" id="left-time"></div>
             <c:choose>
             	<c:when test="${empty gonggu.link }">
 		            <div><a class="ggRead-link-empty"> </a></div>
             	</c:when>
             	<c:otherwise>
-		            <div><a href='${gonggu.link}"' target="_blank" class="ggRead-link">물건의 자세한 정보는 여기서 볼 수 있어요</a></div>
+		            <div><a href="${gonggu.link}" target="_blank" class="ggRead-link">물건의 자세한 정보는 여기서 볼 수 있어요</a></div>
             	</c:otherwise>
             </c:choose>
             <div class="ggRead-map">
@@ -134,21 +134,37 @@
             <div><img src="https://cdn-icons-png.flaticon.com/512/138/138533.png" alt="zzim" id="zzim"></div>
             <div><img src="https://cdn-icons-png.flaticon.com/512/2089/2089736.png" alt="share"></div>
         </div>
-        <div class="ggRead-button">
-            <a href="" class="button">참여신청</a>
-            <a href="" class="button">채팅하기</a>
-        </div>
+        <c:choose>
+        	<c:when test="${gonggu.gongguWriter eq loginMember.userId}">
+       		<div class="ggRead-button">
+	            <a href="" class="button">글 수정</a>
+	            <a href="" class="button">공구삭제</a>
+	            <a href="" class="button">채팅하기</a>
+	            <a href="" class="button">끌올하기</a>
+	            <a href="" class="button">참여자확인</a>
+        	</div>
+        	</c:when>
+        	<c:otherwise>
+	        <div class="ggRead-button">
+	            <a href="" class="button">참여신청</a>
+	            <a href="" class="button">채팅하기</a>
+	        </div>
+        	</c:otherwise>
+        </c:choose>
         <div>
         <c:choose>
         	<c:when test="${empty loginMember.userId}">
         		<div class="ggRead-report"><a id="pzlogin">신고</a></div>
+        	</c:when>
+        	<c:when test="${gonggu.gongguWriter eq loginMember.userId}">
+        		<div class="ggRead-report"><a id="report-none">신고</a></div>
         	</c:when>
         	<c:otherwise>
             	<div class="ggRead-report"><a id="open-report">신고</a></div>
             </c:otherwise>
         </c:choose>
             <div class="ggRead-info">
-                <div>관심 수 <span>5</span> · </div>
+                <div>관심 수 <span>${zzimCount }</span> · </div>
                 <div>조회 수 <span>${gonggu.count }</span></div>
                 <input type="hidden" value="${gonggu.longitude }" id="longitude">
                 <input type="hidden" value="${gonggu.latitude }" id="latitude">
@@ -177,7 +193,7 @@
     </form>
 </div>
 
-<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggRead_Partic.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggRead_Partic.js?<%=System.currentTimeMillis() %>"></script>
 <script>
 const longitude= document.getElementById('longitude').value;
 const latitude= document.getElementById('latitude').value;

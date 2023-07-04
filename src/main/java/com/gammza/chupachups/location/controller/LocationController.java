@@ -6,8 +6,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gammza.chupachups.location.model.service.LocationService;
 import com.gammza.chupachups.location.model.vo.Location;
@@ -50,7 +50,7 @@ public class LocationController {
 	}
 	
 	@PostMapping("/location/EnrollLocation.lo")
-	public String enrollLocation(Location location, HttpSession session,RedirectAttributes redirectAttr) {
+	public String enrollLocation(Location location, HttpSession session,Model model) {
 		Location fullLocation=selectLocation(location);
 		
 		Member mem=(Member)session.getAttribute("loginMember");
@@ -62,10 +62,10 @@ public class LocationController {
 		
 		int result=locationService.updateLocation(memUp);
 		if(result==1) {
-			redirectAttr.addFlashAttribute("msg","위치가 정상적으로 업데이트 되었습니다.");
+			model.addAttribute("lomsg","위치가 정상적으로 업데이트 되었습니다.");
 			return "/member/location";
 		}else {
-			redirectAttr.addFlashAttribute("msg","위치 업데이트에 실패했습니다.");
+			model.addAttribute("lomsg","위치 업데이트에 실패했습니다.");
 			return "/member/location";
 		}
 	}

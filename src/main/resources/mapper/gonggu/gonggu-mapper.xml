@@ -27,7 +27,7 @@
 			#{longitude},
 			default,
 			default,  null,sysdate,
-			#{locationNo}
+			#{locationNo}, default
 		)
 	</insert>
 	<select id="selectLastNum" resultType="_int">
@@ -60,8 +60,16 @@
 		   FROM   GONGGU   GONG
 		 WHERE GONG.STATUS = 1
 	</select>
-
-
+	<update id="updateGongguCount">
+		update gonggu
+		set count=count+1
+		where gonggu_no=#{gongguNo}
+	</update>
+	<update id="updateEndStatus">
+		update gonggu
+		set END_STATUS = 0
+		where gonggu_no=#{gongguNo}
+	</update>
 </mapper>  
 
 

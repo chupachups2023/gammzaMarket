@@ -15,4 +15,5 @@ public class Report {
 	private String reportContent;
 	private int gongguNo;
 	private Date createAt;
+	
 }
