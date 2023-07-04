@@ -121,12 +121,13 @@
 
 										<li class="login-naver">
 											<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&state=test&client_id=GQGBjwaCzYQZZ_5XkE2o&state=STATE_STRING&redirect_uri=http://localhost:8095/chupachups/auth/naver/callback">
-												<img src="${pageContext.request.contextPath}/resources/img/header/icon_naver_long_resize.png" alt="네이버로그인버튼">
+												<img src="${pageContext.request.contextPath}/resources/img/header/icon_naver_long_resize.png" alt="네이버로그인버튼"> (수정중..)
 											</a> 
 										</li>
 									</ul>
 									<br>
-									<button type="button" id="close-modal">임시닫기버튼</button>
+									<a id="close-modal" class="modal-closeBtn">닫기</a>
+									<!-- <button type="button" id="close-modal">임시닫기버튼</button> -->
 
 								</div>
 							</div>

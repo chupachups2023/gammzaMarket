@@ -9,6 +9,14 @@
 		select * from location 
 		 where SIDO_NM=#{sidoNm} and SGG_NM = #{sggNm} and ADM_NM = #{admNm} and LEG_NM = #{legNm} 
 	</select>
+	<select id="selectLocationLess" resultMap="locationMap">
+		select * from location 
+		 where SIDO_NM=#{sidoNm} and SGG_NM = #{sggNm} and LEG_NM = #{legNm} 
+	</select>
+	<select id="selectLocationLest" resultMap="locationMap">
+		select * from location 
+		 where SIDO_NM=#{sidoNm} and SGG_NM = #{sggNm} and ADM_NM = #{admNm} 
+	</select>
 	<select id="selectlegCount" resultType="_int">
 		select count(*) from location where SIDO_NM=#{sidoNm} and SGG_NM = #{sggNm} and LEG_NM = #{legNm} 
 	</select>
@@ -19,4 +27,9 @@
 		select * from location 
 		 where location_no=#{locationNo}
 	</select>
+	<update id="updateLocation">
+		update member
+		set location=#{locationNo}
+		where user_id=#{userId}
+	</update>
   </mapper>
