@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.gammza.chupachups.auth.SNSLogin;
 import com.gammza.chupachups.auth.SnsValue;
 import com.gammza.chupachups.member.model.service.MemberService;
+import com.gammza.chupachups.member.model.service.MemberServiceImpl;
 import com.gammza.chupachups.member.model.vo.Member;
 
 @Controller
@@ -28,6 +29,13 @@ import com.gammza.chupachups.member.model.vo.Member;
 @SessionAttributes({"loginMember"})
 
 public class MemberController {
+	
+	@Autowired
+	private MemberService memberService;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
 	
 	@GetMapping("/memberLogin.me")
 	public String memberLogin() {
@@ -80,29 +88,6 @@ public class MemberController {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	// private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
-	
-	@Inject
-	private SnsValue naverSns;
-	
-	
-	@Autowired
-	private MemberService memberService;
-	
-	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
-	
-	
-	
-	
-	
-	
 	@GetMapping("/memberEnroll.me")
 	public void memberEnroll() {} 
 	
@@ -120,8 +105,6 @@ public class MemberController {
 		return "redirect:/";
 	}
 		
-	
-	
 	
 	@GetMapping("/memberDetail.me")
 	public void memberDetail() {
