@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggRead.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggRead.css?<%=System.currentTimeMillis() %>">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggRead_End.css?<%=System.currentTimeMillis() %>">
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
@@ -92,14 +92,27 @@
             <div><img src="https://cdn-icons-png.flaticon.com/512/138/138533.png" alt="zzim" id="zzim"></div>
             <div><img src="https://cdn-icons-png.flaticon.com/512/2089/2089736.png" alt="share"></div>
         </div>
-        <div class="ggRead-button">
-            <a class="button-end">참여신청</a>
-            <a class="button-end">채팅하기</a>
-        </div>
+        <c:choose>
+        	<c:when test="${gonggu.gongguWriter eq loginMember.userId}">
+       		<div class="ggRead-button">
+	            <a href="" class="button-end">글 수정</a>
+	            <a href="" class="button-end-writer">공구삭제</a>
+	            <a href="" class="button-end-writer">채팅하기</a>
+	            <a href="" class="button-end">끌올하기</a>
+	            <a href="" class="button-end-writer">참여자확인</a>
+        	</div>
+        	</c:when>
+        	<c:otherwise>
+	        <div class="ggRead-button">
+	            <a href="" class="button-end">참여신청</a>
+	            <a href="" class="button-end">채팅하기</a>
+	        </div>
+        	</c:otherwise>
+        </c:choose>
         <div>
             <div class="ggRead-report"><a href="#">신고</a></div>
             <div class="ggRead-info">
-                <div>관심 수 <span>5</span> · </div>
+                <div>관심 수 <span>${zzimCount }</span> · </div>
                 <div>조회 수 <span>${gonggu.count }</span></div>
                 <input type="hidden" value="${gonggu.longitude }" id="longitude">
                 <input type="hidden" value="${gonggu.latitude }" id="latitude">

@@ -53,4 +53,5 @@ public class GongguServiceImpl implements GongguService {
 	public int updateEndStatus(int gongguNo) {
 		return gongguDao.updateEndStatus(gongguNo);
 	}
+
 }
