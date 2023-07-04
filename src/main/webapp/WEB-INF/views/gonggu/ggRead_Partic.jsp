@@ -134,21 +134,37 @@
             <div><img src="https://cdn-icons-png.flaticon.com/512/138/138533.png" alt="zzim" id="zzim"></div>
             <div><img src="https://cdn-icons-png.flaticon.com/512/2089/2089736.png" alt="share"></div>
         </div>
-        <div class="ggRead-button">
-            <a href="" class="button">참여신청</a>
-            <a href="" class="button">채팅하기</a>
-        </div>
+        <c:choose>
+        	<c:when test="${gonggu.gongguWriter eq loginMember.userId}">
+       		<div class="ggRead-button">
+	            <a href="" class="button">글 수정</a>
+	            <a href="" class="button">공구삭제</a>
+	            <a href="" class="button">채팅하기</a>
+	            <a href="" class="button">끌올하기</a>
+	            <a href="" class="button">참여자확인</a>
+        	</div>
+        	</c:when>
+        	<c:otherwise>
+	        <div class="ggRead-button">
+	            <a href="" class="button">참여신청</a>
+	            <a href="" class="button">채팅하기</a>
+	        </div>
+        	</c:otherwise>
+        </c:choose>
         <div>
         <c:choose>
         	<c:when test="${empty loginMember.userId}">
         		<div class="ggRead-report"><a id="pzlogin">신고</a></div>
+        	</c:when>
+        	<c:when test="${gonggu.gongguWriter eq loginMember.userId}">
+        		<div class="ggRead-report"><a id="report-none">신고</a></div>
         	</c:when>
         	<c:otherwise>
             	<div class="ggRead-report"><a id="open-report">신고</a></div>
             </c:otherwise>
         </c:choose>
             <div class="ggRead-info">
-                <div>관심 수 <span>5</span> · </div>
+                <div>관심 수 <span>${zzimCount }</span> · </div>
                 <div>조회 수 <span>${gonggu.count }</span></div>
                 <input type="hidden" value="${gonggu.longitude }" id="longitude">
                 <input type="hidden" value="${gonggu.latitude }" id="latitude">

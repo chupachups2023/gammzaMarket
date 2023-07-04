@@ -22,5 +22,10 @@
 		on z.gonggu_no = g.gonggu_no
 		
 	</select>
+	<select id="selectZzim" resultMap="likeListMap">
+		select *
+		from zzim
+		where gonggu_no=#{gongguNo}
+	</select>
 	<!-- where zzim_member = #{userId} -->
 </mapper>

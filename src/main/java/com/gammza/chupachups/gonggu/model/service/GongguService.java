@@ -24,4 +24,5 @@ public interface GongguService {
 
 	int updateEndStatus(int gongguNo);
 
+
 }

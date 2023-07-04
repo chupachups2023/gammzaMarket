@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.gammza.chupachups.common.model.vo.PageInfo;
-import com.gammza.chupachups.common.template.Pagination;
 import com.gammza.chupachups.likeList.model.service.LikeListService;
 import com.gammza.chupachups.likeList.model.vo.Zzim;
 import com.gammza.chupachups.member.model.vo.Member;
@@ -38,5 +35,10 @@ public class LikeListController {
 		
 		List<Zzim> myLikelist = likeListService.selectLikeList(userId);
 		model.addAttribute("myLikelist", myLikelist);
+		
+	}
+	
+	public List<Zzim> selectZzim(int gongguNo) {
+		return likeListService.selectZzim(gongguNo);
 	}
 }

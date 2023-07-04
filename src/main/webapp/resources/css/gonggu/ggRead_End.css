@@ -19,7 +19,7 @@
     font-weight: bold;
     font-size: 30px;
 }
-.button-end{
+.button-end,.button-end-writer{
 	font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
     display: inline-block;
     width: 130px;
