@@ -85,14 +85,15 @@ public class GongguController {
 		 Member loginMember=(Member)session.getAttribute("loginMember");
 		 gongguService.updateGongguCount(gongguNo);
 		 Gonggu gonggu = gongguService.selectOneGonggu(gongguNo);
-		 model.addAttribute("gonggu", gonggu);
 		 
 		 LocalDateTime today = LocalDateTime.now();
 		 LocalDateTime endTime = LocalDateTime.parse(ChangeDate.chageDateToJsp(gonggu.getEndTime()));
-		 
-		 if(today.isAfter(endTime)) {
+		 if(today.isAfter(endTime) && gonggu.getEndStatus()==1) {
 			 gongguService.updateEndStatus(gongguNo);
+			 gonggu = gongguService.selectOneGonggu(gongguNo);
 		 }
+		 
+		 model.addAttribute("gonggu", gonggu);
 		 
 		 if(gonggu.getEndStatus()==1) {
 			 if(loginMember != null) {	//로그인 한 사람일 경우
