@@ -6,23 +6,10 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=44e2b21ec219944c6d834fff124a603d&libraries=services,clusterer"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggWrite.css?<%=System.currentTimeMillis()  %>">
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>	
-<!-- <script type="text/javascript">
-	
-</script> -->
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="공구 글 작성하기" name="title"/>
 </jsp:include>
-
-<!-- 
-*제목 수정하기
-*내용 들어갈 곳
-*공구 글 작성 
--->
-
-
-  <!--   <h1>공구 글 작성</h1>
-    <hr>  -->
     <div class="write-container">
         <form action="${pageContext.request.contextPath}/gonggu/ggEnrollFrm.go" method="post" enctype="multipart/form-data" name="ggEnrollFrm">
             <div class="write-category">
@@ -39,19 +26,18 @@
                     <option value="8">반려동물용품</option>
                 </select>
             </div>
-            <div>
                 <div class="write-price">
-                    <span>개당</span><input type="number" name="price" id="">P
+                    <span>개당</span><input type="number" name="price" >P
                 </div>
-                <div class="ggWrite-mid-flex">
+			<div class="ggWrite-mid-flex">
                 <div>
-                <div class="write-count">
-                    공구 수량 <select name="type" >
-                        <option value="0">수량 기준</option>
-                        <option value="1">인원 기준</option>
-                    </select>
-                    <input type="text" name="num">명/개
-                </div>
+	                <div class="write-count">
+	                    공구 수량 <select name="type" >
+	                        <option value="0">수량 기준</option>
+	                        <option value="1">인원 기준</option>
+	                    </select>
+	                    <input type="number" name="num">명/개
+	                </div>
 	                <!-- 사진 파일 첨부 -->
 	                <div class="ggWrite_fileupload_out">
 					    <div class="ggWirte_upload_icon" onclick="openFileUpload('1');">
