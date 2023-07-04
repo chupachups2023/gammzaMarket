@@ -37,14 +37,12 @@
 	            	</c:when>
 	            	<c:when test="${loginMember eq 'admin'}">
 			            <img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login">
-	            		<!-- 230627 -->
 		      			<a href="${pageContext.request.contextPath}/member/memberDetail.me">${loginMember.userId}님 반갑습니다.</a>&emsp; 
 
 		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
 					</c:when>
 					<c:otherwise>
 						<a href="${pageContext.request.contextPath}/mypage/mypageMain.me"><img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login" ></a>
-					<!-- 230627 -->
 		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
 					</c:otherwise>
 				</c:choose>
