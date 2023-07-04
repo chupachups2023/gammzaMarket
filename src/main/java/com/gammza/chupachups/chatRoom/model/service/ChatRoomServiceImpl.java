@@ -2,6 +2,7 @@ package com.gammza.chupachups.chatRoom.model.service;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +16,13 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 	private ChatRoomDao chatRoomDao;
 	
 	@Override
-	public List<ChatRoom> chatRoomList() {
-		return chatRoomDao.chatRoomList();
+	public List<ChatRoom> chatRoomList(RowBounds rowBounds) {
+		return chatRoomDao.chatRoomList(rowBounds);
+	}
+
+	@Override
+	public int selectTotalRecord() {
+		return chatRoomDao.selectTotalRecord();
 	}
 
 }

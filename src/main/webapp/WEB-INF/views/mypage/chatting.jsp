@@ -14,7 +14,7 @@
 		<div class="css-1plme8k">
 			<nav class="css-dcpzrh">
 				<div class="css-fycla4">
-					<div class="nickname-area">user01</div>
+					<div class="nickname-area">${loginMember.userId }</div>
 				</div>
 				<div class="css-iyc8t">
 					<label class="unread-label common-bg-hover">
@@ -32,43 +32,19 @@
 				</div>
 				<ul tabindex="0" role="list" aria-label="내 채널 리스트" class="css-8lfz6g">
 					<li class="css-v2yhcd">
-						<a class="css-y6c1l4" href="">
-							<div class="css-qv4ssb">
-								<div class="preview-title-wrap">
-									<span class="preview-nickname">감자마켓</span>
-									<span class="badge-wrapper">
-										<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>
-									</span
-										><div class="sub-text">
-											<span>1일 전</span>
-										</div></div>
-								<div class="preview-description">
-									<span class="description-text">(두근두근) 신디님의 첫 거래 시도를 축하드려요! 첫 거래를 하기 전 꼭 읽어보세요:)</span>
-								</div>
-							</div>
-						</a>
-						<div class="common-bg-hover only-hover css-q6qzi5">
-							<span class="option-controller">
-								<svg width="36" height="36" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"></svg>
-							</span>
-						</div>
-					</li>
-					<li class="css-v2yhcd">
+					<c:forEach items="${myChatList}" var="chatRoom">
 						<a class="selected css-y6c1l4" href="">
-							<div class="css-qv4ssb"><div class="preview-title-wrap">
-								<span class="preview-nickname">user02</span>
+							<div class="preview-title-wrap">
+								<span class="preview-nickname">${chatRoom.roomOwner}</span>
 							<div class="sub-text">
-								<span>당산동</span>
-								<span> · </span>
-								<span>오후 10:25</span>
-							</div>
-							</div>
-								<div class="preview-description">
-									<span class="description-text">안녕하세요!</span>
+								<span>${location.admNm}</span>
+								<span>${chatRoom.lastChat}</span>
+								<span></span>
 							</div>
 							</div>
 								<img src="${pageContext.request.contextPath}/resources/img/chatting/Rectangle 3.png" class="preview-image" alt="" width="50px">
 						</a>
+					</c:forEach>
 						<div class="common-bg-hover only-hover css-q6qzi5">
 							<span class="option-controller">
 								<svg width="36" height="36" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"></svg>
