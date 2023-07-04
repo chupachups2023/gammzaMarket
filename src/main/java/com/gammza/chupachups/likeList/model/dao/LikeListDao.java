@@ -12,6 +12,8 @@ public interface LikeListDao {
 
 	int selectTotalRecord(String userId);
 
-	List<Zzim> selectLikeList(String userId);
+	List<Zzim> selectLikeList(String userId, RowBounds rowBounds);
+
+	int deleteZzim(String zzimNo);
 
 }

@@ -8,19 +8,22 @@
 	<select id="selectTotalRecord" resultType="_int">
 		select count(*)
 		from zzim
-		left join qna_category
-		on qna_category = qna_cat_no
+		left join gonggu
+		using (gonggu_no)
 		where zzim_member = #{userId}
 	</select>
 	<select id="selectLikeList" resultMap="likeListMap">
-		select zzim_no, photo1, gonggu_name, price, z.create_at, (select max(location_name) 
+		select zzim_no, z.gonggu_no, photo1, gonggu_name, price, z.create_at, (select max(location_name) 
 													               from location l , parti_tb p
 													             where g.gonggu_no = p.gonggu_no 
 													                 and p.location_code = l.location_no) location_name
 		from zzim z
 		left join gonggu g
 		on z.gonggu_no = g.gonggu_no
-		
+		where zzim_member = #{userId}
 	</select>
-	<!-- where zzim_member = #{userId} -->
+	<delete id="deleteZzim">
+		delete from zzim
+		where zzim_no = #{zzimNo}
+	</delete>
 </mapper>
