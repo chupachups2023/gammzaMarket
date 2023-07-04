@@ -23,4 +23,6 @@ public interface GongguDao {
 
 	int updateGongguCount(int gongguNo);
 
+	int updateEndStatus(int gongguNo);
+
 }

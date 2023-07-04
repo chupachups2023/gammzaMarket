@@ -65,7 +65,11 @@
 		set count=count+1
 		where gonggu_no=#{gongguNo}
 	</update>
-
+	<update id="updateEndStatus">
+		update gonggu
+		set END_STATUS = 0
+		where gonggu_no=#{gongguNo}
+	</update>
 </mapper>  
 
 

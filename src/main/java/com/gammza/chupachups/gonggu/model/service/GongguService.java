@@ -22,4 +22,6 @@ public interface GongguService {
 
 	int updateGongguCount(int gongguNo);
 
+	int updateEndStatus(int gongguNo);
+
 }
