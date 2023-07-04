@@ -137,7 +137,7 @@
         <c:choose>
         	<c:when test="${gonggu.gongguWriter eq loginMember.userId}">
        		<div class="ggRead-button">
-	            <a href="" class="button">글 수정</a>
+	            <a href="${pageContext.request.contextPath}/gonggu/update.go?gongguNo=${gonggu.gongguNo}" class="button">글 수정</a>
 	            <a href="" class="button">공구삭제</a>
 	            <a href="" class="button">채팅하기</a>
 	            <a href="" class="button">끌올하기</a>
