@@ -40,8 +40,7 @@
 		<ul class="qnaPaging">
 			<c:if test="${pi.nowPage ne 1}">
 				<li>
-					<a href="${pageContext.request.contextPath}/adminpage/questionList.do?nowPage=${pi.nowPage-1}"
-					tabindex="-1" aria-disabled="false">이전</a>
+					<a href="${pageContext.request.contextPath}/adminpage/questionList.do?nowPage=${pi.nowPage-1}">이전</a>
 				</li>
 			</c:if>
 			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">

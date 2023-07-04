@@ -8,7 +8,9 @@ public interface LikeListService {
 
 	int selectTotalRecord(String userId);
 
-	List<Zzim> selectLikeList(String userId);
+	List<Zzim> selectLikeList(String userId, RowBounds rowBounds);
+
+	int deleteZzim(String zzimNo);
 
 	List<Zzim> selectZzim(int gongguNo); //공구글마다 찜 수 몇인지
 	
