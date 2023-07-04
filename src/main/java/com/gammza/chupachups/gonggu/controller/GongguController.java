@@ -2,6 +2,8 @@ package com.gammza.chupachups.gonggu.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -79,23 +81,33 @@ public class GongguController {
 	}
 	
 	 @GetMapping("/ggRead.go") 
-	 public String ggRead_Partic(@RequestParam int gongguNo, Model model, HttpSession session) {
+	 public String ggRead_Partic(@RequestParam int gongguNo, Model model, HttpSession session) throws ParseException {
 		 Member loginMember=(Member)session.getAttribute("loginMember");
-		 int countResult=gongguService.updateGongguCount(gongguNo);
+		 gongguService.updateGongguCount(gongguNo);
 		 Gonggu gonggu = gongguService.selectOneGonggu(gongguNo);
 		 model.addAttribute("gonggu", gonggu);
 		 
+		 LocalDateTime today = LocalDateTime.now();
+		 LocalDateTime endTime = LocalDateTime.parse(ChangeDate.chageDateToJsp(gonggu.getEndTime()));
 		 
+		 if(today.isAfter(endTime)) {
+			 gongguService.updateEndStatus(gongguNo);
+		 }
 		 
-		 if(loginMember != null) {	//로그인 한 사람일 경우
-			 if(gonggu.getGongguWriter().equals(loginMember.getUserId())) { //글쓴사람이면
-				 return "/gonggu/ggRead_Leader"; 
-			 }else { //글쓴사람 아니면
+		 if(gonggu.getEndStatus()==1) {
+			 if(loginMember != null) {	//로그인 한 사람일 경우
+				 if(gonggu.getGongguWriter().equals(loginMember.getUserId())) { //글쓴사람이면
+					 return "/gonggu/ggRead_Leader"; 
+				 }else { //글쓴사람 아니면
+					 return "/gonggu/ggRead_Partic"; 
+				 }
+			 }else {				//로그인 안한 사람
 				 return "/gonggu/ggRead_Partic"; 
 			 }
-		 }else {				//로그인 안한 사람
-			 return "/gonggu/ggRead_Partic"; 
+		 }else {
+			 return "/gonggu/ggEnd"; 
 		 }
+		 
 	 }
 	 
 	 

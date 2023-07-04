@@ -101,10 +101,10 @@
             <div class="ggRead-num">
                 <div>${gonggu.num}개 나눠요<span>/</span></div>
                 <div class="ggRead-on"> 아직 <span>${gonggu.num - 1}개</span> 남았어요</div>
-            </div>
+            </div><input type="hidden" id="endtime" value="${gonggu.endTime }">
             <fmt:parseDate value="${gonggu.endTime }" var="endTime" pattern="yyyy-MM-dd HH:mm"/>
             <div class="ggRead-endtime"><fmt:formatDate value="${endTime }" pattern="yyyy년 MM월 dd일 HH시 mm분"/>까지 기다려요</div>
-            <div class="ggRead-lefttime">2일 23시간 15분 남았어요</div>
+            <div class="ggRead-lefttime" id="left-time"></div>
             <c:choose>
             	<c:when test="${empty gonggu.link }">
 		            <div><a class="ggRead-link-empty"> </a></div>
@@ -177,7 +177,7 @@
     </form>
 </div>
 
-<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggRead_Partic.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggRead_Partic.js?<%=System.currentTimeMillis() %>"></script>
 <script>
 const longitude= document.getElementById('longitude').value;
 const latitude= document.getElementById('latitude').value;
