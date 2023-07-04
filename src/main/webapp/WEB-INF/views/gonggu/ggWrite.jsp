@@ -112,9 +112,6 @@
     </div>
 	<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggWriteMap.js?<%=System.currentTimeMillis() %>"></script>
 <script>
-
-
-	
 	var now_utc = Date.now();
 	var timeOff = new Date().getTimezoneOffset()*60000;
 	var today = new Date(now_utc-timeOff).toISOString().substring(0, 16);
@@ -148,8 +145,6 @@
 	        readImage(e.target)
 	    });
 	}
-	
-	
 </script>
 
 

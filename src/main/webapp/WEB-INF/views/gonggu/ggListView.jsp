@@ -17,7 +17,14 @@
 						<img src="${pageContext.request.contextPath}/resources/upload/${list.photo1}" alt="이미지 없음">
 					</div>
 					<div class="onelineThreeTitle">
-						<div class="ggTitle">${list.gongguName }</div>
+						<c:choose>
+							<c:when test="${fn:length(list.gongguName) gt 18}">
+								<div class="ggTitle">${fn:substring(list.gongguName, 0, 18)}...</div>
+							</c:when>
+							<c:otherwise>
+								<div class="ggTitle">${list.gongguName}</div>
+							</c:otherwise>
+						</c:choose>
 						<div style="font-size: 20px;"><b><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" />P</b></div>
 						<div><small>${list.locationName}</small></div>
 					</div>
