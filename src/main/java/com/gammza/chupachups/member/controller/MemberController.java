@@ -24,60 +24,10 @@ import com.gammza.chupachups.member.model.vo.Member;
 
 public class MemberController {
 	
-	// private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
-	
-	@Inject
-	private SnsValue naverSns;
-	
-	
-	@Autowired
-	private MemberService memberService;
-	
-	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
-	
-	@GetMapping("/memberEnroll.me")
-	public void memberEnroll() {}  // => /member/memberEnroll
-	
-	
-	@PostMapping("/memberEnroll.me") 
-	public String memberEnroll(Member member) {
-		System.out.println("userPass = " + member);
-	 
-		
-		
-		// 비밀번호 암호화
-		String rawPassword = member.getUserPwd();
-		String encodedPassword = passwordEncoder.encode(rawPassword);
-		member.setUserPwd(encodedPassword);
-		System.out.println("changePass = " + member);
-		
-		int result = memberService.insertMember(member);
-		return "redirect:/";
-	}
-		
-	
 	@GetMapping("/memberLogin.me")
 	public String memberLogin() {
 		return "member/memberLogin";
 	}
-	
-	
-	/*
-	@GetMapping("/memberLogin.me")
-	public void login(Model model) throws Exception {
-		// Logger.info("login GET .....");
-		
-		SNSLogin snsLogin = new SNSLogin(naverSns);
-		model.addAttribute("naver_url", snsLogin.getNaverAuthURL());
-		
-//		SNSLogin snsLogin = new SNSLogin(naverSns);
-//		model.addAttribute("naver_url", snsLogin.getNaverAuthURL());
-	}
-	*/
-	
-	
-	
 	
 	@PostMapping("/memberLogin.me")
 	public String memberLogin(String userId, String userPwd, Model model, RedirectAttributes redirectAtt) {
@@ -97,6 +47,18 @@ public class MemberController {
 	}
 	
 	
+	/*
+	@GetMapping("/memberLogin.me")
+	public void login(Model model) throws Exception {
+		// Logger.info("login GET .....");
+		
+		SNSLogin snsLogin = new SNSLogin(naverSns);
+		model.addAttribute("naver_url", snsLogin.getNaverAuthURL());
+		
+//		SNSLogin snsLogin = new SNSLogin(naverSns);
+//		model.addAttribute("naver_url", snsLogin.getNaverAuthURL());
+	}
+	 */
 	
 	
 	
@@ -111,6 +73,50 @@ public class MemberController {
 			status.setComplete();
 		return "redirect:/";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	// private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+	
+	@Inject
+	private SnsValue naverSns;
+	
+	
+	@Autowired
+	private MemberService memberService;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
+	
+	
+	
+	
+	
+	@GetMapping("/memberEnroll.me")
+	public void memberEnroll() {} 
+	
+	@PostMapping("/memberEnroll.me") 
+	public String memberEnroll(Member member) {
+		System.out.println("userPass = " + member);
+		
+		// 비밀번호 암호화
+		String rawPassword = member.getUserPwd();
+		String encodedPassword = passwordEncoder.encode(rawPassword);
+		member.setUserPwd(encodedPassword);
+		System.out.println("changePass = " + member);
+		
+		int result = memberService.insertMember(member);
+		return "redirect:/";
+	}
+		
+	
+	
 	
 	@GetMapping("/memberDetail.me")
 	public void memberDetail() {
