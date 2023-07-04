@@ -34,4 +34,29 @@ document.querySelectorAll(".ggRead-slider-dot .ggRead-dot").forEach((dot, index)
     dot.addEventListener("click", () => {
         gotoSlider(index);
     })
-})
+});
+
+function setLeftTime(){
+	var now_utc = Date.now();
+	var endTime = document.getElementById("endtime").value;
+	var eT=new Date(endTime).getTime();
+	var leftMii=eT-now_utc;
+	
+	var leftDay=Math.floor(leftMii/1000/60/60/24);
+	var leftHour=Math.floor(leftMii/1000/60/60-leftDay*24);
+	var leftMin=Math.ceil(leftMii/1000/60-leftDay*24*60-leftHour*60);
+	document.getElementById("left-time").innerHTML=leftDay+"일 "+leftHour+"시간 "+leftMin+"분 남았어요";
+};
+
+
+//setLeftTime();
+$(function(){
+		setLeftTime();
+	setInterval(function(){
+		
+		setLeftTime();
+	},1000*10);
+});
+
+
+

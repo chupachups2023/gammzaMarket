@@ -2,8 +2,11 @@ package com.gammza.chupachups.gonggu.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -25,6 +28,8 @@ import com.gammza.chupachups.common.model.vo.PageInfo;
 import com.gammza.chupachups.common.template.Pagination;
 import com.gammza.chupachups.gonggu.model.service.GongguService;
 import com.gammza.chupachups.gonggu.model.vo.Gonggu;
+import com.gammza.chupachups.likeList.controller.LikeListController;
+import com.gammza.chupachups.likeList.model.vo.Zzim;
 import com.gammza.chupachups.location.controller.LocationController;
 import com.gammza.chupachups.location.model.service.LocationService;
 import com.gammza.chupachups.location.model.vo.Location;
@@ -43,6 +48,8 @@ public class GongguController {
 	private LocationService locationService;
 	@Autowired
 	private LocationController locationController;
+	@Autowired
+	private LikeListController likeListController;
 
 	@GetMapping("/ggWrite.go")
 	public void ggWrite() {
@@ -79,22 +86,29 @@ public class GongguController {
 	}
 	
 	 @GetMapping("/ggRead.go") 
-	 public String ggRead_Partic(@RequestParam int gongguNo, Model model, HttpSession session) {
+	 public String ggRead_Partic(@RequestParam int gongguNo, Model model, HttpSession session) throws ParseException {
 		 Member loginMember=(Member)session.getAttribute("loginMember");
+		 List<Zzim> zzimList=likeListController.selectZzim(gongguNo);
+		 model.addAttribute("zzimCount", zzimList.size());
+		 
+		 gongguService.updateGongguCount(gongguNo);
 		 Gonggu gonggu = gongguService.selectOneGonggu(gongguNo);
+		 
+		 LocalDateTime today = LocalDateTime.now();
+		 LocalDateTime endTime = LocalDateTime.parse(ChangeDate.chageDateToJsp(gonggu.getEndTime()));
+		 if(today.isAfter(endTime) && gonggu.getEndStatus()==1) {
+			 gongguService.updateEndStatus(gongguNo);
+			 gonggu = gongguService.selectOneGonggu(gongguNo);
+		 }
+		 
 		 model.addAttribute("gonggu", gonggu);
 		 
-		 
-		 
-		 if(loginMember != null) {	//로그인 한 사람일 경우
-			 if(gonggu.getGongguWriter().equals(loginMember.getUserId())) { //글쓴사람이면
-				 return "/gonggu/ggRead_Leader"; 
-			 }else { //글쓴사람 아니면
-				 return "/gonggu/ggRead_Partic"; 
-			 }
-		 }else {				//로그인 안한 사람
+		 if(gonggu.getEndStatus()==1) {
 			 return "/gonggu/ggRead_Partic"; 
+		 }else {
+			 return "/gonggu/ggEnd"; 
 		 }
+		 
 	 }
 	 
 	 
@@ -184,7 +198,15 @@ public class GongguController {
 			return "/gonggu/ggWrite";
 		}
 	}
-
+	 @GetMapping("/update.go")
+	 public String gongguUpdate(@RequestParam int gongguNo, Model model) {
+		 Gonggu gonggu=gongguService.selectOneGonggu(gongguNo);
+		 model.addAttribute("gonggu", gonggu);
+		 Location location=locationService.selectLocationByNo(gonggu.getLocationNo());
+		 model.addAttribute("location", location);
+		 
+		 return "/gonggu/ggUpdate";
+	 }
 	
 	
 	

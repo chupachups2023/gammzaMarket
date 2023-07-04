@@ -40,17 +40,19 @@
 	
 	<nav id="pagingNav">
 		<ul class="qnaPaging">
+			<c:if test="${pi.totalRecord eq 0 }">
+				
+			</c:if>
 			<c:if test="${pi.nowPage ne 1}">
 				<li>
-					<a href="${pageContext.request.contextPath}/mypage/myQuestionList.do?nowPage=${pi.nowPage-1}"
-					tabindex="-1" aria-disabled="false">이전</a>
+					<a href="${pageContext.request.contextPath}/mypage/myQuestionList.do?nowPage=${pi.nowPage-1}">이전</a>
 				</li>
 			</c:if>
 			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
 				<c:choose>
 					<c:when test="${p eq pi.nowPage }">
 						<li>
-							<a href="${pageContext.request.contextPath}/mypage/myQuestionList.do?nowPage=${p}">${p}</a>
+							<a id="selectedPage" href="${pageContext.request.contextPath}/mypage/myQuestionList.do?nowPage=${p}">${p}</a>
 						</li>
 					</c:when>
 					<c:otherwise>
@@ -60,7 +62,7 @@
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
-			<c:if test="${pi.nowPage ne pi.totalPage }">
+			<c:if test="${${pi.nowPage ne pi.totalPage && pi.totalPage ne 0}}">
 				<li><a href="${pageContext.request.contextPath}/mypage/myQuestionList.do?nowPage=${pi.nowPage+1}">다음</a></li>
 			</c:if>
 		</ul>

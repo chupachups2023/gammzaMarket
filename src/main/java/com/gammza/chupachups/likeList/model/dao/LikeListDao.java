@@ -11,7 +11,11 @@ import com.gammza.chupachups.likeList.model.vo.Zzim;
 public interface LikeListDao {
 
 	int selectTotalRecord(String userId);
+ 
+	List<Zzim> selectLikeList(String userId, RowBounds rowBounds);
 
-	List<Zzim> selectLikeList(String userId);
+	int deleteZzim(String zzimNo);
+
+	List<Zzim> selectZzim(int gongguNo);
 
 }

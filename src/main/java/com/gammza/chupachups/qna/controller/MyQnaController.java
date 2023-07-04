@@ -19,7 +19,6 @@ import com.gammza.chupachups.common.template.Pagination;
 import com.gammza.chupachups.member.model.vo.Member;
 import com.gammza.chupachups.qna.model.service.QnaService;
 import com.gammza.chupachups.qna.model.vo.Qna;
-import com.gammza.chupachups.qna.model.vo.QnaCategory;
 
 @Controller
 @RequestMapping("/mypage")

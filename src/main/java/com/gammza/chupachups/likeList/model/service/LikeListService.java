@@ -9,7 +9,11 @@ import com.gammza.chupachups.likeList.model.vo.Zzim;
 public interface LikeListService {
 
 	int selectTotalRecord(String userId);
+ 
+	List<Zzim> selectLikeList(String userId, RowBounds rowBounds);
 
-	List<Zzim> selectLikeList(String userId);
+	int deleteZzim(String zzimNo);
 
+	List<Zzim> selectZzim(int gongguNo); //공구글마다 찜 수 몇인지
+	
 }

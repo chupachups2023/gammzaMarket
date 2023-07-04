@@ -219,7 +219,7 @@
     text-align: right;
     color: rgb(114, 114, 114);
 }
-.ggRead-report:hover{
+.ggRead-report>*:hover{
     text-decoration: underline;
     text-underline-position : under;
     cursor:pointer;
