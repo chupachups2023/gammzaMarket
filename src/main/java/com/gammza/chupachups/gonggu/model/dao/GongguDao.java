@@ -21,4 +21,6 @@ public interface GongguDao {
 
 	int selectTotalRecored();
 
+	int updateGongguCount(int gongguNo);
+
 }

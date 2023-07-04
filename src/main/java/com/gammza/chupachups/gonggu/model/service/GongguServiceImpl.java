@@ -43,4 +43,9 @@ public class GongguServiceImpl implements GongguService {
 	public ArrayList<Gonggu> selectggListView() {
 		return gongguDao.selectggListView();
 	}
+
+	@Override
+	public int updateGongguCount(int gongguNo) {
+		return gongguDao.updateGongguCount(gongguNo);
+	}
 }
