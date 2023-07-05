@@ -16,7 +16,7 @@
 		<div class="mypageTitle">
 			<div><h2>현재 보유 포인트</h2></div>
 			<div class="maypageMain-point"><h2>&emsp;<fmt:formatNumber type="number" maxFractionDigits="3" value="${loginMember.point}" />&emsp;</h2></div>
-			<a href="" class="button">포인트 충전하기</a>
+			<a href="${pageContext.request.contextPath}/member/pointPurchase.do" class="button">포인트 충전하기</a>
 		</div>
 	</div>
 	<div align="center">
