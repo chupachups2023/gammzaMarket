@@ -104,7 +104,7 @@ public class GongguController {
 		 model.addAttribute("gonggu", gonggu);
 		 
 		 if(gonggu.getEndStatus()==1) {
-			 return "/gonggu/ggRead_Partic"; 
+			 return "/gonggu/ggRead"; 
 		 }else {
 			 return "/gonggu/ggEnd"; 
 		 }
@@ -192,7 +192,7 @@ public class GongguController {
 			int gongguNo=gongguService.selectLastNum();
 			Gonggu newGonggu=gongguService.selectOneGonggu(gongguNo);
 			model.addAttribute("gonggu", newGonggu);
-			return "/gonggu/ggRead_Partic";
+			return "/gonggu/ggRead";
 		}else {
 			redirectAttr.addFlashAttribute("msg","글 작성에 실패했습니다ㅠ");
 			return "/gonggu/ggWrite";
@@ -300,10 +300,10 @@ public class GongguController {
 		if(result>0) {
 			Gonggu updateGonggu=gongguService.selectOneGonggu(newGonggu.getGongguNo());
 			model.addAttribute("gonggu", updateGonggu);
-			return "/gonggu/ggRead_Partic";
+			return "/gonggu/ggRead";
 		}else {
 			redirectAttr.addFlashAttribute("msg","글 수정에 실패했습니다ㅠ");
-			return "/gonggu/ggRead_Partic";
+			return "/gonggu/ggRead";
 		}
 	}
 	
