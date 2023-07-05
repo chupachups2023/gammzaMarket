@@ -17,9 +17,6 @@ h1 {
   text-align: center;
 }
 
-hr {
-  width: 90%;
-}
 
 table, tr, td {
   font-size: 18px;
@@ -76,11 +73,41 @@ tr td:nth-child(2) {
   font-weight: 500px;
   font-size: 16px;
   border: none;
-  
+
+  font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
+}
+.qttcont *{
+	margin:0;
+	padding:0;
+	font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
+}
+.Parti-td{
+	border: none; 
+	border-bottom: 1px solid #000000;
+}
+.numbtn{
+	width:20px
+}
+#qttnum{
+	width:60px;
 }
 
 .partic-btn input:hover {
   background: rgb(35, 117, 84);
 }
 
+.partic-container img{
+	margin-left: 25px;
+}
+.partic-container input{
+	font-size:16px;
+	text-align:center;
+}
+.title-size{
+	width:313px;
+}
+.btn{
+	font-size:15px;
+	width:110px
+}
 
