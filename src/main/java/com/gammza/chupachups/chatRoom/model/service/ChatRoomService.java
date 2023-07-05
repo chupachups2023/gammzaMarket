@@ -8,7 +8,8 @@ import com.gammza.chupachups.chatRoom.model.vo.ChatRoom;
 
 public interface ChatRoomService {
 
-	List<ChatRoom> chatRoomList(RowBounds rowBounds);
+	//List<ChatRoom> chatRoomList(RowBounds rowBounds);
+	List<ChatRoom> chatRoomList(RowBounds rowBounds, String roomOwner);
 
 	int selectTotalRecord();
 

@@ -28,7 +28,7 @@
 	</div>
 	<div align="center">
 		<a href="" class="button-long">참여한 공구 보기</a>&emsp;
-		<a href="${pageContext.request.contextPath}/chatRoom/myChatList.bo" class="button">채팅 보기</a>&emsp;
+		<a href="${pageContext.request.contextPath}/chatRoom/myChatList.bo?roomOwner=${loginMember.userId}" class="button">채팅 보기</a>&emsp;
 		<a href="" class="button">리뷰 보기</a><br><br><br>
 		<a href="" class="button-long">내가 연 공구 보기</a>&emsp;
 		<a href="${pageContext.request.contextPath}/mypage/likeList.do" class="button">찜한 공구 보기</a>&emsp;
