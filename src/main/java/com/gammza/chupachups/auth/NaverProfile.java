@@ -8,7 +8,9 @@ import lombok.Data;
 
 @Data
 public class NaverProfile {
+	public String id;
 
+	/*
 	public String resultcode;
 	public String message;
 	public Response response;
@@ -21,8 +23,26 @@ public class NaverProfile {
 	public void setAdditionalProperty(String name, Object value) {
 	this.additionalProperties.put(name, value);
 	}
+	*/
 
 }
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 	class Response {
 
 		public String id;
@@ -37,6 +57,7 @@ public class NaverProfile {
 		}
 
 }
+*/
 
 
 

@@ -198,7 +198,15 @@ public class GongguController {
 			return "/gonggu/ggWrite";
 		}
 	}
-
+	 @GetMapping("/update.go")
+	 public String gongguUpdate(@RequestParam int gongguNo, Model model) {
+		 Gonggu gonggu=gongguService.selectOneGonggu(gongguNo);
+		 model.addAttribute("gonggu", gonggu);
+		 Location location=locationService.selectLocationByNo(gonggu.getLocationNo());
+		 model.addAttribute("location", location);
+		 
+		 return "/gonggu/ggUpdate";
+	 }
 	
 	
 	

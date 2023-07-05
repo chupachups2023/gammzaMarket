@@ -26,4 +26,9 @@
 		delete from zzim
 		where zzim_no = #{zzimNo}
 	</delete>
+	<select id="selectZzim" resultMap="likeListMap">
+		select *
+		from zzim
+		where gonggu_no=#{gongguNo}
+	</select>
 </mapper>

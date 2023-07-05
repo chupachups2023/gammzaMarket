@@ -9,7 +9,7 @@ import com.gammza.chupachups.likeList.model.vo.Zzim;
 public interface LikeListService {
 
 	int selectTotalRecord(String userId);
-
+ 
 	List<Zzim> selectLikeList(String userId, RowBounds rowBounds);
 
 	int deleteZzim(String zzimNo);
