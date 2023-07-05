@@ -52,10 +52,10 @@
 	document.querySelector("#sysdate").addEventListener('change',(e)=>{
 	
 		if ($("#sysdate").is(':checked')) {
-			$("#openTime").prop("disabled", true);
+			$("#openTime").attr("name", "");
 			$("#sysdate").attr("name", "openTime");
 		} else {
-			$("#openTime").prop("disabled", false);
+			$("#openTime").attr("name", "openTime");
 			$("#sysdate").attr("name", "");
 		}
 	
