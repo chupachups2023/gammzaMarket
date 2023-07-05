@@ -14,43 +14,36 @@
 		<div class="css-1plme8k">
 			<nav class="css-dcpzrh">
 				<div class="css-fycla4">
-					<div class="nickname-area">${loginMember.userId }</div>
+					<div class="nickname-area">${loginMember.userId}</div>
 				</div>
 				<div class="css-iyc8t">
 					<label class="unread-label common-bg-hover">
 						<span class="unread-description">안읽은 메시지만 보기</span>
 						<input class="checkbox" type="checkbox">
-						<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M13.4687 6.37459C13.6756 6.11573 13.6334 5.73818 13.3746 5.5313C13.1157 5.32442 12.7382 5.36655 12.5313 5.62541L7.72681 11.637L5.39354 9.60959C5.14341 9.39225 4.76444 9.41883 4.5471 9.66896C4.32975 9.91909 4.35633 10.2981 4.60646 10.5154L7.41166 12.9529C7.53501 13.0601 7.69673 13.1123 7.85947 13.0975C8.02221 13.0828 8.17188 13.0022 8.2739 12.8746L13.4687 6.37459Z" fill="#ADB1BA">
-								
-							</path>
-							<path fill-rule="evenodd" clip-rule="evenodd" d="M18 9C18 13.9706 13.9706 18 9 18C4.02944 18 0 13.9706 0 9C0 4.02944 4.02944 0 9 0C13.9706 0 18 4.02944 18 9ZM16.8 9C16.8 13.3078 13.3078 16.8 9 16.8C4.69218 16.8 1.2 13.3078 1.2 9C1.2 4.69218 4.69218 1.2 9 1.2C13.3078 1.2 16.8 4.69218 16.8 9Z" fill="#ADB1BA">
-								
-							</path>
-						</svg>
 					</label>
 				</div>
 				<ul tabindex="0" role="list" aria-label="내 채널 리스트" class="css-8lfz6g">
+					<c:forEach items="${chatRoomList}" var="chatRoom">
 					<li class="css-v2yhcd">
-					<c:forEach items="${myChatList}" var="chatRoom">
 						<a class="selected css-y6c1l4" href="">
 							<div class="preview-title-wrap">
 								<span class="preview-nickname">${chatRoom.roomOwner}</span>
 							<div class="sub-text">
-								<span>${location.admNm}</span>
-								<span>${chatRoom.lastChat}</span>
+								<span>${chatRoom.gongguNo }</span>
 								<span></span>
+								<span>${chatRoom.lastChat}</span>
 							</div>
 							</div>
 								<img src="${pageContext.request.contextPath}/resources/img/chatting/Rectangle 3.png" class="preview-image" alt="" width="50px">
 						</a>
-					</c:forEach>
 						<div class="common-bg-hover only-hover css-q6qzi5">
 							<span class="option-controller">
 								<svg width="36" height="36" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"></svg>
 							</span>
 						</div>
 					</li>
+					</c:forEach>
+					
 				</ul>
 				<div class="faq-container">
 					<a class="faq-content common-bg-hover" href="" target="_blank" rel="noreferrer">

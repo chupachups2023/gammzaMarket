@@ -16,8 +16,8 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 	private ChatRoomDao chatRoomDao;
 	
 	@Override
-	public List<ChatRoom> chatRoomList(RowBounds rowBounds) {
-		return chatRoomDao.chatRoomList(rowBounds);
+	public List<ChatRoom> chatRoomList(RowBounds rowBounds, String roomOwner) {
+		return chatRoomDao.chatRoomList(rowBounds, roomOwner);
 	}
 
 	@Override

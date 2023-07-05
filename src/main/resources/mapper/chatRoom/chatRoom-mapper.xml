@@ -5,18 +5,15 @@
   
 <mapper namespace="com.gammza.chupachups.chatRoom.model.dao.ChatRoomDao">
 	<resultMap type="chatRoom" id="chatRoomMap"></resultMap>
-		<select id="selectTotalRecord" resultType="_int">
+	
+	<select id="selectTotalRecord" resultType="_int">
 		select count(*)
 		  from chat_room
 	</select>
-	<select resultMap="chatRoomMap" id="chatRoomList">
-		select *
-		  from chat_room
-		  join chat_msg using (room_no)
-		 where room_no = (select room_no
-		 				    from chat_room
-		 				   where room_owner = '${roomOwner}')
-		  order by last_chat desc
+	<select id="chatRoomList" resultMap="chatRoomMap">
+	select *
+	from chat_room
+	where room_owner = #{userId}
+		order by last_chat desc
 	</select>
-	
 </mapper>

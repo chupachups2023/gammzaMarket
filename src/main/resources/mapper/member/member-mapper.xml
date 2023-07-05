@@ -28,15 +28,10 @@
  			#{birthday}
  		)
  	</insert>
- 	
- 	
- 	
- 	
+
  	<select id="selectOneMember" resultMap="memberMap">
  		SELECT * FROM MEMBER
- 		WHERE USER_ID = #{userId}
+ 		join location on(location = location_no)
+ 		 where user_id = #{userId}
  	</select>
- 
- 
- 
  </mapper>
