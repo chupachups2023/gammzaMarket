@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.gammza.chupachups.likeList.model.dao.LikeListDao">
+	<resultMap id="likeListMap" type="zzim"/>
+	<select id="selectTotalRecord" resultType="_int">
+		select count(*)
+		from zzim
+		left join gonggu
+		using (gonggu_no)
+		where zzim_member = #{userId}
+	</select>
+	<select id="selectLikeList" resultMap="likeListMap">
+		select zzim_no, z.gonggu_no, photo1, gonggu_name, price, z.create_at
+		from zzim z
+		left join gonggu g
+		on z.gonggu_no = g.gonggu_no
+		where zzim_member = #{userId}
+	</select>
+	<delete id="deleteZzim">
+		delete from zzim
+		where zzim_no = #{zzimNo}
+	</delete>
+	<select id="selectZzim" resultMap="likeListMap">
+		select *
+		from zzim
+		where gonggu_no=#{gongguNo}
+	</select>
+</mapper>

@@ -1,12 +1,8 @@
 package com.gammza.chupachups.member.controller;
 
-import java.lang.System.Logger;
-
 import javax.inject.Inject;
 
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +14,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.gammza.chupachups.auth.SNSLogin;
 import com.gammza.chupachups.auth.SnsValue;
 import com.gammza.chupachups.member.model.service.MemberService;
 import com.gammza.chupachups.member.model.service.MemberServiceImpl;
@@ -129,9 +124,8 @@ public class MemberController {
 	}
 	
 	@GetMapping("/memberInfo.me")
-	public String memberInfo(String userId, Model model) {
-		model.addAttribute("loginMember", memberService.selectOneMember(userId));
-		return "redirect:/";
+	public String memberInfo() { 
+		return "/mypage/memberInfo";
 	}
 	
 	@GetMapping("/checkId.me")
@@ -156,7 +150,6 @@ public class MemberController {
 	public String findPwd() {
 		return "member/findPwd";
 	}
-	
 	
 }
 

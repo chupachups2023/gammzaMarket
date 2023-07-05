@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.gammza.chupachups.location.model.dao.LocationDao">
+	<resultMap type="location" id="locationMap"></resultMap>
+	<select id="selectLocation" resultMap="locationMap">
+		select * from location 
+		 where SIDO_NM=#{sidoNm} and SGG_NM = #{sggNm} and ADM_NM = #{admNm} and LEG_NM = #{legNm} 
+	</select>
+	<select id="selectLocationLess" resultMap="locationMap">
+		select * from location 
+		 where SIDO_NM=#{sidoNm} and SGG_NM = #{sggNm} and LEG_NM = #{legNm} 
+	</select>
+	<select id="selectLocationLest" resultMap="locationMap">
+		select * from location 
+		 where SIDO_NM=#{sidoNm} and SGG_NM = #{sggNm} and ADM_NM = #{admNm} 
+	</select>
+	<select id="selectlegCount" resultType="_int">
+		select count(*) from location where SIDO_NM=#{sidoNm} and SGG_NM = #{sggNm} and LEG_NM = #{legNm} 
+	</select>
+	<select id="selectadmCount" resultType="_int">
+		select count(*) from location where SIDO_NM=#{sidoNm} and SGG_NM = #{sggNm} and ADM_NM = #{admNm} 
+	</select>
+	<select id="selectLocationByNo" resultMap="locationMap">
+		select * from location 
+		 where location_no=#{locationNo}
+	</select>
+	<update id="updateLocation">
+		update member
+		set location=#{locationNo}
+		where user_id=#{userId}
+	</update>
+  </mapper>

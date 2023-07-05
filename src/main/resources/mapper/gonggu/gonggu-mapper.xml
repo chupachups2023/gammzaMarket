@@ -26,7 +26,8 @@
 			#{latitude},
 			#{longitude},
 			default,
-			default,  null,sysdate
+			default,  null,sysdate,
+			#{locationNo}, default
 		)
 	</insert>
 	<select id="selectLastNum" resultType="_int">
@@ -55,16 +56,40 @@
 		SELECT  GONG.GONGGU_NO
 		            ,GONG.GONGGU_NAME
 		            ,GONG.PRICE
-		            ,GONG.PHOTO1
-		          , (SELECT MAX(LOCATION_NAME) 
-		               FROM LOCATION LCTN , PARTI_TB PRTB 
-		             WHERE GONG.GONGGU_NO = PRTB.GONGGU_NO 
-		                 AND PRTB.LOCATION_CODE = LCTN.LOCATION_NO) LOCATION_NAME
+		            ,GONG.PHOTO1, GONG.LOCATION_NO
 		   FROM   GONGGU   GONG
 		 WHERE GONG.STATUS = 1
 	</select>
-
-
+	<update id="updateGongguCount">
+		update gonggu
+		set count=count+1
+		where gonggu_no=#{gongguNo}
+	</update>
+	<update id="updateEndStatus">
+		update gonggu
+		set END_STATUS = 0
+		where gonggu_no=#{gongguNo}
+	</update>
+	<update id="updateGonggu">
+		update gonggu
+		   set gonggu_name=#{gongguName},
+		   	   price=#{price},
+		   	   type=#{type},
+		   	   num=#{num},
+		   	   category=#{category},
+		   	   photo1=#{photo1},
+		   	   photo2=#{photo2},
+		   	   photo3=#{photo3},
+		   	   link=#{link},
+		   	   send_time=${sendTime},
+		   	   open_time=${openTime},
+		   	   end_time=${endTime},
+		   	   latitude=#{latitude},
+		   	   longitude=#{longitude},
+		   	   update_at=sysdate,
+		   	   location_no=#{locationNo}
+		 where gonggu_no=#{gongguNo} 
+	</update>
 </mapper>  
 
 

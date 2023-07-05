@@ -8,29 +8,41 @@
 	<jsp:param value="장소인증" name="title"/>
 </jsp:include>
 
+<form method="post" action="${pageContext.request.contextPath}/location/EnrollLocation.lo" name="loactionFrm">
   <div class="location-body">
         <div class="location-map" id="map"></div>
         <div>
             <div>
                 <div class="location-title">현재 접속 동네</div>
-                <div class="location-cont">서울시 영등포구 당산 제2동</div>
+                <div class="location-cont">
+                	<input name="sidoNm" id="sidoNm" readonly class="location-curr">
+		            <input name="sggNm"  id="sggNm" readonly class="location-curr">
+		            <input name="admNm"  type="hidden" id="admNm" >
+		            <input name="legNm"  id="legNm" readonly class="location-curr">
+				</div>
             </div>
             <div class="location-part">
                 <div class="location-title">우리 동네 근처 옆동네</div>
                 <div class="location-cont">당산동, 당산동4가, 당산동5가, 당산동6가, 합정동, 여의동, 양평동, 영등포동</div>
             </div>
-            <form>
-            <input type="hidden" id="lon" name="longitude">
-            <input type="hidden" id="lat" name="latitude">
+            <input type="hidden" id="lon" name="longitude" >
+            <input type="hidden" id="lat" name="latitude" >
+            
             <div class="location-btn">
-                <input type="submit" value="장소 인증하기" class="button">
+                <input type="button" value="장소 인증하기" class="button" id="location-submit" onclick="locationSubmit();">
             </div>
-            </form>
         </div>
     </div>
-
+</form>
 <script>
-
+function locationSubmit(){
+	const userId="${loginMember.userId}";
+	if(userId=="" || userId ==null){
+		alert("장소를 인증하려면 먼저 로그인을 해야 합니다!")
+	}else{
+		loactionFrm.submit();
+	}
+}
 function success(position) {
     const latitude = position.coords.latitude;   // 위도(37.xxxx)
     const longitude = position.coords.longitude; // 경도
@@ -45,6 +57,9 @@ function success(position) {
     		header.setRequestHeader("Authorization","KakaoAK 840539f3651afe19f12cc19a1dc9e0ab");
         },
         success:function(result){
+        	var address=result.documents[0].address.address_name;
+        	geoCoe(address);
+        	
         	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
         	var options = { //지도를 생성할 때 필요한 기본 옵션
         		center: new kakao.maps.LatLng(latitude, longitude), //지도의 중심좌표.
@@ -75,6 +90,22 @@ function success(position) {
         		marker.setPosition(latlng);
         		marker.setMap(map);
         		
+        		$.ajax({
+		        	type:"get",
+		        	url:"https://dapi.kakao.com/v2/local/geo/coord2address.json?x="+latlng.La+"&y="+latlng.Ma+"&input_coord=WGS84",
+		        	beforeSend: function (header) {
+		        		header.setRequestHeader("Authorization","KakaoAK 840539f3651afe19f12cc19a1dc9e0ab");
+		            },
+		            success:function(clickresult){
+		            	var clickaddress=clickresult.documents[0].address.address_name;
+			            console.log(clickaddress);
+		            	geoCoe(clickaddress);
+		            },
+		            error:function(){
+		            	console.log("실패");
+		            }
+				});
+        		
         	});
         },
         error:function(){
@@ -91,8 +122,69 @@ function getUserLocation() {
     }
 }
 
-getUserLocation();
+
+//지도 토큰 받아오기
+var accessToken = 'none';
+var errCnt=0;
+getAccessToken();
+function getAccessToken(){
+	jQuery.ajax({
+		type:'GET',
+		url: 'https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json',
+		data:{
+		consumer_key : 'd063e685682f42c998cc',
+		consumer_secret : '26cef6c7c4f64fe4bea7'
+		},
+		success:function(data){
+			errCnt = 0;																									
+			accessToken = data.result.accessToken;
+			getUserLocation();
+			
+		},
+		error:function(data) {
+		}
+	});
+};
+
+function geoCoe(address){
+ 	address = encodeURIComponent(address);
+ 	var pagenum = '0';
+ 	var resultcount = '1';
+ 	$.ajax({
+ 		type:'GET',
+ 		url: 'https://sgisapi.kostat.go.kr/OpenAPI3/addr/geocode.json',
+ 		data:{
+ 			accessToken : accessToken,
+ 			address : address,
+ 			pagenum : pagenum,
+ 			resultcount : resultcount,
+ 		},
+ 		success:function(data){
+ 			switch (parseInt(data.errCd)){
+ 					case 0:
+	     			var resultdata = data.result.resultdata[0];
+ 					document.getElementById('sidoNm').value=resultdata.sido_nm
+ 					document.getElementById('sggNm').value=resultdata.sgg_nm
+ 					document.getElementById('admNm').value=resultdata.adm_nm
+ 					document.getElementById('legNm').value=resultdata.leg_nm
+ 					
+ 					break;
+ 					case -401:
+                     	errCnt ++;
+ 						getAccessToken();
+ 						console.log(errCnt);
+ 						
+ 						//window.location.reload()
+ 					break;																					
+ 					case -100:																					
+ 					break;																					
+ 			}
+ 		},																														
+ 		error:function(data) {
+ 		}																														
+ 	});																		
+}
+</script> 
 
 
-</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

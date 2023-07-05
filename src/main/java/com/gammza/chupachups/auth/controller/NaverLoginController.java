@@ -7,8 +7,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.gammza.chupachups.auth.model.service.SocialService;
+import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import net.sf.json.JSONObject;
 
 @Controller
 public class NaverLoginController {

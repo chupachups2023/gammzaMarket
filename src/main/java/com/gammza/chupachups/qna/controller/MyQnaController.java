@@ -31,11 +31,11 @@ public class MyQnaController {
 		Member loginMember = (Member) session.getAttribute("loginMember");
 		String userId = loginMember.getUserId();
 		int totalRecord = qnaService.selectMyQnaTotalRecord(userId);
-		int limit = 5;
+		int limit = 10;
 		int offset = (nowPage -1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		PageInfo pi = Pagination.getPageInfo(totalRecord, nowPage, limit, 3);
+		PageInfo pi = Pagination.getPageInfo(totalRecord, nowPage, limit, 5);
 		
 		List<Qna> myQuestionList = qnaService.selectMyQuestionList(userId, rowBounds);
 		model.addAttribute("myQuestionList", myQuestionList);
@@ -54,9 +54,11 @@ public class MyQnaController {
 	
 	@PostMapping("/myQuestionUpdate.do")
 	public String myQuestionUpdate(@RequestParam int qnaNo, Qna qna, @RequestParam int nowPage, Model model, RedirectAttributes redirectAttr) {
-		qna.setQnaContent(qna.getQnaContent());
+		Qna qna2 = qnaService.selectOneQna(qnaNo);
+		qna2.setQnaContent(qna.getQnaContent());
+		qna2.setQnaTitle(qna.getQnaTitle());
 		
-		int result = qnaService.updateMyQuestion(qna);
+		int result = qnaService.updateMyQuestion(qna2);
 
 		if(result > 0) {
 			redirectAttr.addFlashAttribute("msg", "수정완료");

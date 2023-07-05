@@ -5,7 +5,6 @@ import java.sql.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @Data
 @NoArgsConstructor
@@ -19,4 +18,6 @@ public class Qna {
 	private Date createAt;
 	private int ref;
 	private int depth;
+	private int qnaCatNo;
+	private String qnaCatName;
 }

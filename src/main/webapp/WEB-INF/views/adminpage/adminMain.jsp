@@ -37,6 +37,15 @@
         margin: 10px;
         cursor: pointer;
     }
+    .adminpageBoxHalf{
+        position: relative;
+        width: 300px;
+        height: 137px;
+        border-radius: 10px;
+        display: inline-block;
+        margin: 10px 0 10px 10px;
+        cursor: pointer;
+    }
     .orange{
         background: #F3CF9F;
     }
@@ -57,7 +66,24 @@
         font-weight: bold;
         line-height: 100px;
     }
-
+    .adminpageBoxHalf>div{
+        position: absolute;
+        top:25px;
+        left:50px;
+        width: 200px;
+        height: 90px;
+        background: rgba(255, 255, 255, 0.32);
+        border-radius: 20px;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 35px;
+        font-weight: bold;
+        line-height: 90px;
+    }
+    .halfbox{
+        display: inline-block;
+        width:300px;
+    }
 
 </style>
 
@@ -72,10 +98,15 @@
             <div>전체공구</div>
         </div>
         <div class="adminpageBox orange" onclick="location.href='#'">
-            <div>신고목록</div>
+            <div class="menuBig">회원정보</div>
         </div>
-        <div class="adminpageBox green" onclick="location.href='${pageContext.request.contextPath}/adminpage/questionList.do'">
-            <div>1:1 문의</div>
+        <div class="halfbox">
+            <div class="adminpageBoxHalf green" onclick="location.href='${pageContext.request.contextPath}/report/reportList.bo'">
+                <div>신고목록</div>
+            </div>
+            <div class="adminpageBoxHalf green" onclick="location.href='${pageContext.request.contextPath}/adminpage/questionList.do'">
+                <div>1:1 문의</div>
+            </div>
         </div>
     </div>
 

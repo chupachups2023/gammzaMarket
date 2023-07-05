@@ -6,9 +6,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=44e2b21ec219944c6d834fff124a603d&libraries=services,clusterer"></script>
-<meta charset="UTF-8">
 <title>${param.title }</title>
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/img/header/shorcuticon.png">
@@ -35,7 +35,7 @@
 					<c:when test="${empty loginMember}">
 						<button class="header-login btn" id="open-modal">로그인</button>
 					</c:when>
-					<c:when test="${loginMember.userId eq admin}">
+					<c:when test="${loginMember.userId eq 'admin'}">
 						<a href="${pageContext.request.contextPath}/admin/adminMain.ad"><img src="https://cdn-icons-png.flaticon.com/512/5909/5909015.png" alt="adminlogo" class="header-login" ></a>
 		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
 					</c:when>
@@ -138,42 +138,6 @@
 				</form>
 			</div>
 		</div>
-
-
-		<!-- 로그인 모달창 원본 -->
-
-		<%-- <div class="modal" tabindex="-1" id="modal">
-			<div class="modal-dialog">
-				<div class="modal-content">
-				    <div class="modal-header">
-						<h5 class="modal-title">로그인</h5>
-				    </div>
-			   		<form action="" method="post" name="loginFrm">
-				      	<div class="modal-body">
-				        	<table class="table">
-								<tr>
-									<td scope="col">아이디</td>
-									<td scope="col">
-										<input type="text" name="userId" placeholder="아이디를 입력하세요">
-									</td>
-								</tr>
-								<tr>
-									<td scope="col">비밀번호</td>
-									<td scope="col">
-										<input type="password" name="userPwd" placeholder="비밀번호를 입력하세요">
-									</td>
-								</tr>
-							</table>
-				      	</div>
-				      	<div class="modal-footer">
-					        <button type="button" id="login-modal">로그인</button>
-					        <button type="button" id="close-modal">닫기</button>
-				    	</div>
-					</form>
-			      
-				</div>
-			</div>
-		</div> --%>
 
 		<script>
 	        $(function(){

@@ -3,6 +3,7 @@ package com.gammza.chupachups;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,7 +22,8 @@ public class HomeController {
 		return "forward:gonggu/homeList.go";
 	}
 	@GetMapping("/common/location.lo")
-	public String location() {
+	public String location(Model model) {
+		model.addAttribute("lomsg", "");
 		return "/member/location";
 	}
 }
