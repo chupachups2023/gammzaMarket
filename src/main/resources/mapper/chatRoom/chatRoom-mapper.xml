@@ -5,18 +5,28 @@
   
 <mapper namespace="com.gammza.chupachups.chatRoom.model.dao.ChatRoomDao">
 	<resultMap type="chatRoom" id="chatRoomMap"></resultMap>
-		<select id="selectTotalRecord" resultType="_int">
+	<select id="selectTotalRecord" resultType="_int">
 		select count(*)
 		  from chat_room
 	</select>
-	<select resultMap="chatRoomMap" id="chatRoomList">
-		select *
-		  from chat_room
-		  join chat_msg using (room_no)
-		 where room_no = (select room_no
-		 				    from chat_room
-		 				   where room_owner = '${roomOwner}')
-		  order by last_chat desc
+	<select id="chatRoomList" resultMap="chatRoomMap">
+	select *
+	  from chat_room
+	 where room_owner = (select gonggu_writer
+                           from gonggu
+                          WHERE gonggu_no = (select gonggu_no
+		 				  					   from parti_tb
+		 				 					  where parti_member = #{userId})) or room_owner = #{userId}
+	order by last_chat desc
 	</select>
-	
+	<insert id="isnertChatRoom">
+		insert into chat_room
+			 values (
+			 		chatroom_seq.nextval,
+			 		#{gongguNo},
+			 		#{gongguWriter},
+			 		default,
+			 		SYSDATE		 
+			 )				
+	</insert>
 </mapper>

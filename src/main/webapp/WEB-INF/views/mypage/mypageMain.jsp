@@ -16,7 +16,7 @@
 		<div class="mypageTitle">
 			<div><h2>현재 보유 포인트</h2></div>
 			<div class="maypageMain-point"><h2>&emsp;<fmt:formatNumber type="number" maxFractionDigits="3" value="${loginMember.point}" />&emsp;</h2></div>
-			<a href="" class="button">포인트 충전하기</a>
+			<a href="${pageContext.request.contextPath}/member/pointPurchase.do" class="button">포인트 충전하기</a>
 		</div>
 	</div>
 	<div align="center">
@@ -28,7 +28,7 @@
 	</div>
 	<div align="center">
 		<a href="" class="button-long">참여한 공구 보기</a>&emsp;
-		<a href="${pageContext.request.contextPath}/chatRoom/myChatList.bo" class="button">채팅 보기</a>&emsp;
+		<a href="${pageContext.request.contextPath}/chatRoom/myChatList.bo?roomOwner=${loginMember.userId}" class="button">채팅 보기</a>&emsp;
 		<a href="" class="button">리뷰 보기</a><br><br><br>
 		<a href="" class="button-long">내가 연 공구 보기</a>&emsp;
 		<a href="${pageContext.request.contextPath}/mypage/likeList.do" class="button">찜한 공구 보기</a>&emsp;

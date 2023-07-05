@@ -1,4 +1,4 @@
-package com.gammza.chupachups.gonggu.model.vo;
+package com.gammza.chupachups.chatRoom.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

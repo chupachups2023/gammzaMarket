@@ -73,6 +73,7 @@ tr td:nth-child(2) {
   font-weight: 500px;
   font-size: 16px;
   border: none;
+
   font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
 }
 .qttcont *{
@@ -90,6 +91,7 @@ tr td:nth-child(2) {
 #qttnum{
 	width:60px;
 }
+
 .partic-btn input:hover {
   background: rgb(35, 117, 84);
 }
@@ -108,3 +110,4 @@ tr td:nth-child(2) {
 	font-size:15px;
 	width:110px
 }
+

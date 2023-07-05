@@ -26,15 +26,15 @@ public class LoginInterceptor implements HandlerInterceptor{
 		//true 리턴시 => 기존 요청 흐름대로 해당 controller를 실행
 		//false 리턴시 => controller 실행되지 않음
 		HttpSession session=request.getSession();
-		Member loginUser=(Member)session.getAttribute("loginUser");
-		if(loginUser == null) {
+		Member loginMember =(Member) session.getAttribute("loginMember");
+		if (loginMember == null) {
 			FlashMap flashMap=new FlashMap(); //한번 쓰고 버림
 			flashMap.put("msg", "로그인 후 접근 가능한 페이지입니다.");
 			FlashMapManager manager=RequestContextUtils.getFlashMapManager(request);
 			manager.saveOutputFlashMap(flashMap,request,response);
 			response.sendRedirect(request.getContextPath()+"/");
 			return false;
-		}else {
+		} else {
 			return true;
 		}
 	}
