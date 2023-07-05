@@ -63,7 +63,7 @@
 				<c:choose>
 					<c:when test="${empty qAns.qnaNo}">
 						<button class="qnaBtn" type="submit">작성</button>
-						<button class="qnaBtn" type="button" onclick="location.href='${pageContext.request.contextPath}/adminpage/deleteQuestion.do?ref=${qna.ref}'">삭제</button>
+						<button class="qnaBtn" type="button" onclick="javascript:delQna();">삭제</button>
 						<button class="qnaBtn" type="button"
 							onclick="location.href='${pageContext.request.contextPath}/adminpage/questionList.do?nowPage=${nowPage}'">목록</button>
 					</c:when>
@@ -80,4 +80,25 @@
 			<input type="hidden" name="ref" value="${qna.ref}">
 		</form>
 	</div>
+	
+<script>
+function delQna() {
+	let yn = confirm("삭제하겠습니까?");
+	if(yn){
+			$.ajax({
+				url:"deleteQuestion.do",
+				data:{
+					ref:${qna.ref}
+				},
+				type:"get",
+				success: function() {
+					location.href="${pageContext.request.contextPath}/adminpage/questionList.do";
+				},
+				error:function() {
+					console.log("삭제 ajax 통신 실패");
+				}
+			});
+	}
+}
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
