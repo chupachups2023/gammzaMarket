@@ -18,7 +18,7 @@ import com.gammza.chupachups.report.model.vo.Report;
 
 @Controller
 //@SessionAttributes
-public class reportController {
+public class ReportController {
 	
 	@Autowired
 	private ReportService reportService;

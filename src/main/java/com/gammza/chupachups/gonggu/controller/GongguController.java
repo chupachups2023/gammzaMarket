@@ -93,14 +93,15 @@ public class GongguController {
 		 
 		 gongguService.updateGongguCount(gongguNo);
 		 Gonggu gonggu = gongguService.selectOneGonggu(gongguNo);
-		 model.addAttribute("gonggu", gonggu);
 		 
 		 LocalDateTime today = LocalDateTime.now();
 		 LocalDateTime endTime = LocalDateTime.parse(ChangeDate.chageDateToJsp(gonggu.getEndTime()));
-		 
-		 if(today.isAfter(endTime)) {
+		 if(today.isAfter(endTime) && gonggu.getEndStatus()==1) {
 			 gongguService.updateEndStatus(gongguNo);
+			 gonggu = gongguService.selectOneGonggu(gongguNo);
 		 }
+		 
+		 model.addAttribute("gonggu", gonggu);
 		 
 		 if(gonggu.getEndStatus()==1) {
 			 return "/gonggu/ggRead_Partic"; 

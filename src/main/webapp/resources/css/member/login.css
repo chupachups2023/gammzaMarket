@@ -131,6 +131,7 @@ input::-webkit-input-placeholder {
 
 .modal-content h2 {
 	font-size: 20px;
+	padding: 20px 0;
 }
 
 .login-chkbox {
@@ -139,21 +140,35 @@ input::-webkit-input-placeholder {
 }
 
 .login-chkbox label {
-	padding-left: 10px;
-}
-
-}
-.modal-content h2 {
-	padding: 20px 0;
+	padding-left: 5px;
+	font-size: 13px;
 }
 
 .login-bottom {
 	display: flex;
-	justify-content: space-evenly
+	justify-content: space-evenly;
 }
 
 .login-bottom li {
 	padding: 10px 0;
+}
+
+.login-bottom li a {
+	font-size: 13px;
+}
+
+.modal-closeBtn {
+	position: absolute;
+	right: 30px;
+	top: 30px;
+	cursor: pointer;
+	/* background: url("../resources/img/header/close-icon.png") no-repeat; */
+	background: url("close-icon.png") no-repeat; /* 경로 수정 예정 */
+	color: transparent;
+	width: 41px;
+	height: 41px;
+	
+	
 }
 
 
@@ -167,14 +182,14 @@ input::-webkit-input-placeholder {
 }
 
 .social-container {
-	padding: 20px 0;
+	padding: 16px 0;
 	/* display: flex;
 	flex-direction: column;
 	padding: 20px 0; */
 }
 
 .social-container h3 {
-	padding-bottom: 10px;
+	padding: 16px;
 }
 
 .login-kakao a img {

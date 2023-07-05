@@ -35,7 +35,7 @@
 					<c:when test="${empty loginMember}">
 						<button class="header-login btn" id="open-modal">로그인</button>
 					</c:when>
-					<c:when test="${loginMember.userId eq admin}">
+					<c:when test="${loginMember.userId eq 'admin'}">
 						<a href="${pageContext.request.contextPath}/admin/adminMain.ad"><img src="https://cdn-icons-png.flaticon.com/512/5909/5909015.png" alt="adminlogo" class="header-login" ></a>
 		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
 					</c:when>
@@ -125,12 +125,12 @@
 										</li>
 										<li class="login-naver">
 											<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&state=test&client_id=GQGBjwaCzYQZZ_5XkE2o&state=STATE_STRING&redirect_uri=http://localhost:8095/chupachups/auth/naver/callback">
-												<img src="${pageContext.request.contextPath}/resources/img/header/icon_naver_long_resize.png" alt="네이버로그인버튼">
+												<img src="${pageContext.request.contextPath}/resources/img/header/icon_naver_long_resize.png" alt="네이버로그인버튼"> (수정중..)
 											</a> 
 									</ul>
 									<br>
-									<button type="button" id="close-modal">임시닫기버튼</button>
-
+									<a id="close-modal" class="modal-closeBtn">닫기</a>
+									<!-- <button type="button" id="close-modal">임시닫기버튼</button> -->
 								</div>
 							</div>
 						</div>

@@ -3,6 +3,7 @@ package com.gammza.chupachups.likeList.model.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.session.RowBounds;
 
 import com.gammza.chupachups.likeList.model.vo.Zzim;
 
@@ -10,8 +11,10 @@ import com.gammza.chupachups.likeList.model.vo.Zzim;
 public interface LikeListDao {
 
 	int selectTotalRecord(String userId);
+ 
+	List<Zzim> selectLikeList(String userId, RowBounds rowBounds);
 
-	List<Zzim> selectLikeList(String userId);
+	int deleteZzim(String zzimNo);
 
 	List<Zzim> selectZzim(int gongguNo);
 

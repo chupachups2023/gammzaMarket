@@ -2,6 +2,7 @@ package com.gammza.chupachups.likeList.model.service;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +21,13 @@ public class LikeListServiceImpl implements LikeListService {
 	}
 
 	@Override
-	public List<Zzim> selectLikeList(String userId) {
-		return likeListDao.selectLikeList(userId);
+	public List<Zzim> selectLikeList(String userId, RowBounds rowBounds) {
+		return likeListDao.selectLikeList(userId, rowBounds);
+	}
+
+	@Override
+	public int deleteZzim(String zzimNo) {
+		return likeListDao.deleteZzim(zzimNo);
 	}
 
 	@Override

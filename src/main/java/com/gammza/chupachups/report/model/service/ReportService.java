@@ -13,5 +13,5 @@ public interface ReportService {
 	int selectTotalRecord();
 
 	List<Report> selectreportList(RowBounds rowBounds);
-
+ 
 }
