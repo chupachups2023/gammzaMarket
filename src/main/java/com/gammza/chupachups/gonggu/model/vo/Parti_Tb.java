@@ -1,7 +1,5 @@
 package com.gammza.chupachups.gonggu.model.vo;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,8 +11,8 @@ import lombok.ToString;
 @ToString
 public class Parti_Tb {
 	private int gongguNo;
-    private String partiMember;
-    private int num;
-    private Date regAt;
-    private int locationCode;
+	private String partiMember;
+	private int num; //구매 수량
+	private String regAt;
+	private String locationCode;
 }
