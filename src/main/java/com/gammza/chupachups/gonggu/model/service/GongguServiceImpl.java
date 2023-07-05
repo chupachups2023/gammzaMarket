@@ -54,4 +54,9 @@ public class GongguServiceImpl implements GongguService {
 		return gongguDao.updateEndStatus(gongguNo);
 	}
 
+	@Override
+	public int updateGonggu(Gonggu gonggu) {
+		return gongguDao.updateGonggu(gonggu);
+	}
+
 }

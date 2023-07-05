@@ -38,7 +38,7 @@
     font-size: 30px;
     font-weight: bold;
     margin: 0 15px;
-    width:600px;
+    max-width:600px;
 }
 .ggRead-head{
     display: flex;

@@ -32,7 +32,7 @@
 		<a href="" class="button">리뷰 보기</a><br><br><br>
 		<a href="" class="button-long">내가 연 공구 보기</a>&emsp;
 		<a href="${pageContext.request.contextPath}/mypage/likeList.do" class="button">찜한 공구 보기</a>&emsp;
-		<a href="" class="button">공지사항</a>
+		<a href="${pageContext.request.contextPath}/adminpage/noticeList.bo" class="button">공지사항</a>
 	</div>
 	<div class="qna-potato" onclick="location.href='${pageContext.request.contextPath}/mypage/myQuestionList.do'">
 		<img src="${pageContext.request.contextPath}/resources/img/mypage/qna.png" width="120px" >

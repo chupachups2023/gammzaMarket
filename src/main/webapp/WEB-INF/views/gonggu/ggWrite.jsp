@@ -27,7 +27,7 @@
                 </select>
             </div>
                 <div class="write-price">
-                    <span>개당</span><input type="number" name="price" >P
+                    <span>구매 가격</span><input type="number" name="price" >P
                 </div>
 			<div class="ggWrite-mid-flex">
                 <div>
