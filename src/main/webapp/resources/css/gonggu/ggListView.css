@@ -1,13 +1,13 @@
 @charset "UTF-8";
 	/* 공구게시판 */
     .GGlistSec {
-        width: 1100px;
+        width: 1200px;
         margin: 100px auto;
     }
     /* 한 줄에 세 이미지 박스 */
 	.onelineThreebox{
 		display:inline-block;
-		margin: 35px 0px 0px 35px;
+		margin: 50px 0px 0px 80px;
 		position: relative;
 	}
 	.onelineThreebox:hover{

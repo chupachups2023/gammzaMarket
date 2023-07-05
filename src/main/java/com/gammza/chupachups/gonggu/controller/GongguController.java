@@ -232,6 +232,7 @@ public class GongguController {
 		ArrayList<String> photo = new ArrayList<String>();
 
 		if (upPhoto1.getSize() > 0) {
+			System.out.println("들어옴");
 			if(Ogonggu.getPhoto1() != null) {
 				File file=new File(saveDirectory, Ogonggu.getPhoto1());
 				file.delete();
@@ -246,6 +247,8 @@ public class GongguController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}else {
+			newGonggu.setPhoto1(Ogonggu.getPhoto1());
 		}
 		if(upPhoto2.getSize()>0) {
 			String changeFilename=SpringUtils.changeMultipartFile(upPhoto2);
@@ -262,6 +265,8 @@ public class GongguController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}else {
+			newGonggu.setPhoto2(Ogonggu.getPhoto2());
 		}
 		if(upPhoto3.getSize()>0) {
 			String changeFilename=SpringUtils.changeMultipartFile(upPhoto3);
@@ -278,6 +283,8 @@ public class GongguController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}else {
+			newGonggu.setPhoto3(Ogonggu.getPhoto3());
 		}
 		//사진 정렬
 		if (!photo.isEmpty()) {
