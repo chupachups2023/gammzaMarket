@@ -2,6 +2,8 @@ package com.gammza.chupachups.likeList.model.service;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
+
 import com.gammza.chupachups.likeList.model.vo.Zzim;
 
 public interface LikeListService {
