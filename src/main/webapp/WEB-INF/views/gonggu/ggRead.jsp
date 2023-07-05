@@ -146,7 +146,7 @@
         	</c:when>
         	<c:otherwise>
 	        <div class="ggRead-button">
-	            <a href="" class="button">참여신청</a>
+	            <a href="${pageContext.request.contextPath}/gonggu/partiEnroll.pa?gongguNo=${gonggu.gongguNo}" class="button">참여신청</a>
 	            <a href="" class="button">채팅하기</a>
 	        </div>
         	</c:otherwise>
