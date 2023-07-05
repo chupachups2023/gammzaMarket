@@ -119,7 +119,7 @@ public class GongguController {
 		
 		 int locationNo=locationService.selectLocation(map).getLocationNo();
 		 gonggu.setLocationNo(locationNo);
-		 gonggu.setPrice(gonggu.getPrice()/gonggu.getNum());
+		 gonggu.setPrice(gonggu.getPrice());
 		if (gonggu.getOpenTime().equals("sysdate")) {
 			gonggu.setEndTime(ChangeDate.chageDate(gonggu.getEndTime()));
 			gonggu.setSendTime(ChangeDate.chageDate(gonggu.getSendTime()));
@@ -213,7 +213,7 @@ public class GongguController {
 			@RequestParam MultipartFile upPhoto3, Model model, RedirectAttributes redirectAttr) {
 		 Gonggu Ogonggu=gongguService.selectOneGonggu(newGonggu.getGongguNo());
 		 
-		 newGonggu.setPrice(newGonggu.getPrice()/newGonggu.getNum());
+		 newGonggu.setPrice(newGonggu.getPrice());
 		 
 		 int locationNo=locationService.selectLocation(map).getLocationNo();
 		 newGonggu.setLocationNo(locationNo);
