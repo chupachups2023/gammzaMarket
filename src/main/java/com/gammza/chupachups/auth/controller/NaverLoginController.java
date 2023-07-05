@@ -28,6 +28,7 @@ public class NaverLoginController {
 		this.socialService = socialService;
 	}
 	
+	/*
 	@RequestMapping(value = "member/memberLogin.me", method = { RequestMethod.GET, RequestMethod.POST})
 	public String login(Model model, HttpSession session) {
 		String naverAuthUrl = socialService.getAuthorizationUrl(session);
@@ -38,6 +39,7 @@ public class NaverLoginController {
 		return "member/memberLogin";
 		
 	}
+	*/
 	
 	/* 230704 din 
 	@RequestMapping(value = "/chupachups/auth/naver/callback", method = { RequestMethod.GET, RequestMethod.POST})
