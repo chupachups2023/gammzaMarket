@@ -9,7 +9,7 @@
 	<jsp:param value="공구 글 수정하기" name="title"/>
 </jsp:include>
     <div class="write-container">
-        <form action="${pageContext.request.contextPath}/gonggu/ggUpdateFrm.go" method="post" enctype="multipart/form-data" name="ggUpdateFrm">
+        <form action="${pageContext.request.contextPath}/gonggu/ggUpdate.go" method="post" enctype="multipart/form-data" name="ggUpdateFrm">
             <div class="write-category">
                 <input class="write-stuff" type="text" placeholder="공구할 물건" name="gongguName" value="${gonggu.gongguName }">
                 <select name="category">
@@ -25,7 +25,7 @@
                 </select>
             </div>
                 <div class="write-price">
-                    <span>개당</span><input type="number" name="price" value="${gonggu.price }">P
+                    <span>구매가격</span><input type="number" name="price" value="${gonggu.price * gonggu.num }">P
                 </div>
 			<div class="ggWrite-mid-flex">
                 <div>
@@ -125,7 +125,7 @@
             <input type="hidden" name="sggNm" id="sggNm" value="${location.sggNm }">
             <input type="hidden" name="admNm" id="admNm" value="${location.admNm }">
             <input type="hidden" name="legNm" id="legNm" value="${location.legNm }">
-            <input type="hidden" name="gongguWriter" value="${loginMember.userId }">
+            <input type="hidden" name="gongguNo" value="${gonggu.gongguNo }">
             <div class="ggStart-btn"><input type="button" value="공구 수정" onclick="ggUpdateFrmSubmit();"></div>
         </form>
     </div>

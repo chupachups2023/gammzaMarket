@@ -25,4 +25,6 @@ public interface GongguDao {
 
 	int updateEndStatus(int gongguNo);
 
+	int updateGonggu(Gonggu gonggu);
+
 }

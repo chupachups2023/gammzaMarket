@@ -70,6 +70,26 @@
 		set END_STATUS = 0
 		where gonggu_no=#{gongguNo}
 	</update>
+	<update id="updateGonggu">
+		update gonggu
+		   set gonggu_name=#{gongguName},
+		   	   price=#{price},
+		   	   type=#{type},
+		   	   num=#{num},
+		   	   category=#{category},
+		   	   photo1=#{photo1},
+		   	   photo2=#{photo2},
+		   	   photo3=#{photo3},
+		   	   link=#{link},
+		   	   send_time=${sendTime},
+		   	   open_time=${openTime},
+		   	   end_time=${endTime},
+		   	   latitude=#{latitude},
+		   	   longitude=#{longitude},
+		   	   update_at=sysdate,
+		   	   location_no=#{locationNo}
+		 where gonggu_no=#{gongguNo} 
+	</update>
 </mapper>  
 
 

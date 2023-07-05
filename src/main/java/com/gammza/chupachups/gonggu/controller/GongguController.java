@@ -117,9 +117,9 @@ public class GongguController {
 	 public String ggEnrollFrm(Gonggu gonggu, Location map,@RequestParam MultipartFile upPhoto1, @RequestParam MultipartFile upPhoto2,
 			@RequestParam MultipartFile upPhoto3, Model model,RedirectAttributes redirectAttr) {
 		
-		 System.out.println("들어옴: "+map);
 		 int locationNo=locationService.selectLocation(map).getLocationNo();
 		 gonggu.setLocationNo(locationNo);
+		 gonggu.setPrice(gonggu.getPrice()/gonggu.getNum());
 		if (gonggu.getOpenTime().equals("sysdate")) {
 			gonggu.setEndTime(ChangeDate.chageDate(gonggu.getEndTime()));
 			gonggu.setSendTime(ChangeDate.chageDate(gonggu.getSendTime()));
@@ -192,7 +192,7 @@ public class GongguController {
 			int gongguNo=gongguService.selectLastNum();
 			Gonggu newGonggu=gongguService.selectOneGonggu(gongguNo);
 			model.addAttribute("gonggu", newGonggu);
-			return "/gonggu/ggRead_Leader";
+			return "/gonggu/ggRead_Partic";
 		}else {
 			redirectAttr.addFlashAttribute("msg","글 작성에 실패했습니다ㅠ");
 			return "/gonggu/ggWrite";
@@ -208,6 +208,103 @@ public class GongguController {
 		 return "/gonggu/ggUpdate";
 	 }
 	
-	
+	 @PostMapping("/ggUpdate.go")
+	 public String ggUpdate(Gonggu newGonggu, Location map, @RequestParam MultipartFile upPhoto1, @RequestParam MultipartFile upPhoto2,
+			@RequestParam MultipartFile upPhoto3, Model model, RedirectAttributes redirectAttr) {
+		 Gonggu Ogonggu=gongguService.selectOneGonggu(newGonggu.getGongguNo());
+		 
+		 newGonggu.setPrice(newGonggu.getPrice()/newGonggu.getNum());
+		 
+		 int locationNo=locationService.selectLocation(map).getLocationNo();
+		 newGonggu.setLocationNo(locationNo);
+		 //공구 바로 시작하기 처리
+		if (newGonggu.getOpenTime().equals("sysdate")) {
+			newGonggu.setEndTime(ChangeDate.chageDate(newGonggu.getEndTime()));
+			newGonggu.setSendTime(ChangeDate.chageDate(newGonggu.getSendTime()));
+		} else {
+			newGonggu.setOpenTime(ChangeDate.chageDate(newGonggu.getOpenTime()));
+			newGonggu.setEndTime(ChangeDate.chageDate(newGonggu.getEndTime()));
+			newGonggu.setSendTime(ChangeDate.chageDate(newGonggu.getSendTime()));
+		}
+		
+		String saveDirectory = application.getRealPath("/resources/upload");
+
+		ArrayList<String> photo = new ArrayList<String>();
+
+		if (upPhoto1.getSize() > 0) {
+			if(Ogonggu.getPhoto1() != null) {
+				File file=new File(saveDirectory, Ogonggu.getPhoto1());
+				file.delete();
+			}
+			
+			String changeFilename = SpringUtils.changeMultipartFile(upPhoto1);
+			photo.add(changeFilename);
+			File destFile = new File(saveDirectory, changeFilename);
+
+			try {
+				upPhoto1.transferTo(destFile); // 실제로 저장
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		if(upPhoto2.getSize()>0) {
+			String changeFilename=SpringUtils.changeMultipartFile(upPhoto2);
+			photo.add(changeFilename);
+			
+			File destFile=new File(saveDirectory, changeFilename);
+			if(Ogonggu.getPhoto2() != null) {
+				File file=new File(saveDirectory, Ogonggu.getPhoto2());
+				file.delete();
+			}
+
+			try {
+				upPhoto2.transferTo(destFile); // 실제로 저장
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		if(upPhoto3.getSize()>0) {
+			String changeFilename=SpringUtils.changeMultipartFile(upPhoto3);
+			photo.add(changeFilename);
+			
+			File destFile=new File(saveDirectory, changeFilename);
+			if(Ogonggu.getPhoto3() != null) {
+				File file=new File(saveDirectory, Ogonggu.getPhoto3());
+				file.delete();
+			}
+			
+			try {
+				upPhoto3.transferTo(destFile); // 실제로 저장
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		//사진 정렬
+		if (!photo.isEmpty()) {
+			Collections.sort(photo);
+
+			photo.remove(null);
+			
+			if (photo.size() == 1) {
+				newGonggu.setPhoto1(photo.get(0));
+			} else if (photo.size() == 2) {
+				newGonggu.setPhoto1(photo.get(0));
+				newGonggu.setPhoto2(photo.get(1));
+			} else {
+				newGonggu.setPhoto1(photo.get(0));
+				newGonggu.setPhoto2(photo.get(1));
+				newGonggu.setPhoto3(photo.get(2));
+			}
+		}
+		int result = gongguService.updateGonggu(newGonggu);
+		if(result>0) {
+			Gonggu updateGonggu=gongguService.selectOneGonggu(newGonggu.getGongguNo());
+			model.addAttribute("gonggu", updateGonggu);
+			return "/gonggu/ggRead_Partic";
+		}else {
+			redirectAttr.addFlashAttribute("msg","글 수정에 실패했습니다ㅠ");
+			return "/gonggu/ggRead_Partic";
+		}
+	}
 	
 }
