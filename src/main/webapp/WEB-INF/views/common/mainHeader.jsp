@@ -35,7 +35,7 @@
 			            <button type="button" class="header-login btn" id="open-modal">로그인</button>
 			            <button class="header-login btn" onclick="location.href='${pageContext.request.contextPath}/member/memberEnroll.me'">회원가입</button>
 	            	</c:when>
-	            	<c:when test="${loginMember eq 'admin'}">
+	            	<c:when test="${loginMember eq 'admin' }">
 			            <img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login">
 		      			<a href="${pageContext.request.contextPath}/member/memberDetail.me">${loginMember.userId}님 반갑습니다.</a>&emsp; 
 
