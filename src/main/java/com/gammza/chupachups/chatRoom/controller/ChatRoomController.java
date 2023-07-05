@@ -22,6 +22,7 @@ public class ChatRoomController {
 	@Autowired
 	private ChatRoomService chatRoomService;
 	
+	
 	@GetMapping("/chatRoom/myChatList.bo")
 	public String chatRoomList(@RequestParam(defaultValue="1") int nowPage, @RequestParam(required = false) String roomOwner, Model model) {
 		int totalRecord = chatRoomService.selectTotalRecord();
@@ -45,4 +46,5 @@ public class ChatRoomController {
 		return "mypage/chatting";
 	}
 	
+	/* @PostMapping("/") */
 }
