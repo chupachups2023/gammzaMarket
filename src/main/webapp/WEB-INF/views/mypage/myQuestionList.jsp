@@ -72,8 +72,4 @@
 	</div>
 </div>
 
-<script>
-	console.log("${loginMember.userId}");
-</script>
-
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
