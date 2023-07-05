@@ -32,7 +32,7 @@ public class Member {
 	private int point;
 	private double temperature;
 	private int kakaoIdkey;
-	private int naverIdkey;
+	private String naverIdkey;
 	private int category;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate birthday;
