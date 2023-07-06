@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gammza.chupachups.chatRoom.model.service.ChatRoomService;
 import com.gammza.chupachups.chatRoom.model.vo.ChatRoom;
@@ -20,8 +20,7 @@ import com.gammza.chupachups.common.template.Pagination;
 public class ChatRoomController {
 
 	@Autowired
-	private ChatRoomService chatRoomService;
-	
+	private ChatRoomService chatRoomService;	
 	
 	@GetMapping("/chatRoom/myChatList.bo")
 	public String chatRoomList(@RequestParam(defaultValue="1") int nowPage, @RequestParam(required = false) String roomOwner, Model model) {
@@ -46,5 +45,4 @@ public class ChatRoomController {
 		return "mypage/chatting";
 	}
 	
-	/* @PostMapping("/") */
 }

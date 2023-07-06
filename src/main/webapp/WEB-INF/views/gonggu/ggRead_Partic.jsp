@@ -125,10 +125,22 @@
             <div><img src="https://cdn-icons-png.flaticon.com/512/138/138533.png" alt="zzim" id="zzim"></div>
             <div><img src="https://cdn-icons-png.flaticon.com/512/2089/2089736.png" alt="share"></div>
         </div>
-        <div class="ggRead-button">
-            <a href="" class="button">참여신청</a>
-            <a href="" class="button">채팅하기</a>
-        </div>
+        <c:choose>
+        	<c:when test="${gonggu.gongguWriter eq loginMember.userId}">
+       		<div class="ggRead-button">
+	            <a href="${pageContext.request.contextPath}/gonggu/update.go?gongguNo=${gonggu.gongguNo}" class="button">글 수정</a>
+	            <a href="" class="button">공구삭제</a>
+	            <a href="" class="button">채팅하기</a>
+	            <a href="" class="button">끌올하기</a>
+	            <a href="${pageContext.request.contextPath}/parti_Tb/checkParti.do?gongguNo=${gonggu.gongguNo}" class="button">참여자확인</a>
+        	</div>
+        	</c:when>
+        	<c:otherwise>
+	        <div class="ggRead-button">
+	            <a href="${pageContext.request.contextPath}/gonggu/partiEnroll.pa?gongguNo=${gonggu.gongguNo}" class="button">참여신청</a>
+	        </div>
+        	</c:otherwise>
+        </c:choose>
         <div>
         <c:choose>
         	<c:when test="${empty loginMember.userId}">

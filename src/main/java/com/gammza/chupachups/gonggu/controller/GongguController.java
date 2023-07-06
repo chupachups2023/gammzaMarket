@@ -19,12 +19,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.gammza.chupachups.chatRoom.model.service.ChatRoomService;
 import com.gammza.chupachups.common.ChangeDate;
 import com.gammza.chupachups.common.SpringUtils;
 import com.gammza.chupachups.common.model.vo.PageInfo;
 import com.gammza.chupachups.common.template.Pagination;
 import com.gammza.chupachups.gonggu.model.service.GongguService;
 import com.gammza.chupachups.gonggu.model.vo.Gonggu;
+import com.gammza.chupachups.likeList.controller.LikeListController;
 import com.gammza.chupachups.location.controller.LocationController;
 import com.gammza.chupachups.location.model.service.LocationService;
 import com.gammza.chupachups.location.model.vo.Location;
@@ -43,6 +45,10 @@ public class GongguController {
 	private LocationService locationService;
 	@Autowired
 	private LocationController locationController;
+	@Autowired
+	private LikeListController likeListController;
+	@Autowired
+	private ChatRoomService chatRoomService;
 
 	@GetMapping("/ggWrite.go")
 	public void ggWrite() {
@@ -105,6 +111,7 @@ public class GongguController {
 		
 		 System.out.println("들어옴: "+map);
 		 int locationNo=locationService.selectLocation(map).getLocationNo();
+		 System.out.println("123"+ locationNo);
 		 gonggu.setLocationNo(locationNo);
 		if (gonggu.getOpenTime().equals("sysdate")) {
 			gonggu.setEndTime(ChangeDate.chageDate(gonggu.getEndTime()));
@@ -178,6 +185,7 @@ public class GongguController {
 			int gongguNo=gongguService.selectLastNum();
 			Gonggu newGonggu=gongguService.selectOneGonggu(gongguNo);
 			model.addAttribute("gonggu", newGonggu);
+			model.addAttribute("chatRoom", chatRoomService.insertChatRoom(newGonggu));
 			return "/gonggu/ggRead_Leader";
 		}else {
 			redirectAttr.addFlashAttribute("msg","글 작성에 실패했습니다ㅠ");

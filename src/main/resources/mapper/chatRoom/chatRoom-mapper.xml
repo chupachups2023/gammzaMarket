@@ -19,7 +19,7 @@
 		 				 					  where parti_member = #{userId})) or room_owner = #{userId}
 	order by last_chat desc
 	</select>
-	<insert id="isnertChatRoom">
+	<insert id="insertChatRoom">
 		insert into chat_room
 			 values (
 			 		chatroom_seq.nextval,
