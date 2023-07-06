@@ -23,7 +23,7 @@
     </div>
     <div class="partic-container">
 
-        <form action="" method="">
+        <form action="${pageContext.request.contextPath}/gonggu/partiEnroll.pa" method="post">
             <table>
                 <tbody>
                     <tr>
@@ -94,7 +94,10 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="partic-btn"><input type="button" value="참여하기" class="button"></div>
+            <input type="hidden" name="gongguNo" value="${gonggu.gongguNo }">
+            <input type="hidden" name="locationCode" value="${gonggu.locationNo }">
+            <input type="hidden" name="partiMember" value="${loginMember.userId }">
+            <div class="partic-btn"><input type="submit" value="참여하기" class="button"></div>
             <!-- 모달창: 유의사항 동의 - 참여하기 -->
         </form>
     </div>
