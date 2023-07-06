@@ -25,5 +25,7 @@ public class PurchaseController {
 		
 		Member member = memberService.selectOneMember(userId);
 		model.addAttribute(member);
+		
+		
 	}
 }

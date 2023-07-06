@@ -72,11 +72,14 @@
 		margin-left:90%;
 	}
 
-	#payBox{
-		display: none;
+	#payBox {
 	}
     
 </style>	
+
+<script>
+
+</script>
 
 <div class="pointPurchaseSec">
     <h1>포인트 결제</h1>
@@ -96,31 +99,34 @@
 				<tbody>
 					<tr>
 						<td>
-							<div class="pointSel sel1">
+							<a href="javascript:">
+							<div class="pointSel">
 								<h3 class="pointG">10,000p</h3>
 								10,000 원
+								<input type="hidden" class="price" value="10000">
 							</div>
+							</a>
 						</td>
 						<td>
-							<div class="pointSel sel2">
+							<div class="pointSel">
 								<h3 class="pointG">30,000p</h3>
 								30,000 원
+								<input type="hidden" class="price" value="30000">
 							</div>
 						</td>
 						<td>
-							<div class="pointSel sel3">
+							<div class="pointSel">
 								<h3 class="pointG">50,000p</h3>
 								50,000 원
+								<input type="hidden" class="price" value="50000">
 							</div>
 						</td>
 						<td>
-							<div class="pointSel sel4" >
+							<div class="pointSel" >
 								<h3 class="pointG">100,000p</h3>
 								100,000 원
+								<input type="hidden" class="price" value="100000">
 							</div>
-							
-							
-							<!-- onclick="selectedPoint('sel4', 100000);" -->
 						</td>
 					</tr>
 				</tbody>
@@ -130,12 +136,11 @@
 							결제가능 수단&emsp;&emsp;
 						</td>
 						<td colspan="3">
-								<input type="radio" name="purchaseSelect" value="카카오페이">카카오페이
-								<input type="radio" name="purchaseSelect" value="네이버페이">네이버페이
-								<input type="radio" name="purchaseSelect" value="계좌이체">계좌이체<br>
-								<input type="radio" name="purchaseSelect" value="토스뱅크">토스뱅크
-								<input type="radio" name="purchaseSelect" value="휴대폰">휴대폰 결제
-								<input type="radio" name="purchaseSelect" value="카드">신용/체크 카드 결제
+								<input type="radio" name="purchaseSelect" class="pg" value="kakaopay">카카오페이<br>
+								<input type="radio" name="purchaseSelect" class="pg" value="네이버페이">네이버페이<br>
+								<input type="radio" name="purchaseSelect" class="pg" value="계좌이체">계좌이체<br>
+								<input type="radio" name="purchaseSelect" class="pg" value="휴대폰">휴대폰 결제<br>
+								<input type="radio" name="purchaseSelect" class="pg" value="html5_inicis">신용/체크 카드 결제
 							
 						</td>
 					</tr>
@@ -143,13 +148,13 @@
 			</table>
 		</div>
 		<div>
-			if문으로 선택한 포인트와 결제수단으로 결제창 뜨는 div 공간
 			
 			<div id="payBox">
-
+				결제수단 : <input id="selectedPg">
+				결제가격 : <input id="pointPrice">
+				
+				이대로 포인트 충전하시겠습니까?
 			</div> 
-			
-
 
 		</div>
 		<br><br><br><br>
@@ -159,80 +164,61 @@
 				</textarea>
 				<input type="checkbox" required> 약관을 다 읽었으며 동의하고 결제합니다
 			</div>
-			<button id="purchaseBtn" type="submit">결제</button>
+			<button id="test" type="button">되나?</button>
+			<button id="purchaseBtn" type="button" onclick="requestPay();">결제</button>
 		</div>
 	</form>
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 <script>
-/*  	function selectedPoint(point, won) {
+	/* 포인트 선택 */
+	$('.pointSel').click(function(){
   		$('.pointSel').removeClass('clicking');
   		$(this).addClass('clicking');
- 	} */
-/* $(function(){
- 	$('.pointSel').on("click", () => {
-  		$('.pointSel').removeClass('clicking');
-  		$(this).addClass('clicking');
+  		const price1 = $(this).children('input').val();
+  		$('#pointPrice').val(price1);
 	});
-}) */
+	
+	/* 결제방식 선택 */
+	$(':radio').click(function() {
+		$('#test').attr("onclick", 'requestPay();');
+	});
 
-$(function(){
- 	$('.pointSel').click(function(){
-  		$('.pointSel').removeClass('clicking');
-  		$('.sel1').addClass('clicking');
-	});
-})
-	/* 결제 */
-	var IMP = window.IMP;	//생략가능
-	IMP.init("imp36052417"); //가맹점 식별 코드
+	/* 카카오페이 */
+	const IMP = window.IMP; 
+	IMP.init("imp36052417"); 
 	
-	function kakaopay() {
-		
-	IMP.request_pay({
-    pg : 'kakaopay',		//바꿀 수 있음
-    pay_method : 'card', //생략 가능
-    merchant_uid: "10000p", // 상점에서 관리하는 주문 번호
-    name : '주문명:결제테스트',
-    amount : 10000,
-    buyer_email : ${member.email},
-    buyer_name : ${member.name},
-    buyer_tel : ${member.phone},
-    buyer_addr : ${member.address},
-    buyer_postcode : ${member.zipcode}
-	}, function(rsp) { 
-		if(rsp.success) {   //결제성공시
-			$.ajax({
-				type:'post',
-				url:'/updatePoint',
-				data: {"purchased":, }
-			});
-		}else {
-			alert("결제실패원인: " + rsp.error_msg);
-		}
-	});
+	function requestPay() {
+	    IMP.request_pay({
+	        pg : $(".pg").val(),		//결제하는 pg종류
+	        pay_method : 'card',
+	        merchant_uid: '12322',		//  상점에서 관리하는 주문 번호(겹치지않는 번호로)
+	        name : '결제테스트 10,000p',			
+	        amount : $('#pointPrice').val(),
+	        buyer_email : '${member.email}',
+	        buyer_name : '${member.name}',
+	        buyer_tel : '${member.phone}',
+	        buyer_addr : '${member.address}',
+	        buyer_postcode : '${member.zipcode}'
+	    }, function (rsp) {
+	    	if(rsp.success) {     //결제성공시
+				$.ajax({
+					url:'/updatePoint',
+					type:'post',
+					data: {"purchased":10000, }
+				}); 
+			}else {
+				alert("결제실패원인: " + rsp.error_msg);
+			}
+	    });
 	}
- 	
-	// if(${qAns.qnaNo} != null) {
-	// 	$("#myQC").attr("readonly", true);
-	// 	$("#updateQ").attr("disabled", true).css("width", "200px").text("답변된 문의는 수정불가");
-	// 	$("#myQTitle").attr("readonly", true);
-	// }
 	
 	
-	// const chkAll = document.querySelector("#chkAll");
-	// chkAll.addEventListener("change", () => {
-	// 	const chkList = document.getElementsByName("delZzim");
-	// 	for (delZzim of chkList)
-	// 		delZzim.checked = chkAll.checked;
-	// });
 	
-	// function delSelZ() {
-	// 	const chkList = document.getElementsByName("delZzim");
-	// 	if(chkList.value != null) {
-	// 		delZFrm.submit();
-	// 	}else {
-	// 		alert("선택된 찜이 없습니다");
-	// 	}
-	// }
+	function orderNum() {
+		
+	}
+	
+	
 </script>
