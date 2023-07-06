@@ -39,7 +39,7 @@
 		                    </select>
 		                    <input type="number" name="num">명/개
 		                </div>
-	                	<small class="write-count-small">* 나를 포함한 인원 또는 수량으로 입력해주세요</small>
+	                	<small class="write-count-small">* 나를 제외한 인원 또는 수량으로 입력해주세요</small>
 		            </div>
 	                <!-- 사진 파일 첨부 -->
 	                <div class="ggWrite_fileupload_out">

@@ -36,12 +36,22 @@ public class PartiServiceImpl implements PartiService {
 	}
 
 	@Override
-	public int updatePartiStatus(HashMap<String, String> map) {
-		return partiDao.updatePartiStatus(map);
+	public int updatePartiStatusSelf(HashMap<String, String> map) {
+		return partiDao.updatePartiStatusSelf(map);
 	}
 
 	@Override
 	public int updateLeaderPoint(Gonggu gonggu) {
 		return partiDao.updateLeaderPoint(gonggu);
+	}
+
+	@Override
+	public ArrayList<Parti> selectPartiListForLeader(int gongguNo) {
+		return partiDao.selectPartiListForLeader(gongguNo);
+	}
+
+	@Override
+	public int updatePartiStatusByLeader(HashMap<String, String> map) {
+		return partiDao.updatePartiStatusByLeader(map);
 	}
 }

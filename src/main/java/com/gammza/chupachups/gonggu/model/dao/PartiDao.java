@@ -19,8 +19,12 @@ public interface PartiDao {
 
 	Parti selectOneParti(HashMap<String, String> selectParti);
 
-	int updatePartiStatus(HashMap<String, String> map);
+	int updatePartiStatusSelf(HashMap<String, String> map);
 
 	int updateLeaderPoint(Gonggu gonggu);
+
+	ArrayList<Parti> selectPartiListForLeader(int gongguNo);
+
+	int updatePartiStatusByLeader(HashMap<String, String> map);
 	
 }

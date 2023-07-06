@@ -101,6 +101,8 @@ public class PartiController {
 			map.put("gongguNo", String.valueOf(gongguNo));
 			map.put("userId", loginMember.getUserId());
 			Parti oneParti=partiService.selectOneParti(map);
+			
+			partiGongguList.get(i).setPrice(partiGongguList.get(i).getPrice()*oneParti.getNum());
 			partiGongguList.get(i).setCreateAt(oneParti.getRegAt()); //공구 생성날짜를 참여일로 바꾸기 jsp에서 뿌려줄 때 공구 생성날짜는 필요 없는데 참여일 날짜는 필요하니까
 			partiGongguList.get(i).setStatus(oneParti.getStatus());
 		}
@@ -112,6 +114,7 @@ public class PartiController {
 		return "/mypage/ggList_Parti";
 	}
 	
+	//물건 수령 했다고 버튼 눌렀을 때
 	@GetMapping("/partiStatusUpdate.pa")
 	public String partiStatusUpdate(@RequestParam int gongguNo, Model model) {
 		String userId=((Member)model.getAttribute("loginMember")).getUserId();
@@ -119,13 +122,38 @@ public class PartiController {
 		map.put("gongguNo", String.valueOf(gongguNo));
 		map.put("userId", userId);
 		Parti parti=partiService.selectOneParti(map);
-		partiService.updatePartiStatus(map);
+		partiService.updatePartiStatusSelf(map);
 		Gonggu gonggu=gongguService.selectOneGonggu(gongguNo);
+		
 		gonggu.setPrice(gonggu.getPrice()*parti.getNum());
 		int result=partiService.updateLeaderPoint(gonggu);
 		
 		partiList(model);
 		return "/mypage/ggList_Parti";
+	}
+	
+	//공구 총대가 보는 참여자 리스트
+	@GetMapping("/checkPartis.pa")
+	public String checkPartis(@RequestParam int gongguNo, Model model) {
+		ArrayList<Parti> partiList=partiService.selectPartiListForLeader(gongguNo);
+		Gonggu gonggu=gongguService.selectOneGonggu(gongguNo);
+		
+		model.addAttribute("gonggu", gonggu);
+		model.addAttribute("partiList", partiList);
+		return "/gonggu/ggPartiList";
+	}
+	
+	@GetMapping("/partiMemSelect.pa")
+	public String partiMemSelect(@RequestParam String[] id, @RequestParam int gongguNo, Model model) {
+		for(int i=0;i<id.length;i++) {
+			HashMap<String, String> map=new HashMap<String,String>();
+			map.put("gongguNo", String.valueOf(gongguNo));
+			map.put("userId", id[i]);
+			int result=partiService.updatePartiStatusByLeader(map);
+		}
+		checkPartis(gongguNo,model);
+		
+		return "/gonggu/ggPartiList";
 	}
 	
 }
