@@ -21,9 +21,6 @@ public class Member {
 	private String userPwd;
 	private String name;
 	private String phone;
-	private int zipcode;
-	private String address;
-	private String addressDetail;
 	private int location;
 	private String email;
 	private LocalDateTime createAt;
@@ -32,7 +29,7 @@ public class Member {
 	private int point;
 	private double temperature;
 	private int kakaoIdkey;
-	private int naverIdkey;
+	private String naverIdkey;
 	private int category;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate birthday;
