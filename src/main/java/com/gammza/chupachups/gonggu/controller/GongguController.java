@@ -119,9 +119,7 @@ public class GongguController {
 	 @PostMapping("/ggEnrollFrm.go")
 	 public String ggEnrollFrm(Gonggu gonggu, Location map,@RequestParam MultipartFile upPhoto1, @RequestParam MultipartFile upPhoto2,
 			@RequestParam MultipartFile upPhoto3, Model model,RedirectAttributes redirectAttr) {
-		
-		 int locationNo=locationService.selectLocation(map).getLocationNo();
-		 System.out.println("123"+ locationNo);
+		 int locationNo=locationController.selectLocation(map).getLocationNo();
 		 gonggu.setLocationNo(locationNo);
 		 gonggu.setPrice(gonggu.getPrice());
 		if (gonggu.getOpenTime().equals("sysdate")) {
@@ -196,7 +194,7 @@ public class GongguController {
 			int gongguNo=gongguService.selectLastNum();
 			Gonggu newGonggu=gongguService.selectOneGonggu(gongguNo);
 			model.addAttribute("gonggu", newGonggu);
-			model.addAttribute("chatRoom", chatRoomService.insertChatRoom(newGonggu));
+			chatRoomService.insertChatRoom(newGonggu);
 			return "/gonggu/ggRead";
 		}else {
 			redirectAttr.addFlashAttribute("msg","글 작성에 실패했습니다ㅠ");
