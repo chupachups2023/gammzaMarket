@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.gammza.chupachups.chatRoom.model.service.ChatRoomService;
 import com.gammza.chupachups.common.ChangeDate;
 import com.gammza.chupachups.common.SpringUtils;
 import com.gammza.chupachups.common.model.vo.PageInfo;
@@ -49,13 +50,10 @@ public class GongguController {
 	private LocationController locationController;
 	@Autowired
 	private LikeListController likeListController;
-<<<<<<< Updated upstream
-=======
 	@Autowired
 	private ChatRoomService chatRoomService;
 	@Autowired
 	private PartiService partiService;
->>>>>>> Stashed changes
 
 	@GetMapping("/ggWrite.go")
 	public void ggWrite() {	}
@@ -129,8 +127,7 @@ public class GongguController {
 	 @PostMapping("/ggEnrollFrm.go")
 	 public String ggEnrollFrm(Gonggu gonggu, Location map,@RequestParam MultipartFile upPhoto1, @RequestParam MultipartFile upPhoto2,
 			@RequestParam MultipartFile upPhoto3, Model model,RedirectAttributes redirectAttr) {
-		
-		 int locationNo=locationService.selectLocation(map).getLocationNo();
+		 int locationNo=locationController.selectLocation(map).getLocationNo();
 		 gonggu.setLocationNo(locationNo);
 		 gonggu.setPrice(gonggu.getPrice());
 		if (gonggu.getOpenTime().equals("sysdate")) {
@@ -205,6 +202,7 @@ public class GongguController {
 			int gongguNo=gongguService.selectLastNum();
 			Gonggu newGonggu=gongguService.selectOneGonggu(gongguNo);
 			model.addAttribute("gonggu", newGonggu);
+			chatRoomService.insertChatRoom(newGonggu);
 			return "/gonggu/ggRead";
 		}else {
 			redirectAttr.addFlashAttribute("msg","글 작성에 실패했습니다ㅠ");

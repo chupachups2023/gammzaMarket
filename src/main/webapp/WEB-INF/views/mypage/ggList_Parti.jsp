@@ -10,15 +10,24 @@
 </jsp:include>
 
 
-<<<<<<< Updated upstream
 <div id="container">
 <input type="checkbox"> 마감 공구 제외하고 보기
 <input type="radio"> 마감 순으로 정렬
 <input type="radio"> 신청 순으로 정렬
-=======
-	<div id="container">
->>>>>>> Stashed changes
 		<table class="table" align="center" >
+		<tr>
+			<td colspan="3"  class="sort-type">
+			<small>
+				<input type="checkbox" name="onlyOn" id="onlyOn"><label for="onlyOn"> 마감 공구 제외하고 보기</label>
+			</small>
+			</td>
+			<td colspan="3"  class="sort-type align-right">
+			<small>
+				<input type="radio" name="parti-sort" id="regAt" value="2" checked="checked"><label for="regAt"> 신청 순으로 정렬</label>
+				<input type="radio" name="parti-sort" id="endTime" value="0"><label for="endTime"> 마감 순으로 정렬</label> 
+			</small>
+			</td>
+		</tr>
 		<c:forEach items="${partiList}" var="list" varStatus="j">
 			<tr>
 				<th><img src="${pageContext.request.contextPath }/resources/upload/${list.photo1}" width="100px"></img></th>
@@ -64,7 +73,8 @@
 		}else{
 			return
 		}
-		
 	}
+	
+	
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

@@ -1,5 +1,6 @@
 package com.gammza.chupachups.location.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -21,12 +22,12 @@ public class LocationController {
 	
 	public Location selectLocation(Location map) {
 		Location fullLocation=locationService.selectLocation(map);
-		Location less=locationService.selectLocationLess(map).get(0);
+		ArrayList<Location> less=locationService.selectLocationLess(map);
 		
 		if(fullLocation != null) {
 			return fullLocation;
 		}else if(less !=null){
-			return less;
+			return less.get(0);
 		}else {
 			return locationService.selectLocationLest(map).get(0);
 		}

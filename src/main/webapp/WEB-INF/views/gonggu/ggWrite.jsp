@@ -11,7 +11,7 @@
 	<jsp:param value="공구 글 작성하기" name="title"/>
 </jsp:include>
     <div class="write-container">
-        <form action="${pageContext.request.contextPath}/gonggu/ggEnrollFrm.go" method="post" enctype="multipart/form-data" name="ggEnrollFrm">
+        <form action="${pageContext.request.contextPath}/gonggu/ggEnrollFrm.go?roomOwner=${loginMember.userId}" method="post" enctype="multipart/form-data" name="ggEnrollFrm">
             <div class="write-category">
                 <input class="write-stuff" type="text" placeholder="공구할 물건" name="gongguName">
                 <select name="category">

@@ -1,6 +1,7 @@
 package com.gammza.chupachups.member.controller;
 
-import javax.inject.Inject;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -8,15 +9,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.gammza.chupachups.auth.SnsValue;
 import com.gammza.chupachups.member.model.service.MemberService;
-import com.gammza.chupachups.member.model.service.MemberServiceImpl;
 import com.gammza.chupachups.member.model.vo.Member;
 
 @Controller
@@ -99,6 +100,59 @@ public class MemberController {
 		int result = memberService.insertMember(member);
 		return "redirect:/";
 	}
+	
+	
+	/*
+	@PostMapping("/checkId.me")
+	public String checkId(@RequestParam String userId, Model model) {
+		Member member = memberService.selectOneMember(userId);
+		boolean available = member == null;
+		
+		model.addAttribute("userId", userId);
+		model.addAttribute("available", available);
+		
+		return "jsonView";
+	}
+	*/
+	
+	/*
+	@GetMapping("/checkId.do")
+	public String checkId(@RequestParam String userId, Model model) {
+		Member member = memberService.selectOneMember(userId);
+		boolean available = member == null;
+		
+		model.addAttribute("userId", userId);
+		model.addAttribute("available", available);
+		
+		return "jsonView";
+	}
+	*/
+	
+	@PostMapping(value="/checkId.do", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public Map<Object, Object> checkIdFunc(@RequestBody String userId){
+		int count = 0;
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		count = memberService.checkIdFunc(userId);
+		map.put("cnt", count);
+		return map;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 		
 	
 	@GetMapping("/memberDetail.me")
@@ -128,16 +182,10 @@ public class MemberController {
 		return "/mypage/memberInfo";
 	}
 	
-	@GetMapping("/checkId.me")
-	public String checkId(@RequestParam String userId, Model model) {
-		Member member = memberService.selectOneMember(userId);
-		boolean available = member == null;
-		
-		model.addAttribute("userId", userId);
-		model.addAttribute("available", available);
-		
-		return "jsonView";
-	}
+	
+	
+	
+	
 	
 	
 	// 아이디/비밀번호 찾기 
