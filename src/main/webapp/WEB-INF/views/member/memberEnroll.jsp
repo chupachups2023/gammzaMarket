@@ -66,19 +66,20 @@
                     </td>
                </tr>
                <tr>
-                   <td scope="col" class="add">
+                   <td scope="col" class="add" colspan="2">
                        <input type="password" name="userPwd" id="userPwd" placeholder="비밀번호 입력">
                        <!-- 영문, 숫자, 특수문자 포함 8~20자리 -->
                    </td>
                </tr>
                <tr>
-                   <td scope="col" class="add">
+                   <td scope="col" class="add" colspan="2">
                        <input type="password" name="userPwdChk" id="userPwdChk" placeholder="비밀번호 다시 입력">
                    </td>
                </tr>
                <tr>
-               	  <td>
-               	  	<span style="font-size: 14px;">*영문, 숫자, 특수문자 포함 8~20자리로 입력</span>
+               	  <td colspan="2">
+               	  	<span style="font-size: 14px;"><em>*아이디는 4~12자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능</em></span><br>
+               	  	<span style="font-size: 14px;"><em>*비밀번호는 영문, 숫자, 특수문자 포함 8~20자리로 입력</em></span>
                  </td>
                </tr>
            </table>
@@ -92,12 +93,12 @@
             </tr>
             <tr>
                 <td scope="col" class="add">
-                    <input name="phone" id="phone" placeholder="휴대폰번호 입력">
+                    <input name="phone" id="phone" placeholder="휴대폰번호 입력 (ex. 01012345678)">
                 </td>
             </tr>
             <tr>
                 <td scope="col" class="add">
-                    <input name="email" id="email" placeholder="이메일 입력 (example@example.com)">
+                    <input name="email" id="email" placeholder="이메일 입력 (ex. example@example.com)">
                 </td>
                 <td class="btn-cont">
                     <button type="button" class="bo-small">인증</button>
@@ -165,7 +166,7 @@
 		var uname = document.getElementById("name");
 		var phone = document.getElementById("phone");
 		var email = document.getElementById("email");
-		var birth = document.getElementById("birthday");
+		var birthday = document.getElementById("birthday");
 		
 		// 정규표현식
 		// 아이디 
@@ -178,10 +179,14 @@
 		var nameCfm = /^[가-힣a-zA-Z]{2,15}$/;
 		
 		// 휴대폰번호
-		var numchk=/^[0-9]+$/;
+		var phoneCfm = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
 		
 		// 이메일 
-		var emailCfm = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+		var emailCfm = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+		
+		// 생년월일
+		var birthdayCfm = /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
+		
 		
 		
 		// 아이디 확인
@@ -191,12 +196,14 @@
 			return false;
 		}
 		
-		// 아이디 대소문자 확인 
-		else if (idCfm.test(uid.value)) {
-			alert("4~12자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다");
+		// 아이디 대소문자 확인 -> 수정 예정 
+		if (idCfm.test(uid.value)) {
+			alert("아이디는 4~12자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다");
 			uid.focus();
 			return false;
 		}
+		
+		// ID 중복확인 작업중 
 		
 		// 비밀번호 확인 
 		if (pw.value == "") {
@@ -219,16 +226,10 @@
 			return false;
 		}
 		
-		// 이메일 주소 확인 
-		if (email.value.length == 0) {
-			alert("이메일 주소를 입력하세요");
-			email.focus();
-			return false;
-		}
-		
-		else if (!emailCfm.test(email.value)) {
-			alert("잘못된 이메일 형식입니다");
-			email.focus();
+		// 비밀번호 영문, 숫자, 특수문자 포함 8~20자리
+		if (!pwdCfm.test(pw.value)) {
+			alert("비밀번호는 8~20자리의 영문, 숫자, 특수문자로 설정해 주세요");
+			pw.focus();
 			return false;
 		}
 		
@@ -237,17 +238,52 @@
 			alert("이름을 입력하세요");
 			uname.focus();
 			return false;
-		}
-		
-		else if(nameCfm.test(uname.value)) {
-			alert("2글자 이상의 한글과 영어만 가능합니다");
+		} else if (nameCfm.test(uname.value)) {
+			alert("이름은 2글자 이상의 한글과 영어만 가능합니다");
 			uname.focus();
 			return false;
 		}
 		
-		// 생일
+		// 휴대폰번호
+		if (phone.value == "") {
+			alert("휴대폰번호를 입력하세요");
+			phone.focus();
+			return false;
+		} else if (phoneCfm.test(phone)) {
+			alert("휴대폰번호가 올바르지 않습니다");
+			phone.focus();
+			return false;
+		} else {
+			// 자동으로 하이픈 넣기 
+			// phone = phone.replace(/ /g, '').replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+		}
 		
-		// 휴대폰 번호
+		
+		
+		// 이메일 주소 확인 
+		if (email.value == "") {
+			alert("이메일 주소를 입력하세요");
+			email.focus();
+			return false;
+		} else if (!emailCfm.test(email.value)) {
+			alert("잘못된 이메일 형식입니다");
+			email.focus();
+			return false;
+		}
+		
+		// 생년월일 
+		if (birthday.value == "") {
+			alert("생년월일을 입력하세요");
+			birthday.focus();
+			return false;
+		}
+		
+		/* 
+			- 입력 텍스트 font-size 조절 예정
+			- 아이디 검증
+			- mapper 수정 
+		*/
+		
 		
 		document.enrollfrm.submit();
 		
@@ -258,33 +294,6 @@
 
 </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     
 
 
 
