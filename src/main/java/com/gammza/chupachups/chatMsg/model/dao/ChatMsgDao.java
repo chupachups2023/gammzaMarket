@@ -1,5 +1,11 @@
 package com.gammza.chupachups.chatMsg.model.dao;
 
-public interface ChatMsgDao {
+import java.util.List;
 
+import com.gammza.chupachups.chatMsg.model.vo.ChatMsg;
+
+public interface ChatMsgDao {
+	/*
+	 * List<ChatMsg> selectChatMsg();
+	 */
 }
