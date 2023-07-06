@@ -9,6 +9,6 @@
 
 *제목 수정하기
 *내용 들어갈 곳
-*참여자 공구 리스트
+*총대가 보는 참여자 공구 리스트
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

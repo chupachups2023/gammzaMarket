@@ -4,6 +4,8 @@
 }
 .table{
     border-collapse: collapse;
+    width:950px;
+    margin:50px auto;
 }
 th{
     border-top: solid 1px black;
@@ -19,6 +21,14 @@ th{
 }
 .bon {
     background-color: #95D08B;
+    width: 80px; 
+    height: 20px; 
+    color: white; 
+    border-radius: 30px;
+    border: none;
+}
+.non {
+    background-color: white;
     width: 80px; 
     height: 20px; 
     color: white; 

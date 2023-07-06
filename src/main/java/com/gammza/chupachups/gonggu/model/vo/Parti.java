@@ -14,6 +14,6 @@ public class Parti {
 	private String partiMember;
 	private int num; //구매수량
 	private String regAt;
-	private String locationCode;
+	private int status;
 	
 }

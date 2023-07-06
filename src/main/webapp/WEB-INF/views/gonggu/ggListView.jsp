@@ -19,7 +19,7 @@
 					<div class="onelineThreeTitle">
 						<c:choose>
 							<c:when test="${fn:length(list.gongguName) gt 18}">
-								<div class="ggTitle">${fn:substring(list.gongguName, 0, 18)}...</div>
+								<div class="ggTitle">${fn:substring(list.gongguName, 0, 18)}⋯</div>
 							</c:when>
 							<c:otherwise>
 								<div class="ggTitle">${list.gongguName}</div>
