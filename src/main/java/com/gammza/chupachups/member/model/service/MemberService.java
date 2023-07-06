@@ -10,4 +10,6 @@ public interface MemberService {
 	
 	int updateMember(Member member);
 
+	int checkIdFunc(String userId);
+
 }
