@@ -34,4 +34,14 @@ public class PartiServiceImpl implements PartiService {
 	public Parti selectOneParti(HashMap<String, String> selectParti) {
 		return partiDao.selectOneParti(selectParti);
 	}
+
+	@Override
+	public int updatePartiStatus(HashMap<String, String> map) {
+		return partiDao.updatePartiStatus(map);
+	}
+
+	@Override
+	public int updateLeaderPoint(Gonggu gonggu) {
+		return partiDao.updateLeaderPoint(gonggu);
+	}
 }

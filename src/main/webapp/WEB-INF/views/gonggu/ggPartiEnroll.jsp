@@ -45,11 +45,18 @@
                     <tr>
                         <td colspan="">수량</td>
                         <td>
+                        <c:choose>
+                        	<c:when test="${gonggu.type eq 0 }">
                             <div class="qttcont">
 								<button type="button" onclick="minus();" class="numbtn">-</button>
 								<input type="text" name="num" min="1" readonly value="1" id="qttnum">
 								<button type="button" onclick="plus();" class="numbtn">+</button>
 							</div>
+                        	</c:when>
+                        	<c:otherwise>
+                        		<input type="text" name="num" min="1" readonly value="1" id="qttnum">
+                        	</c:otherwise>
+                        </c:choose>
                         </td>
                     </tr>
                     <tr class="partic-point">

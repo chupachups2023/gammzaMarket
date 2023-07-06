@@ -26,4 +26,14 @@
 		select * from parti_tb
 		where gonggu_no=#{gongguNo} and parti_member=#{userId}
 	</select>
+	<update id="updatePartiStatus">
+		update parti_tb
+		set status=2
+		where gonggu_no=#{gongguNo} and parti_member=#{userId}
+	</update>
+	<update id="updateLeaderPoint">
+		update member
+		set point=point+#{price}
+		where user_id=#{gongguWriter}
+	</update>
 </mapper>

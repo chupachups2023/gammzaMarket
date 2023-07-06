@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.gammza.chupachups.gonggu.model.service.GongguService;
 import com.gammza.chupachups.gonggu.model.service.PartiService;
@@ -37,13 +39,30 @@ public class PartiController {
 	private MemberService memberService;
 	
 	@GetMapping("/partiEnroll.pa")
-	public String partiEnroll(@RequestParam int gongguNo, Model model) {
+	public ModelAndView partiEnroll(@RequestParam int gongguNo, Model model,RedirectAttributes redirectAttr) {
+		Member loginMember=(Member)model.getAttribute("loginMember");
+		
+		HashMap<String, String> map=new HashMap<String,String>();
+		map.put("gongguNo", String.valueOf(gongguNo));
+		map.put("userId", loginMember.getUserId());
+		Parti parti=partiService.selectOneParti(map); //이미 참여한 이력이 있는지 검색
+		
 		Gonggu gonggu=gongguService.selectOneGonggu(gongguNo);
 		model.addAttribute("gonggu", gonggu);
 		Location location=locationService.selectLocationByNo(gonggu.getLocationNo());
 		model.addAttribute("location", location);
 		
-		return "/gonggu/ggPartiEnroll";
+		if(parti!=null) {
+			redirectAttr.addFlashAttribute("msg","이미 참여한 공구입니다.");
+			ModelAndView mav=new ModelAndView();
+			mav.setView(new RedirectView("ggPartiList.pa"));
+			
+			return mav;
+		}else {
+			return new ModelAndView("/gonggu/ggPartiEnroll");
+			
+		}
+		
 	}
 	
 	@PostMapping("/partiEnroll.pa")
@@ -64,7 +83,7 @@ public class PartiController {
 			return "/mypage/ggList_Parti";
 		}else {
 			redirectAttr.addFlashAttribute("msg","참여가 정상적으로 이루어지지 않았습니다.");
-			return "/home";
+			return "redirect:/";
 		}
 	}
 	
@@ -90,6 +109,22 @@ public class PartiController {
 		
 		model.addAttribute("partiList", partiGongguList);
 		
+		return "/mypage/ggList_Parti";
+	}
+	
+	@GetMapping("/partiStatusUpdate.pa")
+	public String partiStatusUpdate(@RequestParam int gongguNo, Model model) {
+		String userId=((Member)model.getAttribute("loginMember")).getUserId();
+		HashMap<String, String> map=new HashMap<String,String>();
+		map.put("gongguNo", String.valueOf(gongguNo));
+		map.put("userId", userId);
+		Parti parti=partiService.selectOneParti(map);
+		partiService.updatePartiStatus(map);
+		Gonggu gonggu=gongguService.selectOneGonggu(gongguNo);
+		gonggu.setPrice(gonggu.getPrice()*parti.getNum());
+		int result=partiService.updateLeaderPoint(gonggu);
+		
+		partiList(model);
 		return "/mypage/ggList_Parti";
 	}
 	

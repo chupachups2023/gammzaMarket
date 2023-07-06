@@ -18,14 +18,16 @@ th{
     color: white; 
     border-radius: 30px;
     border: none;
+    font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
 }
 .bon {
     background-color: #95D08B;
-    width: 80px; 
+    width: 110px; 
     height: 20px; 
     color: white; 
     border-radius: 30px;
     border: none;
+    font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
 }
 .non {
     background-color: white;
