@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/home.css?<%=System.currentTimeMillis() %>">
 <jsp:include page="/WEB-INF/views/common/mainHeader.jsp" >
-	<jsp:param value="main" name="title"/>
+	<jsp:param value="감자마켓💚" name="title"/>
 </jsp:include>
 	<div class="mainSearchSec">
 		<h2>어떤 공구를 찾으세요?</h2>

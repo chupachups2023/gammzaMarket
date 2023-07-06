@@ -6,8 +6,10 @@
     border-collapse: collapse;
     width:950px;
     margin:50px auto;
+    font-weight:normal;
+    text-align:center;
 }
-th{
+th, td{
     border-top: solid 1px black;
     border-bottom: solid 1px black;
 }
@@ -42,4 +44,13 @@ th{
 }
 .align-right{
 	text-align:right;
+}
+.dateTd{
+	width:300px;
+	font-weight:normal;
+	font-size:15px;
+}
+a:hover{
+	text-decoration:underline;
+	text-underline-position : under;
 }

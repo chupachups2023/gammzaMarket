@@ -26,7 +26,12 @@
 		select * from parti_tb
 		where gonggu_no=#{gongguNo} and parti_member=#{userId}
 	</select>
-	<update id="updatePartiStatus">
+	<update id="updatePartiStatusByLeader">
+		update parti_tb
+		set status=1
+		where gonggu_no=#{gongguNo} and parti_member=#{userId}
+	</update>
+	<update id="updatePartiStatusSelf">
 		update parti_tb
 		set status=2
 		where gonggu_no=#{gongguNo} and parti_member=#{userId}
@@ -36,4 +41,11 @@
 		set point=point+#{price}
 		where user_id=#{gongguWriter}
 	</update>
+	<select id="selectPartiListForLeader" resultMap="partiMap">
+		select p.*, m.user_id, m.temperature
+		from member m, parti_tb p
+		where p.parti_member=m.user_id and 
+				gonggu_no=#{gongguNo}
+		order by p.reg_at 
+	</select>
 </mapper>

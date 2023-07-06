@@ -6,11 +6,14 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/ggPartic_List.css?<%=System.currentTimeMillis() %>">
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="내가 참여한 공구" name="title"/>
+	<jsp:param value="${loginMember.userId }님이 참여한 공구" name="title"/>
 </jsp:include>
 
 
 <div id="container">
+<input type="checkbox"> 마감 공구 제외하고 보기
+<input type="radio"> 마감 순으로 정렬
+<input type="radio"> 신청 순으로 정렬
 		<table class="table" align="center" >
 		<tr>
 			<td colspan="3"  class="sort-type">
@@ -38,7 +41,7 @@
 						</c:otherwise>
 					</c:choose>
 				</th>
-				<th><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" />P</th>
+				<th><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price }" />P</th>
 			<c:choose>
 			<c:when test="${list.status eq 0 and list.endStatus eq 0}">
 				<th><div>마감된 공구입니다</div></th>

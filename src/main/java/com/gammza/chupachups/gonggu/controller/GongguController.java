@@ -12,7 +12,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +27,9 @@ import com.gammza.chupachups.common.SpringUtils;
 import com.gammza.chupachups.common.model.vo.PageInfo;
 import com.gammza.chupachups.common.template.Pagination;
 import com.gammza.chupachups.gonggu.model.service.GongguService;
+import com.gammza.chupachups.gonggu.model.service.PartiService;
 import com.gammza.chupachups.gonggu.model.vo.Gonggu;
+import com.gammza.chupachups.gonggu.model.vo.Parti;
 import com.gammza.chupachups.likeList.controller.LikeListController;
 import com.gammza.chupachups.likeList.model.vo.Zzim;
 import com.gammza.chupachups.location.controller.LocationController;
@@ -44,8 +45,6 @@ public class GongguController {
 	@Autowired
 	private ServletContext application;
 	@Autowired
-	private ResourceLoader resourceLoader;
-	@Autowired
 	private LocationService locationService;
 	@Autowired
 	private LocationController locationController;
@@ -53,10 +52,11 @@ public class GongguController {
 	private LikeListController likeListController;
 	@Autowired
 	private ChatRoomService chatRoomService;
+	@Autowired
+	private PartiService partiService;
 
 	@GetMapping("/ggWrite.go")
-	public void ggWrite() {
-	}
+	public void ggWrite() {	}
 
 	@GetMapping("/ggListView.go")
 	public String ggListView(Model model) {
@@ -103,7 +103,15 @@ public class GongguController {
 			 gongguService.updateEndStatus(gongguNo);
 			 gonggu = gongguService.selectOneGonggu(gongguNo);
 		 }
+		 ArrayList<Parti> partiList=partiService.selectPartiListForLeader(gongguNo);
 		 
+		 int partiNum=0;
+		 for(int i=0;i<partiList.size();i++) {
+			 if(partiList.get(i).getStatus()>0) {
+				 partiNum++;
+			 }
+		 }
+		 model.addAttribute("partiNum", partiNum);
 		 model.addAttribute("gonggu", gonggu);
 		 
 		 if(gonggu.getEndStatus()==1) {
@@ -316,5 +324,15 @@ public class GongguController {
 			return "/gonggu/ggRead";
 		}
 	}
+	 
+	 //공구 총대가 공구 마감
+	 @GetMapping("/gongguEnd.go")
+	 public String gongguEnd(@RequestParam int gongguNo, Model model) {
+		 gongguService.updateEndStatus(gongguNo);
+		 Gonggu gonggu = gongguService.selectOneGonggu(gongguNo);
+		 model.addAttribute("gonggu", gonggu);
+		 
+		 return "/gonggu/ggEnd";
+	 }
 	
 }
