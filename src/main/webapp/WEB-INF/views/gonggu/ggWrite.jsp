@@ -112,6 +112,7 @@
     </div>
 	<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggWriteMap.js?<%=System.currentTimeMillis() %>"></script>
 <script>
+	console.log(ggEnrollFrm.upPhoto1.value);
 	var now_utc = Date.now();
 	var timeOff = new Date().getTimezoneOffset()*60000;
 	var today = new Date(now_utc-timeOff).toISOString().substring(0, 16);
@@ -148,5 +149,5 @@
 </script>
 
 
-<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggWrite.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggWrite.js?<%=System.currentTimeMillis() %>"></script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
