@@ -37,3 +37,9 @@ th{
     border-radius: 30px;
     border: none;
 }
+.sort-type{
+	padding-bottom:5px
+}
+.align-right{
+	text-align:right;
+}
