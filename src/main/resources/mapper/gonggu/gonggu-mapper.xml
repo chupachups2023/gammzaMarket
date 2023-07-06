@@ -59,6 +59,7 @@
 		            ,GONG.PHOTO1, GONG.LOCATION_NO
 		   FROM   GONGGU   GONG
 		 WHERE GONG.STATUS = 1
+		 order by pullup_at desc
 	</select>
 	<update id="updateGongguCount">
 		update gonggu

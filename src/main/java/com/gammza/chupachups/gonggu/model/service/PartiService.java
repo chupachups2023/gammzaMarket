@@ -15,5 +15,9 @@ public interface PartiService {
 	ArrayList<Gonggu> selectAllPartiList(String userId);
 	
 	Parti selectOneParti(HashMap<String, String> selectParti);
+
+	int updatePartiStatus(HashMap<String, String> map);
+
+	int updateLeaderPoint(Gonggu gonggu);
 	
 }

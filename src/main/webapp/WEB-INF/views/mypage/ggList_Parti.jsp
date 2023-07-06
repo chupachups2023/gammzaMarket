@@ -12,6 +12,19 @@
 
 <div id="container">
 		<table class="table" align="center" >
+		<tr>
+			<td colspan="3"  class="sort-type">
+			<small>
+				<input type="checkbox" name="onlyOn" id="onlyOn"><label for="onlyOn"> 마감 공구 제외하고 보기</label>
+			</small>
+			</td>
+			<td colspan="3"  class="sort-type align-right">
+			<small>
+				<input type="radio" name="parti-sort" id="regAt" value="2" checked="checked"><label for="regAt"> 신청 순으로 정렬</label>
+				<input type="radio" name="parti-sort" id="endTime" value="0"><label for="endTime"> 마감 순으로 정렬</label> 
+			</small>
+			</td>
+		</tr>
 		<c:forEach items="${partiList}" var="list" varStatus="j">
 			<tr>
 				<th><img src="${pageContext.request.contextPath }/resources/upload/${list.photo1}" width="100px"></img></th>
@@ -31,20 +44,16 @@
 				<th><div>마감된 공구입니다</div></th>
 				<th><button class="non"></button></th>
 			</c:when>
-			<c:when test="${list.status eq 0}">
+			<c:when test="${list.status eq 0 and list.endStatus eq 1}">
 				<th><div>신청 확인 중</div></th>
 				<th><button class="non"></button></th>
 			</c:when>
-			<c:when test="${list.status eq 1}">
+			<c:when test="${list.status eq 1 and list.endStatus eq 1}">
 				<th><div>공구 진행 중</div></th>
-				<th><button class="non"></button></th>
+				<th><button class="bon" onclick='receive("${list.gongguName}",${list.gongguNo });'>물건 받기 완료</button></th>
 			</c:when>
-			<%-- <c:when test="${list.endStatus eq 1}">
-				<th><div>공구 진행 중</div></th>
-				<th><button class="non"></button></th>
-			</c:when> --%>
 			<c:otherwise>
-				<th><div>공구 마감</div></th>
+				<th><div>공구 완료</div></th>
 				<th><button class="bon">리뷰쓰기</button></th>
 			</c:otherwise>
 			</c:choose>
@@ -52,35 +61,17 @@
 				<th><fmt:formatDate value="${createAt }" pattern="yyyy.MM.dd."/></th>
 			</tr>
 		</c:forEach>
-			<%-- <tr>
-				<th><img src="${pageContext.request.contextPath }/resources/img/chatting/Rectangle 3.png"  width="100px"></img></th>
-				<th>판매글 제목</th>
-				<th>10,000원</th>
-				<th><button class="bon">공구완료</button></th>
-				<th>2023.06.11</th>
-			</tr>
-			<tr>
-				<th><img src="${pageContext.request.contextPath }/resources/img/chatting/Rectangle 3.png" width="100px"></img></th>
-				<th>판매글 제목</th>
-				<th>10,000원</th>
-				<th><button class="bon">공구완료</button></th>
-				<th>2023.06.11</th>
-			</tr>
-			<tr>
-				<th><img src="${pageContext.request.contextPath }/resources/img/chatting/Rectangle 3.png"  width="100px"></img></th>
-				<th>판매글 제목</th>
-				<th>10,000원</th>
-				<th><button class="bon">공구완료</button></th>
-				<th>2023.06.11</th>
-			</tr>
-			<tr>
-				<th><img src="${pageContext.request.contextPath }/resources/img/chatting/Rectangle 3.png"  width="100px"></img></th>
-				<th>판매글 제목</th>
-				<th>10,000원</th>
-				<th><button class="bon">공구완료</button></th>
-				<th>2023.06.11</th>
-			</tr> --%>
 		</table>
 	</div>
-
+<script>
+	function receive(gongguName,gongguNo){
+		if(	confirm(gongguName+"을(를) 수령하셨나요?") ){
+			location.href="${pageContext.request.contextPath }/gonggu/partiStatusUpdate.pa?gongguNo="+gongguNo;
+		}else{
+			return
+		}
+	}
+	
+	
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
