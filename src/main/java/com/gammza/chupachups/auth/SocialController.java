@@ -9,13 +9,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,10 +25,69 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gammza.chupachups.auth.model.service.SocialService;
+import com.gammza.chupachups.member.model.vo.Member;
 
 @Controller
 public class SocialController {
+	
+			// KAKAO
+			@Autowired
+			private SocialService socialService;
+		
+			@GetMapping(value = "/auth/kakao/callback", produces = "text/json; charset=UTF-8")
+			public String kakaoCallback(String code, Model model) {
+				// System.out.println("kakao code: " + code);
+				
+			String access_Token = socialService.getAccessToken(code);
+			// System.out.println("KAKAO_access_Token: " + access_Token);
+				
+			HashMap<String, Object> kakaoUserInfo = socialService.getUserInfo(access_Token);
+			// System.out.println("KAKAO_access_Token: " + access_Token);
+			System.out.println("KAKAO_IDKEY: " + kakaoUserInfo.get("id"));	
+			// System.out.println("KAKAO_nickname: " + userInfo.get("nickname"));
+			
+				
+			return "redirect:/";
+			}
+	
+			// NAVER 
+			@GetMapping(value = "/auth/naver/callback", produces = "text/json; charset=UTF-8")
+			public String naverCallback(String code, Member member) {
+				// System.out.println("kakao code: " + code);
+				
+			String access_Token = socialService.getAccessToken2(code);
+			// System.out.println("NAVER_access_Token: " + access_Token);
+				
+			HashMap<String, Object> naverUserInfo = socialService.getUserInfo2(access_Token, member);
+			// System.out.println("NAVER_access_Token: " + access_Token);
+			System.out.println("NAVER_IDKEY: " + naverUserInfo.get("id"));	
+			// System.out.println("NAVER_nickname: " + naverUserInfo.get("nickname"));
+				
+				
+			return "redirect:/";
+			// return "member/addInfo"
+			}
+			
+			
+	
+	
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
 	// KAKAO
 	@GetMapping(value = "/auth/kakao/callback", produces = "text/json; charset=UTF-8")
 	public String kakaoCallback(String code) {
@@ -101,11 +161,13 @@ public class SocialController {
 
 		// member object: KAKAO_IDKEY 관련
 		System.out.println("KAKAO_IDKEY: " + kakaoProfile.getId());
-		System.out.println("카카오 닉네임: " + kakaoProfile.getKakao_account().getProfile().getNickname()); // 삭제 예정
+		// System.out.println("카카오 닉네임: " + kakaoProfile.getKakao_account().getProfile().getNickname()); // 삭제 예정
 
+		/* 
 		System.out.println("감자마켓 사용자이름: " + kakaoProfile.getKakao_account().getProfile().getNickname() + "_"
-				+ kakaoProfile.getId()); // 삭제 예정
-
+				+ kakaoProfile.getId());
+				*/ 
+				
 		// Member kakaoMember = new Member();
 		// kakaoMember.setUserId(kakaoProfile.getKakao_account().getProfile().getNickname()
 		// + "_" + kakaoProfile.getId());
@@ -114,6 +176,7 @@ public class SocialController {
 
 		// return response2.getBody();
 		
+		/*
 		System.out.println("----------------------------------------------------------------------------------------------");
 		System.out.println("카카오 아이디(번호) : " + kakaoProfile.getId());
 
@@ -122,11 +185,12 @@ public class SocialController {
 		UUID garbagePassword = UUID.randomUUID();
 		System.out.println("감자마켓 패스워드 : " + garbagePassword);
 		System.out.println("----------------------------------------------------------------------------------------------");
+		*/
 		
-		
-		return "redirect:/";
-	}
+		// return "redirect:/";
+	// } 
 
+/*
 	// NAVER
 	@GetMapping(value = "/auth/naver/callback", produces = "text/json; charset=UTF-8")
 	public String naverCallback(String code) {
@@ -192,8 +256,8 @@ public class SocialController {
 		 */
 		
 
-		return "redirect:/";
-	}
+		// return "redirect:/";
+	// }
 
 	private static String get(String apiUrl, Map<String, String> requestHeaders) {
 		HttpURLConnection con = connect(apiUrl);

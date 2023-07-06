@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.gammza.chupachups.chatRoom.model.service.ChatRoomService;
 import com.gammza.chupachups.common.ChangeDate;
 import com.gammza.chupachups.common.SpringUtils;
 import com.gammza.chupachups.common.model.vo.PageInfo;
@@ -50,6 +51,8 @@ public class GongguController {
 	private LocationController locationController;
 	@Autowired
 	private LikeListController likeListController;
+	@Autowired
+	private ChatRoomService chatRoomService;
 
 	@GetMapping("/ggWrite.go")
 	public void ggWrite() {
@@ -118,8 +121,9 @@ public class GongguController {
 			@RequestParam MultipartFile upPhoto3, Model model,RedirectAttributes redirectAttr) {
 		
 		 int locationNo=locationService.selectLocation(map).getLocationNo();
+		 System.out.println("123"+ locationNo);
 		 gonggu.setLocationNo(locationNo);
-		 gonggu.setPrice(gonggu.getPrice()/gonggu.getNum());
+		 gonggu.setPrice(gonggu.getPrice());
 		if (gonggu.getOpenTime().equals("sysdate")) {
 			gonggu.setEndTime(ChangeDate.chageDate(gonggu.getEndTime()));
 			gonggu.setSendTime(ChangeDate.chageDate(gonggu.getSendTime()));
@@ -192,6 +196,7 @@ public class GongguController {
 			int gongguNo=gongguService.selectLastNum();
 			Gonggu newGonggu=gongguService.selectOneGonggu(gongguNo);
 			model.addAttribute("gonggu", newGonggu);
+			model.addAttribute("chatRoom", chatRoomService.insertChatRoom(newGonggu));
 			return "/gonggu/ggRead";
 		}else {
 			redirectAttr.addFlashAttribute("msg","글 작성에 실패했습니다ㅠ");
@@ -213,7 +218,7 @@ public class GongguController {
 			@RequestParam MultipartFile upPhoto3, Model model, RedirectAttributes redirectAttr) {
 		 Gonggu Ogonggu=gongguService.selectOneGonggu(newGonggu.getGongguNo());
 		 
-		 newGonggu.setPrice(newGonggu.getPrice()/newGonggu.getNum());
+		 newGonggu.setPrice(newGonggu.getPrice());
 		 
 		 int locationNo=locationService.selectLocation(map).getLocationNo();
 		 newGonggu.setLocationNo(locationNo);

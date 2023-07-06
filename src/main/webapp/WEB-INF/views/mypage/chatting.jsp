@@ -43,6 +43,26 @@
 						</div>
 					</li>
 					</c:forEach>
+					<c:forEach items="${myChatRoomList}" var="chatRoom">
+					<li class="css-v2yhcd">
+						<a class="selected css-y6c1l4" href="">
+							<div class="preview-title-wrap">
+								<span class="preview-nickname">${chatRoom.roomOwner}</span>
+							<div class="sub-text">
+								<span>${chatRoom.gongguNo }</span>
+								<span>${loginMember.location}</span>
+								<span>${chatRoom.lastChat}</span>
+							</div>
+							</div>
+								<img src="${pageContext.request.contextPath}/resources/img/chatting/Rectangle 3.png" class="preview-image" alt="" width="50px">
+						</a>
+						<div class="common-bg-hover only-hover css-q6qzi5">
+							<span class="option-controller">
+								<svg width="36" height="36" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"></svg>
+							</span>
+						</div>
+					</li>
+					</c:forEach>
 					
 				</ul>
 				<div class="faq-container">
@@ -61,7 +81,7 @@
 					<div class="css-1c3oejv">
 						<div class="chat-header-profile">
 							<div class="main-title">
-								<span>user02</span>
+								<span>${ chatRoom.roomOwner }</span>
 								<span class="temperature">37.8°C</span>
 							</div>
 						</div>

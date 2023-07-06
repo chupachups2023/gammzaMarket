@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 
 import com.gammza.chupachups.auth.NaverAPI20;
+import com.gammza.chupachups.member.model.vo.Member;
 import com.github.scribejava.core.builder.ServiceBuilder;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.github.scribejava.core.model.OAuthRequest;
@@ -28,6 +29,7 @@ import com.google.gson.JsonObject;
 @Service
 public class SocialService {
 	
+	// KAKAO 
 	public String getAccessToken(String authorize_code) {
 		String access_Token = "";
 		String refresh_Token = "";
@@ -37,18 +39,15 @@ public class SocialService {
 			URL url = new URL(reqURL);
             
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			// POST 요청을 위해 기본값이 false인 setDoOutput을 true로
             
 			conn.setRequestMethod("POST");
-			conn.setDoOutput(true);
+			conn.setDoOutput(true); // POST 요청을 위해 기본값이 false인 setDoOutput을 true로 
 			
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 			StringBuilder sb = new StringBuilder();
 			sb.append("grant_type=authorization_code");
-            
 			sb.append("&client_id=db32886cc653e7c143ebd36f56525b61"); 
 			sb.append("&redirect_uri=http://localhost:8095/chupachups/auth/kakao/callback");
-            
 			sb.append("&code=" + authorize_code);
 			bw.write(sb.toString());
 			bw.flush();
@@ -65,17 +64,15 @@ public class SocialService {
 			while ((line = br.readLine()) != null) {
 				result += line;
 			}
-			// System.out.println("response body(service_kakao) : " + result);
+			// System.out.println("response body(카카오 토큰) : " + result);
             
 			// Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
 			// JsonArray parser = new Gson().fromJson("JsonArray 문자열", JsonArray.class);
 			
 			// JsonParser parser = new JsonParser();
 			JsonElement element = new Gson().fromJson(result, JsonElement.class);
-            
 			access_Token = element.getAsJsonObject().get("access_token").getAsString();
 			refresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();
-            
 			// System.out.println("access_token : " + access_Token);
 			// System.out.println("refresh_token : " + refresh_Token);
             
@@ -89,7 +86,7 @@ public class SocialService {
 	
 	public HashMap<String, Object> getUserInfo(String access_Token) {
 
-		// 요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
+		// 사용자마다 가진 정보가 다를 수 있으므로 HashMap타입으로 선언
 		HashMap<String, Object> kakaoUserInfo = new HashMap<String, Object>();
 		String reqURL = "https://kapi.kakao.com/v2/user/me";
 		try {
@@ -101,17 +98,16 @@ public class SocialService {
 			conn.setRequestProperty("Authorization", "Bearer " + access_Token);
 
 			int responseCode = conn.getResponseCode();
-			// System.out.println("responseCode : " + responseCode);
+			// System.out.println("responseCode : " + responseCode); // 200 
 
 			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
 			String line = "";
 			String result = "";
 			
 			while ((line = br.readLine()) != null) {
 				result += line;
 			}
-			// System.out.println("response body(service_kakao) : " + result);
+			System.out.println("response body(카카오 사용자 정보) : " + result);
 
 			JsonElement element = new Gson().fromJson(result, JsonElement.class);
 
@@ -125,6 +121,11 @@ public class SocialService {
 			
 			kakaoUserInfo.put("id", id);
 			kakaoUserInfo.put("nickname", nickname);
+			
+				
+			
+			
+			
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -134,7 +135,6 @@ public class SocialService {
 	}
 	
 	// NAVER 
-	
 	private final static String CLIENT_ID = "GQGBjwaCzYQZZ_5XkE2o";
 	private final static String CLIENT_SECRET = "y3TAUEyfZu";
 	private final static String REDIRECT_URI = "http://localhost:8095/chupachups/auth/naver/callback";
@@ -154,12 +154,6 @@ public class SocialService {
 		return oauthService.getAuthorizationUrl();
 	}
 	
-	
-	
-	
-	
-	
-	
 	public String getAccessToken2(String authorize_code) {
 		String access_Token = "";
 		String refresh_Token = "";
@@ -169,8 +163,6 @@ public class SocialService {
 			URL url2 = new URL(reqURL);
             
 			HttpURLConnection conn2 = (HttpURLConnection) url2.openConnection();
-			// POST 요청을 위해 기본값이 false인 setDoOutput을 true로
-            
 			conn2.setRequestMethod("POST");
 			conn2.setDoOutput(true);
 			
@@ -181,17 +173,13 @@ public class SocialService {
 			sb2.append("&client_id=GQGBjwaCzYQZZ_5XkE2o"); 
 			sb2.append("&redirect_uri=http://localhost:8095/chupachups/auth/naver/callback");
 			sb2.append("&client_secret=y3TAUEyfZu");
-            
 			sb2.append("&code=" + authorize_code);
 			bw2.write(sb2.toString());
 			
-			
-			
 			bw2.flush();
             
-			// 결과 코드가 200이라면 성공
 			int responseCode2 = conn2.getResponseCode();
-			// System.out.println("responseCode(NAVER) : " + responseCode2);
+			// System.out.println("responseCode(NAVER) : " + responseCode2); // 200이면 성공 
             
 			// 요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
 			BufferedReader br2 = new BufferedReader(new InputStreamReader(conn2.getInputStream()));
@@ -201,17 +189,15 @@ public class SocialService {
 			while ((line2 = br2.readLine()) != null) {
 				result2 += line2;
 			}
-			// System.out.println("response body(service_naver) : " + result2);
+			// System.out.println("response body(네이버 토큰) : " + result2);
             
 			// Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
 			// JsonArray parser = new Gson().fromJson("JsonArray 문자열", JsonArray.class);
 			
 			// JsonParser parser = new JsonParser();
 			JsonElement element2 = new Gson().fromJson(result2, JsonElement.class);
-            
 			access_Token = element2.getAsJsonObject().get("access_token").getAsString();
 			refresh_Token = element2.getAsJsonObject().get("refresh_token").getAsString();
-            
 			// System.out.println("access_token : " + access_Token);
 			// System.out.println("refresh_token : " + refresh_Token);
             
@@ -223,7 +209,7 @@ public class SocialService {
 		return access_Token;
 	}
 	
-	public HashMap<String, Object> getUserInfo2(String access_Token) {
+	public HashMap<String, Object> getUserInfo2(String access_Token, Member member) {
 
 		// 요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
 		HashMap<String, Object> naverUserInfo = new HashMap<String, Object>();
@@ -247,7 +233,7 @@ public class SocialService {
 			while ((line2 = br2.readLine()) != null) {
 				result2 += line2;
 			}
-			// System.out.println("response body(service_naver) : " + result2);
+			System.out.println("response body(네이버 사용자 정보) : " + result2);
 
 			JsonElement element = new Gson().fromJson(result2, JsonElement.class);
 
@@ -259,11 +245,12 @@ public class SocialService {
 			String id = response.getAsJsonObject().get("id").getAsString();
 			
 			naverUserInfo.put("id", id);
+			// member.setNaverIdkey(naver_idkey);
+			// System.out.println(naverUserInfo);
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 		return naverUserInfo;
 	}
 	
@@ -297,20 +284,4 @@ public class SocialService {
 		return response.getBody();
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }

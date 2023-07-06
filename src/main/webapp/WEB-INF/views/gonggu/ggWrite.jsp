@@ -11,7 +11,7 @@
 	<jsp:param value="공구 글 작성하기" name="title"/>
 </jsp:include>
     <div class="write-container">
-        <form action="${pageContext.request.contextPath}/gonggu/ggEnrollFrm.go" method="post" enctype="multipart/form-data" name="ggEnrollFrm">
+        <form action="${pageContext.request.contextPath}/gonggu/ggEnrollFrm.go?roomOwner=${loginMember.userId}" method="post" enctype="multipart/form-data" name="ggEnrollFrm">
             <div class="write-category">
                 <input class="write-stuff" type="text" placeholder="공구할 물건" name="gongguName">
                 <select name="category">
@@ -27,17 +27,20 @@
                 </select>
             </div>
                 <div class="write-price">
-                    <span>구매 가격</span><input type="number" name="price" >P
+                    <span>개당(인당)가격</span><input type="number" name="price" >P
                 </div>
 			<div class="ggWrite-mid-flex">
                 <div>
-	                <div class="write-count">
-	                    공구 수량 <select name="type" >
-	                        <option value="0">수량 기준</option>
-	                        <option value="1">인원 기준</option>
-	                    </select>
-	                    <input type="number" name="num">명/개
-	                </div>
+                	<div class="write-count-out">
+		                <div class="write-count">
+		                    공구 수량 <select name="type" >
+		                        <option value="0">수량 기준</option>
+		                        <option value="1">인원 기준</option>
+		                    </select>
+		                    <input type="number" name="num">명/개
+		                </div>
+	                	<small class="write-count-small">* 나를 포함한 인원 또는 수량으로 입력해주세요</small>
+		            </div>
 	                <!-- 사진 파일 첨부 -->
 	                <div class="ggWrite_fileupload_out">
 					    <div class="ggWirte_upload_icon" onclick="openFileUpload('1');">
@@ -112,6 +115,7 @@
     </div>
 	<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggWriteMap.js?<%=System.currentTimeMillis() %>"></script>
 <script>
+	console.log(ggEnrollFrm.upPhoto1.value);
 	var now_utc = Date.now();
 	var timeOff = new Date().getTimezoneOffset()*60000;
 	var today = new Date(now_utc-timeOff).toISOString().substring(0, 16);
@@ -148,5 +152,5 @@
 </script>
 
 
-<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggWrite.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggWrite.js?<%=System.currentTimeMillis() %>"></script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
