@@ -105,32 +105,30 @@
 				<tbody>
 					<tr>
 						<td>
-							<a href="javascript:">
 							<div class="pointSel">
 								<h3 class="pointG">10,000p</h3>
-								10,000 원
+								<h4>10,000 원</h5>
 								<input type="hidden" class="price" value="10000">
 							</div>
-							</a>
 						</td>
 						<td>
 							<div class="pointSel">
 								<h3 class="pointG">30,000p</h3>
-								30,000 원
+								<h4>30,000 원</h4>
 								<input type="hidden" class="price" value="30000">
 							</div>
 						</td>
 						<td>
 							<div class="pointSel">
 								<h3 class="pointG">50,000p</h3>
-								50,000 원
+								<h4>50,000 원</h4>
 								<input type="hidden" class="price" value="50000">
 							</div>
 						</td>
 						<td>
 							<div class="pointSel" >
 								<h3 class="pointG">100,000p</h3>
-								100,000 원
+								<h4>100,000 원</h4>
 								<input type="hidden" class="price" value="100000">
 							</div>
 						</td>
@@ -165,18 +163,19 @@
 		<br><br><br><br>
 		<div>
 			<div id="clause">
-				<textarea id="clauseContent" cols="60" rows="7">약관내용
+				<textarea id="clauseContent" cols="60" rows="7" readonly>약관내용
 				</textarea>
-				<input type="checkbox" required> 약관을 다 읽었으며 동의하고 결제합니다
+				<input type="checkbox" id="clauseCkh" required> 약관을 다 읽었으며 동의하고 결제합니다
 			</div>
-			<button id="test" type="button">되나?</button>
 			<button id="purchaseBtn" type="button" onclick="requestPay();">결제</button>
 		</div>
 	</form>
 </div>
 
+
 <input type="hidden" id="selectedPg">
 <input type="hidden" id="pointPrice">
+<input type="hidden" id="orderName">
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 <script>
@@ -185,18 +184,19 @@
   		$('.pointSel').removeClass('clicking');
   		$(this).addClass('clicking');
   		const price1 = $(this).children('input').val();
-  		$('#viewPrice').val($(this).children('h3').text());
+  		$('#viewPrice').val($(this).children('h4').text());
+  		$('#orderName').val($(this).children('h3').text());
   		$('#pointPrice').val(price1);
 	});
 	const pg = "";
 	/* 결제방식 선택 */
 	$(':radio').click(function() {
-		const pg = $(".pg").val();
+		const pg = $(':radio:checked').val();
 		$('#viewPg').val($(':radio:checked').next().text());
 		$('#selectedPg').val(pg);
 		
 		if(pg != "계좌이체") {
-			$('#test').attr("onclick", 'requestPay('+'"'+pg+'"'+');');
+			$('#purchaseBtn').attr("onclick", 'requestPay('+'"'+pg+'"'+');');
 		}else {
 			
 		}
@@ -207,12 +207,16 @@
 	IMP.init("imp36052417"); 
 	
 	function requestPay(pg) {
+		if(!$('#clauseCkh').is(':checked')){
+			alert("약관을 읽고 동의해주세요");
+			return;
+		}
 		const pointPrice = $('#pointPrice').val();
 	    IMP.request_pay({
 	        pg : pg,		//결제하는 pg종류
 	        pay_method : 'card',
-	        merchant_uid: '12322',		//  상점에서 관리하는 주문 번호(겹치지않는 번호로)
-	        name : '결제테스트 10,000p',			
+	        merchant_uid: orderNum(),		//  상점에서 관리하는 주문 번호(겹치지않는 번호로)
+	        name : $('#orderName').val()+'oint',			
 	        amount : pointPrice,
 	        buyer_email : '${member.email}',
 	        buyer_name : '${member.name}',
@@ -237,9 +241,14 @@
 	
 	
 	function orderNum() {
+		const date = new Date();
+		const year = date.getFullYear();
+		const month = String(date.getMonth() + 1).padStart(2, "0");
+		const day = String(date.getDate()).padStart(2, "0");
 		
+		let orderNum = "p" + $('#pointPrice').val() + "_" + year + month + day;
+		orderNum += String(Math.floor(Math.random() * 10000 +1)).padStart(4, "0");
+		return orderNum;
 	}
 	
-    /*  buyer_addr : ,
-    buyer_postcode :  */
 </script>
