@@ -41,9 +41,14 @@ body {
   font-size:18px;
   text-align:center;
 }
-
-.write-count {
+.write-count{
+	padding-bottom:10px
+}
+.write-count-out {
   padding-bottom: 40px;
+}
+.write-count-small{
+	color:gray
 }
 
 .write-count input {
@@ -250,9 +255,6 @@ table {
   border-bottom: 3px solid #ddd;
 }
 
-.write-count {
-  padding-bottom: 40px;
-}
 
 .write-count input {
   width: 50px;

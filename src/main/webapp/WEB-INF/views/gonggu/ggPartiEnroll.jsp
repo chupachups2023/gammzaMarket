@@ -81,12 +81,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>모집마감시간</td>
-                        <td colspan="2"><fmt:formatDate value="${gonggu.endTime}" pattern="YYYY년 MM월 dd일" type="date"/></td>
+                        <td>모집마감시간</td><fmt:parseDate value="${gonggu.endTime}" var="endTime" pattern="yyyy-MM-dd HH:mm"/>
+                        <td colspan="2"><fmt:formatDate value="${endTime}" pattern="YYYY년 MM월 dd일 HH시 mm분"/></td>
                     </tr>
                     <tr>
-                        <td>교환장소/시간</td>
-                        <td colspan="2">주소.. / 2023.06.11 15시 예정</td>
+                        <td>교환장소/시간</td><fmt:parseDate value="${gonggu.sendTime}" var="sendTime" pattern="yyyy-MM-dd HH:mm"/>
+                        <td colspan="2">${location.sidoNm } ${location.sggNm } ${location.legNm } <br><small><fmt:formatDate value="${sendTime}" pattern="YYYY년 MM월 dd일 HH시 mm분"/> 예정</small> </td>
                     </tr>
                     <tr>
                         <td class="partic-tb-bottom">#유의사항</td>
@@ -109,7 +109,7 @@ $(function(){
 	let memberPoint=document.getElementById("memberPoint").value;
 	let price=document.getElementById("price").value;
 	let leftPoint=(memberPoint-price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	if(memberPoint<price){
+	if(memberPoint-price>0){
 		$("#leftPoint").attr("value",leftPoint);
 	}else{
 		$("#lackPoint").attr("value",leftPoint);
