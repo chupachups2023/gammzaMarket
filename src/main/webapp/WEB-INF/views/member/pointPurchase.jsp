@@ -73,7 +73,7 @@
 	}
 
 	#payBox {
-		margin-left: 100px;
+		margin-left: 50px;
 	}
 	#viewPg, #viewPrice {
 		border:none;
@@ -98,8 +98,8 @@
 				<thead>
 					<tr>
 						<td colspan="4">
-							잔여 포인트 : ${member.point} p<br>
-							충전 후 포인트 : ${member.point} p
+							&emsp;잔여 포인트 : ${member.point} p<br>
+							&emsp;충전 후 포인트 : ${member.point} p
 						</td>
 					</tr>
 				</thead>
@@ -152,12 +152,11 @@
 			</table>
 		</div>
 		<div>
-			
+			<br>
 			<div id="payBox">
 				결제수단 : <input id="viewPg"><br>
 				결제가격 : <input id="viewPrice"><br>
-				<br>
-				이대로 진행하시려면 결제를 눌러주세요.
+				<br>이대로 진행하시려면 결제를 눌러주세요.<br>
 			</div> 
 
 		</div>
@@ -189,21 +188,24 @@
   		$('#orderName').val($(this).children('h3').text());
   		$('#pointPrice').val(price1);
 	});
-	const pg = "";
+
 	/* 결제방식 선택 */
 	$(':radio').click(function() {
 		const pg = $(':radio:checked').val();
 		$('#viewPg').val($(':radio:checked').next().text());
 		$('#selectedPg').val(pg);
+		const payment = $('#payBox').text();
 		
-		if(pg != "계좌이체") {
-			$('#purchaseBtn').attr("onclick", 'requestPay('+'"'+pg+'"'+');');
+		if(pg != "bank") {
+			$('#purchaseBtn').attr("onclick", 'requestPay('+'"'+pg+'"'+');');	//계좌이체 외 결제수단은 requestPay()에서 처리
 		}else {
+			$('#purchaseBtn').removeAttr("onclick");
+			$('#purchaseBtn').attr("onclick", 'bank();');	//계좌이체는 모달창으로 띄우기//미완성
 			
 		}
 	});
 
-	/* 카카오페이 */
+	/* 결제 */
 	const IMP = window.IMP; 
 	IMP.init("imp36052417"); 
 	
@@ -230,12 +232,15 @@
 		    }, function (rsp) {
 		    	if(rsp.success) {     //결제성공시
 					$.ajax({
-						url:'/updatePoint',
+						url:'/updatePoint.do',
 						type:'post',
 						data: {
+							"pointOrderNum" : merchant_uid,
+							"userId" : ${member.userId},
+							"pointName" : name,
 							"pointPrice": pointPrice,
-							"orderNum" : merchant_uid,
-							
+							"paymentMethod" : $('#viewPrice').val(),
+							"purchasedTime" : new Date()
 						}
 					}); 
 				}else {
@@ -245,6 +250,10 @@
 		}
 	}
 	
+	/* 계좌이체 선택시 */	//미완성
+	function bank() {
+		
+	}
 	
 	
 	function orderNum() {
