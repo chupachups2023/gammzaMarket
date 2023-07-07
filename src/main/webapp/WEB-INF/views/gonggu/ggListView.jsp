@@ -18,8 +18,8 @@
 					</div>
 					<div class="onelineThreeTitle">
 						<c:choose>
-							<c:when test="${fn:length(list.gongguName) gt 18}">
-								<div class="ggTitle">${fn:substring(list.gongguName, 0, 18)}...</div>
+							<c:when test="${fn:length(list.gongguName) gt 17}">
+								<div class="ggTitle">${fn:substring(list.gongguName, 0, 17)}⋯</div>
 							</c:when>
 							<c:otherwise>
 								<div class="ggTitle">${list.gongguName}</div>
@@ -32,7 +32,12 @@
        		 </c:forEach>
 		 </div>
 </div>
-
+<script>
+	const loginMem="${loginMember.userId}";
+	if(loginMem == null || loginMem ==""){
+		alert("로그인하지 않고 사용할 경우 정확한 주변의 공구를 가져오지 못할 수 있습니다.");
+	}
+</script>
 
 
 

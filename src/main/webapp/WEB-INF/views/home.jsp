@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/home.css?<%=System.currentTimeMillis() %>">
 <jsp:include page="/WEB-INF/views/common/mainHeader.jsp" >
-	<jsp:param value="main" name="title"/>
+	<jsp:param value="감자마켓💚" name="title"/>
 </jsp:include>
 	<div class="mainSearchSec">
 		<h2>어떤 공구를 찾으세요?</h2>
@@ -35,11 +35,23 @@
                                     <div class="ggTitle gghover">${list.gongguName}</div>
                                 </c:otherwise>
                             </c:choose>
-                        <div class="gghover">
-                            <b>
-                                <fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" />
-                            </b>
-                        </div>
+                         <c:choose>
+                         	<c:when test="${list.endStatus eq 0 }">
+		                        <div class="gghover when-ggEnd">
+		                        	<div class="ggEnd-tag">마감공구</div>
+		                            <b>
+		                                <fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" />
+		                            </b>
+		                        </div>
+                         	</c:when>
+                         	<c:otherwise>
+		                        <div class="gghover">
+		                            <b>
+		                                <fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" />
+		                            </b>
+		                        </div>
+                         	</c:otherwise>
+                         </c:choose>
                         <div class="gghover">
                             <small>${list.locationName}</small>
                         </div>
@@ -55,6 +67,7 @@
 	</div>
 	
 <!-- 	<script>
+무한스크롤
 		$(function(){
 			$(".main-listSec  .list-goods").hide();
 			$(".main-listSec  .list-goods").slice(0, 8).css({display:inline-block;}); 

@@ -3,15 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/ggList_Leader.css?<%=System.currentTimeMillis() %>">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/ggPartic_List.css?<%=System.currentTimeMillis() %>">
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="연 공구" name="title"/>
+	<jsp:param value="${loginMember.userId }님이 참여한 공구" name="title"/>
 </jsp:include>
 
+
 <div id="container">
-	<table class="table" align="center" >
-			<!-- <tr>
+		<table class="table" align="center" >
+		<tr>
 			<td colspan="3"  class="sort-type" >
 			<small>
 				<input type="checkbox" name="onlyOn" id="onlyOn"><label for="onlyOn"> 마감 공구 제외하고 보기</label>
@@ -23,8 +24,8 @@
 				<input type="radio" name="parti-sort" id="endTime" value="0"><label for="endTime"> 마감 순으로 정렬</label> 
 			</small>
 			</td>
-		</tr> -->
-		<c:forEach items="${leadList}" var="list" varStatus="j">
+		</tr>
+		<c:forEach items="${partiList}" var="list" varStatus="j">
 			<tr>
 				<th><img src="${pageContext.request.contextPath }/resources/upload/${list.photo1}" width="100px"></img></th>
 				<th>
@@ -56,12 +57,21 @@
 				<th><button class="bon">리뷰쓰기</button></th>
 			</c:otherwise>
 			</c:choose>
-				<fmt:parseDate value="${list.endTime }" var="endTime" pattern="yyyy-MM-dd"/>
-				<th><fmt:formatDate value="${endTime }" pattern="yyyy.MM.dd."/></th>
+				<fmt:parseDate value="${list.createAt }" var="createAt" pattern="yyyy-MM-dd"/>
+				<th><fmt:formatDate value="${createAt }" pattern="yyyy.MM.dd."/></th>
 			</tr>
 		</c:forEach>
 		</table>
 	</div>
-
-
+<script>
+	function receive(gongguName,gongguNo){
+		if(	confirm(gongguName+"을(를) 수령하셨나요?") ){
+			location.href="${pageContext.request.contextPath }/gonggu/partiStatusUpdate.pa?gongguNo="+gongguNo;
+		}else{
+			return
+		}
+	}
+	
+	
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

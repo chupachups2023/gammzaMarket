@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.gammza.chupachups.chatRoom.model.dao.ChatRoomDao;
 import com.gammza.chupachups.chatRoom.model.vo.ChatRoom;
+import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 
 @Service
 public class ChatRoomServiceImpl implements ChatRoomService {
@@ -23,6 +24,11 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 	@Override
 	public int selectTotalRecord() {
 		return chatRoomDao.selectTotalRecord();
+	}
+
+	@Override
+	public int insertChatRoom(Gonggu newGonggu ) {
+		return chatRoomDao.insertChatRoom(newGonggu);
 	}
 
 }

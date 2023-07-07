@@ -4,11 +4,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="제목" name="title"/>
+	<jsp:param value="결제결과" name="title"/>
 </jsp:include>
 
-*제목 수정하기
-*내용 들어갈 곳
-*참여자 공구 리스트
+<h1 align="center">결제되셨습니다!</h1>>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

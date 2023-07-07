@@ -14,6 +14,10 @@ public class Parti {
 	private String partiMember;
 	private int num; //구매수량
 	private String regAt;
-	private String locationCode;
+	private int status;
+	
+	//----DB에는 없는데 필요에 의해 추가
+	private String userId;
+	private double temperature;
 	
 }

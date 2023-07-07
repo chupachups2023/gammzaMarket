@@ -7,20 +7,12 @@
  	<resultMap type="member" id="memberMap"></resultMap>
  	
  	<insert id="insertMember">
- 		INSERT INTO MEMBER(USER_ID, USER_PWD, NAME, PHONE, ZIPCODE, ADDRESS, ADDRESSDETAIL, LOCATION, EMAIL, CREATE_AT, UPDATE_AT, STATUS, POINT, TEMPERATURE, KAKAO_IDKEY, NAVER_IDKEY, BIRTHDAY) 
+ 		INSERT INTO MEMBER(USER_ID, USER_PWD, NAME, PHONE, LOCATION, EMAIL, CREATE_AT, UPDATE_AT, STATUS, POINT, TEMPERATURE, KAKAO_IDKEY, NAVER_IDKEY, BIRTHDAY) 
  		VALUES(
  			#{userId},
  			#{userPwd},
-<<<<<<< Updated upstream
- 			'김감자',
- 			'01012345678',
- 			12345,
- 			#{address},
- 			'이레빌딩',
-=======
- 			#{name},
+      #{name},
  			#{phone},
->>>>>>> Stashed changes
  			1,
  			#{email},
  			DEFAULT,

@@ -4,10 +4,15 @@
 }
 .table{
     border-collapse: collapse;
+    width:950px;
+    margin:50px auto;
+    font-weight:normal;
+    text-align:center;
 }
 th{
     border-top: solid 1px black;
     border-bottom: solid 1px black;
+    font-weight:normal;
 }
 .don {
     background-color: #EBC58B;
@@ -16,12 +21,38 @@ th{
     color: white; 
     border-radius: 30px;
     border: none;
+    font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
 }
 .bon {
     background-color: #95D08B;
+    width: 110px; 
+    height: 20px; 
+    color: white; 
+    border-radius: 30px;
+    border: none;
+    font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
+}
+.non {
+    background-color: white;
     width: 80px; 
     height: 20px; 
     color: white; 
     border-radius: 30px;
     border: none;
+}
+.sort-type{
+	padding-bottom:5px;
+	text-align:left;
+}
+.align-right{
+	text-align:right;
+}
+.dateTd{
+	width:300px;
+	font-weight:normal;
+	font-size:15px;
+}
+a:hover{
+	text-decoration:underline;
+	text-underline-position : under;
 }

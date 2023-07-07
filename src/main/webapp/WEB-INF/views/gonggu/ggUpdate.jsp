@@ -25,17 +25,20 @@
                 </select>
             </div>
                 <div class="write-price">
-                    <span>구매가격</span><input type="number" name="price" value="${gonggu.price * gonggu.num }">P
+                    <span>개당(인당)가격</span><input type="number" name="price" value="${gonggu.price}">P
                 </div>
 			<div class="ggWrite-mid-flex">
                 <div>
-	                <div class="write-count">
-	                    공구 수량 <select name="type" >
-	                        <option value="0">수량 기준</option>
-	                        <option value="1">인원 기준</option>
-	                    </select>
-	                    <input type="number" name="num" value="${gonggu.num }">명/개
-	                </div>
+	                <div class="write-count-out">
+		                <div class="write-count">
+		                    공구 수량 <select name="type" >
+		                        <option value="0">수량 기준</option>
+		                        <option value="1">인원 기준</option>
+		                    </select>
+		                    <input type="number" name="num" value="${gonggu.num }">명/개
+		                </div>
+		                <small class="write-count-small">* 나를 제외한 인원 또는 수량으로 입력해주세요</small>
+	               </div>
 	                <!-- 사진 파일 첨부 -->
 	                <div class="ggWrite_fileupload_out">
 					    <div class="ggWirte_upload_icon" onclick="openFileUpload('1');">

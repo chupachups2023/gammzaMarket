@@ -54,7 +54,17 @@
 		
 	}
 	
-		
+.when-ggEnd{
+	display:flex;
+	flex-direction:row;
+}
+.ggEnd-tag{
+	font-size:12px;
+	background-color:#F9E8D0; 
+	border-radius:10px;
+	padding:3px 4px;
+	margin-right:5px;
+}
 	
 	.list-row {
   display: flex; /* Display the elements in a flex container */

@@ -63,6 +63,8 @@ a {
     -webkit-box-pack: justify;
     justify-content: space-between;
     border-left: 1px solid;
+    border-bottom: 1px solid;
+    
 }
 .css-fycla4 {
     position: relative;

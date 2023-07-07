@@ -1,5 +1,11 @@
 package com.gammza.chupachups.chatMsg.model.service;
 
-public interface ChatMsgService {
+import java.util.List;
 
+import com.gammza.chupachups.chatMsg.model.vo.ChatMsg;
+
+public interface ChatMsgService {
+/*
+	List<ChatMsg> selectChatMsg(ChatMsg chatMsg);
+*/
 }

@@ -53,7 +53,7 @@
             <div class="ggRead-price">개당 <fmt:formatNumber type="number" maxFractionDigits="3" value="${gonggu.price}" /> 포인트</div>
             <div class="ggRead-num">
                 <div>${gonggu.num}개 나눠요<span>/</span></div>
-                <div class="ggRead-on"> 아직 <span>${gonggu.num - 1}개</span> 남았어요</div>
+                <div class="ggRead-on"> 지금 <span>${gonggu.num - partiNum}개</span> 남았어요</div>
             </div>
             <fmt:parseDate value="${gonggu.endTime }" var="endTime" pattern="yyyy-MM-dd HH:mm"/>
             <div class="ggRead-endtime"><fmt:formatDate value="${endTime }" pattern="yyyy년 MM월 dd일 HH시 mm분"/>까지 기다려요</div>
@@ -67,7 +67,8 @@
             	</c:otherwise>
             </c:choose>
             <div class="ggRead-map">
-                <div>여기서 나눠드려요</div>
+                <fmt:parseDate value="${gonggu.sendTime }" var="sendTime" pattern="yyyy-MM-dd"/>
+                <div><fmt:formatDate value="${sendTime }" pattern="yyyy년 MM월 dd일"/>에 여기서 나눠드려요</div>
                 <div class="ggRead-mapp" id="map"></div>
             </div>
         </div>
@@ -95,17 +96,15 @@
         <c:choose>
         	<c:when test="${gonggu.gongguWriter eq loginMember.userId}">
        		<div class="ggRead-button">
-	            <a href="" class="button-end">글 수정</a>
+	            <a href="" class="button-end-writer">공구 마감하기</a>
 	            <a href="" class="button-end-writer">공구삭제</a>
 	            <a href="" class="button-end-writer">채팅하기</a>
-	            <a href="" class="button-end">끌올하기</a>
-	            <a href="" class="button-end-writer">참여자확인</a>
+	            <a href="${pageContext.request.contextPath}/gonggu/checkPartis.pa?gongguNo=${gonggu.gongguNo}" class="button-end-writer">참여자확인</a>
         	</div>
         	</c:when>
         	<c:otherwise>
 	        <div class="ggRead-button">
 	            <a href="" class="button-end">참여신청</a>
-	            <a href="" class="button-end">채팅하기</a>
 	        </div>
         	</c:otherwise>
         </c:choose>

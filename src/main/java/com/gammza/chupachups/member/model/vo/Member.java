@@ -21,9 +21,6 @@ public class Member {
 	private String userPwd;
 	private String name;
 	private String phone;
-	private int zipcode;
-	private String address;
-	private String addressDetail;
 	private int location;
 	private String email;
 	private LocalDateTime createAt;
@@ -36,5 +33,7 @@ public class Member {
 	private int category;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate birthday;
+	private String latitude;
+	private String longitude;
 
 }
