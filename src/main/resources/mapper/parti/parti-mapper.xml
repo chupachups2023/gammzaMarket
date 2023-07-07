@@ -11,7 +11,12 @@
 			#{gongguNo}, #{partiMember}, #{num}, sysdate, default
 		)
 	</insert>
-	<update id="updateMemberPoint">
+	<update id="updateMemberPointPlus">
+		update member
+		set point=point+#{totalPoint}
+		where user_id=#{userId}
+	</update>
+	<update id="updateMemberPointMinus">
 		update member
 		set point=point-#{totalPoint}
 		where user_id=#{userId}
@@ -36,11 +41,7 @@
 		set status=2
 		where gonggu_no=#{gongguNo} and parti_member=#{userId}
 	</update>
-	<update id="updateLeaderPoint">
-		update member
-		set point=point+#{price}
-		where user_id=#{gongguWriter}
-	</update>
+	
 	<select id="selectPartiListForLeader" resultMap="partiMap">
 		select p.*, m.user_id, m.temperature
 		from member m, parti_tb p

@@ -29,7 +29,9 @@
 	</select>
 	<update id="updateLocation">
 		update member
-		set location=#{locationNo}
+		set location=#{locationNo},
+			latitude=#{latitude},
+			longitude=#{longitude}
 		where user_id=#{userId}
 	</update>
   </mapper>

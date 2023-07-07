@@ -38,17 +38,17 @@
 			<tr>
 			<c:choose>
 				<c:when test="${list.status > 0 }">
-					<td height="50px"> <input type="checkbox" value="${j.index}" name="gongguMem" disabled checked> </td>
+					<th height="50px"> <input type="checkbox" value="${j.index}" name="gongguMem" disabled checked> </th>
 				</c:when>
 				<c:otherwise>
-					<td height="50px"> <input type="checkbox" value="${j.index}" name="gongguMem"> </td>
+					<th height="50px"> <input type="checkbox" value="${j.index}" name="gongguMem"> </th>
 				</c:otherwise>
 			</c:choose>
-				<td>${j.count }</td>
-				<td class="userId_bold">${list.userId }</td>
-				<td>${list.num }개(인분)</td>
-				<td>${list.temperature }도</td>
-				<td>
+				<th>${j.count }</th>
+				<th class="userId_bold">${list.userId }</th>
+				<th>${list.num }개(인분)</th>
+				<th>${list.temperature }도</th>
+				<th>
 					<c:choose>
 						<c:when test="${list.status eq 0 }">
 							참여 대기
@@ -57,12 +57,12 @@
 							참여 중
 						</c:otherwise>
 					</c:choose>
-				</td>
+				</th>
 				
-				<td class="dateTd">
+				<th class="dateTd">
 					<fmt:parseDate value="${list.regAt }" var="regAt" pattern="yyyy-MM-dd HH:mm"/>
 					<fmt:formatDate value="${regAt }" pattern="yyyy년 MM월 dd일 HH시 mm분"/> 신청
-				</td>
+				</th>
 			</tr>
 		</c:forEach>
 		</table>
