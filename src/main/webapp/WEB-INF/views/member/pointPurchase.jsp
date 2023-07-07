@@ -45,7 +45,7 @@
 		color: white;
 	}
 	.clicking {
-		background-color: rgb(184, 182, 182);
+		background-color: rgba(48, 175, 86, 0.753);
 		color: white;
 	}
     .pointG{
@@ -141,10 +141,10 @@
 							결제가능 수단&emsp;&emsp;
 						</td>
 						<td colspan="3">
-								<input type="radio" name="purchaseSelect" class="pg" value="kakaopay"><span>카카오페이</span><br>
-								<input type="radio" name="purchaseSelect" class="pg" value="naverpay"><span>네이버페이</span><br>
-								<input type="radio" name="purchaseSelect" class="pg" value="bank"><span>계좌이체</span><br>
-								<input type="radio" name="purchaseSelect" class="pg" value="html5_inicis"><span>신용/체크 카드</span>
+								<input type="radio" name="purchaseSelect" class="pg" value="kakaopay"> <span>카카오페이</span><br>
+								<input type="radio" name="purchaseSelect" class="pg" value="naverpay"> <span>네이버페이</span><br>
+								<input type="radio" name="purchaseSelect" class="pg" value="bank"> <span>계좌이체</span><br>
+								<input type="radio" name="purchaseSelect" class="pg" value="html5_inicis"> <span>신용/체크 카드</span>
 							
 						</td>
 					</tr>
@@ -183,10 +183,13 @@
 	$('.pointSel').click(function(){
   		$('.pointSel').removeClass('clicking');
   		$(this).addClass('clicking');
-  		const price1 = $(this).children('input').val();
+  		var price1 = $(this).children('input').val();
   		$('#viewPrice').val($(this).children('h4').text());
   		$('#orderName').val($(this).children('h3').text());
   		$('#pointPrice').val(price1);
+  		var afterP = 0;
+  		afterP = Number(${member.point})+Number(price1)+" p";
+  		$('#afterP').text(afterP);
 	});
 
 	/* 결제방식 선택 */
@@ -222,7 +225,7 @@
 		        pg : pg,		//결제하는 pg종류
 		        pay_method : 'card',
 		        merchant_uid: merchant_uid,		//  상점에서 관리하는 주문 번호(겹치지않는 번호로)
-		        name : $('#orderName').val()+'oint',			
+		        name : $('#orderName').val()+"oint",			
 		        amount : pointPrice,
 		        buyer_email : '${member.email}',
 		        buyer_name : '${member.name}',
@@ -230,12 +233,13 @@
 	
 		    }, function (data) {
 		    	if(data.success) {     //결제성공시
+		    		var msg = $('#orderName').val()+"oint" + "충전되셨습니다";
 					$.ajax({
 						url:'updatePoint.do',
 						type:'post',
 						data: {
 							pointOrderNum : merchant_uid,
-							pointName : $('#orderName').val()+'oint',
+							pointName : $('#orderName').val()+"oint",
 							pointPrice : pointPrice,
 							paymentMethod : $('#viewPg').val(),
 							purchasedTime : new Date()
@@ -244,7 +248,8 @@
 				}else {
 					alert("결제실패원인: " + data.error_msg);
 				}
-		    	document.location.href="${pageContext.request.contextPath}/member/pointPurChk.do?pointOrderNum="+merchant_uid;
+		    	alert(msg);
+		    	document.location.href="${pageContext.request.contextPath}/mypage/mypageMain.me";
 		    });
 		}
 	}
