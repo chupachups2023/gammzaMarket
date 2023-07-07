@@ -9,9 +9,10 @@
     font-weight:normal;
     text-align:center;
 }
-th, td{
+th{
     border-top: solid 1px black;
     border-bottom: solid 1px black;
+    font-weight:normal;
 }
 .don {
     background-color: #EBC58B;
@@ -40,7 +41,8 @@ th, td{
     border: none;
 }
 .sort-type{
-	padding-bottom:5px
+	padding-bottom:5px;
+	text-align:left;
 }
 .align-right{
 	text-align:right;

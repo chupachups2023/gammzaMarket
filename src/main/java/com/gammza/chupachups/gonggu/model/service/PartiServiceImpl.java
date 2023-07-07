@@ -21,8 +21,13 @@ public class PartiServiceImpl implements PartiService {
 	}
 
 	@Override
-	public int updateMemberPoint(HashMap<String,String> updatePoint) {
-		return partiDao.updateMemberPoint(updatePoint);
+	public int updateMemberPointMinus(HashMap<String,String> updatePoint) {
+		return partiDao.updateMemberPointMinus(updatePoint);
+	}
+	
+	@Override
+	public int updateMemberPointPlus(HashMap<String,String> updatePoint) {
+		return partiDao.updateMemberPointPlus(updatePoint);
 	}
 
 	@Override
@@ -38,11 +43,6 @@ public class PartiServiceImpl implements PartiService {
 	@Override
 	public int updatePartiStatusSelf(HashMap<String, String> map) {
 		return partiDao.updatePartiStatusSelf(map);
-	}
-
-	@Override
-	public int updateLeaderPoint(Gonggu gonggu) {
-		return partiDao.updateLeaderPoint(gonggu);
 	}
 
 	@Override

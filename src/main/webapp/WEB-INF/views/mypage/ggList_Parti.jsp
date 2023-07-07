@@ -11,12 +11,9 @@
 
 
 <div id="container">
-<input type="checkbox"> 마감 공구 제외하고 보기
-<input type="radio"> 마감 순으로 정렬
-<input type="radio"> 신청 순으로 정렬
 		<table class="table" align="center" >
 		<tr>
-			<td colspan="3"  class="sort-type">
+			<td colspan="3"  class="sort-type" >
 			<small>
 				<input type="checkbox" name="onlyOn" id="onlyOn"><label for="onlyOn"> 마감 공구 제외하고 보기</label>
 			</small>

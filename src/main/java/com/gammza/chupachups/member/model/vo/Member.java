@@ -33,5 +33,7 @@ public class Member {
 	private int category;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate birthday;
+	private String latitude;
+	private String longitude;
 
 }

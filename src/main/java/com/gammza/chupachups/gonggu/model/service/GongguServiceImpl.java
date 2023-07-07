@@ -1,6 +1,7 @@
 package com.gammza.chupachups.gonggu.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,16 @@ public class GongguServiceImpl implements GongguService {
 
 	@Autowired
 	private GongguDao gongguDao;
+	
+	@Override
+	public ArrayList<Gonggu> selectHomeList() {
+		return gongguDao.selectHomeList();
+	}
+	
+	@Override
+	public ArrayList<Gonggu> selectggListView(HashMap<String,String> locationMap) {
+		return gongguDao.selectggListView(locationMap);
+	}
 
 	@Override
 	public int insertGonggu(Gonggu gonggu) {
@@ -25,11 +36,6 @@ public class GongguServiceImpl implements GongguService {
 	}
 
 	@Override
-	public ArrayList<Gonggu> selectHomeList() {
-		return gongguDao.selectHomeList();
-	}
-
-	@Override
 	public int selectLastNum() {
 		return gongguDao.selectLastNum();
 	}
@@ -37,11 +43,6 @@ public class GongguServiceImpl implements GongguService {
 	@Override
 	public int selectTotalRecored() {
 		return gongguDao.selectTotalRecored();
-	}
-
-	@Override
-	public ArrayList<Gonggu> selectggListView() {
-		return gongguDao.selectggListView();
 	}
 
 	@Override
@@ -57,6 +58,11 @@ public class GongguServiceImpl implements GongguService {
 	@Override
 	public int updateGonggu(Gonggu gonggu) {
 		return gongguDao.updateGonggu(gonggu);
+	}
+
+	@Override
+	public ArrayList<Gonggu> selectLeadGongguList(String userId) {
+		return gongguDao.selectLeadGongguList(userId);
 	}
 
 }
