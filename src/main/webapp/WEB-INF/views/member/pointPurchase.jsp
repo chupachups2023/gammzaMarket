@@ -73,6 +73,7 @@
 	}
 
 	#payBox {
+		margin-left: 100px;
 	}
 	#viewPg, #viewPrice {
 		border:none;
@@ -141,8 +142,8 @@
 						</td>
 						<td colspan="3">
 								<input type="radio" name="purchaseSelect" class="pg" value="kakaopay"><span>카카오페이</span><br>
-								<input type="radio" name="purchaseSelect" class="pg" value="네이버페이"><span>네이버페이</span><br>
-								<input type="radio" name="purchaseSelect" class="pg" value="계좌이체"><span>계좌이체</span><br>
+								<input type="radio" name="purchaseSelect" class="pg" value="naverpay"><span>네이버페이</span><br>
+								<input type="radio" name="purchaseSelect" class="pg" value="bank"><span>계좌이체</span><br>
 								<input type="radio" name="purchaseSelect" class="pg" value="html5_inicis"><span>신용/체크 카드</span>
 							
 						</td>
@@ -211,31 +212,37 @@
 			alert("약관을 읽고 동의해주세요");
 			return;
 		}
-		const pointPrice = $('#pointPrice').val();
-	    IMP.request_pay({
-	        pg : pg,		//결제하는 pg종류
-	        pay_method : 'card',
-	        merchant_uid: orderNum(),		//  상점에서 관리하는 주문 번호(겹치지않는 번호로)
-	        name : $('#orderName').val()+'oint',			
-	        amount : pointPrice,
-	        buyer_email : '${member.email}',
-	        buyer_name : '${member.name}',
-	        buyer_tel : '${member.phone}'
-
-	    }, function (rsp) {
-	    	if(rsp.success) {     //결제성공시
-				$.ajax({
-					url:'/updatePoint',
-					type:'post',
-					data: {
-						"purchased": pointPrice,
-						
-					}
-				}); 
-			}else {
-				alert("결제실패원인: " + rsp.error_msg);
-			}
-	    });
+		if(pg == "bank") {
+			
+			
+		}else{
+			const pointPrice = $('#pointPrice').val();
+		    IMP.request_pay({
+		        pg : pg,		//결제하는 pg종류
+		        pay_method : 'card',
+		        merchant_uid: orderNum(),		//  상점에서 관리하는 주문 번호(겹치지않는 번호로)
+		        name : $('#orderName').val()+'oint',			
+		        amount : pointPrice,
+		        buyer_email : '${member.email}',
+		        buyer_name : '${member.name}',
+		        buyer_tel : '${member.phone}'
+	
+		    }, function (rsp) {
+		    	if(rsp.success) {     //결제성공시
+					$.ajax({
+						url:'/updatePoint',
+						type:'post',
+						data: {
+							"pointPrice": pointPrice,
+							"orderNum" : merchant_uid,
+							
+						}
+					}); 
+				}else {
+					alert("결제실패원인: " + rsp.error_msg);
+				}
+		    });
+		}
 	}
 	
 	
