@@ -15,9 +15,8 @@ public class ChatMsgServiceImpl implements ChatMsgService {
 	private ChatMsgDao chatMsgDao;
 /*
 	@Override
-	public List<ChatMsg> selectChatMsg() {
-		return chatMsgDao.selectChatMsg();
+	public List<ChatMsg> selectChatMsg(ChatMsg chatmsg) {
+		return chatMsgDao.selectChatMsg(chatmsg);
 	}
-	
 	*/
 }
