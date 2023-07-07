@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.gammza.chupachups.purchase.model.dao.PurchaseDao">
+ 	<resultMap type="pointPurRec" id="pointMap"/>
+ 	
+ 	<!-- 포인트 충전 반영 -->
+ 	<update id="updatePoint">
+ 		update member
+ 		set point = point + #{pointPrice}
+ 		where user_id = #{userId}
+ 	</update>
+
+ 	<!-- 포인트 충전 기록 -->
+ 	<insert id="insertPointPurRec">
+ 		insert into point_pur_rec
+ 			values(
+ 				POINT_SEQ.NEXTVAL,
+ 				#{pointOrderNum},
+ 				#{userId},
+ 				#{pointName},
+ 				#{pointPrice},
+ 				#{paymentMethod},
+ 				#{purchasedTime}
+ 			)
+ 	</insert>
+</mapper>

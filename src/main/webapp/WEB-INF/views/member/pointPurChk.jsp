@@ -4,14 +4,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="포인트결제" name="title"/>
+	<jsp:param value="결제결과" name="title"/>
 </jsp:include>
 
 결제되셨습니다!
 
-결제항목 : <br>
-결제한 포인트 : <br>
-결제 후 포인트 : ${member.point } <br>
+결제한 포인트 : ${pointOrderNum}<br>
+결제 후 포인트 :<%--  ${member.point } --%> <br>
 
 
 
