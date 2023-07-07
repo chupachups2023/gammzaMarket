@@ -63,4 +63,6 @@
 		<beans:constructor-arg ref="naverRedirectUrl" />
 	</beans:bean>
 	
+	<beans:bean id="socialService" class="com.gammza.chupachups.auth.model.service.SocialService" />
+	
 </beans:beans>

@@ -38,6 +38,7 @@
     font-size: 30px;
     font-weight: bold;
     margin: 0 15px;
+    max-width:600px;
 }
 .ggRead-head{
     display: flex;
@@ -147,6 +148,7 @@
 }
 .ggRead-writer:hover{
     text-decoration: underline;
+    text-underline-position : under;
     cursor: pointer;
 }
 .ggRead-detail>*{
@@ -168,6 +170,7 @@
 }
 .ggRead-on>span{
     text-decoration: underline;
+    text-underline-position : under;
 }
 .ggRead-endtime{
     font-size: 15px;
@@ -216,8 +219,10 @@
     text-align: right;
     color: rgb(114, 114, 114);
 }
-.ggRead-report:hover{
+.ggRead-report>*:hover{
     text-decoration: underline;
+    text-underline-position : under;
+    cursor:pointer;
 }
 .ggRead-info{
     display: flex;
@@ -244,7 +249,9 @@
 }
 .ggRead-link:hover{
     text-decoration: underline;
+    text-underline-position : under;
 }
 .ggRead-section{
     margin: 0 auto;
 }
+

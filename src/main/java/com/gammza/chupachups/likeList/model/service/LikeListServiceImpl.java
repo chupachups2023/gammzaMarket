@@ -21,7 +21,17 @@ public class LikeListServiceImpl implements LikeListService {
 	}
 
 	@Override
-	public List<Zzim> selectLikeList(String userId) {
-		return likeListDao.selectLikeList(userId);
+	public List<Zzim> selectLikeList(String userId, RowBounds rowBounds) {
+		return likeListDao.selectLikeList(userId, rowBounds);
+	}
+
+	@Override
+	public int deleteZzim(String zzimNo) {
+		return likeListDao.deleteZzim(zzimNo);
+	}
+
+	@Override
+	public List<Zzim> selectZzim(int gongguNo) {
+		return likeListDao.selectZzim(gongguNo);
 	}
 }

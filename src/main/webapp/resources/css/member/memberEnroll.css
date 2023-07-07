@@ -1,4 +1,9 @@
 @charset "UTF-8";
+
+* {
+    font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
+}
+
 /* #title {
     text-align: center;
 } */
@@ -17,9 +22,6 @@ h1 {
     text-align: center;
 }
 
-hr {
-    width: 90%;
-}
 
 .container {
     display: flex;
@@ -27,7 +29,7 @@ hr {
     align-items: center;
 
     /* text-align: center;  */
-    width: 350px; 
+    width: 400px; 
     /* margin:auto;  */
     margin-top: 20px;
     background-color: #F9F9F9; 
@@ -35,8 +37,23 @@ hr {
     border-radius: 30px;
     height: 120px;
 }    
+
+.container2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* text-align: center;  */
+    width: 500px; 
+    /* margin:auto;  */
+    margin-top: 20px;
+    background-color: #F9F9F9; 
+    border: 1px solid #E9D296; 
+    border-radius: 30px;
+    height: 180px;
+}    
 .lo {
-    width: 350px; 
+    width: 500px; 
     margin: auto; 
     margin-top: 20px;
     box-sizing:border-box; 
@@ -50,9 +67,19 @@ th, td {
 
 .enroll-section {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    padding: 15px 20px;
 }
+
+.enroll-section2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 20px;
+}
+
+
 
 .table1 {
     /* text-align: center;
@@ -62,6 +89,11 @@ th, td {
     justify-content: center;
     padding: 30px 0;
 }
+
+.add {
+    width: 320px;
+}
+
 .add input {
     background-color: #F9F9F9; 
     width: 300px;
@@ -70,10 +102,32 @@ th, td {
     margin-top: 2px;
 }
 .bo {
-    width: 100px; 
-    height: 30px; 
+    width: 130px; 
+    height: 40px; 
     background: rgba(94, 177, 98, 0.75); 
     color: white; 
     border-radius: 30px;
     border: none;
+    font-size: 15px;
+    font-weight: bold;
 }
+
+.btn-cont {
+    /* padding: 20px; */
+}
+
+.bo-small {
+    width: 100px; 
+    height: 30px; 
+    background: rgba(94, 177, 98, 0.75); 
+    color: white; 
+    border-radius: 0 10px 10px 10px;
+    border: none;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.td span {
+    font-size: 8px;
+}
+

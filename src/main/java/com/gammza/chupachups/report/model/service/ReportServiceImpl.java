@@ -29,4 +29,5 @@ public class ReportServiceImpl implements ReportService {
 	public List<Report> selectreportList(RowBounds rowBounds) {
 		return reportDao.selectreportList(rowBounds);
 	}
+	
 }

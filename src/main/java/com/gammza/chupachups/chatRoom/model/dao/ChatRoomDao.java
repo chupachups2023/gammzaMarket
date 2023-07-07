@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.session.RowBounds;
 
 import com.gammza.chupachups.chatRoom.model.vo.ChatRoom;
-import com.gammza.chupachups.chatRoom.model.vo.Parti_Tb;
 import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 
 public interface ChatRoomDao {

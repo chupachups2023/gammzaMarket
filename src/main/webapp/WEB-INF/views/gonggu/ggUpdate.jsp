@@ -3,116 +3,173 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggUpdate.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggWrite.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggUpdate.css?<%=System.currentTimeMillis() %>">
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="제목" name="title"/>
+	<jsp:param value="공구 글 수정하기" name="title"/>
 </jsp:include>
-
-<!-- 
-*제목 수정하기
-*내용 들어갈 곳
-*공구 글 수정 
--->
-
-	<!-- 공구 글 작성 -->
-
-    <!-- <h1>공구 물건 이름: 참여폼</h1>
-    <hr> -->
     <div class="write-container">
-        <form action="" method="">
+        <form action="${pageContext.request.contextPath}/gonggu/ggUpdate.go" method="post" enctype="multipart/form-data" name="ggUpdateFrm">
             <div class="write-category">
-                <input class="write-stuff" type="text" placeholder="공구할 물건">
-                <select name="" id="">
-                    <option value="">카테고리</option>
-                    <option value="">의류</option>
-                    <option value="">화장품/미용</option>
-                    <option value="">식품/농산물</option>
-                    <option value="">가구/인테리어</option>
-                    <option value="">배달음식</option>
-                    <option value="">유아동</option>
-                    <option value="">생활용품</option>
-                    <option value="">반려동물용품</option>
+                <input class="write-stuff" type="text" placeholder="공구할 물건" name="gongguName" value="${gonggu.gongguName }">
+                <select name="category">
+                    <option value="0">카테고리</option>
+                    <option value="1">의류</option>
+                    <option value="2">화장품/미용</option>
+                    <option value="3">식품/농산물</option>
+                    <option value="4">가구/인테리어</option>
+                    <option value="5">배달음식</option>
+                    <option value="6">유아동</option>
+                    <option value="7">생활용품</option>
+                    <option value="8">반려동물용품</option>
                 </select>
             </div>
-            <div>
                 <div class="write-price">
-                    <span>개당</span><input type="text" name="" id="">￦
+                    <span>개당(인당)가격</span><input type="number" name="price" value="${gonggu.price}">P
                 </div>
-                <div class="write-count">
-                    공구 수량 <select name="" id="">
-                        <option value="">수량 기준</option>
-                        <option value="">인원 수 기준</option>
-                        <option value="">물건 수 기준</option>
-                    </select>
-                    <input type="text">명/개
-                    <!-- <input type="text">명 -->
-                </div>
-                
-                <!-- 사진 파일 첨부 -->
-                <div class="update-info1">
-                    <div>
-                        (파일첨부이미지) 
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                    </div>
-                    <div>
-                        <span>상세정보 링크</span>
-                        <input class="update-infolink" type="text" placeholder="https://">
-                    </div>
-                </div>
-
-
-            </div>
-
+			<div class="ggWrite-mid-flex">
+                <div>
+	                <div class="write-count-out">
+		                <div class="write-count">
+		                    공구 수량 <select name="type" >
+		                        <option value="0">수량 기준</option>
+		                        <option value="1">인원 기준</option>
+		                    </select>
+		                    <input type="number" name="num" value="${gonggu.num }">명/개
+		                </div>
+		                <small class="write-count-small">* 나를 제외한 인원 또는 수량으로 입력해주세요</small>
+	               </div>
+	                <!-- 사진 파일 첨부 -->
+	                <div class="ggWrite_fileupload_out">
+					    <div class="ggWirte_upload_icon" onclick="openFileUpload('1');">
+					        <img src="https://cdn-icons-png.flaticon.com/512/1237/1237946.png" class="ggWrite_plus">
+					        <div class="ggWrite_file">
+					        <c:choose>
+					        	<c:when test="${not empty gonggu.photo1 }">
+						            <img src="${pageContext.request.contextPath}/resources/upload/${gonggu.photo1}" id="preview-image1" alt="" class="preview-image">
+					        	</c:when>
+					        	<c:otherwise>
+						            <img src="" alt="" id="preview-image1" class="preview-image">
+					        	</c:otherwise>
+					        </c:choose>
+					            <input type="file" accept=".jpg, .png, jpeg" class="hidden" id="hiddenFile1" name="upPhoto1">
+					        </div>
+					    </div>
+					
+					    <div class="ggWirte_upload_icon" onclick="openFileUpload('2');">
+					        <img src="https://cdn-icons-png.flaticon.com/512/1237/1237946.png" class="ggWrite_plus">
+					        <div class="ggWrite_file">
+					        <c:choose>
+					        	<c:when test="${not empty gonggu.photo2 }">
+						            <img src="${pageContext.request.contextPath}/resources/upload/${gonggu.photo2}" id="preview-image2" alt="" class="preview-image">
+					        	</c:when>
+					        	<c:otherwise>
+						            <img src="" alt="" id="preview-image2" class="preview-image">
+					        	</c:otherwise>
+					        </c:choose>
+					            <input type="file" accept=".jpg, .png, jpeg" class="hidden" id="hiddenFile2" name="upPhoto2">
+					        </div>
+					    </div>
+					    
+					    <div class="ggWirte_upload_icon" onclick="openFileUpload('3');">
+					        <img src="https://cdn-icons-png.flaticon.com/512/1237/1237946.png" class="ggWrite_plus">
+					        <div class="ggWrite_file">
+					        <c:choose>
+					        	<c:when test="${not empty gonggu.photo3}">
+						            <img src="${pageContext.request.contextPath}/resources/upload/${gonggu.photo3}" id="preview-image3" alt="" class="preview-image">
+					        	</c:when>
+					        	<c:otherwise>
+						            <img src="" alt="" id="preview-image3" class="preview-image">
+					        	</c:otherwise>
+					        </c:choose>
+					            <input type="file" accept=".jpg, .png, jpeg" class="hidden" id="hiddenFile3" name="upPhoto3">
+					        </div>
+					    </div>
+					</div>
+				</div>
+	            <div class="ggWrite-null">
+					<div class="ggWrite-content">
+						<pre><textarea name="content" placeholder="공구 예정자들에게 전달할 내용이 있나요?" class="ggWrite-textarea">${gonggu.content }</textarea></pre>
+					</div>
+					<div class="ggWrite-link">
+						구매 예정 링크: <input name="link" value="${gonggu.link}">
+					</div>
+				</div>
+			</div>
             <!-- date/time -->
             <div class="write-info2">
                 <div class="write-date">
                     <table class="write-tb">
                         <tr>
-                            <td>물건 나눌 날짜</td>
-                            <td><input type="date" name="" id=""></td>
+                            <td rowspan="2">공구 오픈 날짜</td>
+                            <td><input type="datetime-local" name="openTime" id="openTime" value="${gonggu.openTime }"></td>
                         </tr>
                         <tr>
-                            <td>물건 나눌 시간</td>
-                            <td><input type="time"></td>
-                        </tr>
-                        <tr></tr>
-                        <tr>
-                            <td>공구 마감 날짜</td>
-                            <td><input type="date" name="" id=""></td>
+                            <td><input type="checkbox" id="sysdate" value="sysdate" ><label for="sysdate">바로 시작하기</label></td>
                         </tr>
                         <tr>
-                            <td>공구 마감 시간</td>
-                            <td><input type="time"></td>
+                            <td class="gg-date">공구 마감 날짜</td>
+                            <td><input type="datetime-local" name="endTime" id="endTime" value="${gonggu.endTime }"></td>
                         </tr>
                         <tr>
-                            <td>공구 오픈 날짜</td>
-                            <td><input type="date" name="" id=""></td>
-                        </tr>
-                        <tr>
-                            <td>공구 오픈 시간</td>
-                            <td><input type="time"></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td><input type="checkbox" id="chk2"><label for="chk2">바로 시작하기</label></td>
+                            <td class="gg-date">물건 나눌 날짜</td>
+                            <td><input type="datetime-local" name="sendTime" id="sendTime" value="${gonggu.sendTime }"></td>
                         </tr>
                     </table>
                 </div>
                 <div class="wirte-map">
                     <span>물건 나눌 장소</span>
-                    <img src="map.png" alt="" style="width: 300px;">
+                    <div id="map" class="ggWrite_map"></div>
                 </div>
             </div>
-            
-            <div class="ggStart-btn"><input type="button" value="수정"></div>
+            <input type="hidden" name="latitude" id="lat" value="${gonggu.latitude }">
+            <input type="hidden" name="longitude" id="lon" value="${gonggu.longitude }">
+            <input type="hidden" name="sidoNm" id="sidoNm" value="${location.sidoNm }">
+            <input type="hidden" name="sggNm" id="sggNm" value="${location.sggNm }">
+            <input type="hidden" name="admNm" id="admNm" value="${location.admNm }">
+            <input type="hidden" name="legNm" id="legNm" value="${location.legNm }">
+            <input type="hidden" name="gongguNo" value="${gonggu.gongguNo }">
+            <div class="ggStart-btn"><input type="button" value="공구 수정" onclick="ggUpdateFrmSubmit();"></div>
         </form>
     </div>
+	<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggUpdateMap.js?<%=System.currentTimeMillis() %>"></script>
+	<script>
+	var now_utc = Date.now();
+	var timeOff = new Date().getTimezoneOffset()*60000;
+	var today = new Date(now_utc-timeOff).toISOString().substring(0, 16);
+	
+	document.getElementById("openTime").setAttribute("min", today);
+	document.getElementById("endTime").setAttribute("min", today);
+	
+	function openFileUpload(num) {
+        
+	    document.getElementById("hiddenFile"+num).click();
+
+	    function readImage(input) {
+	        // 인풋 태그에 파일이 있는 경우
+	        if (input.files && input.files[0]) {
+	            // FileReader 인스턴스 생성
+	            const reader = new FileReader()
+	            // 이미지가 로드가 된 경우
+	            reader.onload = e => {
+	                const previewImage = document.getElementById("preview-image"+num);
+	                const oldPhoto = document.getElementById("Pvalue"+num);
+	                previewImage.src = e.target.result;
+	                oldPhoto.src= " " ;
+	                previewImage.style.backgroundColor="white";
+	            }
+	            // reader가 이미지 읽도록 하기
+	            reader.readAsDataURL(input.files[0]);
+	        }
+	    }
+	    // input file에 change 이벤트 부여
+	    const inputImage = document.getElementById("hiddenFile"+num);
+	    inputImage.addEventListener("change", e => {
+	        readImage(e.target)
+	    });
+	}
+</script>
 
 
+<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggUpdate.js?<%=System.currentTimeMillis() %>"></script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

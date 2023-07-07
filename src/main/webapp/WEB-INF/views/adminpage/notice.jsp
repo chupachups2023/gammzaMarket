@@ -156,8 +156,7 @@ element.style {
 </nav>
 <div>
 	<c:if test="${loginMember.userId eq 'admin'}">
-		<button onclick="location.href='${pageContext.request.contextPath}/adminpage/insertNotice.do'">글
-			작성</button>
+		<button onclick="location.href='${pageContext.request.contextPath}/adminpage/insertNotice.do'">글 작성</button>
 	</c:if>
 </div>
 

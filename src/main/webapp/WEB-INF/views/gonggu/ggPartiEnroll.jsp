@@ -23,7 +23,7 @@
     </div>
     <div class="partic-container">
 
-        <form action="" method="">
+        <form action="${pageContext.request.contextPath}/gonggu/partiEnroll.pa" method="post">
             <table>
                 <tbody>
                     <tr>
@@ -45,11 +45,18 @@
                     <tr>
                         <td colspan="">수량</td>
                         <td>
+                        <c:choose>
+                        	<c:when test="${gonggu.type eq 0 }">
                             <div class="qttcont">
 								<button type="button" onclick="minus();" class="numbtn">-</button>
 								<input type="text" name="num" min="1" readonly value="1" id="qttnum">
 								<button type="button" onclick="plus();" class="numbtn">+</button>
 							</div>
+                        	</c:when>
+                        	<c:otherwise>
+                        		<input type="text" name="num" min="1" readonly value="1" id="qttnum">
+                        	</c:otherwise>
+                        </c:choose>
                         </td>
                     </tr>
                     <tr class="partic-point">
@@ -94,6 +101,9 @@
                     </tr>
                 </tbody>
             </table>
+            <input type="hidden" name="gongguNo" value="${gonggu.gongguNo }">
+            <input type="hidden" name="locationCode" value="${gonggu.locationNo }">
+            <input type="hidden" name="partiMember" value="${loginMember.userId }">
             <div class="partic-btn"><input type="submit" value="참여하기" class="button"></div>
             <!-- 모달창: 유의사항 동의 - 참여하기 -->
         </form>

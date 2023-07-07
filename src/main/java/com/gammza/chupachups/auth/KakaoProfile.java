@@ -13,6 +13,7 @@ public class KakaoProfile {
 	public KakaoAccount kakao_account;
 	private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 	
+	
 	public Map<String, Object> getAdditionalProperties() {
 	return this.additionalProperties;
 	}

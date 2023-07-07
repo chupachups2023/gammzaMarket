@@ -35,7 +35,7 @@
 					<c:when test="${empty loginMember}">
 						<button class="header-login btn" id="open-modal">로그인</button>
 					</c:when>
-					<c:when test="${loginMember.userId eq admin}">
+					<c:when test="${loginMember.userId eq 'admin'}">
 						<a href="${pageContext.request.contextPath}/admin/adminMain.ad"><img src="https://cdn-icons-png.flaticon.com/512/5909/5909015.png" alt="adminlogo" class="header-login" ></a>
 		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
 					</c:when>
@@ -54,9 +54,9 @@
 					<img src="${pageContext.request.contextPath}/resources/img/header/menu.png"	alt="logo" class="header-catemenu"> 
 					<a class="header-menu headder-cateA">카테고리</a>
 				</div>
-				<a href="${pageContext.request.contextPath}/gonggu/ggListView.go" class="header-menu">공구보기</a> 
+				<a href="javascript:viewAllGonggu();" class="header-menu">공구보기</a> 
 				<a href="" class="header-menu">요청게시판</a> 
-				<a href="${pageContext.request.contextPath}/common/location.lo" class="header-menu">장소인증</a>
+				<a href="${pageContext.request.contextPath}/location/location.lo" class="header-menu">장소인증</a>
 				<a href="${pageContext.request.contextPath}/gonggu/ggWrite.go" class="header-menu">공구 글쓰기</a>
 			</div>
 			<form action="">
@@ -125,12 +125,12 @@
 										</li>
 										<li class="login-naver">
 											<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&state=test&client_id=GQGBjwaCzYQZZ_5XkE2o&state=STATE_STRING&redirect_uri=http://localhost:8095/chupachups/auth/naver/callback">
-												<img src="${pageContext.request.contextPath}/resources/img/header/icon_naver_long_resize.png" alt="네이버로그인버튼">
+												<img src="${pageContext.request.contextPath}/resources/img/header/icon_naver_long_resize.png" alt="네이버로그인버튼"> (수정중..)
 											</a> 
 									</ul>
 									<br>
-									<button type="button" id="close-modal">임시닫기버튼</button>
-
+									<a id="close-modal" class="modal-closeBtn">닫기</a>
+									<!-- <button type="button" id="close-modal">임시닫기버튼</button> -->
 								</div>
 							</div>
 						</div>
@@ -138,42 +138,6 @@
 				</form>
 			</div>
 		</div>
-
-
-		<!-- 로그인 모달창 원본 -->
-
-		<%-- <div class="modal" tabindex="-1" id="modal">
-			<div class="modal-dialog">
-				<div class="modal-content">
-				    <div class="modal-header">
-						<h5 class="modal-title">로그인</h5>
-				    </div>
-			   		<form action="" method="post" name="loginFrm">
-				      	<div class="modal-body">
-				        	<table class="table">
-								<tr>
-									<td scope="col">아이디</td>
-									<td scope="col">
-										<input type="text" name="userId" placeholder="아이디를 입력하세요">
-									</td>
-								</tr>
-								<tr>
-									<td scope="col">비밀번호</td>
-									<td scope="col">
-										<input type="password" name="userPwd" placeholder="비밀번호를 입력하세요">
-									</td>
-								</tr>
-							</table>
-				      	</div>
-				      	<div class="modal-footer">
-					        <button type="button" id="login-modal">로그인</button>
-					        <button type="button" id="close-modal">닫기</button>
-				    	</div>
-					</form>
-			      
-				</div>
-			</div>
-		</div> --%>
 
 		<script>
 	        $(function(){
@@ -186,6 +150,27 @@
 	                }
 	            })
 	        })
+	        
+	        	function viewAllGonggu(){
+	    if (!navigator.geolocation) {
+	        alert("위치 정보가 지원되지 않습니다.");
+	    }else{
+	    	
+			function success(position) {
+			    const latitude = position.coords.latitude;   
+			    const longitude = position.coords.longitude;
+			    
+			    location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?longitude="+longitude+"&latitude="+latitude;
+			    
+			};
+	    	navigator.geolocation.getCurrentPosition(success);
+	    }
+	};
+		
+	        
+	        
+	        
+	        
 		const modal = document.getElementById("modal");
 		const openModalBtn = document.getElementById("open-modal");
 		const closeModalBtn = document.getElementById("close-modal");
@@ -206,6 +191,8 @@
 			document.body.style.overflow = "auto"; // 스크롤바 보이기
 			loginFrm.submit();
 		});
+		
+
 	    </script>
 	</header>
 	<section>

@@ -1,7 +1,222 @@
 body {
   font-size: 18px;
 }
+.write-container {
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  padding: 40px 0 0 100px;
 
+}
+
+.write-category {
+  padding-bottom: 40px;
+}
+
+.write-container table {
+  display: block;
+}
+
+.write-info2 {
+  display: flex;
+  width: 100%;
+}
+
+.write-stuff {
+  width: 400px;
+  border: none;
+  border-bottom: 3px solid #ddd;
+  font-size: 20px;
+
+}
+
+.write-price {
+  padding-bottom: 40px;
+}
+
+.write-price input {
+  width: 150px;
+  border: none;
+  border-bottom: 3px solid #ddd;
+  font-size:18px;
+  text-align:center;
+}
+.write-count{
+	padding-bottom:10px
+}
+.write-count-out {
+  padding-bottom: 40px;
+}
+.write-count-small{
+	color:gray
+}
+
+.write-count input {
+  width: 50px;
+  border: none;
+  border-bottom: 3px solid #ddd;
+  font-size:18px;
+  text-align:center;
+}
+.write-count input::-webkit-outer-spin-button,
+.write-count input::-webkit-inner-spin-button,
+.write-price input::-webkit-outer-spin-button,
+.write-price input::-webkit-inner-spin-button  {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.ggWrite-link input {
+  width: 250px;
+  border: none;
+  border-bottom: 3px solid #ddd;
+
+}
+
+
+.write-container input[type=datetime-local],
+.write-container input[type=date],
+.write-container input[type=time] {
+  border: 2px solid #ddd;
+  width: 180px;
+  height: 30px;
+  margin-top:15px;
+  font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
+  padding-left:5px;
+}
+
+.gg-date{
+  padding-top:15px;
+}
+
+.write-container select, option {
+  border: 2px solid #ddd;
+  width: 100px;
+  height: 40px;
+  margin-left: 18px;
+  border-radius: 5px;
+
+}
+
+.wirte-map {
+  padding-left: 70px;
+}
+.ggWrite-mid-flex{
+	display:flex;
+	justify-content: space-between;
+	flex-direction:row;
+}
+.ggWrite-null{
+	width:400px;
+}
+.ggWrite-null div{
+	margin-bottom:25px;
+}
+.wirte-map span {
+  display: block;
+}
+
+.ggWrite-textarea{
+	width:400px;
+	height:95px;
+	resize:none;
+	padding:10px;
+	border-radius:20px;
+	font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
+}
+
+.write-container table tr td:first-child {
+  padding-right: 35px;
+}
+
+.ggStart-btn {
+  display: flex;
+  justify-content: center;
+  padding: 30px 0;
+}
+
+.ggStart-btn input {
+  width: 120px;
+  height: 50px;
+  line-height: 50px;
+  border-radius: 20px;
+  transition: all 0.2s ;
+  background: #60b565b7;
+  color: #ffffff;
+  font-weight: 500px;
+  font-size: 16px;
+  border: none;
+  
+}
+
+.ggStart-btn input:hover {
+  background: rgb(35, 117, 84);
+}
+
+.update-info1 {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.update-infolink {
+  width: 300px;
+  border: none;
+  border-bottom: 3px solid #ddd;
+  font-size: 20px;
+  padding-left: 5px;
+}
+
+.ggWrite_map{
+	width:400px;
+	height:170px;
+	border-radius:20px;
+}
+.ggWrite_fileupload_out{
+    width: 320px;
+    display: flex;
+    justify-content: space-between;
+}
+.ggWirte_upload_icon {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    position: relative;
+}
+
+.ggWirte_upload_icon:hover {
+    cursor: pointer;
+}
+.preview-image{
+    max-width: 100px;
+    min-height: 100px;
+}
+.ggWrite_plus {
+    width: 50px;
+    height: 50px;
+    opacity: 0.2;
+    position: absolute;
+    left: 25px;
+    top: 25px
+}
+
+.ggWrite_file {
+    padding: 0;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    background-color: rgba(185, 185, 185, 0.568);
+    border-radius: 20px;
+    border: none;
+}
+
+.hidden {
+    visibility: hidden;
+}
+.write-tb{
+	height:170px;
+	padding-top:25px;
+}
+.write-container input:focus {outline:none;}
 .write-container {
   display: flex;
   justify-content: center;
@@ -40,9 +255,6 @@ table {
   border-bottom: 3px solid #ddd;
 }
 
-.write-count {
-  padding-bottom: 40px;
-}
 
 .write-count input {
   width: 50px;

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.gammza.chupachups.gonggu.model.dao.PartiDao">
+	<resultMap type="parti" id="partiMap"></resultMap>
+	<resultMap type="gonggu" id="gongguMap"></resultMap>
+	<insert id="insertParti">
+		insert into parti_tb values (
+			#{gongguNo}, #{partiMember}, #{num}, sysdate, default
+		)
+	</insert>
+	<update id="updateMemberPointPlus">
+		update member
+		set point=point+#{totalPoint}
+		where user_id=#{userId}
+	</update>
+	<update id="updateMemberPointMinus">
+		update member
+		set point=point-#{totalPoint}
+		where user_id=#{userId}
+	</update>
+	<select id="selectAllPartiList" resultMap="gongguMap">
+		select g.*
+		from gonggu g , parti_tb p
+		where g.gonggu_no=p.gonggu_no and p.parti_member = #{userId} and g.status=1
+		order by reg_at desc
+	</select>
+	<select id="selectOneParti" resultMap="partiMap">
+		select * from parti_tb
+		where gonggu_no=#{gongguNo} and parti_member=#{userId}
+	</select>
+	<update id="updatePartiStatusByLeader">
+		update parti_tb
+		set status=1
+		where gonggu_no=#{gongguNo} and parti_member=#{userId}
+	</update>
+	<update id="updatePartiStatusSelf">
+		update parti_tb
+		set status=2
+		where gonggu_no=#{gongguNo} and parti_member=#{userId}
+	</update>
+	
+	<select id="selectPartiListForLeader" resultMap="partiMap">
+		select p.*, m.user_id, m.temperature
+		from member m, parti_tb p
+		where p.parti_member=m.user_id and 
+				gonggu_no=#{gongguNo}
+		order by p.reg_at 
+	</select>
+</mapper>

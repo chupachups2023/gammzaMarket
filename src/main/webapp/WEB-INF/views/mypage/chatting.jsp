@@ -24,13 +24,14 @@
 				</div>
 				<ul tabindex="0" role="list" aria-label="내 채널 리스트" class="css-8lfz6g">
 					<c:forEach items="${chatRoomList}" var="chatRoom">
+				<c:if test="${parti.status eq 1 or chatRoom.roomOwner eq loginMember.userId}">
 					<li class="css-v2yhcd">
 						<a class="selected css-y6c1l4" id="msgList" onclick="msgList(${chatRoom.roomNo});" href="">
 							<div class="preview-title-wrap">
 								<span class="preview-nickname">${chatRoom.roomOwner}</span>
 							<div class="sub-text">
 								<span>${chatRoom.gongguNo }</span>
-								<span></span>
+								<span>${parti.status}</span>
 								<span>${chatRoom.lastChat}</span>
 							</div>
 							</div>
