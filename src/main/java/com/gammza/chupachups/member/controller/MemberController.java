@@ -56,6 +56,59 @@ public class MemberController {
 	}
 	
 	
+	@GetMapping("/checkId.me")
+	public String checkIdFunc(@RequestParam String userId, Model model) {
+		Member member = memberService.checkIdFunc(userId);
+		boolean available = member == null;
+		
+		model.addAttribute("userId", userId);
+		model.addAttribute("available", available);
+		
+		return "jsonView";
+	}
+	
+	/*
+	@PostMapping("/checkId.do")
+	@ResponseBody
+	public Map<String, Object> checkIdFunc(@RequestParam("userId") String userId, Map<String, Object> map) {
+		Map<String, Object> result = new HashMap<>();
+		
+		Member member = memberService.checkIdFunc(userId);
+		System.out.println("userId = " + userId);
+		
+		return map;
+}
+*/
+		
+	/*
+	@PostMapping("/checkId.do")
+	@ResponseBody
+	public int checkIdFunc(@RequestParam("userId") String userId) {
+		int cnt = memberService.checkIdFunc(userId);
+		return cnt;
+	}
+	*/
+		
+	/*
+	@ResponseBody
+	@PostMapping(value="/checkId.do", produces = "application/json; charset=UTF-8")
+	public Map<String, Boolean> checkIdFunc(String userId){
+		Member member = memberService.selectOneMember(userId);
+		boolean flag = (member == null);
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
+		map.put("flag", flag);
+		return map;
+		
+		/*
+		int count = 0;
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		count = memberService.checkIdFunc(userId);
+		map.put("cnt", count);
+		return map;
+	}
+	 */
+	
+	
 	/*
 	@GetMapping("/memberLogin.me")
 	public void login(Model model) throws Exception {
@@ -100,59 +153,6 @@ public class MemberController {
 		int result = memberService.insertMember(member);
 		return "redirect:/";
 	}
-	
-	
-	/*
-	@PostMapping("/checkId.me")
-	public String checkId(@RequestParam String userId, Model model) {
-		Member member = memberService.selectOneMember(userId);
-		boolean available = member == null;
-		
-		model.addAttribute("userId", userId);
-		model.addAttribute("available", available);
-		
-		return "jsonView";
-	}
-	*/
-	
-	/*
-	@GetMapping("/checkId.do")
-	public String checkId(@RequestParam String userId, Model model) {
-		Member member = memberService.selectOneMember(userId);
-		boolean available = member == null;
-		
-		model.addAttribute("userId", userId);
-		model.addAttribute("available", available);
-		
-		return "jsonView";
-	}
-	*/
-	
-	@PostMapping(value="/checkId.do", produces = "application/json; charset=UTF-8")
-	@ResponseBody
-	public Map<Object, Object> checkIdFunc(@RequestBody String userId){
-		int count = 0;
-		Map<Object, Object> map = new HashMap<Object, Object>();
-		count = memberService.checkIdFunc(userId);
-		map.put("cnt", count);
-		return map;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 		
 	
 	@GetMapping("/memberDetail.me")
@@ -181,11 +181,6 @@ public class MemberController {
 	public String memberInfo() { 
 		return "/mypage/memberInfo";
 	}
-	
-	
-	
-	
-	
 	
 	
 	// 아이디/비밀번호 찾기 
