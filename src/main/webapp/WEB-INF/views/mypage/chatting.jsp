@@ -24,13 +24,14 @@
 				</div>
 				<ul tabindex="0" role="list" aria-label="내 채널 리스트" class="css-8lfz6g">
 					<c:forEach items="${chatRoomList}" var="chatRoom">
+				<c:if test="${parti.status eq 1 or chatRoom.roomOwner eq loginMember.userId}">
 					<li class="css-v2yhcd">
 						<a class="selected css-y6c1l4" href="">
 							<div class="preview-title-wrap">
 								<span class="preview-nickname">${chatRoom.roomOwner}</span>
 							<div class="sub-text">
 								<span>${chatRoom.gongguNo }</span>
-								<span></span>
+								<span>${parti.status}</span>
 								<span>${chatRoom.lastChat}</span>
 							</div>
 							</div>
@@ -42,12 +43,13 @@
 							</span>
 						</div>
 					</li>
+					</c:if>
 					</c:forEach>
-					<c:forEach items="${myChatRoomList}" var="chatRoom">
+<%-- 					<c:forEach items="${myChatRoomList}" var="chatRoom">
 					<li class="css-v2yhcd">
 						<a class="selected css-y6c1l4" href="">
 							<div class="preview-title-wrap">
-								<span class="preview-nickname">${chatRoom.roomOwner}</span>
+								<span class="preview-nickname">${chatRoom.roomOwner}123</span>
 							<div class="sub-text">
 								<span>${chatRoom.gongguNo }</span>
 								<span>${loginMember.location}</span>
@@ -62,8 +64,7 @@
 							</span>
 						</div>
 					</li>
-					</c:forEach>
-					
+					</c:forEach>	 --%>				
 				</ul>
 				<div class="faq-container">
 					<a class="faq-content common-bg-hover" href="" target="_blank" rel="noreferrer">
@@ -209,3 +210,8 @@
 </main>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
+
+
+<script>
+	
+</script>
