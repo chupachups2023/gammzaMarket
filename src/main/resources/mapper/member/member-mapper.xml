@@ -11,11 +11,16 @@
  		VALUES(
  			#{userId},
  			#{userPwd},
+<<<<<<< Updated upstream
  			'김감자',
  			'01012345678',
  			12345,
  			#{address},
  			'이레빌딩',
+=======
+ 			#{name},
+ 			#{phone},
+>>>>>>> Stashed changes
  			1,
  			#{email},
  			DEFAULT,
@@ -30,9 +35,10 @@
  	</insert>
  	
  	
+ 	
  	<!-- 아이디 중복체크 -->
-	<select id="checkIdFunc" resultType="_int">
-		select count(*) from member 
+	<select id="checkIdFunc" resultMap ="memberMap">
+		select * from member 
 		where user_id = #{userId}
 	</select>
  	
