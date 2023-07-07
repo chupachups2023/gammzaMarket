@@ -96,7 +96,7 @@
 							<h2>로그인</h2>
 							<ul class="login-top">
 								<li class="login-info">
-									<input type="text" placeholder="아이디 입력!" name="userId">
+									<input type="text" placeholder="아이디 입력" name="userId">
 								</li>
 								<li class="login-info">
 									<input type="password" placeholder="비밀번호 입력" name="userPwd">
