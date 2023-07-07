@@ -65,6 +65,7 @@ public class PartiController {
 		
 	}
 	
+	//참여 신청하기
 	@PostMapping("/partiEnroll.pa")
 	public String partiEnrollFrm(Parti parti,RedirectAttributes redirectAttr,Model model) {
 		int result=partiService.insertParti(parti);
@@ -74,7 +75,7 @@ public class PartiController {
 			HashMap<String,String> updatePoint=new HashMap<String,String>();
 			updatePoint.put("totalPoint", String.valueOf(totalPrice));
 			updatePoint.put("userId", parti.getPartiMember());
-			int pointResult=partiService.updateMemberPoint(updatePoint);
+			int pointResult=partiService.updateMemberPointMinus(updatePoint);
 			if(pointResult>0) {
 				Member member=memberService.selectOneMember(parti.getPartiMember());
 				model.addAttribute("loginMember", member);
@@ -123,10 +124,14 @@ public class PartiController {
 		map.put("userId", userId);
 		Parti parti=partiService.selectOneParti(map);
 		partiService.updatePartiStatusSelf(map);
-		Gonggu gonggu=gongguService.selectOneGonggu(gongguNo);
 		
-		gonggu.setPrice(gonggu.getPrice()*parti.getNum());
-		int result=partiService.updateLeaderPoint(gonggu);
+		Gonggu gonggu=gongguService.selectOneGonggu(gongguNo);
+		int totalPrice=gonggu.getPrice()*parti.getNum();
+		HashMap<String,String> updatePoint=new HashMap<String,String>();
+		updatePoint.put("totalPoint", String.valueOf(totalPrice));
+		updatePoint.put("userId", gonggu.getGongguWriter());
+		
+		int result=partiService.updateMemberPointPlus(updatePoint);
 		
 		partiList(model);
 		return "/mypage/ggList_Parti";
@@ -143,17 +148,61 @@ public class PartiController {
 		return "/gonggu/ggPartiList";
 	}
 	
+	//총대가 참여자 선택
 	@GetMapping("/partiMemSelect.pa")
 	public String partiMemSelect(@RequestParam String[] id, @RequestParam int gongguNo, Model model) {
+		Gonggu gonggu=gongguService.selectOneGonggu(gongguNo);
 		for(int i=0;i<id.length;i++) {
 			HashMap<String, String> map=new HashMap<String,String>();
 			map.put("gongguNo", String.valueOf(gongguNo));
 			map.put("userId", id[i]);
 			int result=partiService.updatePartiStatusByLeader(map);
 		}
+
+		ArrayList<Parti> partiList=partiService.selectPartiListForLeader(gongguNo);
+		int selectCount=0;
+		for(int i=0;i<partiList.size();i++) {
+			if(partiList.get(i).getStatus()>0)
+				selectCount+=partiList.get(i).getNum();
+		}
+		if(gonggu.getNum()==selectCount) {
+			nonPartiMemPointMgr(gongguNo);
+			gongguService.updateEndStatus(gongguNo);
+		}
+		
 		checkPartis(gongguNo,model);
 		
 		return "/gonggu/ggPartiList";
 	}
+	
+	//공구가 마감되면 참여 안하는 회원들 포인트 돌려주기
+	public void nonPartiMemPointMgr(int gongguNo) {
+		Gonggu gonggu=gongguService.selectOneGonggu(gongguNo);
+		ArrayList<Parti> partiList=partiService.selectPartiListForLeader(gongguNo);
+		
+		for(int i=0;i<partiList.size();i++) {
+			if(partiList.get(i).getStatus()==0) {
+				int totalPrice=gonggu.getPrice()*partiList.get(i).getNum();
+				
+				HashMap<String,String> updatePoint=new HashMap<String,String>();
+				updatePoint.put("totalPoint", String.valueOf(totalPrice));
+				updatePoint.put("userId", partiList.get(i).getPartiMember());
+				
+				partiService.updateMemberPointPlus(updatePoint);
+			}
+		}
+			
+	}
+	
+	//총대가 오픈한 공구 리스트
+	@GetMapping("/ggLeadList.pa")
+	public String getLeadList(Model model) {
+		Member member=(Member)model.getAttribute("loginMember");
+		ArrayList<Gonggu> leadList=gongguService.selectLeadGongguList(member.getUserId());
+		model.addAttribute("leadList", leadList);
+		
+		return "/mypage/ggList_Leader";
+	}
+	
 	
 }

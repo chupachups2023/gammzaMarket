@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -19,7 +20,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.gammza.chupachups.chatRoom.model.service.ChatRoomService;
 import com.gammza.chupachups.common.ChangeDate;
@@ -59,16 +62,40 @@ public class GongguController {
 	public void ggWrite() {	}
 
 	@GetMapping("/ggListView.go")
-	public String ggListView(Model model) {
-		ArrayList<Gonggu> ggListView = gongguService.selectggListView();
+	public ModelAndView ggListView(Model model,RedirectAttributes redirectAttr, HttpSession session,
+				@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude) {
+		Member loginMember=(Member) session.getAttribute("loginMember");
+		ArrayList<Gonggu> ggListView;
+		ModelAndView mav=new ModelAndView();
+		if(loginMember !=null) {
+			if(loginMember.getLatitude() == null) {
+				redirectAttr.addFlashAttribute("msg","정확한 주변 공구를 보려면 장소 인증을 먼저 해야 합니다.");
+				mav.setView(new RedirectView("/chupachups/location/location.lo"));
+				
+				return mav;
+			}else {
+				HashMap<String,String> locationMap=new HashMap<String,String>();
+				locationMap.put("longitude", loginMember.getLongitude());
+				locationMap.put("latitude", loginMember.getLatitude());
+				ggListView = gongguService.selectggListView(locationMap);
+			}
+		}else {
+			HashMap<String,String> locationMap=new HashMap<String,String>();
+			locationMap.put("longitude", longitude);
+			locationMap.put("latitude", latitude);
+			ggListView = gongguService.selectggListView(locationMap);
+		}
+		
 		for(int i=0;i<ggListView.size();i++) {
 			Location tempLocal=locationService.selectLocationByNo(ggListView.get(i).getLocationNo());
 			String locationName=locationController.SelectLocationName(tempLocal);
 			ggListView.get(i).setLocationName(locationName);
+			
 		}
 		model.addAttribute("ggListView", ggListView);
+		mav.setViewName("/gonggu/ggListView");
 		
-		return "/gonggu/ggListView";
+		return mav;
 	}
 	
 	@GetMapping("/homeList.go")
@@ -78,6 +105,8 @@ public class GongguController {
 			Location tempLocal=locationService.selectLocationByNo(homeList.get(i).getLocationNo());
 			String locationName=locationController.SelectLocationName(tempLocal);
 			homeList.get(i).setLocationName(locationName);
+			//홈 띄워질 때마다 공구 상태 관리
+			gongguStatusMgr(homeList.get(i).getGongguNo());
 		}
 		model.addAttribute("homeList", homeList);
 		int totalRecord=gongguService.selectTotalRecored();
@@ -88,8 +117,21 @@ public class GongguController {
 		return "/home";
 	}
 	
+	//공구 상태 관리
+	public void gongguStatusMgr(int gongguNo) {
+		Gonggu gonggu = gongguService.selectOneGonggu(gongguNo);
+		LocalDateTime today = LocalDateTime.now();
+		LocalDateTime endTime = LocalDateTime.parse(ChangeDate.chageDateToJsp(gonggu.getEndTime()));
+		
+		//공구 날짜가 지났는데 상태가 1(진행 중)이면 
+		if(today.isAfter(endTime) && gonggu.getEndStatus()==1) {
+			gongguService.updateEndStatus(gongguNo);
+			new PartiController().nonPartiMemPointMgr(gongguNo);
+		}
+	}
+	
 	 @GetMapping("/ggRead.go") 
-	 public String ggRead_Partic(@RequestParam int gongguNo, Model model, HttpSession session) throws ParseException {
+	 public String ggRead(@RequestParam int gongguNo, Model model, HttpSession session) throws ParseException {
 		 Member loginMember=(Member)session.getAttribute("loginMember");
 		 List<Zzim> zzimList=likeListController.selectZzim(gongguNo);
 		 model.addAttribute("zzimCount", zzimList.size());
@@ -97,18 +139,12 @@ public class GongguController {
 		 gongguService.updateGongguCount(gongguNo);
 		 Gonggu gonggu = gongguService.selectOneGonggu(gongguNo);
 		 
-		 LocalDateTime today = LocalDateTime.now();
-		 LocalDateTime endTime = LocalDateTime.parse(ChangeDate.chageDateToJsp(gonggu.getEndTime()));
-		 if(today.isAfter(endTime) && gonggu.getEndStatus()==1) {
-			 gongguService.updateEndStatus(gongguNo);
-			 gonggu = gongguService.selectOneGonggu(gongguNo);
-		 }
 		 ArrayList<Parti> partiList=partiService.selectPartiListForLeader(gongguNo);
 		 
 		 int partiNum=0;
 		 for(int i=0;i<partiList.size();i++) {
 			 if(partiList.get(i).getStatus()>0) {
-				 partiNum++;
+				 partiNum+=partiList.get(i).getNum();
 			 }
 		 }
 		 model.addAttribute("partiNum", partiNum);

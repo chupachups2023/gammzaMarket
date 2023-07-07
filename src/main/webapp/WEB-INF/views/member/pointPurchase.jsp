@@ -198,9 +198,7 @@
 	        amount : $('#pointPrice').val(),
 	        buyer_email : '${member.email}',
 	        buyer_name : '${member.name}',
-	        buyer_tel : '${member.phone}',
-	        buyer_addr : '${member.address}',
-	        buyer_postcode : '${member.zipcode}'
+	        buyer_tel : '${member.phone}'
 	    }, function (rsp) {
 	    	if(rsp.success) {     //결제성공시
 				$.ajax({
