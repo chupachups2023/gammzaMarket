@@ -99,7 +99,7 @@
 					<tr>
 						<td colspan="4">
 							&emsp;잔여 포인트 : ${member.point} p<br>
-							&emsp;충전 후 포인트 : ${member.point} p
+							&emsp;충전 후 포인트 : <b id="afterP">${member.point} p</b>
 						</td>
 					</tr>
 				</thead>
@@ -194,7 +194,6 @@
 		const pg = $(':radio:checked').val();
 		$('#viewPg').val($(':radio:checked').next().text());
 		$('#selectedPg').val(pg);
-		const payment = $('#payBox').text();
 		
 		if(pg != "bank") {
 			$('#purchaseBtn').attr("onclick", 'requestPay('+'"'+pg+'"'+');');	//계좌이체 외 결제수단은 requestPay()에서 처리
@@ -210,45 +209,49 @@
 	IMP.init("imp36052417"); 
 	
 	function requestPay(pg) {
+		const merchant_uid = orderNum();
 		if(!$('#clauseCkh').is(':checked')){
 			alert("약관을 읽고 동의해주세요");
 			return;
 		}
 		if(pg == "bank") {
 			
-			
 		}else{
 			const pointPrice = $('#pointPrice').val();
 		    IMP.request_pay({
 		        pg : pg,		//결제하는 pg종류
 		        pay_method : 'card',
-		        merchant_uid: orderNum(),		//  상점에서 관리하는 주문 번호(겹치지않는 번호로)
+		        merchant_uid: merchant_uid,		//  상점에서 관리하는 주문 번호(겹치지않는 번호로)
 		        name : $('#orderName').val()+'oint',			
 		        amount : pointPrice,
 		        buyer_email : '${member.email}',
 		        buyer_name : '${member.name}',
-		        buyer_tel : '${member.phone}'
+		        buyer_tel : '${member.phone}',
 	
-		    }, function (rsp) {
-		    	if(rsp.success) {     //결제성공시
+		    }, function (data) {
+		    	if(data.success) {     //결제성공시
 					$.ajax({
-						url:'/updatePoint.do',
+						url:'updatePoint.do',
 						type:'post',
 						data: {
-							"pointOrderNum" : merchant_uid,
-							"userId" : ${member.userId},
-							"pointName" : name,
-							"pointPrice": pointPrice,
-							"paymentMethod" : $('#viewPrice').val(),
-							"purchasedTime" : new Date()
+							pointOrderNum : merchant_uid,
+							pointName : $('#orderName').val()+'oint',
+							pointPrice : pointPrice,
+							paymentMethod : $('#viewPg').val(),
+							purchasedTime : new Date()
 						}
 					}); 
 				}else {
-					alert("결제실패원인: " + rsp.error_msg);
+					alert("결제실패원인: " + data.error_msg);
 				}
+		    	document.location.href="${pageContext.request.contextPath}/member/pointPurChk.do?pointOrderNum="+merchant_uid;
 		    });
 		}
 	}
+	
+	
+	
+	
 	
 	/* 계좌이체 선택시 */	//미완성
 	function bank() {

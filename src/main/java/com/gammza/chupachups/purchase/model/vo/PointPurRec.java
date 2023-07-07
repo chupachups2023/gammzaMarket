@@ -2,8 +2,6 @@ package com.gammza.chupachups.purchase.model.vo;
 
 import java.util.Date;
 
-import com.gammza.chupachups.qna.model.vo.Qna;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
