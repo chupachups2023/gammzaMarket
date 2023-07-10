@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.gammza.chupachups.chatRoom.model.service.ChatRoomService;
 import com.gammza.chupachups.chatRoom.model.vo.ChatRoom;
@@ -17,6 +17,7 @@ import com.gammza.chupachups.common.template.Pagination;
 
 
 @Controller
+@SessionAttributes({"chatRoomList"})
 public class ChatRoomController {
 
 	@Autowired
@@ -31,6 +32,7 @@ public class ChatRoomController {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		PageInfo pi = Pagination.getPageInfo(totalRecord, nowPage, limit, 3);
 		List<ChatRoom> chatRoomList = chatRoomService.chatRoomList(rowBounds, roomOwner);
+
 		if(!chatRoomList.isEmpty()) {
 		System.out.println("나옴");
 		System.out.println(chatRoomList);
@@ -39,6 +41,7 @@ public class ChatRoomController {
 		System.out.println("안나옴");
 		System.out.println(chatRoomList);
 		}
+
 		model.addAttribute("chatRoomList", chatRoomList);
 		model.addAttribute("pi", pi);
 		
