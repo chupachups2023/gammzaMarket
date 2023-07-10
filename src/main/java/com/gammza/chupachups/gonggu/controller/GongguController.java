@@ -382,7 +382,7 @@ public class GongguController {
 		
 		 PageInfo pi=Pagination.getPageInfo(totalRecord, 1, 1, 8);
          model.addAttribute("pi", pi);
-		 
+         
 		 return "/home";
 	 }
 	 

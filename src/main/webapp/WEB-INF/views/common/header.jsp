@@ -62,7 +62,7 @@
 			<form action="">
 				<div class="header-searchbox">
 					<img src="${pageContext.request.contextPath}/resources/img/header/search.png" alt="" class="header-searchicon" onclick="fn_srchGgLst()"> 
-					<input type="text" class="header-search" name="gongguName" id="gongguName">
+					<input type="text" class="header-search" name="gongguName" id="gongguName" onkeyup="if(window.event.keyCode==13){fn_srchGgLst()}">
 				</div>
 			</form>
 		</div>
@@ -139,19 +139,19 @@
 			</div>
 		</div>
 
-		<script>
-	        $(function(){
-	            $(".header-category").click(function(){
-	                const p1 = $(".category-drop");
-	                if(p1.css("display")=="none"){
-	                    p1.slideDown();
-	                }else{
-	                    p1.slideUp();
-	                }
-	            })
-	        })
-	        
-	        	function viewAllGonggu(){
+<script>
+	$(function(){
+	    $(".header-category").click(function(){
+	        const p1 = $(".category-drop");
+	        if(p1.css("display")=="none"){
+	            p1.slideDown();
+	        }else{
+	            p1.slideUp();
+	        }
+	    });
+	});
+       
+   	function viewAllGonggu(){
 	    if (!navigator.geolocation) {
 	        alert("위치 정보가 지원되지 않습니다.");
 	    }else{
@@ -167,9 +167,6 @@
 	    }
 	};
 		
-	        
-	        
-	        
 	        
 		const modal = document.getElementById("modal");
 		const openModalBtn = document.getElementById("open-modal");
@@ -192,12 +189,12 @@
 			loginFrm.submit();
 		});
 		
-		 function fn_srchGgLst() {
-	            var gongguName = document.getElementById('gongguName').value;
-	            
-	            var url = '${pageContext.request.contextPath}/gonggu/ggSearch.go?gongguName=' + encodeURIComponent(gongguName);
-	            location.href = url;
-	        }
+	function fn_srchGgLst() {
+		var gongguName = document.getElementById('gongguName').value;
+		
+		var url = '${pageContext.request.contextPath}/gonggu/ggSearch.go?gongguName=' + encodeURIComponent(gongguName);
+		location.href = url;
+	}
 		
 	    </script>
 	</header>
