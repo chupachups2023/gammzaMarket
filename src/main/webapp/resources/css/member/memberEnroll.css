@@ -151,11 +151,13 @@ th, td {
 }
 
 .ok { 
-    color: #5EB162; font-size: 13px; 
+    color: #5EB162;
+    font-size: 13px; 
     font-weight: bold;
 }
 
 .error { 
-    color: #FF0606; font-size: 13px; 
+    color: #FF0606; 
+    font-size: 13px; 
     font-weight: bold;
 } 
