@@ -94,7 +94,7 @@ function success(position) {
         		marker.setMap(map);
         		
         		$.ajax({
-		        	type:"get",
+		        	type:"post",
 		        	url:"https://dapi.kakao.com/v2/local/geo/coord2address.json?x="+latlng.La+"&y="+latlng.Ma+"&input_coord=WGS84",
 		        	beforeSend: function (header) {
 		        		header.setRequestHeader("Authorization","KakaoAK 840539f3651afe19f12cc19a1dc9e0ab");
@@ -102,11 +102,39 @@ function success(position) {
 		            success:function(clickresult){
 		            	var clickaddress=clickresult.documents[0].address.address_name;
 		            	geoCoe(clickaddress);
-<<<<<<< Updated upstream
-=======
 		            	
 		            	getNearDong(latlng.Ma, latlng.La);
->>>>>>> Stashed changes
+		            	
+		            	var places = new kakao.maps.services.Places();
+						
+		            	let resultArr=[];
+		            	
+		            	var callback = function(result, status) {
+		            	    if (status === kakao.maps.services.Status.OK) {
+		            	    	for(let i=0;i<result.length;i++){
+		            	    		getOnlyGeoCoe(result[i].address_name,resultArr)
+		            	    	} 
+		            	    	console.log(resultArr);
+		            	    	
+		            	        $.ajax({
+		            	        	type:"post",
+		            	        	url:"nearDong.lo",
+		            	        	date:{"result":resultArr},
+		            	        	traditional : true,
+		            	        	success:function(successResult){
+		            	        		console.log(successResult);
+		            	        	}
+		            	        });
+		            	    }
+		            	};
+
+		            	// 공공기관 코드 검색
+			            	places.keywordSearch('행정복지센터', callback, {
+			            	    // Map 객체를 지정하지 않았으므로 좌표객체를 생성하여 넘겨준다.
+			            	    location: new kakao.maps.LatLng(latlng.Ma, latlng.La),
+			            	    radius:4000,
+			            	    sort_by:"DISTANCE"
+			            	});
 		            },
 		            error:function(){
 		            	console.log("실패");
@@ -221,11 +249,6 @@ function geoCoe(address){
                      	errCnt ++;
  						getAccessToken();
  						console.log(errCnt);
-<<<<<<< Updated upstream
- 						
- 						//window.location.reload()
-=======
->>>>>>> Stashed changes
  					break;																					
  					case -100:																					
  					break;																					
@@ -235,10 +258,42 @@ function geoCoe(address){
  		}																														
  	});																		
 }
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
+function getOnlyGeoCoe(address, arr){
+ 	address = encodeURIComponent(address);
+ 	var pagenum = '0';
+ 	var resultcount = '1';
+ 	$.ajax({
+ 		type:'GET',
+ 		url: 'https://sgisapi.kostat.go.kr/OpenAPI3/addr/geocode.json',
+ 		data:{
+ 			accessToken : accessToken,
+ 			address : address,
+ 			pagenum : pagenum,
+ 			resultcount : resultcount,
+ 		},
+ 		success:function(data){
+ 			switch (parseInt(data.errCd)){
+ 					case 0:
+	     			var resultdata = data.result.resultdata[0];
+	     			var Paramtext=resultdata.sido_nm+"/"+resultdata.sgg_nm+"/"+resultdata.adm_nm+"/"+resultdata.leg_nm;
+	     			
+	     			
+	     			arr.push(Paramtext);
+	     			
+ 					break;
+ 					case -401:
+                     	errCnt ++;
+ 						getAccessToken();
+ 					break;																					
+ 					case -100:																					
+ 					break;																					
+ 			}
+ 		},																														
+ 		error:function(data) {
+ 		}																														
+ 	});																		
+}
 </script> 
 
 

@@ -1,11 +1,13 @@
 package com.gammza.chupachups.location.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,8 +101,6 @@ public class LocationController {
 		return "/member/location";
 	}
 	
-<<<<<<< Updated upstream
-=======
 	@PostMapping("/location/nearDong.lo")
 	@ResponseBody
 	public Map<String,String[]> nearDong(HttpServletRequest request) {
@@ -132,5 +132,12 @@ public class LocationController {
 		return returnV;
 	}
 	
->>>>>>> Stashed changes
+	@PostMapping("/location/nearDong.lo")
+	public String nearDong(HttpServletRequest request) {
+		String[] result = request.getParameterValues("result");
+		System.out.println("들어오긴 함");
+		System.out.println(Arrays.toString(result));
+		return "성공!";
+	}
+	
 }

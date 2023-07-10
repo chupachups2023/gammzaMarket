@@ -5,7 +5,7 @@ import java.util.List;
 import com.gammza.chupachups.chatMsg.model.vo.ChatMsg;
 
 public interface ChatMsgDao {
-	/*
-	 * List<ChatMsg> selectChatMsg();
-	 */
+	
+	 List<ChatMsg> selectChatMsg(ChatMsg chatmsg);
+	 
 }

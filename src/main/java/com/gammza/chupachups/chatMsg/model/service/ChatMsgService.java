@@ -6,6 +6,6 @@ import com.gammza.chupachups.chatMsg.model.vo.ChatMsg;
 
 public interface ChatMsgService {
 
-	/* List<ChatMsg> selectChatMsg(); */
+	List<ChatMsg> selectChatMsg(ChatMsg chatMsg);
 
 }

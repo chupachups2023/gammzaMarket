@@ -1,6 +1,7 @@
 package com.gammza.chupachups.gonggu.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,20 @@ public class GongguServiceImpl implements GongguService {
 	}
 
 	@Override
+	public ArrayList<Gonggu> searchGonggu(String gongguName) {
+		return gongguDao.searchGonggu(gongguName);
+	}
+
+	@Override
+	public int selectGongguTotalRecored() {
+		return gongguDao.selectGongguTotalRecored();
+	}
+
+	@Override
+	public ArrayList<Gonggu> selectOneCategory(int category) {
+		return gongguDao.selectOneCategory(category);
+	}
+  @Override
 	public ArrayList<Gonggu> selectLeadGongguList(String userId) {
 		return gongguDao.selectLeadGongguList(userId);
 	}

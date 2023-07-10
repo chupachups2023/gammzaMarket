@@ -28,16 +28,14 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int checkIdFunc(String userId) {
-		return memberDao.checkId(userId);
+	public Member checkIdFunc(String userId) {
+		return memberDao.checkIdFunc(userId);
 	}
 
-	/*
-	public void selectOneMember(Member kakaoMember) {
-		// TODO Auto-generated method stub
-		
+	@Override
+	public int insertKakaoMember(Member member) {
+		return memberDao.insertKakaoMember(member);
 	}
-	*/
 
 
 }

@@ -3,8 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/chatting.css">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/chatting.css?<%=System.currentTimeMillis() %>">
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="채팅" name="title"/>
 </jsp:include>
@@ -24,9 +24,9 @@
 				</div>
 				<ul tabindex="0" role="list" aria-label="내 채널 리스트" class="css-8lfz6g">
 					<c:forEach items="${chatRoomList}" var="chatRoom">
-				<c:if test="${parti.status eq 1 or chatRoom.roomOwner eq loginMember.userId}">
+				<%-- <c:if test="${parti.status eq 1 or chatRoom.roomOwner eq loginMember.userId}"> </c:if>--%>
 					<li class="css-v2yhcd">
-						<a class="selected css-y6c1l4" href="">
+						<a class="selected css-y6c1l4" id="msgList" onclick="msgList(${chatRoom.roomNo});" href="">
 							<div class="preview-title-wrap">
 								<span class="preview-nickname">${chatRoom.roomOwner}</span>
 							<div class="sub-text">
@@ -43,41 +43,12 @@
 							</span>
 						</div>
 					</li>
-					</c:if>
 					</c:forEach>
-<%-- 					<c:forEach items="${myChatRoomList}" var="chatRoom">
-					<li class="css-v2yhcd">
-						<a class="selected css-y6c1l4" href="">
-							<div class="preview-title-wrap">
-								<span class="preview-nickname">${chatRoom.roomOwner}123</span>
-							<div class="sub-text">
-								<span>${chatRoom.gongguNo }</span>
-								<span>${loginMember.location}</span>
-								<span>${chatRoom.lastChat}</span>
-							</div>
-							</div>
-								<img src="${pageContext.request.contextPath}/resources/img/chatting/Rectangle 3.png" class="preview-image" alt="" width="50px">
-						</a>
-						<div class="common-bg-hover only-hover css-q6qzi5">
-							<span class="option-controller">
-								<svg width="36" height="36" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"></svg>
-							</span>
-						</div>
-					</li>
-					</c:forEach>	 --%>				
 				</ul>
-				<div class="faq-container">
-					<a class="faq-content common-bg-hover" href="" target="_blank" rel="noreferrer">
-						<span class="faq-test">자주묻는 질문</span>
-						<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<circle cx="9" cy="9" r="8.5" stroke="#868B94"></circle>
-						</svg>
-					</a>
-				</div>
 			</nav>
 		</div>
 		<section class="css-am8mw7">
-			<div class="chat-normal-room">
+			<div class="chat-normal-room" id="msgList">
 				<div class="css-voabwl">
 					<div class="css-1c3oejv">
 						<div class="chat-header-profile">
@@ -96,122 +67,53 @@
 										
 									</path>
 									<path fill-rule="evenodd" clip-rule="evenodd" d="M2.0002 12.8C1.2852 12.8 0.700195 13.385 0.700195 14.1C0.700195 14.815 1.2852 15.4 2.0002 15.4C2.7152 15.4 3.3002 14.815 3.3002 14.1C3.3002 13.385 2.7152 12.8 2.0002 12.8Z" fill="currentColor">
-										
+						<div>
+							<jsp:include page="${pageContext.request.contextPath}/mypage/msgList.do" />
+						</div>
 									</path>
 								</svg>
-							</div>
-						</div>
-					</div>
-					<a href="" target="_blank" rel="noreferrer" class="css-16mjcje">
-						<div class="reserved-wrapper common-bg-hover">
-							<img class="article-image" src="${pageContext.request.contextPath}/resources/img/chatting/Rectangle 3.png" alt="">
-							<div class="reserved-main">
-								<div>물건 이름</div>
-								<div class="reserved-price">10,000원</div>
-							</div>
-							<div>
-								<span class="reserve-button ongoing">판매중</span>
-							</div>
-						</div>
-					</a>
-					<div tabindex="0" role="region" aria-label="메시지 리스트" class="css-13cllyv">
-						<div class="css-13ec0kq">
-							<div class="info">
-								<div class="css-1o46l5b">
-									<span>user01님은 당근페이 사용자예요. 채팅방에서 바로 송금할 수 있어요.</span>
-								</div>
-							</div>
-						</div>
-						<div class="day-divider">
-							<div class="date-text">2023년 6월25일</div>
-						</div>
-						<div id="for-scroll-1" class="for-containment right">
-							<div class="for-containment   css-uc14ng">
-								<div class="sender css-lty8rs">
-									<span class="message-date">user01</span>
-									<div class="message-date">오후 10:25</div>
-								</div>
-								<div class="message-wrapper">
-									<div>
-										<p class="message-box">안녕하세요!</p>
-									</div>
-									<button type="button" class="toolbox">
-										<img src="/icons/more_horiz.svg" alt="more">
-									</button>
-								</div>
-							</div>
-						</div>
-						<div id="for-scroll-2" class="for-containment left">
-							<div class="  css-7rih9z">
-								<div class="message-wrapper">
-									<div>
-										<p class="message-box">안녕하세요!</p>
-									</div>
-									<button type="button" class="toolbox">
-										<img src="/icons/more_horiz.svg" alt="more">
-									</button>
-								</div>
-								<div class="css-lty8rs">
-									<span class="message-date">user02</span>
-									<div class="message-date">오후 11:29</div>
-								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<form class="css-1ckh9yi">
-					<textarea placeholder="메시지를 입력해주세요" class="css-10fmtiz"></textarea>
-					<div class="chatform-option-area">
-						<div class="chatform-submenu">
-							<label class="option-wrapper">
-								<span class="option-tooltip">사진</span>
-								<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<rect width="20" height="20" rx="3"></rect>
-									<path d="M6 9C7.10457 9 8 8.10457 8 7C8 5.89543 7.10457 5 6 5C4.89543 5 4 5.89543 4 7C4 8.10457 4.89543 9 6 9Z" fill="white">
-										
-									</path>
-									<path d="M3 16L6.5 12L10 16" fill="white">
-										
-									</path>
-									<path d="M7 16L12 10L17 16" fill="white">
-										
-									</path>
-								</svg>
-								<input type="file" multiple="" accept="image/png, image/jpeg, image/gif">
-							</label>
-							<label class="option-wrapper ">
-								<span class="option-tooltip">자주 쓰는 문구</span>
-								<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<path fill-rule="evenodd" clip-rule="evenodd" d="M0 18C0 19.1046 0.895431 20 2 20H18C19.1046 20 20 19.1046 20 18V2C20 0.895431 19.1046 0 18 0H2C0.895431 0 0 0.895431 0 2V18ZM5 5.1C4.50294 5.1 4.1 5.50294 4.1 6C4.1 6.49706 4.50294 6.9 5 6.9H15C15.4971 6.9 15.9 6.49706 15.9 6C15.9 5.50294 15.4971 5.1 15 5.1H5ZM4.1 10C4.1 9.50294 4.50294 9.1 5 9.1H15C15.4971 9.1 15.9 9.50294 15.9 10C15.9 10.4971 15.4971 10.9 15 10.9H5C4.50294 10.9 4.1 10.4971 4.1 10ZM5 13.1C4.50294 13.1 4.1 13.5029 4.1 14C4.1 14.4971 4.50294 14.9 5 14.9H15C15.4971 14.9 15.9 14.4971 15.9 14C15.9 13.5029 15.4971 13.1 15 13.1H5Z">
-										
-									</path>
-								</svg>
-							</label>
-							<label class="option-wrapper">
-								<span class="option-tooltip">이모티콘</span>
-								<div class="option-wrapper  css-1f5m7zv">
-									<button class="sticker-button" type="button">sticker
-										<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-											<path fill-rule="evenodd" clip-rule="evenodd" d="M10 20C15.5228 20 20 15.5228 20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20ZM7.55556 8.2222C7.55556 9.08131 6.85912 9.77776 6.00001 9.77776C5.1409 9.77776 4.44445 9.08131 4.44445 8.2222C4.44445 7.36309 5.1409 6.66665 6.00001 6.66665C6.85912 6.66665 7.55556 7.36309 7.55556 8.2222ZM14.0002 9.77776C14.8593 9.77776 15.5558 9.08131 15.5558 8.2222C15.5558 7.36309 14.8593 6.66665 14.0002 6.66665C13.1411 6.66665 12.4447 7.36309 12.4447 8.2222C12.4447 9.08131 13.1411 9.77776 14.0002 9.77776ZM6.29774 11.9236C6.13284 11.5137 5.66687 11.3151 5.25697 11.48C4.84706 11.6449 4.64845 12.1109 4.81336 12.5208C5.28799 13.7006 6.18929 14.5207 7.14118 15.0388C8.08738 15.5537 9.13514 15.8 9.99999 15.8C11.8597 15.8 14.2492 14.8376 15.186 12.5223C15.3518 12.1127 15.1541 11.6463 14.7445 11.4806C14.3349 11.3149 13.8686 11.5126 13.7028 11.9221C13.0841 13.4512 11.4292 14.2 9.99999 14.2C9.40929 14.2 8.62371 14.024 7.90603 13.6334C7.19403 13.2459 6.60088 12.6771 6.29774 11.9236Z">
-												
-											</path>
-										</svg>
-									</button>
-								</div>
-							</label>
-						</div>
-						<button class="disable css-1useanf" aria-disabled="true">전송</button>
-					</div>
-					<span class="text-length">0/1000</span>
-				</form>
 			</div>
 		</section>
 	</div>
 </main>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
+<!-- 
+<c:forEach items="${msgList}" var="chatMsg" varStatus ="status">
+	<li>
+		<a href="${pageContext.request.contextPath}${result.view_url}">
+			<span class="cate"><c:out value="${chatMsg.chatWriter}"/></span>
+			<div class="txt">
+				<strong><c:out value="${chatMsg.chatContent}" escapeXml = "false" /></strong>
+				<span class="date"><c:out value="${chatMsg.sendDate}" /></span>
+			</div> 
+		</a>
+	</li>
+</c:forEach> 
 
-
-<script>
-	
+<script>	
+	document.querySelect("#msgList"),addEventListener('click', (e) => {
+		$.ajax{(
+			url : "chatMsg/msgList.do",
+			type : "post",
+			dateType : "json",
+			data: {param : "${msgList}", num : thisIndex},
+			traditional : true,
+			success : function(result) {
+				console.log(result);
+				${"#msgList"}.html(result);
+			},
+			error :function(jqXHR, textStatus, errorThrown) {
+				alert("오류가 발생했습니다.");
+			}
+		
+		
+		
+		)}		
+	})
 </script>
+ -->

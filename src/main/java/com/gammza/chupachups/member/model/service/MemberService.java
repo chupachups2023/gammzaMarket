@@ -10,6 +10,8 @@ public interface MemberService {
 	
 	int updateMember(Member member);
 
-	int checkIdFunc(String userId);
+	Member checkIdFunc(String userId);
+
+	int insertKakaoMember(Member member);
 
 }

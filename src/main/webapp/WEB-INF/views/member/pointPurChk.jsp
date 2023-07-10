@@ -7,12 +7,6 @@
 	<jsp:param value="결제결과" name="title"/>
 </jsp:include>
 
-결제되셨습니다!
-
-결제한 포인트 : ${pointOrderNum}<br>
-결제 후 포인트 :<%--  ${member.point } --%> <br>
-
-
-
+<h1 align="center">결제되셨습니다!</h1>>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
