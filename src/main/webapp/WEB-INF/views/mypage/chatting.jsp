@@ -69,7 +69,7 @@
 									</path>
 									<path fill-rule="evenodd" clip-rule="evenodd" d="M2.0002 12.8C1.2852 12.8 0.700195 13.385 0.700195 14.1C0.700195 14.815 1.2852 15.4 2.0002 15.4C2.7152 15.4 3.3002 14.815 3.3002 14.1C3.3002 13.385 2.7152 12.8 2.0002 12.8Z" fill="currentColor">
 						<div>
-							<jsp:include page="${pageContext.request.contextPath}/mypage/msgList.do" />
+							<jsp:include page="${pageContext.request.contextPath}/mypage/chatDetail.jsp" />
 						</div>
 									</path>
 								</svg>
