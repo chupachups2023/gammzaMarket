@@ -8,6 +8,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="1:1문의" name="title" />
 </jsp:include>
+
 <div id="qnaBoard">
 	<h1 align="center">문의 사항</h1>
 
@@ -27,7 +28,7 @@
 				<c:if test="${qna.qnaWriter eq loginMember.userId}">
 				<tr>
 					<td width="100px">${pi.totalRecord - ((pi.nowPage-1)*pi.numPerPage)-s.index}</td>
-					<td class="Qtitle"><a href="${pageContext.request.contextPath}/mypage/myQuestionAnswer.do?nowPage=${pi.nowPage}&qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a></td>
+					<td class="Qtitle"><a href="${pageContext.request.contextPath}/mypage/myQuestionAnswer.do?nowPage=${pi.nowPage}&qnaNo=${qna.qnaNo}">[${qna.qnaCatName}] ${qna.qnaTitle}</a></td>
 					<td width="200px">${qna.qnaWriter}</td>
 					<td width="150px">${qna.createAt}</td>
 				</tr>
@@ -39,17 +40,19 @@
 	
 	<nav id="pagingNav">
 		<ul class="qnaPaging">
+			<c:if test="${pi.totalRecord eq 0 }">
+				
+			</c:if>
 			<c:if test="${pi.nowPage ne 1}">
 				<li>
-					<a href="${pageContext.request.contextPath}/mypage/myQuestionList.do?nowPage=${pi.nowPage-1}"
-					tabindex="-1" aria-disabled="false">이전</a>
+					<a href="${pageContext.request.contextPath}/mypage/myQuestionList.do?nowPage=${pi.nowPage-1}">이전</a>
 				</li>
 			</c:if>
 			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
 				<c:choose>
 					<c:when test="${p eq pi.nowPage }">
 						<li>
-							<a href="${pageContext.request.contextPath}/mypage/myQuestionList.do?nowPage=${p}">${p}</a>
+							<a id="selectedPage" href="${pageContext.request.contextPath}/mypage/myQuestionList.do?nowPage=${p}">${p}</a>
 						</li>
 					</c:when>
 					<c:otherwise>
@@ -59,18 +62,14 @@
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
-			<c:if test="${pi.nowPage ne pi.totalPage }">
+			<c:if test="${${pi.nowPage ne pi.totalPage && pi.totalPage ne 0}}">
 				<li><a href="${pageContext.request.contextPath}/mypage/myQuestionList.do?nowPage=${pi.nowPage+1}">다음</a></li>
 			</c:if>
 		</ul>
 	</nav>
 	<div class="qnaBtnBox">
-		<button class="qnaBtn" onclick="location.href='${pageContext.request.contextPath}/mypage/questionForm.do'">글쓰기</button>
+		<button class="qnaBtn" onclick="location.href='${pageContext.request.contextPath}/mypage/questionForm.do'" style="width:80px;">문의하기</button>
 	</div>
 </div>
-
-<script>
-	console.log("${loginMember.userId}");
-</script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

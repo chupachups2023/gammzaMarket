@@ -26,7 +26,8 @@
 			#{latitude},
 			#{longitude},
 			default,
-			default,  null,sysdate
+			default,  null,sysdate,
+			#{locationNo}, default
 		)
 	</insert>
 	<select id="selectLastNum" resultType="_int">
@@ -41,6 +42,12 @@
     <select id="selectHomeList" resultMap="gongguMap">
     	select *
     		from gonggu
+    		where status=1 and end_status=1
+    	order by pullup_at desc
+    </select>
+    <select id="selectHomeListWithEnd" resultMap="gongguMap">
+    	select *
+    		from gonggu
     		where status=1
     	order by pullup_at desc
     </select>
@@ -52,18 +59,55 @@
 	</select>
 
 	<select id="selectggListView" resultMap="gongguMap">
+		SELECT  *
+		   FROM   GONGGU
+		 WHERE STATUS = 1 AND END_STATUS = 1
+		 	and  0.0359*0.0359>power(( to_number(longitude)-to_number(#{longitude })),2)+power(( to_number(latitude)-to_number(#{latitude })),2)
+		 order by pullup_at desc
+	</select>
+	<select id="selectggListViewWithEnd" resultMap="gongguMap">
 		SELECT  GONG.GONGGU_NO
 		            ,GONG.GONGGU_NAME
 		            ,GONG.PRICE
-		            ,GONG.PHOTO1
-		          , (SELECT MAX(LOCATION_NAME) 
-		               FROM LOCATION LCTN , PARTI_TB PRTB 
-		             WHERE GONG.GONGGU_NO = PRTB.GONGGU_NO 
-		                 AND PRTB.LOCATION_CODE = LCTN.LOCATION_NO) LOCATION_NAME
+		            ,GONG.PHOTO1, GONG.LOCATION_NO
 		   FROM   GONGGU   GONG
 		 WHERE GONG.STATUS = 1
+		 order by pullup_at desc
 	</select>
-
+	<update id="updateGongguCount">
+		update gonggu
+		set count=count+1
+		where gonggu_no=#{gongguNo}
+	</update>
+	<update id="updateEndStatus">
+		update gonggu
+		set END_STATUS = 0
+		where gonggu_no=#{gongguNo}
+	</update>
+	<update id="updateGonggu">
+		update gonggu
+		   set gonggu_name=#{gongguName},
+		   	   price=#{price},
+		   	   type=#{type},
+		   	   num=#{num},
+		   	   category=#{category},
+		   	   photo1=#{photo1},
+		   	   photo2=#{photo2},
+		   	   photo3=#{photo3},
+		   	   link=#{link},
+		   	   send_time=${sendTime},
+		   	   open_time=${openTime},
+		   	   end_time=${endTime},
+		   	   latitude=#{latitude},
+		   	   longitude=#{longitude},
+		   	   update_at=sysdate,
+		   	   location_no=#{locationNo}
+		 where gonggu_no=#{gongguNo} 
+	</update>
+	<select id="selectLeadGongguList" resultMap="gongguMap">
+		select * from gonggu where GONGGU_WRITER=#{userId}
+		order by pullup_at desc
+	</select>
 	<update id="updateGongguCount">
 		update gonggu
 		set count=count+1

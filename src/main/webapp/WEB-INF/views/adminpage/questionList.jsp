@@ -26,10 +26,10 @@
 		<tbody>
 			<c:forEach items="${questionList}" var="qna" varStatus="s">
 				<tr>
-					<td width="100px">${pi.totalRecord - ((pi.nowPage-1)*pi.numPerPage)-s.index}</td>
-					<td class="Qtitle"><a href="${pageContext.request.contextPath}/adminpage/questionAnswer.do?nowPage=${pi.nowPage}&qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a></td>
-					<td width="200px">${qna.qnaWriter}</td>
-					<td width="150px">${qna.createAt}</td>
+					<td>${pi.totalRecord - ((pi.nowPage-1)*pi.numPerPage)-s.index}</td>
+					<td class="Qtitle"><a href="${pageContext.request.contextPath}/adminpage/questionAnswer.do?nowPage=${pi.nowPage}&qnaNo=${qna.qnaNo}">[${qna.qnaCatName}] ${qna.qnaTitle}</a></td>
+					<td>${qna.qnaWriter}</td>
+					<td>${qna.createAt}</td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -40,8 +40,7 @@
 		<ul class="qnaPaging">
 			<c:if test="${pi.nowPage ne 1}">
 				<li>
-					<a href="${pageContext.request.contextPath}/adminpage/questionList.do?nowPage=${pi.nowPage-1}"
-					tabindex="-1" aria-disabled="false">이전</a>
+					<a href="${pageContext.request.contextPath}/adminpage/questionList.do?nowPage=${pi.nowPage-1}">이전</a>
 				</li>
 			</c:if>
 			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">

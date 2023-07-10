@@ -5,22 +5,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=44e2b21ec219944c6d834fff124a603d&libraries=services,clusterer"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggWrite.css?<%=System.currentTimeMillis()  %>">
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>	
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="공구 글 작성하기" name="title"/>
 </jsp:include>
-
-<!-- 
-*제목 수정하기
-*내용 들어갈 곳
-*공구 글 작성 
--->
-
-
-  <!--   <h1>공구 글 작성</h1>
-    <hr>  -->
     <div class="write-container">
-        <form action="${pageContext.request.contextPath}/gonggu/ggEnrollFrm.go" method="post" enctype="multipart/form-data" name="ggEnrollFrm">
+        <form action="${pageContext.request.contextPath}/gonggu/ggEnrollFrm.go?roomOwner=${loginMember.userId}" method="post" enctype="multipart/form-data" name="ggEnrollFrm">
             <div class="write-category">
                 <input class="write-stuff" type="text" placeholder="공구할 물건" name="gongguName">
                 <select name="category">
@@ -35,19 +26,21 @@
                     <option value="8">반려동물용품</option>
                 </select>
             </div>
-            <div>
                 <div class="write-price">
-                    <span>개당</span><input type="number" name="price" id="">￦
+                    <span>개당(인당)가격</span><input type="number" name="price" >P
                 </div>
-                <div class="ggWrite-mid-flex">
+			<div class="ggWrite-mid-flex">
                 <div>
-                <div class="write-count">
-                    공구 수량 <select name="type" >
-                        <option value="0">수량 기준</option>
-                        <option value="1">인원 기준</option>
-                    </select>
-                    <input type="text" name="num">명/개
-                </div>
+                	<div class="write-count-out">
+		                <div class="write-count">
+		                    공구 수량 <select name="type" >
+		                        <option value="0">수량 기준</option>
+		                        <option value="1">인원 기준</option>
+		                    </select>
+		                    <input type="number" name="num">명/개
+		                </div>
+	                	<small class="write-count-small">* 나를 제외한 인원 또는 수량으로 입력해주세요</small>
+		            </div>
 	                <!-- 사진 파일 첨부 -->
 	                <div class="ggWrite_fileupload_out">
 					    <div class="ggWirte_upload_icon" onclick="openFileUpload('1');">
@@ -112,12 +105,17 @@
             </div>
             <input type="hidden" name="latitude" id="lat">
             <input type="hidden" name="longitude" id="lon">
+            <input type="hidden" name="sidoNm" id="sidoNm">
+            <input type="hidden" name="sggNm" id="sggNm">
+            <input type="hidden" name="admNm" id="admNm">
+            <input type="hidden" name="legNm" id="legNm">
             <input type="hidden" name="gongguWriter" value="${loginMember.userId }">
             <div class="ggStart-btn"><input type="button" value="공구 시작" onclick="ggEnrollFrmSubmit();"></div>
         </form>
     </div>
-	<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggWriteMap.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggWriteMap.js?<%=System.currentTimeMillis() %>"></script>
 <script>
+	console.log(ggEnrollFrm.upPhoto1.value);
 	var now_utc = Date.now();
 	var timeOff = new Date().getTimezoneOffset()*60000;
 	var today = new Date(now_utc-timeOff).toISOString().substring(0, 16);
@@ -154,5 +152,5 @@
 </script>
 
 
-<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggWrite.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggWrite.js?<%=System.currentTimeMillis() %>"></script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

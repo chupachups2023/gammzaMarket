@@ -7,7 +7,9 @@
 body{
     font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
 }
-
+textarea{
+	 font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
+}
 .header-logos{
     display: flex;
     flex-direction: row;

@@ -3,130 +3,95 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/mypage/likeList.css">
+
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="찜리스트" name="title"/>
 </jsp:include>
 
 <style>
-	/* 마이페이지 찜리스트 */
-    .mypage-likeListSec {
-        width: 1100px;
-        margin: 0 100px;
-    }
-    /* 한줄에 세 이미지 박스 */
-	.onelineThreebox{
-		display:inline-block;
-		margin: 35px 0px 0px 35px;
-		position: relative;
+	#selectedPage{
+		color: red;
 	}
-	.onelineThreeImg{
-		width: 300px;
-		height:300px;
-	}
-	
-    .onelineThreeImg>img{
-		width: 100%;
-		height: 100%;
-		border-radius:10px;
-    }
-	.onelineThreeTitle {
-		position: absolute;
-		bottom: 0%;
-		background-color: rgba(240, 248, 255, 0.692);
-		padding: 10px;
-		width: 150px;
-	}
-	.ggTitle{
-		font-size: 30px;
-		font-weight: bold;
-	}
-	
 </style>
 <div class="mypage-likeListSec">
     <h1>찜한 공구💚</h1>
+	<br><br>
+	<h4 align="right">
+		<input type="checkbox" id="chkAll">전체선택&ensp; |&ensp;
+		<a href="javascript:delSelZ();">선택한 찜 삭제</a>&ensp;
+	</h4>
+    <hr>
 	<div class="likeList">
-		<div class="onelineThreebox" onclick="location.href='#';">
-			<div class="onelineThreeImg">
-				<img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg">
-			</div>
-			<div class="onelineThreeTitle">
-				<div class="ggTitle">물품이름</div>
-				<div><b>30,000원</b></div>
-				<div><small>서울시 영등포구 당산동</small></div>
-			</div>
-		</div>
-		<div class="onelineThreebox" onclick="location.href='#';">
-			<div class="onelineThreeImg">
-				<img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg">
-			</div>
-			<div class="onelineThreeTitle">
-				<div class="ggTitle">물품이름</div>
-				<div><b>30,000원</b></div>
-				<div><small>서울시 영등포구 당산동</small></div>
-			</div>
-		</div>
-		<div class="onelineThreebox" onclick="location.href='#';">
-			<div class="onelineThreeImg">
-				<img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg">
-			</div>
-			<div class="onelineThreeTitle">
-				<div class="ggTitle">물품이름</div>
-				<div><b>30,000원</b></div>
-				<div><small>서울시 영등포구 당산동</small></div>
-			</div>
-		</div>
-		<div class="onelineThreebox" onclick="location.href='#';">
-			<div class="onelineThreeImg">
-				<img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg">
-			</div>
-			<div class="onelineThreeTitle">
-				<div class="ggTitle">물품이름</div>
-				<div><b>30,000원</b></div>
-				<div><small>서울시 영등포구 당산동</small></div>
-			</div>
-		</div>
-		<div class="onelineThreebox" onclick="location.href='#';">
-			<div class="onelineThreeImg">
-				<img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg">
-			</div>
-			<div class="onelineThreeTitle">
-				<div class="ggTitle">물품이름</div>
-				<div><b>30,000원</b></div>
-				<div><small>서울시 영등포구 당산동</small></div>
-			</div>
-		</div>
-		<div class="onelineThreebox" onclick="location.href='#';">
-			<div class="onelineThreeImg">
-				<img src="${pageContext.request.contextPath}/resources/img/testImg/testGoods.jpg">
-			</div>
-			<div class="onelineThreeTitle">
-				<div class="ggTitle">물품이름</div>
-				<div><b>30,000원</b></div>
-				<div><small>서울시 영등포구 당산동</small></div>
-			</div>
-		</div>
+		<form name="delZFrm" method="post" action="deleteZzim.do">
+			<c:forEach items="${myLikelist}" var="zzim">
+				<div class="onelineThreebox">
+					<input class="checklike" type="checkbox" name="delZzim" value="${zzim.zzimNo }">
+					<div onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${zzim.gongguNo}'">
+						<div class="onelineThreeImg">
+							<img src="${pageContext.request.contextPath}/resources/upload/${zzim.photo1}">
+						</div>
+						<div class="onelineThreeTitle">
+							<div class="ggTitle">${fn:substring(zzim.gongguName, 0, 10)}...</div>
+							<div><b>${zzim.price} point</b></div>
+							<div><small>${zzim.locationName}</small></div>
+						</div>
+					</div>
+				</div>
+			</c:forEach>
+		</form>
 	</div>
+	
+	<br>
+	<nav id="pagingNav">
+		<ul class="qnaPaging">
+			<c:if test="${pi.totalRecord eq 0 }">
+				<h1 style="color:gray;">찜한 공구가 없습니다</h1>
+			</c:if>
+			<c:if test="${pi.nowPage ne 1}">
+				<li>
+					<a href="${pageContext.request.contextPath}/mypage/likeList.do?nowPage=${pi.nowPage-1}">이전</a>
+				</li>
+			</c:if>
+			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+				<c:choose>
+					<c:when test="${p eq pi.nowPage }">
+						<li>
+							<a id="selectedPage" href="${pageContext.request.contextPath}/mypage/likeList.do?nowPage=${p}">${p}</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li>
+							<a href="${pageContext.request.contextPath}/mypage/likeList.do?nowPage=${p}">${p}</a>
+						</li>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+			<c:if test="${pi.nowPage ne pi.totalPage && pi.totalPage ne 0}">
+				<li><a href="${pageContext.request.contextPath}/mypage/likeList.do?nowPage=${pi.nowPage+1}">다음</a></li>
+			</c:if>
+		</ul>
+	</nav>
+
 </div>
 
-<%-- 
 
-	<div class="likeList">
-		<c:forEach items="${찜리스트}" var="찜">
-			<div class="onelineThreebox" onclick="location.href='${pageContext.request.contextPath}찜상세페이지경로?찜번호=${찜번호}';">
-				<div class="onelineThreeImg">
-					<img src="${pageContext.request.contextPath}/찜이미지 경로/${찜.이미지이름}">
-				</div>
-				<div class=""onelineThreeTitle"">
-					<div class="ggTitle">${찜.물품이름}</div>
-					<div><b>${찜.가격}</b></div>
-					<div><small>${찜.주소}</small></div>
-				</div>
-			</div>
-		</c:forEach>
-	</div>
-
- --%>
-
-
-
+<script>
+	const chkAll = document.querySelector("#chkAll");
+	chkAll.addEventListener("change", () => {
+		const chkList = document.getElementsByName("delZzim");
+		for (delZzim of chkList)
+			delZzim.checked = chkAll.checked;
+	});
+	
+	function delSelZ() {
+		const chkList = document.getElementsByName("delZzim");
+		if(chkList.value != null) {
+			delZFrm.submit();
+		}else {
+			alert("선택된 찜이 없습니다");
+		}
+	}
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

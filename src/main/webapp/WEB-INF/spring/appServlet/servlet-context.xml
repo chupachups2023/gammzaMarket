@@ -32,6 +32,13 @@
 		<beans:property name="order" value="1"/><!-- 우선순위를 InternalResourceViewResolver보다 높게 설정 -->
 	</beans:bean>
 	
+	<!-- jsonView 빈 등록 -->
+	<beans:bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView">
+		<beans:property name="contentType" value="application/json;charset=UTF-8"/>
+	</beans:bean>
+	
+	
+	
 	<!-- <interceptors>
 		<interceptor>
 			<mapping path="/member/memberDetail.me"/>
@@ -43,5 +50,26 @@
 			<beans:bean class="com.gammza.chupachups.common.interceptor.LoginInterceptor"/> 
 		</interceptor>
 	</interceptors> -->
+	
+	
+	<!-- oauth2 login -->
+	<beans:bean id="naverClientID" class="java.lang.String">
+	   <beans:constructor-arg value="GQGBjwaCzYQZZ_5XkE2o" />
+    </beans:bean>
+	<beans:bean id="naverClientSecret" class="java.lang.String">
+		<beans:constructor-arg value="y3TAUEyfZu" />
+	</beans:bean>
+	<beans:bean id="naverRedirectUrl" class="java.lang.String">
+		<beans:constructor-arg value="http://localhost:8095/auth/naver/callback" />
+	</beans:bean>
+
+	<beans:bean id="naverSns" class="com.gammza.chupachups.auth.SnsValue">
+		<beans:constructor-arg value="naver" />
+		<beans:constructor-arg ref="naverClientID" />
+		<beans:constructor-arg ref="naverClientSecret" />
+		<beans:constructor-arg ref="naverRedirectUrl" />
+	</beans:bean>
+	
+	<beans:bean id="socialService" class="com.gammza.chupachups.auth.model.service.SocialService" />
 	
 </beans:beans>

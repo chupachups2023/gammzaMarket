@@ -35,17 +35,32 @@
   width: 150px;
   border: none;
   border-bottom: 3px solid #ddd;
+  font-size:18px;
+  text-align:center;
 }
-
-.write-count {
+.write-count{
+	padding-bottom:10px
+}
+.write-count-out {
   padding-bottom: 40px;
+}
+.write-count-small{
+	color:gray
 }
 
 .write-count input {
   width: 50px;
   border: none;
   border-bottom: 3px solid #ddd;
-
+  font-size:18px;
+  text-align:center;
+}
+.write-count input::-webkit-outer-spin-button,
+.write-count input::-webkit-inner-spin-button,
+.write-price input::-webkit-outer-spin-button,
+.write-price input::-webkit-inner-spin-button  {
+  -webkit-appearance: none;
+  margin: 0;
 }
 .ggWrite-link input {
   width: 250px;
@@ -127,7 +142,7 @@
   font-weight: 500px;
   font-size: 16px;
   border: none;
-  
+  font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
 }
 
 .ggStart-btn input:hover {
@@ -198,3 +213,4 @@
 	height:170px;
 	padding-top:25px;
 }
+.write-container input:focus {outline:none;}

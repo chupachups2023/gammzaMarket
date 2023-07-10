@@ -16,7 +16,9 @@
 	
 
 	function ggEnrollFrmSubmit(){
+		let check = /^[0-9]+$/
 		if(ggEnrollFrm.gongguName.value=="" || ggEnrollFrm.gongguName.value==null){
+		console.log("메롱");
 			alert("어떤걸 공구하시나요?");
 			return;
 		}else if(ggEnrollFrm.category.value=="0"){
@@ -29,9 +31,9 @@
 			alert("몇 명과 또는 몇 개를 공구할지 적어주세요");
 			return;
 		}else if(ggEnrollFrm.num.value<1){
-			alert("공구는 함께! 공구 수량 또는 인원은 2 이상이어야 합니다");
+			alert("공구 수량 또는 인원은 1 이상이어야 합니다");
 			return;
-		}else if(ggEnrollFrm.upPhoto1.value==null && ggEnrollFrm.upPhoto2.value==null && ggEnrollFrm.upPhoto3.value==null&&ggEnrollFrm.upPhoto1.value=="" && ggEnrollFrm.upPhoto2.value==""&&ggEnrollFrm.upPhoto3.value==""){
+		}else if(ggEnrollFrm.upPhoto1.value=="" && ggEnrollFrm.upPhoto2.value=="" && ggEnrollFrm.upPhoto3.value=="" ){
 			alert("사진은 하나 이상 들어가야합니다!");
 			return;
 		}else if(ggEnrollFrm.openTime.value=="" && ggEnrollFrm.openTime.value==null&&ggEnrollFrm.sysdate.value=="" && ggEnrollFrm.sysdate.value==null){

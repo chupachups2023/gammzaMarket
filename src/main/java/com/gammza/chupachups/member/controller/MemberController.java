@@ -1,14 +1,18 @@
 package com.gammza.chupachups.member.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -21,32 +25,13 @@ import com.gammza.chupachups.member.model.vo.Member;
 @SessionAttributes({"loginMember"})
 
 public class MemberController {
+	
 	@Autowired
 	private MemberService memberService;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
-	@GetMapping("/memberEnroll.me")
-	public void memberEnroll() {}  // => /member/memberEnroll
-	
-	
-	@PostMapping("/memberEnroll.me") 
-	public String memberEnroll(Member member) {
-		System.out.println("userPass = " + member);
-	 
-		
-		
-		// 비밀번호 암호화
-		String rawPassword = member.getUserPwd();
-		String encodedPassword = passwordEncoder.encode(rawPassword);
-		member.setUserPwd(encodedPassword);
-		System.out.println("changePass = " + member);
-		
-		int result = memberService.insertMember(member);
-		return "redirect:/";
-	}
-		
 	
 	@GetMapping("/memberLogin.me")
 	public String memberLogin() {
@@ -59,7 +44,7 @@ public class MemberController {
 		System.out.println("userPwd = " + userPwd);
 		
 		Member member = memberService.selectOneMember(userId);
-		// System.out.println("member = " + member);
+		System.out.println("member = " + member);
 		
 		// 인증
 		if (member != null && passwordEncoder.matches(userPwd, member.getUserPwd())) {
@@ -71,6 +56,71 @@ public class MemberController {
 	}
 	
 	
+	@GetMapping("/checkId.me")
+	public String checkIdFunc(@RequestParam String userId, Model model) {
+		Member member = memberService.checkIdFunc(userId);
+		boolean available = member == null;
+		
+		model.addAttribute("userId", userId);
+		model.addAttribute("available", available);
+		
+		return "jsonView";
+	}
+	
+	/*
+	@PostMapping("/checkId.do")
+	@ResponseBody
+	public Map<String, Object> checkIdFunc(@RequestParam("userId") String userId, Map<String, Object> map) {
+		Map<String, Object> result = new HashMap<>();
+		
+		Member member = memberService.checkIdFunc(userId);
+		System.out.println("userId = " + userId);
+		
+		return map;
+}
+*/
+		
+	/*
+	@PostMapping("/checkId.do")
+	@ResponseBody
+	public int checkIdFunc(@RequestParam("userId") String userId) {
+		int cnt = memberService.checkIdFunc(userId);
+		return cnt;
+	}
+	*/
+		
+	/*
+	@ResponseBody
+	@PostMapping(value="/checkId.do", produces = "application/json; charset=UTF-8")
+	public Map<String, Boolean> checkIdFunc(String userId){
+		Member member = memberService.selectOneMember(userId);
+		boolean flag = (member == null);
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
+		map.put("flag", flag);
+		return map;
+		
+		/*
+		int count = 0;
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		count = memberService.checkIdFunc(userId);
+		map.put("cnt", count);
+		return map;
+	}
+	 */
+	
+	
+	/*
+	@GetMapping("/memberLogin.me")
+	public void login(Model model) throws Exception {
+		// Logger.info("login GET .....");
+		
+		SNSLogin snsLogin = new SNSLogin(naverSns);
+		model.addAttribute("naver_url", snsLogin.getNaverAuthURL());
+		
+//		SNSLogin snsLogin = new SNSLogin(naverSns);
+//		model.addAttribute("naver_url", snsLogin.getNaverAuthURL());
+	}
+	 */
 	
 	
 	
@@ -85,6 +135,25 @@ public class MemberController {
 			status.setComplete();
 		return "redirect:/";
 	}
+	
+	
+	@GetMapping("/memberEnroll.me")
+	public void memberEnroll() {} 
+	
+	@PostMapping("/memberEnroll.me") 
+	public String memberEnroll(Member member) {
+		System.out.println("userPass = " + member);
+		
+		// 비밀번호 암호화
+		String rawPassword = member.getUserPwd();
+		String encodedPassword = passwordEncoder.encode(rawPassword);
+		member.setUserPwd(encodedPassword);
+		System.out.println("changePass = " + member);
+		
+		int result = memberService.insertMember(member);
+		return "redirect:/";
+	}
+		
 	
 	@GetMapping("/memberDetail.me")
 	public void memberDetail() {
@@ -109,20 +178,8 @@ public class MemberController {
 	}
 	
 	@GetMapping("/memberInfo.me")
-	public String memberInfo(String userId, Model model) {
-		model.addAttribute("loginMember", memberService.selectOneMember(userId));
-		return "redirect:/";
-	}
-	
-	@GetMapping("/checkId.me")
-	public String checkId(@RequestParam String userId, Model model) {
-		Member member = memberService.selectOneMember(userId);
-		boolean available = member == null;
-		
-		model.addAttribute("userId", userId);
-		model.addAttribute("available", available);
-		
-		return "jsonView";
+	public String memberInfo() { 
+		return "/mypage/memberInfo";
 	}
 	
 	
@@ -136,66 +193,6 @@ public class MemberController {
 	public String findPwd() {
 		return "member/findPwd";
 	}
-	
-	
-	/*
-	@GetMapping("/auth/kakao/callback")
-	public String kakaoCallback() {
-		return "테스트";
-		
-	}
-	
-	
-	@GetMapping("/auth/kakao/callback")
-	public @ResponseBody String kakaoCallback(String code) { // 데이터 리턴해주는 컨트롤러 함수 
-		
-		RestTemplate rt = new RestTemplate();
-		
-		// HttpHeader object 생성 
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-		
-		// HttpBody object 생성 
-		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		params.add("grant_type", "authorization_code");
-		params.add("client_id", "db32886cc653e7c143ebd36f56525b61");
-		params.add("redirect_uri", "http://localhost:8095/auth/kakao/callback");
-		params.add("code", code);
-		
-		// HttpHeader와 HttpBody를 하나의 object에 담음  
-		HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(params, headers);
-		
-		// Http 요청하기: POST 방식으로 & response 변수의 응답 받음  
-		ResponseEntity response = rt.exchange(
-				"https://kauth.kakao.com/oauth/token",
-				HttpMethod.POST,
-				kakaoTokenRequest,
-				String.class
-				);
-		
-		
-		
-		return "카카오 토큰 요청 완료, 토큰 요청에 대한 응답: " + response;
-	}
-	*/
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }
 

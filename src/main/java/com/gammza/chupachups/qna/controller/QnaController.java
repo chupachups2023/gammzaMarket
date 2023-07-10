@@ -31,11 +31,11 @@ public class QnaController {
 	@GetMapping("/questionList.do")
 	public void qnaList(@RequestParam(defaultValue="1") int nowPage, Model model) {
 		int totalRecord = qnaService.selectTotalRecord();
-		int limit = 5;
+		int limit = 10;
 		int offset = (nowPage -1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		PageInfo pi = Pagination.getPageInfo(totalRecord, nowPage, limit, 3);
+		PageInfo pi = Pagination.getPageInfo(totalRecord, nowPage, limit, 5);
 		
 		List<Qna> questionList = qnaService.selectQuestionList(rowBounds);
 		model.addAttribute("questionList", questionList);
@@ -55,6 +55,8 @@ public class QnaController {
 	
 	@PostMapping("/QAnswerInsert.do")
 	public String QAnswerInsert(Qna qna, @RequestParam int nowPage, @RequestParam String qAnswer,  RedirectAttributes redirectAttr, HttpSession session) {
+		qna = qnaService.selectOneQna(qna.getQnaNo());
+		System.out.println(qna);
 		Qna qnaOrigin = new Qna();
 		qnaOrigin.setQnaTitle(qna.getQnaTitle() + " (답변완료)");
 		qnaOrigin.setQnaNo(qna.getQnaNo());
@@ -76,5 +78,11 @@ public class QnaController {
 			redirectAttr.addFlashAttribute("msg", "답변실패");
 		}
 		return "redirect:/adminpage/questionAnswer.do?nowPage="+nowPage+"&qnaNo="+qna.getQnaNo();
+	}
+	
+	@GetMapping("/deleteQuestion.do")
+	public String deleteQuestion(@RequestParam int ref) {
+		int result = qnaService.deleteQuestion(ref);
+		return "redirect:/adminpage/questionList.do";
 	}
 }

@@ -58,20 +58,22 @@ input:focus {
 
 input::-webkit-input-placeholder {
 	color: #b5b5b5;
-	font-size: 16px;
+	font-size: 15px;
 	line-height: 100%;
+	font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
 }
 
 .login-btn {
 	width: 300px;
 	height: 45px;
 	margin-bottom: 8px;
-	background-color: #CBB376;
+	/* background-color: #E9D296; */
+	background-color: rgba(94, 177, 98, 0.75); ;
 	/* border: 1px solid #F3D774; */
 	border: 1px solid #e9e9e9;
 	border-radius: 5px;
-	/* color: #ffffff; */
-	color: #373737;
+	color: #ffffff;
+	/* color: #373737; */
 	font-size: 16px;
 	font-weight: 900;
 	/* border: 1px solid #F3D774; */
@@ -104,7 +106,7 @@ input::-webkit-input-placeholder {
 
 #modal {
 	position: fixed;
-	z-index: 1;
+	z-index: 10;
 	left: 0;
 	top: 0;
 	width: 100%;
@@ -117,7 +119,7 @@ input::-webkit-input-placeholder {
 .modal-content {
 	position: relative;
 	background-color: #ffffff;
-	padding: 50px 100px;
+	padding: 60px 100px;
 	text-align: center;
 	top: 0;
 	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px
@@ -131,6 +133,7 @@ input::-webkit-input-placeholder {
 
 .modal-content h2 {
 	font-size: 20px;
+	padding-bottom: 20px;
 }
 
 .login-chkbox {
@@ -139,21 +142,36 @@ input::-webkit-input-placeholder {
 }
 
 .login-chkbox label {
-	padding-left: 10px;
-}
-
-}
-.modal-content h2 {
-	padding: 20px 0;
+	padding-left: 5px;
+	font-size: 13px;
 }
 
 .login-bottom {
 	display: flex;
-	justify-content: space-evenly
+	justify-content: space-evenly;
 }
 
 .login-bottom li {
 	padding: 10px 0;
+}
+
+.login-bottom li a {
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.modal-closeBtn {
+	position: absolute;
+	right: 30px;
+	top: 30px;
+	cursor: pointer;
+	/* background: url("../resources/img/header/close-icon.png") no-repeat; */
+	background: url("close-icon.png") no-repeat; /* 경로 수정 예정 */
+	color: transparent;
+	width: 41px;
+	height: 41px;
+	
+	
 }
 
 
@@ -167,14 +185,14 @@ input::-webkit-input-placeholder {
 }
 
 .social-container {
-	padding: 20px 0;
+	padding: 16px 0;
 	/* display: flex;
 	flex-direction: column;
 	padding: 20px 0; */
 }
 
 .social-container h3 {
-	padding-bottom: 10px;
+	padding: 16px;
 }
 
 .login-kakao a img {

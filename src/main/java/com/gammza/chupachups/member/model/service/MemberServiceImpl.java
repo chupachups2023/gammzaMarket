@@ -27,4 +27,17 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.updateMember(member);
 	}
 
+	@Override
+	public Member checkIdFunc(String userId) {
+		return memberDao.checkIdFunc(userId);
+	}
+
+	/*
+	public void selectOneMember(Member kakaoMember) {
+		// TODO Auto-generated method stub
+		
+	}
+	*/
+
+
 }

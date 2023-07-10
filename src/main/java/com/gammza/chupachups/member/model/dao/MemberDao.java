@@ -12,4 +12,6 @@ public interface MemberDao {
 	Member selectOneMember(String userId);
 	
 	int updateMember(Member member);
+
+	Member checkIdFunc(String userId);
 }
