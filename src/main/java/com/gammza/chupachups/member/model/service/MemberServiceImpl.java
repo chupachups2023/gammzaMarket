@@ -47,5 +47,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectMemberByPhone(phone);
 	}
 
+	@Override
+	public Member selectMemberByNaver(String id) {
+		return memberDao.selectMemberByNaver(id);
+	}
+
 
 }
