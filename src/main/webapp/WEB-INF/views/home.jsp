@@ -9,10 +9,10 @@
 </jsp:include>
 	<div class="mainSearchSec">
 		<h2>어떤 공구를 찾으세요?</h2>
-		<form action="">
+		<form action="" method="get">
 			<div class="header-searchbox">
-				<img src="${pageContext.request.contextPath}/resources/img/header/search.png" alt="" class="header-searchicon" onclick="search();">
-				<input type="text" class="mainHeader-search">
+				<img src="${pageContext.request.contextPath}/resources/img/header/search.png" alt="" class="header-searchicon" onclick="fn_srchGgLst()">
+				<input type="text" class="mainHeader-search" name="gongguName" id="gongguName" value="${gonggu}"> 
 			</div>
 		</form>
 	</div>
@@ -67,6 +67,15 @@
 			});
 		});
 	</script> -->
+	
+	<script>
+        function fn_srchGgLst() {
+            var gongguName = document.getElementById('gongguName').value;
+            
+            var url = '${pageContext.request.contextPath}/gonggu/ggSearch.go?gongguName=' + encodeURIComponent(gongguName);
+            location.href = url;
+        }
+    </script>
 	
 	 
 	 <a href="${pageContext.request.contextPath}/adminpage/questionList.do">문의</a>

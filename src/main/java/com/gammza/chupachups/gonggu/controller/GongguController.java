@@ -164,4 +164,27 @@ public class GongguController {
 	
 	
 	
+	 @GetMapping("/ggSearch.go")
+	 public String searchGonggu(@RequestParam("gongguName") String gongguName, Model model) {
+		 ArrayList<Gonggu> homeList = gongguService.searchGonggu(gongguName);
+		 
+		 model.addAttribute("homeList", homeList);
+		 int totalRecord=gongguService.selectGongguTotalRecored();
+		 
+		 model.addAttribute("gonggu", gongguName);
+		
+		 PageInfo pi=Pagination.getPageInfo(totalRecord, 1, 1, 8);
+         model.addAttribute("pi", pi);
+		 
+		 return "/home";
+	 }
+	 
+	 @GetMapping("/categoryList.go")
+		public String categoryList(@RequestParam("category") int category, Model model) {
+			ArrayList<Gonggu> categoryList = gongguService.selectOneCategory(category);
+			
+			model.addAttribute("homeList", categoryList);
+			
+			return "/home";
+		}
 }
