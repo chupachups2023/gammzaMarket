@@ -59,25 +59,23 @@
 				<a href="${pageContext.request.contextPath}/location/location.lo" class="header-menu">장소인증</a>
 				<a href="${pageContext.request.contextPath}/gonggu/ggWrite.go" class="header-menu">공구 글쓰기</a>
 			</div>
-			<form action="">
-				<div class="header-searchbox">
-					<img src="${pageContext.request.contextPath}/resources/img/header/search.png" alt="" class="header-searchicon" onclick="fn_srchGgLst()"> 
-					<input type="text" class="header-search" name="gongguName" id="gongguName" onkeyup="if(window.event.keyCode==13){fn_srchGgLst()}">
-				</div>
-			</form>
+			<div class="header-searchbox">
+				<img src="${pageContext.request.contextPath}/resources/img/header/search.png" alt="" class="header-searchicon" onclick="fn_srchGgLst();"> 
+				<input type="text" class="header-search" value="${keyword }" name="gongguName" id="gongguName" onkeyup="enterEvent(event);">
+			</div>
 		</div>
 		<div class="category-drop">
 			<div class="category-list category-top">
-				<a href="" class="category-menu cloth">의류</a>
-				 <a href=""	class="category-menu makeup">화장품/미용</a> 
-				 <a href="" class="category-menu food">식품/농산물</a> 
-				 <a href="" class="category-menu furniture">가구/인테리어</a>
+				 <p onclick="fn_click(1)" id="category1" class="category-menu cloth" style="cursor:pointer;">의류</p>
+				 <p onclick="fn_click(2)" id="category2" class="category-menu makeup" style="cursor:pointer;">화장품/미용</p> 
+				 <p onclick="fn_click(3)" id="category3" class="category-menu food" style="cursor:pointer;">식품/농산물</p> 
+				 <p onclick="fn_click(4)" id="category4" class="category-menu furniture" style="cursor:pointer;">가구/인테리어</p>
 			</div>
 			<div class="category-list category-bottom">
-				<a href="" class="category-menu delivery">배달음식</a> 
-				<a href="" class="category-menu baby">유아동</a> 
-				<a href="" class="category-menu homeware">생활용품</a> 
-				<a href="" class="category-menu pet">반려동물용품</a>
+				<p onclick="fn_click(5)" id="category5" class="category-menu delivery" style="cursor:pointer;">배달음식</p> 
+				<p onclick="fn_click(6)" id="category6" class="category-menu baby" style="cursor:pointer;">유아동</p> 
+				<p onclick="fn_click(7)" id="category7" class="category-menu homeware" style="cursor:pointer;">생활용품</p> 
+				<p onclick="fn_click(8)" id="category8" class="category-menu pet" style="cursor:pointer;">반려동물용품</p>
 			</div>
 		</div>
 
@@ -151,49 +149,79 @@
 	    });
 	});
        
-   	function viewAllGonggu(){
-	    if (!navigator.geolocation) {
-	        alert("위치 정보가 지원되지 않습니다.");
-	    }else{
-	    	
-			function success(position) {
-			    const latitude = position.coords.latitude;   
-			    const longitude = position.coords.longitude;
-			    
-			    location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?longitude="+longitude+"&latitude="+latitude;
-			    
-			};
-	    	navigator.geolocation.getCurrentPosition(success);
-	    }
+	function viewAllGonggu(){
+		function success(position) {
+		    const latitude = position.coords.latitude;   // 위도(37.xxxx)
+		    const longitude = position.coords.longitude;
+		    const memLong="${loginMember.longitude}";
+		    
+		    if(memLong != ""){
+		    	location.href="${pageContext.request.contextPath}/gonggu/ggListView.go";
+		    }else{
+		   		location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?longitude="+longitude+"&latitude="+latitude;
+		    }
+		}
+	    navigator.geolocation.getCurrentPosition(success);
 	};
-		
-	        
-		const modal = document.getElementById("modal");
-		const openModalBtn = document.getElementById("open-modal");
-		const closeModalBtn = document.getElementById("close-modal");
-		const loginModalBtn = document.getElementById("login-modal");
-		// 모달창 열기
-		openModalBtn.addEventListener("click", () => {
-			modal.style.display = "block";
-			document.body.style.overflow = "hidden"; // 스크롤바 제거
-		});
-		// 모달창 닫기
-		closeModalBtn.addEventListener("click", () => {
-			modal.style.display = "none";
-			document.body.style.overflow = "auto"; // 스크롤바 보이기
-		});
-		// 모달창 닫기
-		loginModalBtn.addEventListener("click", () => {
-			modal.style.display = "none";
-			document.body.style.overflow = "auto"; // 스크롤바 보이기
-			loginFrm.submit();
-		});
-		
+	
+	function enterEvent(e){
+		if(e.keyCode==13){
+			fn_srchGgLst();
+		}
+	}
+	
+	const modal = document.getElementById("modal");
+	const openModalBtn = document.getElementById("open-modal");
+	const closeModalBtn = document.getElementById("close-modal");
+	const loginModalBtn = document.getElementById("login-modal");
+	// 모달창 열기
+	openModalBtn.addEventListener("click", () => {
+		modal.style.display = "block";
+		document.body.style.overflow = "hidden"; // 스크롤바 제거
+	});
+	// 모달창 닫기
+	closeModalBtn.addEventListener("click", () => {
+		modal.style.display = "none";
+		document.body.style.overflow = "auto"; // 스크롤바 보이기
+	});
+	// 모달창 닫기
+	loginModalBtn.addEventListener("click", () => {
+		modal.style.display = "none";
+		document.body.style.overflow = "auto"; // 스크롤바 보이기
+		loginFrm.submit();
+	});
+	
 	function fn_srchGgLst() {
 		var gongguName = document.getElementById('gongguName').value;
 		
 		var url = '${pageContext.request.contextPath}/gonggu/ggSearch.go?gongguName=' + encodeURIComponent(gongguName);
-		location.href = url;
+		const memLong="${loginMember.longitude}";
+	    
+		function success(position) {
+		    const latitude = position.coords.latitude;   
+		    const longitude = position.coords.longitude;
+		    
+		    if(memLong != ""){
+		    	location.href=url;
+		    }else{
+			    location.href=url+"&longitude="+longitude+"&latitude="+latitude;
+		    }
+		};
+    	navigator.geolocation.getCurrentPosition(success);
+	}
+	function fn_click(category) {
+		function success(position) {
+		    const latitude = position.coords.latitude;   // 위도(37.xxxx)
+		    const longitude = position.coords.longitude;
+		    const memLong="${loginMember.longitude}";	//로그인 했니?
+		    
+		    if(memLong != ""){	//했다
+		    	location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category;
+		    }else{		//안했다
+		   		location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category+"&longitude="+longitude+"&latitude="+latitude;
+		    }
+		}
+	    navigator.geolocation.getCurrentPosition(success);
 	}
 		
 	    </script>

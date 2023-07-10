@@ -2,7 +2,8 @@
 	/* 공구게시판 */
     .GGlistSec {
         width: 1200px;
-        margin: 100px auto;
+        margin: 50px auto;
+       position:relative;
     }
     /* 한 줄에 세 이미지 박스 */
 	.onelineThreebox{
@@ -47,7 +48,26 @@
 		text-decoration: none;
 		color: black;
 		font-size: 15px;
+		/* position: relative; */
 	}
 
-
+.loginWarning img{
+	height:18px;
+	opacity:0.5;
+}
+.loginWarning img:hover{
+	cursor:pointer;
+}
+.loginWarning{
+	width:585px;
+	display:flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color:rgba(243, 207, 159, 0.3);
+	padding:5px;
+	position: absolute;
+    left: 50%;
+    transform: translate(-50%, -200%);
+    box-shadow: 3px 3px 3px #d4d4d4;
+}
 

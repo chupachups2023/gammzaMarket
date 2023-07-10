@@ -41,7 +41,7 @@ public class LocationController {
 		
 		if(fullLocation != null) {
 			return fullLocation;
-		}else if(less !=null){
+		}else if(less.size()!=0){
 			return less.get(0);
 		}else {
 			return locationService.selectLocationLest(map).get(0);
@@ -68,6 +68,7 @@ public class LocationController {
 	@PostMapping("/location/EnrollLocation.lo")
 	public ModelAndView enrollLocation(Location location, HttpSession session,Model model, RedirectAttributes redirectAttr,
 			@RequestParam String longitude,@RequestParam String latitude) {
+		System.out.println(location);
 		Location fullLocation=selectLocation(location);
 		
 		Member mem=(Member)session.getAttribute("loginMember");
@@ -96,7 +97,12 @@ public class LocationController {
 	}
 	
 	@GetMapping("/location/location.lo")
-	public String location(Model model) {
+	public String location(Model model,HttpSession session) {
+		Member mem=(Member)session.getAttribute("loginMember");
+		if(mem != null) {
+			Location loginLocation=locationService.selectLocationByNo(mem.getLocation());
+			model.addAttribute("loginLocation", loginLocation);
+		}
 		return "/member/location";
 	}
 	

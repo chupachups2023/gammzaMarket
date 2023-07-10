@@ -1,22 +1,23 @@
 package com.gammza.chupachups.auth.controller;
 
+
 import java.io.BufferedReader;
-<<<<<<< Updated upstream
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-=======
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
->>>>>>> Stashed changes
+
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -32,7 +33,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -43,11 +43,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gammza.chupachups.auth.NaverAPI20;
 import com.gammza.chupachups.auth.OAuthToken;
 import com.gammza.chupachups.auth.model.dao.KakaoProfile;
-<<<<<<< Updated upstream
+
 import com.gammza.chupachups.auth.model.service.SocialService;
-=======
+
 import com.gammza.chupachups.auth.model.dao.NaverProfile;
->>>>>>> Stashed changes
+
 import com.gammza.chupachups.member.model.service.MemberService;
 import com.gammza.chupachups.member.model.vo.Member;
 import com.github.scribejava.core.builder.ServiceBuilder;
@@ -69,7 +69,8 @@ public class SocialController {
 			
 			// KAKAO
 			@GetMapping(value = "/auth/kakao/callback", produces = "text/json; charset=UTF-8")
-			public @ResponseBody String kakaoCallback(String code, Member member, Model model, RedirectAttributes redirectAtt, HttpSession session) {
+			//@ResponseBody
+			public String kakaoCallback(String code, Member member, Model model, RedirectAttributes redirectAtt, HttpSession session) {
 				
 				// POST 방식으로 데이터를 요청(토큰 관련) 
 				/* 
@@ -165,19 +166,27 @@ public class SocialController {
 				member.setName(kakaoProfile.getKakao_account().getProfile().getNickname());
 				System.out.println(member);
 				
+				Member loginMember=memberService.selectMemberByKakao(kakaoProfile.getId());
 				
-				int result = memberService.insertKakaoMember(member);
+				if(loginMember == null) {
+					model.addAttribute("kakaoIdkey", kakaoProfile.getId());
+					redirectAtt.addFlashAttribute("msg", "카카오 간편로그인 최초 1회 연결이 필요합니다.");
+					return "/member/socialLogin";
+				}else {
+					model.addAttribute("loginMember", loginMember);
+					return "redirect:/";
+				}
+				//int result = memberService.insertKakaoMember(member);
 				
 				
 				// kakaoProfile.setId(kakaoProfile.getId());
 				
 				// model.addAttribute("kakaoProfile", kakaoProfile);
 				
-				session.setAttribute("id", kakaoProfile.getId());
+				//session.setAttribute("id", kakaoProfile.getId());
 				
-				
-			return "redirect:/member/loginSuccess.do";
 			}
+			
 			
 			@RequestMapping("/member/loginSuccess.do")
 			public String loginSuccess() {

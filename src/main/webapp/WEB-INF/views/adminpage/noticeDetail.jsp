@@ -8,13 +8,8 @@
 %>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="제목" name="title" />
+	<jsp:param value="${ notice.noticeTitle }" name="title" />
 </jsp:include>
-<!-- 
-*제목 수정하기
-*내용 들어갈 곳
-*관리자 공지사항 글 상세보기
- -->
 <style>
 #title {
 	margin-top: 30px;

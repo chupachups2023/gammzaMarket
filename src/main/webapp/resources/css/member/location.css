@@ -30,12 +30,12 @@ a{
     font-size: 20px;
     margin-top: 5px;
     padding-right: 50px;
-    width:720px;
+    width:600px;
 }
 .location-part{
 	display:flex;
 	flex-direction:column;
-	height:380px;
+	height:400px;
 	justify-content: space-around;
 }
 .location-curr{

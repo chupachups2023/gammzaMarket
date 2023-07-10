@@ -10,5 +10,13 @@
 		 where room_no = #{roomNo}
 		 order by send_date desc
 	</select>
-	
+	<insert id="insertMsg">
+		insert into chat_msg
+		values (chat_msg_seq.nextval,
+				#{roomNo},
+				#{userId},
+				#{chatContent},
+				default		
+		)
+	</insert>
 </mapper>	
