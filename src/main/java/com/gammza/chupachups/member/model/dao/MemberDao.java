@@ -14,4 +14,6 @@ public interface MemberDao {
 	int updateMember(Member member);
 
 	Member checkIdFunc(String userId);
+
+	int insertKakaoMember(Member member);
 }

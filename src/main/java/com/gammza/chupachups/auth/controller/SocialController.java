@@ -1,4 +1,4 @@
-package com.gammza.chupachups.auth;
+package com.gammza.chupachups.auth.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -20,12 +21,16 @@ import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gammza.chupachups.auth.OAuthToken;
+import com.gammza.chupachups.auth.model.dao.KakaoProfile;
 import com.gammza.chupachups.auth.model.service.SocialService;
+import com.gammza.chupachups.member.model.service.MemberService;
 import com.gammza.chupachups.member.model.vo.Member;
 
 @Controller
@@ -33,8 +38,10 @@ public class SocialController {
 	
 			// KAKAO
 			@Autowired
-			private SocialService socialService;
-		
+			private MemberService memberService;
+			// private SocialService socialService;
+			
+			/*
 			@GetMapping(value = "/auth/kakao/callback", produces = "text/json; charset=UTF-8")
 			public String kakaoCallback(String code, Model model) {
 				// System.out.println("kakao code: " + code);
@@ -50,7 +57,118 @@ public class SocialController {
 				
 			return "redirect:/";
 			}
-	
+			*/
+			
+			
+			@GetMapping(value = "/auth/kakao/callback", produces = "text/json; charset=UTF-8")
+			public @ResponseBody String kakaoCallback(String code, Member member, Model model) {
+				
+				// POST 방식으로 데이터를 요청(토큰 관련) 
+				/* 
+					(POST이므로 url에 파라미터로 넣을 수도 없고, a 태그로 전달할 수도 없다) 
+						-> RestTemplate 클래스 사용  
+						-> HttpURLConnection 도 사용 가능하지만 복잡해짐.. 
+				 */
+				RestTemplate rt = new RestTemplate();
+				
+				// HttpHeader object 생성
+				HttpHeaders headers = new HttpHeaders();
+				headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+				// HttpBody object 생성
+				MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+				params.add("grant_type", "authorization_code");
+				params.add("client_id", "db32886cc653e7c143ebd36f56525b61");
+				params.add("redirect_uri", "http://localhost:8095/chupachups/auth/kakao/callback");
+				params.add("code", code);
+
+				// HttpHeader와 HttpBody를 하나의 object에 담음
+				HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<MultiValueMap<String, String>>(params, headers);
+				
+				// 요청 
+				ResponseEntity<String> response = rt.exchange(
+						"https://kauth.kakao.com/oauth/token", 
+						HttpMethod.POST, 
+						kakaoTokenRequest, 
+						String.class); // 응답받을 타입 
+				
+				
+				// 정보를 OAuthToken 객체에 저장 
+				// JSON 데이터를 Java로 처리하기 위해서 바꿔준 것 
+				ObjectMapper objectMapper = new ObjectMapper();
+				OAuthToken oauthToken = null;
+				
+				try {
+					oauthToken = objectMapper.readValue(response.getBody(), OAuthToken.class);
+				} catch (JsonMappingException e) {
+					e.printStackTrace();
+				} catch (JsonProcessingException e) {
+					e.printStackTrace();
+				}
+
+				System.out.println("KAKAO ACCESS TOKEN: " + oauthToken.getAccess_token());
+				
+				
+				RestTemplate rt2 = new RestTemplate();
+
+				HttpHeaders headers2 = new HttpHeaders();
+				headers2.add("Authorization", "Bearer " + oauthToken.getAccess_token());
+				headers2.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+				HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest2 = new HttpEntity(headers2);
+
+				ResponseEntity<String> response2 = rt2.exchange(
+						"https://kapi.kakao.com/v2/user/me", 
+						HttpMethod.POST,
+						kakaoProfileRequest2, 
+						String.class);
+				
+				ObjectMapper objectMapper2 = new ObjectMapper();
+				KakaoProfile kakaoProfile = null;
+				
+				try {
+					kakaoProfile = objectMapper2.readValue(response2.getBody(), KakaoProfile.class);
+				} catch (JsonMappingException e) {
+					e.printStackTrace();
+				} catch (JsonProcessingException e) {
+					e.printStackTrace();
+				}
+				
+				System.out.println("KAKAO_IDKEY: " + kakaoProfile.getId());
+				System.out.println("KAKAO_NICKNAME: " + kakaoProfile.getKakao_account().getProfile().getNickname());
+				// System.out.println("KAKAO_EMAIL: " + kakaoProfile.getKakao_account().getHas_email());
+				
+				
+				// Member
+				System.out.println("GAMMZA_USERNAME: " + kakaoProfile.getKakao_account().getProfile().getNickname() + "_" + kakaoProfile.getId());
+				UUID garbagePassword = UUID.randomUUID();
+				System.out.println("GAMMZA_PASSWORD: " + garbagePassword);
+				
+				
+				/*
+				 * member를 조회했을 때, kakao_idkey == null 이면 그대로 진행
+				 * kakao_idkey != null 이면 강제 로그인 처리 
+				 */
+				
+//				if (member.getKakaoIdkey() == 0) { // DB kakao_idkey default 0 ? 
+//				}
+					
+				member.setKakaoIdkey(kakaoProfile.getId());
+				member.setName(kakaoProfile.getKakao_account().getProfile().getNickname());
+				System.out.println(member);
+				
+				int result = memberService.insertKakaoMember(member);
+				
+				
+				// kakaoProfile.setId(kakaoProfile.getId());
+				
+				// model.addAttribute("kakaoProfile", kakaoProfile);
+			return "redirect:/";
+			}
+			
+			
+			
+			/*
 			// NAVER 
 			@GetMapping(value = "/auth/naver/callback", produces = "text/json; charset=UTF-8")
 			public String naverCallback(String code, Member member) {
@@ -258,7 +376,8 @@ public class SocialController {
 
 		// return "redirect:/";
 	// }
-
+			
+	/*
 	private static String get(String apiUrl, Map<String, String> requestHeaders) {
 		HttpURLConnection con = connect(apiUrl);
 		try {
@@ -280,6 +399,7 @@ public class SocialController {
 		}
 	}
 
+	/*
 	private static HttpURLConnection connect(String apiUrl) {
 		try {
 			URL url = new URL(apiUrl);
@@ -290,7 +410,8 @@ public class SocialController {
 			throw new RuntimeException("연결이 실패했습니다. : " + apiUrl, e);
 		}
 	}
-
+	
+	/*
 	private static String readBody(InputStream body) {
 		InputStreamReader streamReader = new InputStreamReader(body);
 
@@ -318,4 +439,5 @@ public class SocialController {
 			}
 		}
 	}
+	*/
 }
