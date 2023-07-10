@@ -28,27 +28,21 @@
 	  )
 	</insert>
 
-	<!-- <insert id="insertKakaoMember">
-		insert into member(user_id, user_pwd, name, phone, location, email, create_at, update_at, status, point, temperature, kakao_idkey, naver_idkey, birthday, latitude, longitude)
+	<insert id="insertKakaoMember">
+		insert into member(user_id, user_pwd, name, phone, email, create_at, status, point, temperature, kakao_idkey)
 		values(
 		'kakao',
 		'kakao',
 		#{name},
 		'kakao',
-		1,
 		'kakao',
 		default,
-		#{updateAt},
 		default,
 		default,
 		default,
-		#{kakaoIdkey},
-		null,
-		'kakao',
-		null,
-		null
+		#{kakaoIdkey}
 	)
-	</insert> -->	
+	</insert>	
  	
  	
  	
