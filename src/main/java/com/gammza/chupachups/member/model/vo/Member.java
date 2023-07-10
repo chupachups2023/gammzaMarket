@@ -28,7 +28,7 @@ public class Member {
 	private boolean status;
 	private int point;
 	private double temperature;
-	private int kakaoIdkey;
+	private long kakaoIdkey;
 	private String naverIdkey;
 	private int category;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
