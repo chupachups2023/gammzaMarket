@@ -3,6 +3,9 @@ package com.gammza.chupachups.location.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -95,6 +99,37 @@ public class LocationController {
 	@GetMapping("/location/location.lo")
 	public String location(Model model) {
 		return "/member/location";
+	}
+	
+	@PostMapping("/location/nearDong.lo")
+	@ResponseBody
+	public Map<String,String[]> nearDong(HttpServletRequest request) {
+		System.out.println("들어오긴 함");
+		
+		String address[]=request.getParameterValues("address");
+		String place[]=request.getParameterValues("place");
+		
+		HashSet<String> returnValue=new HashSet<>();
+		for(int i=0;i<address.length;i++) {
+			String tem[]=address[i].split(" ");
+			String tem2[]=place[i].split("주민");
+			Location location=new Location();
+			location.setSidoNm(tem[0]);
+			location.setSggNm(tem[1]);
+			location.setAdmNm(tem2[0]);
+			location.setLegNm(tem[2]);
+			
+			String name=SelectLocationName(location);
+			returnValue.add(name);
+		}
+		Iterator<String> ir=returnValue.iterator();
+		String dongName[]=new String[returnValue.size()];
+		for(int i=0;i<returnValue.size();i++) {
+			dongName[i]=ir.next();
+		}
+		Map<String,String[]> returnV=new HashMap<String,String[]>();
+		returnV.put("returnValue", dongName);
+		return returnV;
 	}
 	
 	@PostMapping("/location/nearDong.lo")
