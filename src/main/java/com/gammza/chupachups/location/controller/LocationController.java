@@ -1,7 +1,6 @@
 package com.gammza.chupachups.location.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -104,8 +103,6 @@ public class LocationController {
 	@PostMapping("/location/nearDong.lo")
 	@ResponseBody
 	public Map<String,String[]> nearDong(HttpServletRequest request) {
-		System.out.println("들어오긴 함");
-		
 		String address[]=request.getParameterValues("address");
 		String place[]=request.getParameterValues("place");
 		
@@ -130,14 +127,6 @@ public class LocationController {
 		Map<String,String[]> returnV=new HashMap<String,String[]>();
 		returnV.put("returnValue", dongName);
 		return returnV;
-	}
-	
-	@PostMapping("/location/nearDong.lo")
-	public String nearDong(HttpServletRequest request) {
-		String[] result = request.getParameterValues("result");
-		System.out.println("들어오긴 함");
-		System.out.println(Arrays.toString(result));
-		return "성공!";
 	}
 	
 }

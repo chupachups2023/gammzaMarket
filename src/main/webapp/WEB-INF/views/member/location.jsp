@@ -105,36 +105,6 @@ function success(position) {
 		            	
 		            	getNearDong(latlng.Ma, latlng.La);
 		            	
-		            	var places = new kakao.maps.services.Places();
-						
-		            	let resultArr=[];
-		            	
-		            	var callback = function(result, status) {
-		            	    if (status === kakao.maps.services.Status.OK) {
-		            	    	for(let i=0;i<result.length;i++){
-		            	    		getOnlyGeoCoe(result[i].address_name,resultArr)
-		            	    	} 
-		            	    	console.log(resultArr);
-		            	    	
-		            	        $.ajax({
-		            	        	type:"post",
-		            	        	url:"nearDong.lo",
-		            	        	date:{"result":resultArr},
-		            	        	traditional : true,
-		            	        	success:function(successResult){
-		            	        		console.log(successResult);
-		            	        	}
-		            	        });
-		            	    }
-		            	};
-
-		            	// 공공기관 코드 검색
-			            	places.keywordSearch('행정복지센터', callback, {
-			            	    // Map 객체를 지정하지 않았으므로 좌표객체를 생성하여 넘겨준다.
-			            	    location: new kakao.maps.LatLng(latlng.Ma, latlng.La),
-			            	    radius:4000,
-			            	    sort_by:"DISTANCE"
-			            	});
 		            },
 		            error:function(){
 		            	console.log("실패");
@@ -167,7 +137,6 @@ function getNearDong(lat, lon){
    	        	data:{'address':addressForCon, 'place':placeName},
    	        	dataType : 'json',
    	        	success:function(successResult){
-   	        		//console.log(successResult);
    	        		const locationCont=document.getElementById("location-cont");
    	        		let nearDong='';
    	        		for(let k=0;k<successResult.returnValue.length-1;k++){
