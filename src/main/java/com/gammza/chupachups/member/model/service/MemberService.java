@@ -14,4 +14,6 @@ public interface MemberService {
 
 	int insertKakaoMember(Member member);
 
+	Member selectMemberByKakao(Long id);
+
 }

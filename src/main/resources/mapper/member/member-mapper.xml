@@ -42,8 +42,13 @@
 		default,
 		#{kakaoIdkey}
 	)
-	</insert>	
- 	
+</insert>
+ 
+  <!-- 카카오 아이디키 검색 -->
+ 	<select id="selectMemberByKakao" resultMap ="memberMap">
+ 		select * from member where KAKAO_IDKEY=#{id}
+ 	</select>
+
  	
  	
  	<!-- 아이디 중복체크 -->

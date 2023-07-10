@@ -106,7 +106,27 @@
 	</update>
 	<select id="selectLeadGongguList" resultMap="gongguMap">
 		select * from gonggu where GONGGU_WRITER=#{userId}
+		order by pullup_at desc
 	</select>
+	<select id="searchGonggu" resultMap="gongguMap">
+		select * 
+			from gonggu
+		  where gonggu_name like '%' || #{gongguName} || '%'
+	</select>
+	
+	<select id="selectGongguTotalRecored" resultType="_int">
+		select count(*)
+			from gonggu
+		  where status=1
+		   and gonggu_name = '%' ||  #{gongguName} || '%'
+	</select>
+	<select id="selectOneCategory" resultMap="gongguMap">
+  			select *
+  			  from gonggu
+  			where category = #{category}
+  			
+  		</select>
+	
 </mapper>  
 
 
