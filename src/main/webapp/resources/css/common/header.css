@@ -108,7 +108,7 @@ textarea{
     width: 100%;
     z-index: 10;
 }
-.category-list>a{
+.category-list>p{
     text-decoration: none;
     color: black;
     width: 110px;

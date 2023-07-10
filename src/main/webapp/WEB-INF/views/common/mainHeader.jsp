@@ -166,29 +166,33 @@
 		});
 		
 		function fn_click(category) {
-			
-			 var url = '${pageContext.request.contextPath}/gonggu/categoryList.go?category=' + category;
-			 location.href = url;
-
+			function success(position) {
+			    const latitude = position.coords.latitude;   // 위도(37.xxxx)
+			    const longitude = position.coords.longitude;
+			    const memLong="${loginMember.longitude}";	//로그인 했니?
+			    
+			    if(memLong != ""){	//했다
+			    	location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category;
+			    }else{		//안했다
+			   		location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category+"&longitude="+longitude+"&latitude="+latitude;
+			    }
+			}
+		    navigator.geolocation.getCurrentPosition(success);
 		}
+		
 		function viewAllGonggu(){
-		    if (!navigator.geolocation) {
-		        alert("위치 정보가 지원되지 않습니다.");
-		    }else{
-				function success(position) {
-				    const latitude = position.coords.latitude;   // 위도(37.xxxx)
-				    const longitude = position.coords.longitude;
-				    const memLong="${loginMember.longitude}";
-				    
-				    console.log(memLong);
-				    if(memLong != ""){
-				    	location.href="${pageContext.request.contextPath}/gonggu/ggListView.go";
-				    }else{
-				   		location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?longitude="+longitude+"&latitude="+latitude;
-				    }
-				}
-			    navigator.geolocation.getCurrentPosition(success);
-		    }
+			function success(position) {
+			    const latitude = position.coords.latitude;   // 위도(37.xxxx)
+			    const longitude = position.coords.longitude;
+			    const memLong="${loginMember.longitude}";
+			    
+			    if(memLong != ""){
+			    	location.href="${pageContext.request.contextPath}/gonggu/ggListView.go";
+			    }else{
+			   		location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?longitude="+longitude+"&latitude="+latitude;
+			    }
+			}
+		    navigator.geolocation.getCurrentPosition(success);
 		}
 			
 	    </script>

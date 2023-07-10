@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -372,26 +373,49 @@ public class GongguController {
 	 }
 	
 	 @GetMapping("/ggSearch.go")
-	 public String searchGonggu(@RequestParam("gongguName") String gongguName, Model model) {
-		 ArrayList<Gonggu> homeList = gongguService.searchGonggu(gongguName);
+	 public String searchGonggu(@RequestParam("gongguName") String gongguName, Model model,
+			 @RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude) {
+		 HashMap<String,String> map=new HashMap<String,String>();
+		 map.put("longitude", longitude);
+		 map.put("latitude", latitude);
+		 StringTokenizer st=new StringTokenizer(gongguName);
+		 String searchSql="INTERSECT ";
+		 searchSql+=" SELECT * "
+			 		+ " FROM gonggu "
+			 		+ " where gonggu_name LIKE '%"+st.nextToken()+"%' "; 
+		 while(st.hasMoreTokens()) {
+			 searchSql+=" UNION "
+			 		+ " SELECT * "
+			 		+ " FROM gonggu "
+			 		+ " where gonggu_name LIKE '%"+st.nextToken()+"%' "; 
+		 }
+		 searchSql+=" order by 22 desc";
+		 map.put("search", searchSql);
 		 
-		 model.addAttribute("homeList", homeList);
+		 ArrayList<Gonggu> ggListView = gongguService.searchGonggu(map);
+		 
+		 model.addAttribute("ggListView", ggListView);
 		 int totalRecord=gongguService.selectGongguTotalRecored();
 		 
-		 model.addAttribute("gonggu", gongguName);
+		 model.addAttribute("keyword", gongguName);
 		
 		 PageInfo pi=Pagination.getPageInfo(totalRecord, 1, 1, 8);
          model.addAttribute("pi", pi);
          
-		 return "/home";
+		 return "/gonggu/ggListView";
 	 }
 	 
 	 @GetMapping("/categoryList.go")
-		public String categoryList(@RequestParam("category") int category, Model model) {
-			ArrayList<Gonggu> categoryList = gongguService.selectOneCategory(category);
+		public String categoryList(@RequestParam("category") int category, Model model,
+				@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude) {
+		 	HashMap<String,String> map=new HashMap<String,String>();
+		 	map.put("longitude", longitude);
+		 	map.put("latitude", latitude);
+		 	map.put("category", String.valueOf(category));
+			ArrayList<Gonggu> categoryList = gongguService.selectOneCategory(map);
 			
-			model.addAttribute("homeList", categoryList);
+			model.addAttribute("ggListView", categoryList);
 			
-			return "/home";
+			return "/gonggu/ggListView";
 		}
 }
