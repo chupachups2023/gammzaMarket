@@ -61,6 +61,11 @@
  		select * from member
  		where user_id = #{userId}
  	</select> --> 	
+ 	
+ 	<select id="selectMemberByPhone" resultMap ="memberMap">
+ 		select * from member
+ 		where phone = #{phone}
+ 	</select>
 
  	<select id="selectOneMember" resultMap="memberMap">
  		SELECT * FROM MEMBER

@@ -1,4 +1,4 @@
-package com.gammza.chupachups.auth;
+package com.gammza.chupachups.auth.model.dao;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

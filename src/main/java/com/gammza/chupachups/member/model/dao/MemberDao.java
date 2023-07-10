@@ -18,4 +18,6 @@ public interface MemberDao {
 	int insertKakaoMember(Member member);
 
 	Member selectMemberByKakao(Long id);
+
+	Member selectMemberByPhone(String phone);
 }

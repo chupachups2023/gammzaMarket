@@ -16,4 +16,6 @@ public interface MemberService {
 
 	Member selectMemberByKakao(Long id);
 
+	Member selectMemberByPhone(String phone);
+
 }
