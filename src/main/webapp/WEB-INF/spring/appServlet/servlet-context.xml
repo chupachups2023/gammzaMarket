@@ -63,13 +63,13 @@
 		<beans:constructor-arg value="http://localhost:8095/auth/naver/callback" />
 	</beans:bean>
 
-	<beans:bean id="naverSns" class="com.gammza.chupachups.auth.SnsValue">
+	<!-- <beans:bean id="naverSns" class="com.gammza.chupachups.auth.SnsValue">
 		<beans:constructor-arg value="naver" />
 		<beans:constructor-arg ref="naverClientID" />
 		<beans:constructor-arg ref="naverClientSecret" />
 		<beans:constructor-arg ref="naverRedirectUrl" />
 	</beans:bean>
 	
-	<beans:bean id="socialService" class="com.gammza.chupachups.auth.model.service.SocialService" />
+	<beans:bean id="socialService" class="com.gammza.chupachups.auth.model.service.SocialService" /> -->
 	
 </beans:beans>
