@@ -19,5 +19,8 @@ public interface MemberDao {
 
 	Member selectMemberByKakao(Long id);
 
+	Member selectMemberByNaver(String id);
+
 	Member selectMemberByPhone(String phone);
+
 }
