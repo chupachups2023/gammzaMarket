@@ -61,8 +61,8 @@
 			</div>
 			<form action="">
 				<div class="header-searchbox">
-					<img src="${pageContext.request.contextPath}/resources/img/header/search.png" alt="" class="header-searchicon" onclick="search();"> 
-					<input type="text" class="header-search">
+					<img src="${pageContext.request.contextPath}/resources/img/header/search.png" alt="" class="header-searchicon" onclick="fn_srchGgLst()"> 
+					<input type="text" class="header-search" name="gongguName" id="gongguName">
 				</div>
 			</form>
 		</div>
@@ -192,7 +192,13 @@
 			loginFrm.submit();
 		});
 		
-
+		 function fn_srchGgLst() {
+	            var gongguName = document.getElementById('gongguName').value;
+	            
+	            var url = '${pageContext.request.contextPath}/gonggu/ggSearch.go?gongguName=' + encodeURIComponent(gongguName);
+	            location.href = url;
+	        }
+		
 	    </script>
 	</header>
 	<section>

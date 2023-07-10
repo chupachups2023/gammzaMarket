@@ -62,16 +62,16 @@
 		</div>
 		<div class="category-drop">
 			<div class="category-list category-top">
-				<a href="" class="category-menu cloth">의류</a>
-				 <a href=""	class="category-menu makeup">화장품/미용</a> 
-				 <a href="" class="category-menu food">식품/농산물</a> 
-				 <a href="" class="category-menu furniture">가구/인테리어</a>
+				 <p onclick="fn_click(1)" id="category1" class="category-menu cloth" style="cursor:pointer;">의류</p>
+				 <p onclick="fn_click(2)" id="category2" class="category-menu makeup" style="cursor:pointer;">화장품/미용</p> 
+				 <p onclick="fn_click(3)" id="category3" class="category-menu food" style="cursor:pointer;">식품/농산물</p> 
+				 <p onclick="fn_click(4)" id="category4" class="category-menu furniture" style="cursor:pointer;">가구/인테리어</p>
 			</div>
 			<div class="category-list category-bottom">
-				<a href="" class="category-menu delivery">배달음식</a> 
-				<a href="" class="category-menu baby">유아동</a> 
-				<a href="" class="category-menu homeware">생활용품</a> 
-				<a href="" class="category-menu pet">반려동물용품</a>
+				<p onclick="fn_click(5)" id="category5" class="category-menu delivery" style="cursor:pointer;">배달음식</p> 
+				<p onclick="fn_click(6)" id="category6" class="category-menu baby" style="cursor:pointer;">유아동</p> 
+				<p onclick="fn_click(7)" id="category7" class="category-menu homeware" style="cursor:pointer;">생활용품</p> 
+				<p onclick="fn_click(8)" id="category8" class="category-menu pet" style="cursor:pointer;">반려동물용품</p>
 			</div>
 		</div>
 
@@ -165,6 +165,12 @@
 			loginFrm.submit();
 		});
 		
+		function fn_click(category) {
+			
+			 var url = '${pageContext.request.contextPath}/gonggu/categoryList.go?category=' + category;
+			 location.href = url;
+
+		}
 		function viewAllGonggu(){
 		    if (!navigator.geolocation) {
 		        alert("위치 정보가 지원되지 않습니다.");
