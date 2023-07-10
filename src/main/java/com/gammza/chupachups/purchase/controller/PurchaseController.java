@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.gammza.chupachups.member.model.service.MemberService;
 import com.gammza.chupachups.member.model.vo.Member;
@@ -17,6 +18,7 @@ import com.gammza.chupachups.purchase.model.vo.PointPurRec;
 
 @Controller
 @RequestMapping("/member")
+@SessionAttributes({"loginMember"})
 public class PurchaseController {
 
 	@Autowired
@@ -31,7 +33,7 @@ public class PurchaseController {
 		String userId = loginMember.getUserId();
 
 		Member member = memberService.selectOneMember(userId);
-		model.addAttribute(member);
+		model.addAttribute("loginMember", member);
 	}
 
 	@PostMapping("/updatePoint.do")
@@ -42,7 +44,9 @@ public class PurchaseController {
 		
 		int result1 = purchaseService.updatePoint(pointPR);
 		int result2 = purchaseService.insertPointPurRec(pointPR);
-
+		
+		Member member = memberService.selectOneMember(userId);
+		model.addAttribute("loginMember", member);
 		model.addAttribute(pointPR);
 	}
 

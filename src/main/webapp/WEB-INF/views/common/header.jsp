@@ -61,8 +61,8 @@
 			</div>
 			<form action="">
 				<div class="header-searchbox">
-					<img src="${pageContext.request.contextPath}/resources/img/header/search.png" alt="" class="header-searchicon" onclick="search();"> 
-					<input type="text" class="header-search">
+					<img src="${pageContext.request.contextPath}/resources/img/header/search.png" alt="" class="header-searchicon" onclick="fn_srchGgLst()"> 
+					<input type="text" class="header-search" name="gongguName" id="gongguName">
 				</div>
 			</form>
 		</div>
@@ -96,7 +96,7 @@
 							<h2>로그인</h2>
 							<ul class="login-top">
 								<li class="login-info">
-									<input type="text" placeholder="아이디 입력!" name="userId">
+									<input type="text" placeholder="아이디 입력" name="userId">
 								</li>
 								<li class="login-info">
 									<input type="password" placeholder="비밀번호 입력" name="userPwd">
@@ -192,7 +192,13 @@
 			loginFrm.submit();
 		});
 		
-
+		 function fn_srchGgLst() {
+	            var gongguName = document.getElementById('gongguName').value;
+	            
+	            var url = '${pageContext.request.contextPath}/gonggu/ggSearch.go?gongguName=' + encodeURIComponent(gongguName);
+	            location.href = url;
+	        }
+		
 	    </script>
 	</header>
 	<section>

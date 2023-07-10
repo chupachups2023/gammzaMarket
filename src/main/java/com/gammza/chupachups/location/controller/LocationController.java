@@ -1,8 +1,10 @@
 package com.gammza.chupachups.location.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,6 +95,14 @@ public class LocationController {
 	@GetMapping("/location/location.lo")
 	public String location(Model model) {
 		return "/member/location";
+	}
+	
+	@PostMapping("/location/nearDong.lo")
+	public String nearDong(HttpServletRequest request) {
+		String[] result = request.getParameterValues("result");
+		System.out.println("들어오긴 함");
+		System.out.println(Arrays.toString(result));
+		return "성공!";
 	}
 	
 }

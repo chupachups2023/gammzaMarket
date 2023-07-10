@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/chatting.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/chatting.css?<%=System.currentTimeMillis() %>">
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="채팅" name="title"/>
 </jsp:include>
@@ -24,7 +24,7 @@
 				</div>
 				<ul tabindex="0" role="list" aria-label="내 채널 리스트" class="css-8lfz6g">
 					<c:forEach items="${chatRoomList}" var="chatRoom">
-				<c:if test="${parti.status eq 1 or chatRoom.roomOwner eq loginMember.userId}">
+				<%-- <c:if test="${parti.status eq 1 or chatRoom.roomOwner eq loginMember.userId}"> </c:if>--%>
 					<li class="css-v2yhcd">
 						<a class="selected css-y6c1l4" id="msgList" onclick="msgList(${chatRoom.roomNo});" href="">
 							<div class="preview-title-wrap">
@@ -46,14 +46,6 @@
 					</c:if>
 					</c:forEach>
 				</ul>
-				<div class="faq-container">
-					<a class="faq-content common-bg-hover" href="" target="_blank" rel="noreferrer">
-						<span class="faq-test">자주묻는 질문</span>
-						<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<circle cx="9" cy="9" r="8.5" stroke="#868B94"></circle>
-						</svg>
-					</a>
-				</div>
 			</nav>
 		</div>
 		<section class="css-am8mw7">
