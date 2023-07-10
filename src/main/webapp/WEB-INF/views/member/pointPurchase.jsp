@@ -3,96 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/pointPurchase.css">
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="포인트결제" name="title" />
 </jsp:include>
 <script type="text/javascript"
 	src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <style>
-/* 포인트결제창 */
-.pointPurchaseSec {
-	width: 1000px;
-	margin: 30px auto;
-}
 
-.pointPurchaseSec>h1 {
-	text-align: center;
-	font-size: 30px;
-}
-
-#pointPurchaseBox {
-	border-radius: 10px;
-	border: 2px solid rgba(176, 164, 122, 1);
-	overflow: hidden;
-}
-
-/* 충전 포인트 선택칸 */
-.pointPurchaseTable {
-	border-collapse: collapse;
-	width: 1000px;
-}
-
-.pointPurchaseTable tbody td {
-	border: 1px solid rgba(176, 164, 122, 1);
-	font-size: 20px;
-	text-align: right;
-	font-weight: bold;
-	width: 25%;
-}
-
-.pointSel {
-	padding: 50px 20px;
-}
-
-.pointSel:hover {
-	background-color: rgb(184, 182, 182);
-	color: white;
-}
-
-.clicking {
-	background-color: rgba(48, 175, 86, 0.753);
-	color: white;
-}
-
-.pointG {
-	font-size: 25px;
-	color: #fce38c;
-	text-align: left;
-}
-
-/* 약관박스 */
-#clause {
-	border: 1px solid;
-	width: 500px;
-	padding: 15px;
-	display: inline-block;
-}
-
-/* 결제버튼 */
-#purchaseBtn {
-	border: none;
-	border-radius: 5px;
-	width: 80px;
-	font-size: 25px;
-	background-color: rgb(242, 210, 163);
-	margin-left: 90%;
-}
-
-#payBox {
-	margin-left: 50px;
-}
-
-#viewPg, #viewPrice {
-	border: none;
-	font-size: 20px;
-	text-align: right;
-	width: 145px;
-}
 </style>
 
-<script>
-
-</script>
 
 <div class="pointPurchaseSec">
 	<h1>포인트 결제</h1>
@@ -144,9 +64,8 @@
 					<tr>
 						<td style="text-align: right;">결제가능 수단&emsp;&emsp;</td>
 						<td colspan="3">
-							<input type="radio" name="purchaseSelect" class="pg" value="kakaopay"><span>카카오페이</span><br>
-							<input type="radio" name="purchaseSelect" class="pg" value="bank"><span>계좌이체</span><br> 
-							<input type="radio" name="purchaseSelect" class="pg" value="danal"><span>핸드폰 소액결제</span><br> 
+							<input type="radio" name="purchaseSelect" class="pg" value="kakaopay"> <span>카카오페이</span><br>
+							<input type="radio" name="purchaseSelect" class="pg" value="danal"> <span>핸드폰 소액결제</span><br> 
 							<input type="radio" name="purchaseSelect" class="pg" value="html5_inicis"> <span>신용/체크 카드</span></td>
 					</tr>
 				</tfoot>
@@ -155,8 +74,9 @@
 		<div>
 			<br>
 			<div id="payBox">
-				결제수단 : <input id="viewPg"><br> 결제가격 : <input
-					id="viewPrice"><br> <br>이대로 진행하시려면 결제를 눌러주세요.<br>
+				결제수단 : <input id="viewPg"><br> 
+				결제가격 : <input	id="viewPrice"><br> <br>
+				이대로 진행하시려면 결제를 눌러주세요.<br>
 			</div>
 
 		</div>
@@ -168,7 +88,7 @@
 				<input type="checkbox" id="clauseCkh" required> 약관을 다 읽었으며
 				동의하고 결제합니다
 			</div>
-			<button type="button" onclick="requestPay();">결제</button>
+			<button type="button" id="purchaseBtn" onclick="requestPay();">결제</button>
 		</div>
 	</form>
 </div>
@@ -197,13 +117,6 @@
 	$(':radio').click(function() {
 		$('#viewPg').val($(':radio:checked').next().text());
 		$('#selectedPg').val(pg);
-		
-		if(pg != "bank") {
-			$('#purchaseBtn').attr("onclick", 'requestPay();');	//계좌이체 외 결제수단은 requestPay()에서 처리
-		}else {
-			$('#purchaseBtn').removeAttr("onclick");
-			$('#purchaseBtn').attr("onclick", 'bank();');	//계좌이체는 모달창으로 띄우기//미완성
-		}
 	}); 
 
 	/* 결제 */
@@ -211,6 +124,10 @@
 	IMP.init("imp36052417"); 
 	
 	function requestPay() {
+		if($('#viewPg').val() == "" || $('#viewPrice').val() == ""){
+			alert("포인트 종류와 결제수단을 선택해주세요");
+			return;
+		}
 		if(!$('#clauseCkh').is(':checked')){
 			alert("약관을 읽고 동의해주세요");
 			return;
@@ -265,10 +182,6 @@
     			alert("결제실패 : " + rsp.error_msg );
     		};
 		})
-	}
-	
-	/* 계좌이체 선택시 */	//미완성
-	function bank() {
 	}
 	
 	
