@@ -14,6 +14,30 @@
 	href="${pageContext.request.contextPath}/resources/img/header/shorcuticon.png">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/header.css?<%=System.currentTimeMillis() %>">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/login.css?<%=System.currentTimeMillis() %>">
+<style>
+	.login-content {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 60vh;
+	}
+
+	h2 {
+		text-align: center;
+		padding-bottom: 20px;
+	}
+
+
+
+
+
+
+
+
+
+</style>
+
+
 
 <!-- DB에 저장이 잘 되었다면 alert창 띄우기 -->
 <c:if test="${not empty msg}">
@@ -82,62 +106,33 @@
 		</div>
 
 
-		<!--로그인 모달창 수정본 -->
-		<div class="modal" tabindex="-1" id="modal">
-			<div class="modal-dialog">
-
-				<div class="modal-header">
-					<h5 class="modal-title">로그인</h5>
+		<form action="${pageContext.request.contextPath}/member/memberLogin.me" method="post" id="loginFrm">
+			<div class="login-content">
+				<div>
+					<h2>로그인</h2>
+					<ul class="login-top">
+						<li class="login-info">
+							<input type="text" placeholder="아이디 입력" name="userId">
+						</li>
+						<li class="login-info">
+							<input type="password" placeholder="비밀번호 입력" name="userPwd">
+						</li>
+						<li class="login-chkbox">
+							<input type="checkbox" id="chk1">
+							<label for="chk1">아이디 저장</label>
+						</li>
+						<li class="login-input modal-footer">
+							<input type="button" class="login-btn" value="로그인" id="login-modal">
+						</li>
+					</ul>
+					<ul class="login-bottom">
+						<li><a href="${pageContext.request.contextPath}/member/memberEnroll.me">회원가입</a></li>
+						<li><a href="${pageContext.request.contextPath}/member/findId.me">아이디/비밀번호 찾기</a></li>
+					</ul>
+							
 				</div>
-				<form action="${pageContext.request.contextPath}/member/memberLogin.me" method="post" id="loginFrm">
-					<div class="modal-login">
-						<div class="modal-bg"></div>
-						<div class="modal-content">
-							<h2>로그인</h2>
-							<ul class="login-top">
-								<li class="login-info">
-									<input type="text" placeholder="아이디 입력" name="userId">
-								</li>
-								<li class="login-info">
-									<input type="password" placeholder="비밀번호 입력" name="userPwd">
-								</li>
-								<li class="login-chkbox">
-									<input type="checkbox" id="chk1">
-									<label for="chk1">아이디 저장</label>
-								</li>
-								<li class="login-input modal-footer">
-									<input type="button" class="login-btn" value="로그인" id="login-modal">
-								</li>
-							</ul>
-							<ul class="login-bottom">
-								<li><a href="${pageContext.request.contextPath}/member/memberEnroll.me">회원가입</a></li>
-								<li><a href="${pageContext.request.contextPath}/member/findId.me">아이디/비밀번호 찾기</a></li>
-							</ul>
-									
-							<div class="social-container">
-								<h3>간편 로그인</h3>
-								<div class="social-icon">
-									<ul>
-										<li class="login-kakao">
-											<a href="https://kauth.kakao.com/oauth/authorize?client_id=db32886cc653e7c143ebd36f56525b61&redirect_uri=http://localhost:8095/chupachups/auth/kakao/callback&response_type=code">
-												<img src="${pageContext.request.contextPath}/resources/img/header/icon_kakao_long.png" alt="카카오로그인버튼">
-											</a> 
-										</li>
-										<li class="login-naver">
-											<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&state=test&client_id=GQGBjwaCzYQZZ_5XkE2o&state=STATE_STRING&redirect_uri=http://localhost:8095/chupachups/auth/naver/callback">
-												<img src="${pageContext.request.contextPath}/resources/img/header/icon_naver_long_resize.png" alt="네이버로그인버튼"> (수정중..)
-											</a> 
-									</ul>
-									<br>
-									<a id="close-modal" class="modal-closeBtn">닫기</a>
-									<!-- <button type="button" id="close-modal">임시닫기버튼</button> -->
-								</div>
-							</div>
-						</div>
-					</div>
-				</form>
 			</div>
-		</div>
+		</form>
 
 <script>
 	$(function(){
