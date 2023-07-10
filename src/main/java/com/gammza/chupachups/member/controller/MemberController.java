@@ -66,63 +66,7 @@ public class MemberController {
 		
 		return "jsonView";
 	}
-	
-	/*
-	@PostMapping("/checkId.do")
-	@ResponseBody
-	public Map<String, Object> checkIdFunc(@RequestParam("userId") String userId, Map<String, Object> map) {
-		Map<String, Object> result = new HashMap<>();
 		
-		Member member = memberService.checkIdFunc(userId);
-		System.out.println("userId = " + userId);
-		
-		return map;
-}
-*/
-		
-	/*
-	@PostMapping("/checkId.do")
-	@ResponseBody
-	public int checkIdFunc(@RequestParam("userId") String userId) {
-		int cnt = memberService.checkIdFunc(userId);
-		return cnt;
-	}
-	*/
-		
-	/*
-	@ResponseBody
-	@PostMapping(value="/checkId.do", produces = "application/json; charset=UTF-8")
-	public Map<String, Boolean> checkIdFunc(String userId){
-		Member member = memberService.selectOneMember(userId);
-		boolean flag = (member == null);
-		Map<String, Boolean> map = new HashMap<String, Boolean>();
-		map.put("flag", flag);
-		return map;
-		
-		/*
-		int count = 0;
-		Map<Object, Object> map = new HashMap<Object, Object>();
-		count = memberService.checkIdFunc(userId);
-		map.put("cnt", count);
-		return map;
-	}
-	 */
-	
-	
-	/*
-	@GetMapping("/memberLogin.me")
-	public void login(Model model) throws Exception {
-		// Logger.info("login GET .....");
-		
-		SNSLogin snsLogin = new SNSLogin(naverSns);
-		model.addAttribute("naver_url", snsLogin.getNaverAuthURL());
-		
-//		SNSLogin snsLogin = new SNSLogin(naverSns);
-//		model.addAttribute("naver_url", snsLogin.getNaverAuthURL());
-	}
-	 */
-	
-	
 	
 	// @SessionAttributes + model 통해 로그인정보를 관리하는 경우
 	/*
@@ -193,6 +137,49 @@ public class MemberController {
 	public String findPwd() {
 		return "member/findPwd";
 	}
+	
+	@GetMapping("/findLoginInfo.me")
+	public String findLoginInfo(String phone, Model model, RedirectAttributes redirectAtt) {
+		Member member = memberService.selectMemberByPhone(phone);
+		
+		if (member == null) {
+			model.addAttribute("msg", "일치하는 회원이 없습니다.");
+			return "redirect:/";
+		}
+		
+		model.addAttribute("msg", String.format("회원의 아이디는 %s 입니다.", member.getUserId()));
+		return "redirect:/";
+		
+		
+		
+		
+		
+		
+		
+		// return "member/findLoginInfo";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/* 네이버 관련 수정중  
+	@GetMapping("/memberLogin.me")
+	public void login(Model model) throws Exception {
+		// Logger.info("login GET .....");
+		
+		SNSLogin snsLogin = new SNSLogin(naverSns);
+		model.addAttribute("naver_url", snsLogin.getNaverAuthURL());
+		
+//		SNSLogin snsLogin = new SNSLogin(naverSns);
+//		model.addAttribute("naver_url", snsLogin.getNaverAuthURL());
+	}
+	 */
 	
 }
 
