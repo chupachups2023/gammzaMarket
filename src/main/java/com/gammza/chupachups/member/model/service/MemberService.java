@@ -18,4 +18,6 @@ public interface MemberService {
 
 	Member selectMemberByPhone(String phone);
 
+	Member selectMemberByNaver(String id);
+
 }
