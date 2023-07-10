@@ -6,6 +6,8 @@ import com.gammza.chupachups.chatMsg.model.vo.ChatMsg;
 
 public interface ChatMsgDao {
 	
-	 List<ChatMsg> selectChatMsg(ChatMsg chatmsg);
+	 List<ChatMsg> selectChatMsg(String roomNo);
+
+	int insertMsg(ChatMsg chatMsg);
 	 
 }
