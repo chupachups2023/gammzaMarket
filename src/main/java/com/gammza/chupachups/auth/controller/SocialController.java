@@ -1,11 +1,19 @@
 package com.gammza.chupachups.auth.controller;
 
 import java.io.BufferedReader;
+<<<<<<< Updated upstream
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+=======
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+>>>>>>> Stashed changes
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,11 +40,25 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gammza.chupachups.auth.NaverAPI20;
 import com.gammza.chupachups.auth.OAuthToken;
 import com.gammza.chupachups.auth.model.dao.KakaoProfile;
+<<<<<<< Updated upstream
 import com.gammza.chupachups.auth.model.service.SocialService;
+=======
+import com.gammza.chupachups.auth.model.dao.NaverProfile;
+>>>>>>> Stashed changes
 import com.gammza.chupachups.member.model.service.MemberService;
 import com.gammza.chupachups.member.model.vo.Member;
+import com.github.scribejava.core.builder.ServiceBuilder;
+import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.github.scribejava.core.model.OAuthRequest;
+import com.github.scribejava.core.model.Response;
+import com.github.scribejava.core.model.Verb;
+import com.github.scribejava.core.oauth.OAuth20Service;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 @Controller
 @SessionAttributes({"loginMember"})
@@ -161,18 +183,28 @@ public class SocialController {
 			public String loginSuccess() {
 				return "redirect:/";
 			}
+}			
 			
-			
-			
-			
-			
+
+
+
+
+
+
+
+
+
+
+
+
+
 			/*
 			// NAVER 
 			@GetMapping(value = "/auth/naver/callback", produces = "text/json; charset=UTF-8")
 			public String naverCallback(String code, Member member) {
 				// System.out.println("kakao code: " + code);
 				
-			String access_Token = socialService.getAccessToken2(code);
+				String access_Token = socialService.getAccessToken2(code);
 			// System.out.println("NAVER_access_Token: " + access_Token);
 				
 			HashMap<String, Object> naverUserInfo = socialService.getUserInfo2(access_Token, member);
@@ -185,21 +217,361 @@ public class SocialController {
 			// return "member/addInfo"
 			}
 			
+			*/
 			
-	
-	
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			/*
+			// NAVER
+			@GetMapping(value = "/auth/naver/callback", produces = "text/json; charset=UTF-8")
+			@ResponseBody
+			public String naverCallback(String code) {
+				System.out.println("NAVER code: " + code);
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+				
+				// POST 방식으로 key=value 데이터를 요청 (카카오쪽으로)
+				RestTemplate rt = new RestTemplate();
+
+				// HttpHeader object 생성
+				HttpHeaders headersN1 = new HttpHeaders();
+				// headersN1.add("Content-type",
+				// "application/x-www-form-urlencoded;charset=utf-8");
+
+				// HttpBody object 생성
+				MultiValueMap<String, String> paramsN1 = new LinkedMultiValueMap<String, String>();
+				paramsN1.add("grant_type", "authorization_code");
+				paramsN1.add("client_id", "GQGBjwaCzYQZZ_5XkE2o");
+				paramsN1.add("client_secret", "y3TAUEyfZu");
+				paramsN1.add("redirect_uri", "http://localhost:8095/chupachups/auth/naver/callback");
+				paramsN1.add("state", "test");
+				paramsN1.add("code", code);
+
+				// HttpHeader와 HttpBody를 하나의 object에 담음
+				HttpEntity<MultiValueMap<String, String>> naverTokenRequest = new HttpEntity<MultiValueMap<String, String>>(
+						paramsN1, headersN1);
+				
+				System.out.println(naverTokenRequest);
+				
+				
+				
+				// Http 요청하기: POST 방식으로 & response 변수의 응답 받음
+				ResponseEntity<String> responseN1 = rt.exchange(
+						"https://nid.naver.com/oauth2.0/token", 
+						HttpMethod.POST,
+						naverTokenRequest, 
+						String.class);
+
+				// JSON 데이터를 Java object로 처리
+				ObjectMapper objectMapper3 = new ObjectMapper();
+				OAuthToken oauthToken3 = null;
+
+				try {
+					oauthToken3 = objectMapper3.readValue(responseN1.getBody(), OAuthToken.class);
+				} catch (JsonMappingException e) {
+					e.printStackTrace();
+				} catch (JsonProcessingException e) {
+					e.printStackTrace();
+				}
+
+				System.out.println("NAVER ACCESS TOKEN: " + oauthToken3.getAccess_token());
+				
+				
+				RestTemplate rt2 = new RestTemplate();
+
+				// HttpHeader object 생성
+
+				HttpHeaders headers2 = new HttpHeaders();
+				headers2.add("Authorization", "Bearer " + oauthToken3.getAccess_token());
+				headers2.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+				
+				HttpEntity<MultiValueMap<String, String>> naverProfileRequest2 = new HttpEntity(headers2);
+				
+				ResponseEntity<String> response2 = rt2.exchange(
+						"https://openapi.naver.com/v1/nid/me", 
+						HttpMethod.POST,
+						naverProfileRequest2, 
+						String.class);
+				
+				ObjectMapper objectMapper2 = new ObjectMapper();
+				NaverProfile naverProfile = null;
+				
+				try {
+					naverProfile = objectMapper2.readValue(response2.getBody(), naverProfile.class);
+				} catch (JsonMappingException e) {
+					e.printStackTrace();
+				} catch (JsonProcessingException e) {
+					e.printStackTrace();
+				}
+				
+				
+				return "네이버 토큰: " + naverTokenRequest;
+			}
+			/*
+			
+}
+				
+				
+				
+				
+				
+				/*
+				String token = oauthToken3.getAccess_token(); // 네이버 로그인 접근 토큰;
+				String header = "Bearer " + token; // Bearer 다음에 공백 추가
+
+				String apiURL = "https://openapi.naver.com/v1/nid/me";
+
+				Map<String, String> requestHeaders = new HashMap<String, String>();
+				requestHeaders.put("Authorization", header);
+				String responseBody = get(apiURL, requestHeaders);
+
+				System.out.println("responseBody: " + responseBody);
+				*/
+				
+				
+				
+				
+
+				/*
+				 * // member object: NAVER_IDKEY 관련 System.out.println("NAVER_IDKEY: " +
+				 * oauthToken3.getAccess_token().);
+				 */
+				
+
+				// return "redirect:/";
+			// }
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			/*// NAVER 
+			private final static String CLIENT_ID = "GQGBjwaCzYQZZ_5XkE2o";
+			private final static String CLIENT_SECRET = "y3TAUEyfZu";
+			private final static String REDIRECT_URI = "http://localhost:8095/chupachups/auth/naver/callback";
+			private final static String SESSION_STATE = "oauth_state";
+			String reqURL = "https://openapi.naver.com/v1/nid/me";
+			
+			public String getAuthorizationUrl(HttpSession session) {
+				String state = generateRandomString();
+				setSession(session, state);
+				
+				OAuth20Service oauthService = new ServiceBuilder()
+						.apiKey(CLIENT_ID)
+						.apiSecret(CLIENT_SECRET)
+						.callback(REDIRECT_URI)
+						.state(state)
+						.build(NaverAPI20.instance());
+				return oauthService.getAuthorizationUrl();
+			}
+			
+			public String getAccessToken2(String authorize_code) {
+				String access_Token = "";
+				String refresh_Token = "";
+				String reqURL = "https://nid.naver.com/oauth2.0/token";
+				
+				try {
+					URL url2 = new URL(reqURL);
+		            
+					HttpURLConnection conn2 = (HttpURLConnection) url2.openConnection();
+					conn2.setRequestMethod("POST");
+					conn2.setDoOutput(true);
+					
+					BufferedWriter bw2 = new BufferedWriter(new OutputStreamWriter(conn2.getOutputStream()));
+					StringBuilder sb2 = new StringBuilder();
+					sb2.append("grant_type=authorization_code");
+		            
+					sb2.append("&client_id=GQGBjwaCzYQZZ_5XkE2o"); 
+					sb2.append("&redirect_uri=http://localhost:8095/chupachups/auth/naver/callback");
+					sb2.append("&client_secret=y3TAUEyfZu");
+					sb2.append("&code=" + authorize_code);
+					bw2.write(sb2.toString());
+					
+					bw2.flush();
+		            
+					int responseCode2 = conn2.getResponseCode();
+					// System.out.println("responseCode(NAVER) : " + responseCode2); // 200이면 성공 
+		            
+					// 요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
+					BufferedReader br2 = new BufferedReader(new InputStreamReader(conn2.getInputStream()));
+					String line2 = "";
+					String result2 = "";
+		            
+					while ((line2 = br2.readLine()) != null) {
+						result2 += line2;
+					}
+					// System.out.println("response body(네이버 토큰) : " + result2);
+		            
+					// Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
+					// JsonArray parser = new Gson().fromJson("JsonArray 문자열", JsonArray.class);
+					
+					// JsonParser parser = new JsonParser();
+					JsonElement element2 = new Gson().fromJson(result2, JsonElement.class);
+					access_Token = element2.getAsJsonObject().get("access_token").getAsString();
+					refresh_Token = element2.getAsJsonObject().get("refresh_token").getAsString();
+					// System.out.println("access_token : " + access_Token);
+					// System.out.println("refresh_token : " + refresh_Token);
+		            
+					br2.close();
+					bw2.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				return access_Token;
+			}
+			
+			public HashMap<String, Object> getUserInfo2(String access_Token, Member member) {
+
+				// 요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
+				HashMap<String, Object> naverUserInfo = new HashMap<String, Object>();
+				// String reqURL = "https://openapi.naver.com/v1/nid/me";
+				try {
+					URL url2 = new URL(reqURL);
+					HttpURLConnection conn2 = (HttpURLConnection) url2.openConnection();
+					conn2.setRequestMethod("GET");
+
+					// 요청에 필요한 Header에 포함될 내용
+					conn2.setRequestProperty("Authorization", "Bearer " + access_Token);
+
+					int responseCode2 = conn2.getResponseCode();
+					// System.out.println("responseCode : " + responseCode2);
+
+					BufferedReader br2 = new BufferedReader(new InputStreamReader(conn2.getInputStream()));
+
+					String line2 = "";
+					String result2 = "";
+					
+					while ((line2 = br2.readLine()) != null) {
+						result2 += line2;
+					}
+					System.out.println("response body(네이버 사용자 정보) : " + result2);
+
+					JsonElement element = new Gson().fromJson(result2, JsonElement.class);
+
+					JsonObject response = element.getAsJsonObject().get("response").getAsJsonObject();
+					String naver_idkey = response.getAsJsonObject().get("id").getAsString();
+					
+					// JsonObject kakao_idkey = element.getAsJsonObject().get("id").getAsJsonObject();
+
+					String id = response.getAsJsonObject().get("id").getAsString();
+					
+					naverUserInfo.put("id", id);
+					// member.setNaverIdkey(naver_idkey);
+					// System.out.println(naverUserInfo);
+
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				return naverUserInfo;
+			}
+			
+			
+			// 세션 유효성 검증을 위한 난수 생성기 
+			private String generateRandomString() {
+				return UUID.randomUUID().toString();
+			}
+			
+			// http session에 데이터 저장 
+			private void setSession(HttpSession session, String state) {
+				session.setAttribute(SESSION_STATE, state);
+			}
+			
+			// http session에서 데이터 가져오기 
+			private String getSession(HttpSession session) {
+				return (String) session.getAttribute(SESSION_STATE);
+			}
+			
+			// Access Token을 이용하여 네이버 사용자 프로필 API 호출 
+			public String getUserProfile(OAuth2AccessToken oauthToken) throws IOException {
+				OAuth20Service oauthService = new ServiceBuilder()
+						.apiKey(CLIENT_ID)
+						.apiSecret(CLIENT_SECRET)
+						.callback(REDIRECT_URI)
+						.build(NaverAPI20.instance());
+				
+				OAuthRequest request = new OAuthRequest(Verb.GET, reqURL, oauthService);
+				oauthService.signRequest(oauthToken, request);
+				Response response = request.send();
+				return response.getBody();
+			}
+			
+			
+			
+			
+			
+			
+			
 	
 	
 	
@@ -438,4 +810,4 @@ public class SocialController {
 		}
 	}
 	*/
-}
+
