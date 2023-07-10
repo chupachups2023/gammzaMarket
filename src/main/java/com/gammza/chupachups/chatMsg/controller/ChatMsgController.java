@@ -20,7 +20,7 @@ public class ChatMsgController {
 
 	@Autowired
 	private ChatMsgService chatMsgService;
-/*
+
 	@PostMapping("/chatMsg/msgList.do")
 	public String selectChatMsg(HttpServletRequest request, String[] param, int num, Model model) {
 		ChatMsg chatMsg = new ChatMsg();
@@ -30,5 +30,5 @@ public class ChatMsgController {
 		return "mypage/chatting";
 		
 	}
-	*/
+
 }
