@@ -37,5 +37,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.insertKakaoMember(member);
 	}
 
+	@Override
+	public Member selectMemberByKakao(Long id) {
+		return memberDao.selectMemberByKakao(id);
+	}
+
 
 }
