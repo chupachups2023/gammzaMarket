@@ -12,4 +12,6 @@ public interface MemberService {
 
 	Member checkIdFunc(String userId);
 
+	int insertKakaoMember(Member member);
+
 }
