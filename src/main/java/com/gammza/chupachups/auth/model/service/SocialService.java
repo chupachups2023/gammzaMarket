@@ -134,6 +134,7 @@ public class SocialService {
 		return kakaoUserInfo;
 	}
 	
+	/*
 	// NAVER 
 	private final static String CLIENT_ID = "GQGBjwaCzYQZZ_5XkE2o";
 	private final static String CLIENT_SECRET = "y3TAUEyfZu";
@@ -283,5 +284,6 @@ public class SocialService {
 		Response response = request.send();
 		return response.getBody();
 	}
+	*/
 	
 }
