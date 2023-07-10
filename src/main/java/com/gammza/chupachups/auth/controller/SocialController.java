@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -21,8 +23,11 @@ import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -34,34 +39,15 @@ import com.gammza.chupachups.member.model.service.MemberService;
 import com.gammza.chupachups.member.model.vo.Member;
 
 @Controller
+@SessionAttributes({"loginMember"})
 public class SocialController {
 	
-			// KAKAO
 			@Autowired
 			private MemberService memberService;
-			// private SocialService socialService;
 			
-			/*
+			// KAKAO
 			@GetMapping(value = "/auth/kakao/callback", produces = "text/json; charset=UTF-8")
-			public String kakaoCallback(String code, Model model) {
-				// System.out.println("kakao code: " + code);
-				
-			String access_Token = socialService.getAccessToken(code);
-			// System.out.println("KAKAO_access_Token: " + access_Token);
-				
-			HashMap<String, Object> kakaoUserInfo = socialService.getUserInfo(access_Token);
-			// System.out.println("KAKAO_access_Token: " + access_Token);
-			System.out.println("KAKAO_IDKEY: " + kakaoUserInfo.get("id"));	
-			// System.out.println("KAKAO_nickname: " + userInfo.get("nickname"));
-			
-				
-			return "redirect:/";
-			}
-			*/
-			
-			
-			@GetMapping(value = "/auth/kakao/callback", produces = "text/json; charset=UTF-8")
-			public @ResponseBody String kakaoCallback(String code, Member member, Model model) {
+			public @ResponseBody String kakaoCallback(String code, Member member, Model model, RedirectAttributes redirectAtt, HttpSession session) {
 				
 				// POST 방식으로 데이터를 요청(토큰 관련) 
 				/* 
@@ -157,14 +143,26 @@ public class SocialController {
 				member.setName(kakaoProfile.getKakao_account().getProfile().getNickname());
 				System.out.println(member);
 				
+				
 				int result = memberService.insertKakaoMember(member);
 				
 				
 				// kakaoProfile.setId(kakaoProfile.getId());
 				
 				// model.addAttribute("kakaoProfile", kakaoProfile);
-			return "redirect:/";
+				
+				session.setAttribute("id", kakaoProfile.getId());
+				
+				
+			return "redirect:/member/loginSuccess.do";
 			}
+			
+			@RequestMapping("/member/loginSuccess.do")
+			public String loginSuccess() {
+				return "redirect:/";
+			}
+			
+			
 			
 			
 			
