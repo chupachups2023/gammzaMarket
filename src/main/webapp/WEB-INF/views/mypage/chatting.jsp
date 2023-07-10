@@ -5,6 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/chatting.css?<%=System.currentTimeMillis() %>">
+
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="채팅" name="title"/>
 </jsp:include>
@@ -14,7 +15,7 @@
 		<div class="css-1plme8k">
 			<nav class="css-dcpzrh">
 				<div class="css-fycla4">
-					<div class="nickname-area">${loginMember.userId}</div>
+					<div>${loginMember.userId}</div>
 				</div>
 				<div class="css-iyc8t">
 					<label class="unread-label common-bg-hover">
@@ -26,16 +27,15 @@
 					<c:forEach items="${chatRoomList}" var="chatRoom">
 				<%-- <c:if test="${parti.status eq 1 or chatRoom.roomOwner eq loginMember.userId}"> </c:if>--%>
 					<li class="css-v2yhcd">
-						<a class="selected css-y6c1l4" id="msgList" onclick="msgList(${chatRoom.roomNo});" href="">
+						<a class="selected css-y6c1l4" id="roomNo" onclick="msgList(${chatRoom.roomNo});" href="#">
 							<div class="preview-title-wrap">
-								<span class="preview-nickname">${chatRoom.roomOwner}</span>
+								<span class="preview-nickname" id="roomOwner">${chatRoom.roomOwner}</span>
 							<div class="sub-text">
-								<span>${chatRoom.gongguNo }</span>
-								<span>${parti.status}</span>
-								<span>${chatRoom.lastChat}</span>
+								<span id="gongguNo">${chatRoom.gongguNo }</span>
+								<span id="lastChat">${chatRoom.lastChat}</span>
 							</div>
 							</div>
-								<img src="${pageContext.request.contextPath}/resources/img/chatting/Rectangle 3.png" class="preview-image" alt="" width="50px">
+								<img src="${pageContext.request.contextPath}/resources/upload/${list.photo1}" alt="이미지 없음" width="50px">
 						</a>
 						<div class="common-bg-hover only-hover css-q6qzi5">
 							<span class="option-controller">
@@ -43,14 +43,12 @@
 							</span>
 						</div>
 					</li>
-					</c:if>
 					</c:forEach>
 				</ul>
 			</nav>
 		</div>
 		<section class="css-am8mw7">
 			<div class="chat-normal-room" id="msgList">
-				<div class="css-voabwl">
 					<div class="css-1c3oejv">
 						<div class="chat-header-profile">
 							<div class="main-title">
@@ -58,31 +56,26 @@
 								<span class="temperature">37.8°C</span>
 							</div>
 						</div>
-						<div class="css-1idbtsb">
+
 							<div class="more-button-wrapper common-bg-hover">
 								<svg width="4" height="16" viewBox="0 0 4 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<path fill-rule="evenodd" clip-rule="evenodd" d="M2.0002 3.19998C2.7152 3.19998 3.3002 2.61498 3.3002 1.89998C3.3002 1.18498 2.7152 0.599976 2.0002 0.599976C1.2852 0.599976 0.700195 1.18498 0.700195 1.89998C0.700195 2.61498 1.2852 3.19998 2.0002 3.19998Z" fill="currentColor">
-										
-									</path>
-									<path fill-rule="evenodd" clip-rule="evenodd" d="M2.0002 6.70001C1.2852 6.70001 0.700195 7.28501 0.700195 8.00001C0.700195 8.71501 1.2852 9.30001 2.0002 9.30001C2.7152 9.30001 3.3002 8.71501 3.3002 8.00001C3.3002 7.28501 2.7152 6.70001 2.0002 6.70001Z" fill="currentColor">
-										
-									</path>
-									<path fill-rule="evenodd" clip-rule="evenodd" d="M2.0002 12.8C1.2852 12.8 0.700195 13.385 0.700195 14.1C0.700195 14.815 1.2852 15.4 2.0002 15.4C2.7152 15.4 3.3002 14.815 3.3002 14.1C3.3002 13.385 2.7152 12.8 2.0002 12.8Z" fill="currentColor">
-						<div>
-							<jsp:include page="${pageContext.request.contextPath}/mypage/chatDetail.jsp" />
-						</div>
-									</path>
 								</svg>
-							</div>
 						</div>
 					</div>
-				</div>
+						<div heigh="100%">
+							<jsp:include page="/WEB-INF/views/mypage/chatDetail.jsp" />
+						</div>
 			</div>
 		</section>
 	</div>
 </main>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
+<script>
+	function msgList(roomNo) {
+		location.href = '${pageContext.request.contextPath}/mypage/msgList.do?roomNo=' + roomNo;
+	}
+</script>
 <!-- 
 <c:forEach items="${msgList}" var="chatMsg" varStatus ="status">
 	<li>
