@@ -74,7 +74,6 @@ public class GongguController {
 			if(loginMember.getLatitude() == null) {
 				redirectAttr.addFlashAttribute("msg","정확한 주변 공구를 보려면 장소 인증을 먼저 해야 합니다.");
 				mav.setView(new RedirectView("/chupachups/location/location.lo"));
-				
 				return mav;
 			}else {
 				HashMap<String,String> locationMap=new HashMap<String,String>();
@@ -88,7 +87,6 @@ public class GongguController {
 			locationMap.put("latitude", latitude);
 			ggListView = gongguService.selectggListView(locationMap);
 		}
-		
 		for(int i=0;i<ggListView.size();i++) {
 			Location tempLocal=locationService.selectLocationByNo(ggListView.get(i).getLocationNo());
 			String locationName=locationController.SelectLocationName(tempLocal);
@@ -375,11 +373,17 @@ public class GongguController {
 	 }
 	
 	 @GetMapping("/ggSearch.go")
-	 public String searchGonggu(@RequestParam("gongguName") String gongguName, Model model,
+	 public String searchGonggu(@RequestParam("gongguName") String gongguName, Model model,HttpSession session,
 			 @RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude) {
-		 HashMap<String,String> map=new HashMap<String,String>();
-		 map.put("longitude", longitude);
-		 map.put("latitude", latitude);
+	 	Member mem=(Member)session.getAttribute("loginMember");
+	 	HashMap<String,String> map=new HashMap<String,String>();
+	 	if(mem==null) {
+	 		map.put("longitude", longitude);
+	 		map.put("latitude", latitude);
+	 	}else {
+	 		map.put("longitude", mem.getLongitude());
+	 		map.put("latitude", mem.getLatitude());
+	 	}
 		 StringTokenizer st=new StringTokenizer(gongguName);
 		 String searchSql="INTERSECT ";
 		 searchSql+=" SELECT * "
@@ -408,11 +412,17 @@ public class GongguController {
 	 }
 	 
 	 @GetMapping("/categoryList.go")
-		public String categoryList(@RequestParam("category") int category, Model model,
+		public String categoryList(@RequestParam("category") int category, Model model, HttpSession session,
 				@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude) {
+		 	Member mem=(Member)session.getAttribute("loginMember");
 		 	HashMap<String,String> map=new HashMap<String,String>();
-		 	map.put("longitude", longitude);
-		 	map.put("latitude", latitude);
+		 	if(mem==null) {
+		 		map.put("longitude", longitude);
+		 		map.put("latitude", latitude);
+		 	}else {
+		 		map.put("longitude", mem.getLongitude());
+		 		map.put("latitude", mem.getLatitude());
+		 	}
 		 	map.put("category", String.valueOf(category));
 			ArrayList<Gonggu> categoryList = gongguService.selectOneCategory(map);
 			

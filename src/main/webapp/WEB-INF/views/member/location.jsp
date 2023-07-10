@@ -22,6 +22,22 @@
 				</div>
             </div>
             <div>
+                <div class="location-title">현재 인증 동네</div>
+                <div class="location-cont">
+                <c:choose>
+                	<c:when test="${empty loginMember }">
+                	<div class="location-cont" >동네 인증은 로그인 후 가능합니다.</div>
+                	</c:when>
+                	<c:when test="${empty loginLocation }">
+                	<div class="location-cont" >어서 동네 인증을 해주세요!</div>
+                	</c:when>
+                	<c:otherwise>
+                	<div class="location-cont" >${loginLocation.sidoNm } ${loginLocation.sggNm } ${loginLocation.legNm }</div>
+                	</c:otherwise>
+                </c:choose>
+				</div>
+            </div>
+            <div>
                 <div class="location-title">우리 동네 근처 옆동네</div>
                 <div class="location-cont" id="location-cont"></div>
             </div>
