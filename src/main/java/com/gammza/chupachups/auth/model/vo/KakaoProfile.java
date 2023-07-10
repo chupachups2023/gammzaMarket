@@ -1,5 +1,5 @@
 
-package com.gammza.chupachups.auth.model.dao;
+package com.gammza.chupachups.auth.model.vo;
 
 import lombok.Data;
 

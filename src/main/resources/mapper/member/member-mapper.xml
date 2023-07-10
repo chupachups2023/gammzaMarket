@@ -42,11 +42,18 @@
 		default,
 		#{kakaoIdkey}
 	)
-</insert>
+	</insert>
+
+
  
-  <!-- 카카오 아이디키 검색 -->
+ 	<!-- 카카오 아이디키 검색 -->
  	<select id="selectMemberByKakao" resultMap ="memberMap">
  		select * from member where KAKAO_IDKEY=#{id}
+ 	</select>
+ 	
+ 	<!-- 네이버 아이디키 검색 -->
+ 	<select id="selectMemberByNaver" resultMap ="memberMap">
+ 		select * from member where NAVER_IDKEY=#{id}
  	</select>
 
  	
