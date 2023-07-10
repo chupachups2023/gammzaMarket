@@ -151,23 +151,6 @@
 	    });
 	});
        
-   	function viewAllGonggu(){
-	    if (!navigator.geolocation) {
-	        alert("위치 정보가 지원되지 않습니다.");
-	    }else{
-	    	
-			function success(position) {
-			    const latitude = position.coords.latitude;   
-			    const longitude = position.coords.longitude;
-			    
-			    location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?longitude="+longitude+"&latitude="+latitude;
-			    
-			};
-	    	navigator.geolocation.getCurrentPosition(success);
-	    }
-	};
-		
-	        
 		const modal = document.getElementById("modal");
 		const openModalBtn = document.getElementById("open-modal");
 		const closeModalBtn = document.getElementById("close-modal");
@@ -188,13 +171,6 @@
 			document.body.style.overflow = "auto"; // 스크롤바 보이기
 			loginFrm.submit();
 		});
-		
-	function fn_srchGgLst() {
-		var gongguName = document.getElementById('gongguName').value;
-		
-		var url = '${pageContext.request.contextPath}/gonggu/ggSearch.go?gongguName=' + encodeURIComponent(gongguName);
-		location.href = url;
-	}
 		
 	    </script>
 	</header>

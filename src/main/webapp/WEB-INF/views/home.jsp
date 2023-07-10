@@ -12,7 +12,7 @@
 		<form action="" method="get">
 			<div class="header-searchbox">
 				<img src="${pageContext.request.contextPath}/resources/img/header/search.png" alt="" class="header-searchicon" onclick="fn_srchGgLst()">
-				<input type="text" class="mainHeader-search" name="gongguName" id="gongguName" value="${gonggu}"> 
+				<input type="text" class="mainHeader-search" name="gongguName" id="gongguName" value="${gonggu}" onkeyup="if(window.event.keyCode==13){fn_srchGgLst()}"> 
 			</div>
 		</form>
 	</div>
