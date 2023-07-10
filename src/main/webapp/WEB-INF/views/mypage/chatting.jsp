@@ -43,7 +43,6 @@
 							</span>
 						</div>
 					</li>
-					</c:if>
 					</c:forEach>
 				</ul>
 			</nav>
