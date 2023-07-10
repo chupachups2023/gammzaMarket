@@ -10,12 +10,15 @@
 		${chatMsg.roomNo}
 		<c:choose>
 			<c:when test="${chatWriter eq loginMember.userId}">
-				<div align="right">${chatMsg.chatContent}</div>			
+				<div align="right">${chatMsg.chatContent}
+								   ${chatMsg.chatWriter}
+				</div>			
 			</c:when>
 			<c:otherwise>
-				<div>${chatMsg.chatContent}</div>
+				<div>${chatMsg.chatContent}
+					 ${chatMsg.chatWriter}
+				</div>
 			</c:otherwise>
 		</c:choose>
-		${chatMsg.chatWriter}
 	</div>
 </c:forEach>
