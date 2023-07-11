@@ -25,7 +25,7 @@
 					<li class="login-input"><input type="text" placeholder="아이디 입력"></li>
 					<li class="login-input"><input type="submit" class="login-btn" value="로그인" style="background-color: #CBB376; border: 1px solid #F3D774;"></li>
 			</ul> -->
-			<form action="${pageContext.request.contextPath}/member/findLoginInfo" method="post" name="findfrm">
+			<form action="${pageContext.request.contextPath}/member/findLoginInfo.me" method="post" name="findfrm">
 				<div class="find-content2">
 						<div class="find-id2">
 								<ul>
@@ -54,15 +54,15 @@
 					phone.focus();
 					return false;
 				}
-				// } else if (!phoneCfm.test(phone)) {
-				// 	alert("휴대폰번호가 올바르지 않습니다");
-				// 	phone.focus();
-				// 	return false;
-				// }
+				if (!phoneCfm.test(phone.value)) {
+					alert("휴대폰번호가 올바르지 않습니다");
+					phone.focus();
+					return false;
+				}
 
 
 
-				// document.findfrm.submit();
+				document.findfrm.submit();
 
 			}
 
