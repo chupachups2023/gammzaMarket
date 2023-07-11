@@ -5,14 +5,7 @@
   
 <mapper namespace="com.gammza.chupachups.ggRequest.model.dao.RequestDao">
 	<resultMap type="request" id="requestMap"></resultMap>
-	<resultMap type="requestmember" id="requestMemberMap">
-<!--  		<result column="REQUEST_NO" property="requestNo"/>
-		<result column="REQUEST_MEMBER" property="requestMember"/>
-		<result column="LOCAL_CODE" property="localCode"/>
-		<result column="LATITUDE" property="latitude"/>
-		<result column="LONGITUDE" property="longitude"/>
-		<result column="REG_AT" property="regAt"/> -->
-	</resultMap>
+	<resultMap type="requestmember" id="requestMemberMap"></resultMap>
 	<select id="selectAllRequestList" resultMap="requestMap">
 		select *
 		  from request
@@ -33,5 +26,14 @@
 		select *
 		from request_member
 		where request_no=#{requestNo}
+	</select>
+	<insert id="insertRequest">
+		insert into request values(
+			REQUEST_SEQ.nextval, #{requestWriter},#{requestName},#{price},#{categoryNo},#{photo1},#{photo2},#{photo3},
+			#{num},default,default,#{latitude},#{longitude},#{link},default
+		)
+	</insert>
+	<select id="selectLastNum" resultType="_int">
+		select REQUEST_SEQ.currval from dual
 	</select>
 </mapper>

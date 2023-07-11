@@ -41,6 +41,7 @@
 		</c:forEach>
 		</table>
 	</div>
+	<div class="writeRequestBtn" onclick="location.href='${pageContext.request.contextPath }/ggRequest/writeRequest.req'"><img alt="글쓰기" src="https://cdn-icons-png.flaticon.com/512/148/148764.png"><div>글쓰기</div></div>
 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

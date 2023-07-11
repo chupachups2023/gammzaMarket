@@ -138,7 +138,7 @@
 .ggRead-detail{
     padding: 30px 0 0 10px;
     width: 490px;
-    height: 550px;
+    height: 450px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -193,7 +193,7 @@
 }
 .ggRead-mapp{
     width: 490px;
-    height: 200px;
+    height: 270px;
     border-radius: 20px;
 }
 .ggRead-button{
@@ -254,4 +254,3 @@
 .ggRead-section{
     margin: 0 auto;
 }
-
