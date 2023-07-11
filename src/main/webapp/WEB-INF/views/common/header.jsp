@@ -55,7 +55,7 @@
 					<a class="header-menu headder-cateA">카테고리</a>
 				</div>
 				<a href="javascript:viewAllGonggu();" class="header-menu">공구보기</a> 
-				<a href="" class="header-menu">요청게시판</a> 
+				<a href="javascript:viewRequest();" class="header-menu">요청게시판</a> 
 				<a href="${pageContext.request.contextPath}/location/location.lo" class="header-menu">장소인증</a>
 				<a href="${pageContext.request.contextPath}/gonggu/ggWrite.go" class="header-menu">공구 글쓰기</a>
 			</div>
@@ -167,6 +167,7 @@
 	    }
 	};
 		
+<<<<<<< Updated upstream
 	        
 	        
 	        
@@ -198,6 +199,45 @@
 	            var url = '${pageContext.request.contextPath}/gonggu/ggSearch.go?gongguName=' + encodeURIComponent(gongguName);
 	            location.href = url;
 	        }
+=======
+		var url = '${pageContext.request.contextPath}/gonggu/ggSearch.go?gongguName=' + encodeURIComponent(gongguName);
+		const memLong="${loginMember.longitude}";
+	    
+		function success(position) {
+		    const latitude = position.coords.latitude;   
+		    const longitude = position.coords.longitude;
+		    
+		    if(memLong != ""){
+		    	location.href=url;
+		    }else{
+			    location.href=url+"&longitude="+longitude+"&latitude="+latitude;
+		    }
+		};
+    	navigator.geolocation.getCurrentPosition(success);
+	}
+	function fn_click(category) {
+		function success(position) {
+		    const latitude = position.coords.latitude;   // 위도(37.xxxx)
+		    const longitude = position.coords.longitude;
+		    const memLong="${loginMember.longitude}";	//로그인 했니?
+		    
+		    if(memLong != ""){	//했다
+		    	location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category;
+		    }else{		//안했다
+		   		location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category+"&longitude="+longitude+"&latitude="+latitude;
+		    }
+		}
+	    navigator.geolocation.getCurrentPosition(success);
+	}
+	function viewRequest(){
+		function success(position) {
+		    const latitude = position.coords.latitude;   // 위도(37.xxxx)
+		    const longitude = position.coords.longitude;
+			location.href="${pageContext.request.contextPath}/request/requestView.req?longitude="+longitude+"&latitude="+latitude;
+		}
+		navigator.geolocation.getCurrentPosition(success);
+	}
+>>>>>>> Stashed changes
 		
 	    </script>
 	</header>
