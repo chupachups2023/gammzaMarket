@@ -31,12 +31,6 @@ public interface GongguDao {
 
 	ArrayList<Gonggu> selectLeadGongguList(String userId);
 
-	int updateGongguCount(int gongguNo);
-
-	int updateEndStatus(int gongguNo);
-
-	int updateGonggu(Gonggu gonggu);
-
 	ArrayList<Gonggu> searchGonggu(String gongguName);
 	
 	int selectGongguTotalRecored();

@@ -74,6 +74,7 @@ public class GongguServiceImpl implements GongguService {
 	@Override
 	public ArrayList<Gonggu> selectOneCategory(int category) {
 		return gongguDao.selectOneCategory(category);
+	}
     
   @Override
 	public ArrayList<Gonggu> selectLeadGongguList(String userId) {

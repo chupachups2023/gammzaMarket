@@ -68,16 +68,16 @@
 		</div>
 		<div class="category-drop">
 			<div class="category-list category-top">
-				<a href="" class="category-menu cloth">의류</a>
-				 <a href=""	class="category-menu makeup">화장품/미용</a> 
-				 <a href="" class="category-menu food">식품/농산물</a> 
-				 <a href="" class="category-menu furniture">가구/인테리어</a>
+				 <p href="" class="category-menu cloth">의류</p>
+				 <p href=""	class="category-menu makeup">화장품/미용</p> 
+				 <p href="" class="category-menu food">식품/농산물</p> 
+				 <p href="" class="category-menu furniture">가구/인테리어</p>
 			</div>
 			<div class="category-list category-bottom">
-				<a href="" class="category-menu delivery">배달음식</a> 
-				<a href="" class="category-menu baby">유아동</a> 
-				<a href="" class="category-menu homeware">생활용품</a> 
-				<a href="" class="category-menu pet">반려동물용품</a>
+				<p href="" class="category-menu delivery">배달음식</p> 
+				<p href="" class="category-menu baby">유아동</p> 
+				<p href="" class="category-menu homeware">생활용품</p> 
+				<p href="" class="category-menu pet">반려동물용품</p>
 			</div>
 		</div>
 
