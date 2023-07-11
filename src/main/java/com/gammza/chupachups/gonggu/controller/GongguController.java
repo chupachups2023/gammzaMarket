@@ -99,23 +99,23 @@ public class GongguController {
 		return mav;
 	}
 	
-	@GetMapping("/homeList.go")
-	public String homeList(Model model) {
-		ArrayList<Gonggu> homeList = gongguService.selectHomeList();
-		for(int i=0;i<homeList.size();i++) {
-			Location tempLocal=locationService.selectLocationByNo(homeList.get(i).getLocationNo());
+	@GetMapping("/mainList.go")
+	public String mainList(Model model) {
+		ArrayList<Gonggu> mainList = gongguService.selectMainList();
+		for(int i=0;i<mainList.size();i++) {
+			Location tempLocal=locationService.selectLocationByNo(mainList.get(i).getLocationNo());
 			String locationName=locationController.SelectLocationName(tempLocal);
-			homeList.get(i).setLocationName(locationName);
+			mainList.get(i).setLocationName(locationName);
 			//홈 띄워질 때마다 공구 상태 관리
-			gongguStatusMgr(homeList.get(i).getGongguNo());
+			gongguStatusMgr(mainList.get(i).getGongguNo());
 		}
-		model.addAttribute("homeList", homeList);
+		model.addAttribute("mainList", mainList);
 		int totalRecord=gongguService.selectTotalRecored();
 		
 		PageInfo pi=Pagination.getPageInfo(totalRecord, 1, 1, 8);
 		model.addAttribute("pi", pi);
 		
-		return "/home";
+		return "/common/mainpage";
 	}
 	
 	//공구 상태 관리

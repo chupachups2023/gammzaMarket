@@ -13,7 +13,7 @@ public interface GongguService {
 	
 	ArrayList<Gonggu> selectggListView(HashMap<String,String> locationMap);
 	
-	ArrayList<Gonggu> selectHomeList();
+	ArrayList<Gonggu> selectMainList();
 	
 	ArrayList<Gonggu> selectLeadGongguList(String userId);
 	
