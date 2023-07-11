@@ -14,4 +14,10 @@ public interface MemberService {
 
 	int insertKakaoMember(Member member);
 
+	Member selectMemberByKakao(Long id);
+
+	Member selectMemberByPhone(String phone);
+
+	Member selectMemberByNaver(String id);
+
 }

@@ -7,8 +7,13 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="공구게시판" name="title"/>
 </jsp:include>
-
 <div class="GGlistSec">
+<c:if test="${empty loginMember }">
+	<div class="loginWarning" id="loginWarning">
+		<div><img alt="close" src="https://cdn-icons-png.flaticon.com/512/2961/2961937.png" onclick="closeWarning();"></div>
+		<div>로그인하지 않고 사용할 경우 정확한 주변의 공구를 가져오지 못할 수 있습니다.</div>
+	</div>
+</c:if>
     <a href="" class="GGlist-a">최신순</a>&emsp;<a href="" class="GGlist-a">마감 임박순</a>
 		<div class="likeList">
         	<c:forEach items="${ggListView}" var="list" varStatus="j">
@@ -33,9 +38,8 @@
 		 </div>
 </div>
 <script>
-	const loginMem="${loginMember.userId}";
-	if(loginMem == null || loginMem ==""){
-		alert("로그인하지 않고 사용할 경우 정확한 주변의 공구를 가져오지 못할 수 있습니다.");
+	function closeWarning(){
+		$('#loginWarning').css('display', 'none');
 	}
 </script>
 

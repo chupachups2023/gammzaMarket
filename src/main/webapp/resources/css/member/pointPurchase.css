@@ -1,0 +1,81 @@
+@charset "UTF-8";
+/* 포인트결제창 */
+.pointPurchaseSec {
+	width: 1000px;
+	margin: 30px auto;
+}
+
+.pointPurchaseSec>h1 {
+	text-align: center;
+	font-size: 30px;
+}
+
+#pointPurchaseBox {
+	border-radius: 10px;
+	border: 2px solid rgba(176, 164, 122, 1);
+	overflow: hidden;
+}
+
+/* 충전 포인트 선택칸 */
+.pointPurchaseTable {
+	border-collapse: collapse;
+	width: 1000px;
+}
+
+.pointPurchaseTable tbody td {
+	border: 1px solid rgba(176, 164, 122, 1);
+	font-size: 20px;
+	text-align: right;
+	font-weight: bold;
+	width: 25%;
+}
+
+.pointSel {
+	padding: 50px 20px;
+}
+
+.pointSel:hover {
+	background-color: rgb(184, 182, 182);
+	color: white;
+}
+
+.clicking {
+	background-color: rgba(48, 175, 86, 0.753);
+	color: white;
+}
+
+.pointG {
+	font-size: 25px;
+	color: #fce38c;
+	text-align: left;
+}
+
+/* 약관박스 */
+#clause {
+	border: 1px solid;
+	width: 500px;
+	padding: 15px;
+	display: inline-block;
+}
+
+/* 결제버튼 */
+#purchaseBtn {
+	border: 2px solid rgba(48, 175, 86, 0.753);
+	border-radius: 5px;
+	width: 80px;
+	font-size: 25px;
+	background-color: white;
+	margin-left: 90%;
+	cursor: pointer;
+}
+
+#payBox {
+	margin-left: 50px;
+}
+
+#viewPg, #viewPrice {
+	border: none;
+	font-size: 20px;
+	text-align: right;
+	width: 145px;
+}

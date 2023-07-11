@@ -80,9 +80,9 @@
 		<div class="modal" tabindex="-1" id="modal">
 			<div class="modal-dialog">
 
-				<div class="modal-header">
+				<!-- <div class="modal-header">
 					<h5 class="modal-title">로그인</h5>
-				</div>
+				</div> -->
 				<form action="${pageContext.request.contextPath}/member/memberLogin.me" method="post" id="loginFrm">
 					<div class="modal-login">
 						<div class="modal-bg"></div>
@@ -119,7 +119,7 @@
 										</li>
 										<li class="login-naver">
 											<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&state=test&client_id=GQGBjwaCzYQZZ_5XkE2o&state=STATE_STRING&redirect_uri=http://localhost:8095/chupachups/auth/naver/callback">
-												<img src="${pageContext.request.contextPath}/resources/img/header/icon_naver_long_resize.png" alt="네이버로그인버튼"> (수정중..)
+												<img src="${pageContext.request.contextPath}/resources/img/header/icon_naver_long_resize4.png" alt="네이버로그인버튼">
 											</a> 
 									</ul>
 									<br>
@@ -166,29 +166,33 @@
 		});
 		
 		function fn_click(category) {
-			
-			 var url = '${pageContext.request.contextPath}/gonggu/categoryList.go?category=' + category;
-			 location.href = url;
-
+			function success(position) {
+			    const latitude = position.coords.latitude;   // 위도(37.xxxx)
+			    const longitude = position.coords.longitude;
+			    const memLong="${loginMember.longitude}";	//로그인 했니?
+			    
+			    if(memLong != ""){	//했다
+			    	location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category;
+			    }else{		//안했다
+			   		location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category+"&longitude="+longitude+"&latitude="+latitude;
+			    }
+			}
+		    navigator.geolocation.getCurrentPosition(success);
 		}
+		
 		function viewAllGonggu(){
-		    if (!navigator.geolocation) {
-		        alert("위치 정보가 지원되지 않습니다.");
-		    }else{
-				function success(position) {
-				    const latitude = position.coords.latitude;   // 위도(37.xxxx)
-				    const longitude = position.coords.longitude;
-				    const memLong="${loginMember.longitude}";
-				    
-				    console.log(memLong);
-				    if(memLong != ""){
-				    	location.href="${pageContext.request.contextPath}/gonggu/ggListView.go";
-				    }else{
-				   		location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?longitude="+longitude+"&latitude="+latitude;
-				    }
-				}
-			    navigator.geolocation.getCurrentPosition(success);
-		    }
+			function success(position) {
+			    const latitude = position.coords.latitude;   // 위도(37.xxxx)
+			    const longitude = position.coords.longitude;
+			    const memLong="${loginMember.longitude}";
+			    
+			    if(memLong != ""){
+			    	location.href="${pageContext.request.contextPath}/gonggu/ggListView.go";
+			    }else{
+			   		location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?longitude="+longitude+"&latitude="+latitude;
+			    }
+			}
+		    navigator.geolocation.getCurrentPosition(success);
 		}
 		function viewRequest(){
 			function success(position) {

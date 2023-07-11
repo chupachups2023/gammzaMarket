@@ -12,33 +12,35 @@
 
 
 	<!-- 아이디/비밀번호 찾기 -->
-    <div class="find-content">
-        <nav class="tab-type1">
-            <ul class="find-id">
-                <li><a href="${pageContext.request.contextPath}/member/findId.me">아이디 찾기</a></li>
-                <li><a href="${pageContext.request.contextPath}/member/findPwd.me"  class="tab-on">비밀번호 찾기</a></li>
-            </ul>
-        </nav>
-    </div>
-
-    <!-- <ul class="login-top">
-        <li class="login-input"><input type="text" placeholder="아이디 입력"></li>
-        <li class="login-input"><input type="submit" class="login-btn" value="로그인" style="background-color: #CBB376; border: 1px solid #F3D774;"></li>
-    </ul> -->
-
-    <div class="find-content2">
-        <div class="find-id2">
-            <ul>
-                <li><input type="text" placeholder="아이디를 입력해 주세요"></li>
-            </ul>
-            <ul>
-                <li><input type="text" placeholder="휴대폰 번호를 입력해 주세요"></li>
-            </ul>
-            <ul>
-                <li><input type="button" value="다음"></li>
-            </ul>
-        </div>
-    </div>
+    <div class="find-container">
+			<div class="find-content">
+					<nav class="tab-type1">
+							<ul class="find-id">
+									<li><a href="${pageContext.request.contextPath}/member/findId.me">아이디 찾기</a></li>
+									<li><a href="${pageContext.request.contextPath}/member/findPwd.me"  class="tab-on">비밀번호 찾기</a></li>
+							</ul>
+					</nav>
+			</div>
+			<!-- <ul class="login-top">
+					<li class="login-input"><input type="text" placeholder="아이디 입력"></li>
+					<li class="login-input"><input type="submit" class="login-btn" value="로그인" style="background-color: #CBB376; border: 1px solid #F3D774;"></li>
+			</ul> -->
+			<form action="">
+				<div class="find-content2">
+						<div class="find-id2">
+								<ul>
+										<li><input type="text" name="userId" placeholder="아이디를 입력해 주세요"></li>
+								</ul>
+								<ul>
+										<li><input type="text" name="phone" placeholder="휴대폰 번호를 입력해 주세요"></li>
+								</ul>
+								<ul>
+										<li><input type="button" value="찾기"></li>
+								</ul>
+						</div>
+				</div>
+			</form>
+		</div>
 
 
 

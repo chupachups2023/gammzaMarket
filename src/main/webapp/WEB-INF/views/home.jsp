@@ -12,7 +12,7 @@
 		<form action="" method="get">
 			<div class="header-searchbox">
 				<img src="${pageContext.request.contextPath}/resources/img/header/search.png" alt="" class="header-searchicon" onclick="fn_srchGgLst()">
-				<input type="text" class="mainHeader-search" name="gongguName" id="gongguName" value="${gonggu}"> 
+				<input type="text" class="mainHeader-search" name="gongguName" id="gongguName" value="${keyword}" onkeyup="if(window.event.keyCode==13){fn_srchGgLst()}"> 
 			</div>
 		</form>
 	</div>
@@ -82,12 +82,23 @@
 	</script> -->
 	
 	<script>
-        function fn_srchGgLst() {
-            var gongguName = document.getElementById('gongguName').value;
-            
-            var url = '${pageContext.request.contextPath}/gonggu/ggSearch.go?gongguName=' + encodeURIComponent(gongguName);
-            location.href = url;
-        }
+	function fn_srchGgLst() {
+		var gongguName = document.getElementById('gongguName').value;
+		
+		var url = '${pageContext.request.contextPath}/gonggu/ggSearch.go?gongguName=' + encodeURIComponent(gongguName);
+		
+		 if (!navigator.geolocation) {
+	        alert("위치 정보가 지원되지 않습니다.");
+	    }else{
+			function success(position) {
+			    const latitude = position.coords.latitude;   
+			    const longitude = position.coords.longitude;
+			    
+			    location.href=url+"&longitude="+longitude+"&latitude="+latitude;
+			};
+	    	navigator.geolocation.getCurrentPosition(success);
+	    }
+	}
     </script>
 	
 	 

@@ -28,28 +28,34 @@
 	  )
 	</insert>
 
-	<!-- <insert id="insertKakaoMember">
-		insert into member(user_id, user_pwd, name, phone, location, email, create_at, update_at, status, point, temperature, kakao_idkey, naver_idkey, birthday, latitude, longitude)
+	<insert id="insertKakaoMember">
+		insert into member(user_id, user_pwd, name, phone, email, create_at, status, point, temperature, kakao_idkey)
 		values(
 		'kakao',
 		'kakao',
 		#{name},
 		'kakao',
-		1,
 		'kakao',
 		default,
-		#{updateAt},
 		default,
 		default,
 		default,
-		#{kakaoIdkey},
-		null,
-		'kakao',
-		null,
-		null
+		#{kakaoIdkey}
 	)
-	</insert> -->	
+	</insert>
+
+
+ 
+ 	<!-- 카카오 아이디키 검색 -->
+ 	<select id="selectMemberByKakao" resultMap ="memberMap">
+ 		select * from member where KAKAO_IDKEY=#{id}
+ 	</select>
  	
+ 	<!-- 네이버 아이디키 검색 -->
+ 	<select id="selectMemberByNaver" resultMap ="memberMap">
+ 		select * from member where NAVER_IDKEY=#{id}
+ 	</select>
+
  	
  	
  	<!-- 아이디 중복체크 -->
@@ -62,6 +68,11 @@
  		select * from member
  		where user_id = #{userId}
  	</select> --> 	
+ 	
+ 	<select id="selectMemberByPhone" resultMap ="memberMap">
+ 		select * from member
+ 		where phone = #{phone}
+ 	</select>
 
  	<select id="selectOneMember" resultMap="memberMap">
  		SELECT * FROM MEMBER

@@ -16,4 +16,11 @@ public interface MemberDao {
 	Member checkIdFunc(String userId);
 
 	int insertKakaoMember(Member member);
+
+	Member selectMemberByKakao(Long id);
+
+	Member selectMemberByNaver(String id);
+
+	Member selectMemberByPhone(String phone);
+
 }

@@ -1,5 +1,5 @@
 
-package com.gammza.chupachups.auth.model.dao;
+package com.gammza.chupachups.auth.model.vo;
 
 import lombok.Data;
 
@@ -23,8 +23,14 @@ public class KakaoProfile {
 		public Profile profile;
 		public Boolean has_email;
 		public Boolean email_needs_agreement;
+		public Boolean is_email_valid;
+		public Boolean is_email_verified;
+		public String email;
 		public Boolean has_birthday;
 		public Boolean birthday_needs_agreement;
+		public String birthday_type;
+		public String birthday;
+		
 		
 		@Data
 		public class Profile {

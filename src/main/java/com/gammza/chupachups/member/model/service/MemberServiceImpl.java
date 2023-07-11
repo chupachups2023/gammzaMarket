@@ -37,5 +37,20 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.insertKakaoMember(member);
 	}
 
+	@Override
+	public Member selectMemberByKakao(Long id) {
+		return memberDao.selectMemberByKakao(id);
+	}
+
+	@Override
+	public Member selectMemberByPhone(String phone) {
+		return memberDao.selectMemberByPhone(phone);
+	}
+
+	@Override
+	public Member selectMemberByNaver(String id) {
+		return memberDao.selectMemberByNaver(id);
+	}
+
 
 }

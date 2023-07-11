@@ -110,12 +110,18 @@
             <input type="hidden" name="admNm" id="admNm">
             <input type="hidden" name="legNm" id="legNm">
             <input type="hidden" name="gongguWriter" value="${loginMember.userId }">
-            <div class="ggStart-btn"><input type="button" value="공구 시작" onclick="ggEnrollFrmSubmit();"></div>
+            <div class="ggStart-btn"><input type="button" value="공구 시작" onclick="ggEnrollFrmSubmit();" id="submitBtn"></div>
         </form>
     </div>
 	<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggWriteMap.js?<%=System.currentTimeMillis() %>"></script>
 <script>
-	console.log(ggEnrollFrm.upPhoto1.value);
+	const temperature="${loginMember.temperature}";
+	if(temperature*1<36.5){
+		alert("온도가 36.5도 미만인 경우 공구 글을 작성할 수 없습니다.")
+		document.getElementById("submitBtn").setAttribute("onclick","");
+		document.getElementById("submitBtn").style.backgroundColor="rgb(200,200,200)";
+	}
+
 	var now_utc = Date.now();
 	var timeOff = new Date().getTimezoneOffset()*60000;
 	var today = new Date(now_utc-timeOff).toISOString().substring(0, 16);

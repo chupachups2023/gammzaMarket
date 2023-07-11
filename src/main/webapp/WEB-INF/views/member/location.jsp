@@ -22,6 +22,22 @@
 				</div>
             </div>
             <div>
+                <div class="location-title">현재 인증 동네</div>
+                <div class="location-cont">
+                <c:choose>
+                	<c:when test="${empty loginMember }">
+                	<div class="location-cont" >동네 인증은 로그인 후 가능합니다.</div>
+                	</c:when>
+                	<c:when test="${empty loginLocation }">
+                	<div class="location-cont" >어서 동네 인증을 해주세요!</div>
+                	</c:when>
+                	<c:otherwise>
+                	<div class="location-cont" >${loginLocation.sidoNm } ${loginLocation.sggNm } ${loginLocation.legNm }</div>
+                	</c:otherwise>
+                </c:choose>
+				</div>
+            </div>
+            <div>
                 <div class="location-title">우리 동네 근처 옆동네</div>
                 <div class="location-cont" id="location-cont"></div>
             </div>
@@ -105,36 +121,6 @@ function success(position) {
 		            	
 		            	getNearDong(latlng.Ma, latlng.La);
 		            	
-		            	var places = new kakao.maps.services.Places();
-						
-		            	let resultArr=[];
-		            	
-		            	var callback = function(result, status) {
-		            	    if (status === kakao.maps.services.Status.OK) {
-		            	    	for(let i=0;i<result.length;i++){
-		            	    		getOnlyGeoCoe(result[i].address_name,resultArr)
-		            	    	} 
-		            	    	console.log(resultArr);
-		            	    	
-		            	        $.ajax({
-		            	        	type:"post",
-		            	        	url:"nearDong.lo",
-		            	        	date:{"result":resultArr},
-		            	        	traditional : true,
-		            	        	success:function(successResult){
-		            	        		console.log(successResult);
-		            	        	}
-		            	        });
-		            	    }
-		            	};
-
-		            	// 공공기관 코드 검색
-			            	places.keywordSearch('행정복지센터', callback, {
-			            	    // Map 객체를 지정하지 않았으므로 좌표객체를 생성하여 넘겨준다.
-			            	    location: new kakao.maps.LatLng(latlng.Ma, latlng.La),
-			            	    radius:4000,
-			            	    sort_by:"DISTANCE"
-			            	});
 		            },
 		            error:function(){
 		            	console.log("실패");
@@ -167,7 +153,6 @@ function getNearDong(lat, lon){
    	        	data:{'address':addressForCon, 'place':placeName},
    	        	dataType : 'json',
    	        	success:function(successResult){
-   	        		//console.log(successResult);
    	        		const locationCont=document.getElementById("location-cont");
    	        		let nearDong='';
    	        		for(let k=0;k<successResult.returnValue.length-1;k++){
