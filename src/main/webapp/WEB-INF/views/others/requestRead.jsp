@@ -40,8 +40,12 @@
             </div>
         </div>
         <div class="ggRead-detail">
+        	<c:choose>
+        		<c:when test="${not empty request.price }">
             <div class="ggRead-price">총 <fmt:formatNumber type="number" maxFractionDigits="3" value="${request.price}" /> 포인트 예상</div>
-            <div class="ggRead-price">이 공구를 ${request.num }명이 기다리고 있어요</div>
+        		</c:when>
+        	</c:choose>
+            <div class="ggRead-price">이 공구를 ${reqMember }명이 기다리고 있어요</div>
             <c:choose>
             	<c:when test="${empty request.link }">
 		            <div><a class="ggRead-link-empty"> &emsp; </a></div>

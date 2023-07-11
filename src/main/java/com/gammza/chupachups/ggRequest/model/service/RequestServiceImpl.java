@@ -46,4 +46,9 @@ public class RequestServiceImpl implements RequestService {
 		return requestDao.selectLastNum();
 	}
 
+	@Override
+	public int insertRequestMember(RequestMember reqMem) {
+		return requestDao.insertRequestMember(reqMem);
+	}
+
 }

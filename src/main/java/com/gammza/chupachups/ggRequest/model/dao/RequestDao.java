@@ -23,5 +23,7 @@ public interface RequestDao {
 
 	int selectLastNum();
 
+	int insertRequestMember(RequestMember reqMem);
+
 
 }

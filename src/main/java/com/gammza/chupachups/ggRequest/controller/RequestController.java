@@ -22,6 +22,7 @@ import com.gammza.chupachups.ggRequest.model.service.RequestService;
 import com.gammza.chupachups.ggRequest.model.vo.Request;
 import com.gammza.chupachups.ggRequest.model.vo.RequestMember;
 import com.gammza.chupachups.location.controller.LocationController;
+import com.gammza.chupachups.location.model.vo.Location;
 
 
 @Controller
@@ -54,7 +55,6 @@ public class RequestController {
 		model.addAttribute("request", ggrequest);
 		
 		ArrayList<RequestMember> reqMember=requestService.selectRequestMember(requestNo);
-		model.addAttribute("reqMember", reqMember);
 		
 		
 		return "/others/requestRead";
@@ -69,7 +69,7 @@ public class RequestController {
 
 	 //요청 글 작성
 	 @PostMapping("/ggRequestFrm.req")
-	 public String ggEnrollFrm(Request request, @RequestParam MultipartFile upPhoto1, @RequestParam MultipartFile upPhoto2,
+	 public String ggEnrollFrm(Request request, Location location, @RequestParam MultipartFile upPhoto1, @RequestParam MultipartFile upPhoto2,
 			@RequestParam MultipartFile upPhoto3, Model model,RedirectAttributes redirectAttr) {
 		 
 		String saveDirectory = application.getRealPath("/resources/upload");
@@ -132,10 +132,24 @@ public class RequestController {
 			}
 		}
 		int result = requestService.insertRequest(request);
+		
+		int localCode=locationController.selectLocation(location).getLocationNo();
+		
+		
 		if(result>0) {
 			int requestNo=requestService.selectLastNum();
 			Request newRequest=requestService.selectRequest(requestNo);
 			model.addAttribute("request", newRequest);
+			
+			RequestMember reqMem=new RequestMember();
+			reqMem.setLatitude(newRequest.getLatitude());
+			reqMem.setLongitude(newRequest.getLongitude());
+			reqMem.setLocalCode(localCode);
+			reqMem.setRequestMember(newRequest.getRequestWriter());
+			reqMem.setRequestNo(newRequest.getRequestNo());
+			
+			int insert=requestService.insertRequestMember(reqMem);
+			
 			return "/others/requestRead";
 		}else {
 			redirectAttr.addFlashAttribute("msg","글 작성에 실패했습니다ㅠ");

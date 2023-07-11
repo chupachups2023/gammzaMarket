@@ -20,5 +20,7 @@ public interface RequestService {
 
 	int selectLastNum();
 
+	int insertRequestMember(RequestMember reqMem);
+
 
 }
