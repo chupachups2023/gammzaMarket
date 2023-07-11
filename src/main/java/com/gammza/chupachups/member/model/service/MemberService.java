@@ -20,4 +20,8 @@ public interface MemberService {
 
 	Member selectMemberByNaver(String id);
 
+	String insertNaverIdkey(String setNaverIdkey);
+
+	
+
 }
