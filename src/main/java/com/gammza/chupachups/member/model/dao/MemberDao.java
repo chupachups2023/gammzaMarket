@@ -23,4 +23,6 @@ public interface MemberDao {
 
 	Member selectMemberByPhone(String phone);
 
+	String insertNaverIdkey(String naverIdkey);
+
 }

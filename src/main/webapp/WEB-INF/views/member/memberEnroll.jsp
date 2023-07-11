@@ -314,7 +314,6 @@
 			return false;
 		}
 		
-		// ID 중복확인 작업중 
 		
 		// 비밀번호 확인 
 		if (pw.value == "") {
@@ -360,11 +359,12 @@
 			alert("휴대폰번호를 입력하세요");
 			phone.focus();
 			return false;
-		} else if (!phoneCfm.test(phone)) {
+		} else if (!phoneCfm.test(phone.value)) {
 			alert("휴대폰번호가 올바르지 않습니다");
 			phone.focus();
 			return false;
 		} */
+		
 		
 		
 		

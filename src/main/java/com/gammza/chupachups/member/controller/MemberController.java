@@ -58,6 +58,32 @@ public class MemberController {
 		} else {
 			redirectAtt.addFlashAttribute("msg", "아이디 또는 비밀번호가 맞지 않습니다.");
 		}
+		
+//		String kakaoIdkey = (String) model.getAttribute("kakaoIdkey");
+//		String naverIdkey = (String) model.getAttribute("naverIdkey");
+//		
+//		System.out.println("naverIdkey: " + naverIdkey);
+//		System.out.println(member);
+//		
+//		if (naverIdkey == null) { // 일반 로그인한 상태 
+//			memberService.insertNaverIdkey(member.getNaverIdkey());
+//			return "redirect:/";
+//			
+//			
+//		} else {
+//			return "redirect:/";
+//		}
+		
+		
+		
+		/*
+		 * Member loginMember=memberService.selectMemberByKakao();
+		 * 
+		 * if (loginMember == null) { // 카카오 연동을 최초로 하는 신규/기존 회원 (KAKAO_IDKEY == NULL)
+		 * model.addAttribute("kakaoIdkey", kakaoProfile.getId()); //
+		 * redirectAtt.addFlashAttribute("msg", "카카오 간편로그인 최초 1회 연결이 필요합니다."); return
+		 * "/member/socialLogin";
+		 */
 		return "redirect:/";
 	}
 	
@@ -135,14 +161,15 @@ public class MemberController {
 	// 아이디/비밀번호 찾기 
 	@GetMapping("/findId.me")
 	public String findId() {
-		return "member/findId";
+		return "/member/findId";
 	}
 
 	@GetMapping("/findPwd.me")
 	public String findPwd() {
-		return "member/findPwd";
+		return "/member/findPwd";
 	}
 	
+
 	@RequestMapping(value = "/mailCheck.me", method = RequestMethod.GET)
 	@ResponseBody
 	public String mailCheck(String email, String userId, Model model) throws Exception {
@@ -185,14 +212,20 @@ public class MemberController {
 	@GetMapping("/findLoginInfo.me")
 	public String findLoginInfo(String phone, Model model, RedirectAttributes redirectAtt) {
 		Member member = memberService.selectMemberByPhone(phone);
+		System.out.println(member);
+//		System.out.println(member.getPhone());
 		
 		if (member == null) {
+			// model.addAttribute("historyBack", true);
 			model.addAttribute("msg", "일치하는 회원이 없습니다.");
-			return "redirect:/";
+			return "/member/findId";
+		} 
+		
+		// model.addAttribute("historyBack", true);
+		model.addAttribute("msg", String.format("회원의 아이디는 %s 입니다.", member.getUserId()));
+		return "redirect:/"; 
 		}
 		
-		model.addAttribute("msg", String.format("회원의 아이디는 %s 입니다.", member.getUserId()));
-		return "redirect:/";
 		
 		
 		
@@ -202,29 +235,3 @@ public class MemberController {
 		
 		// return "member/findLoginInfo";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/* 네이버 관련 수정중  
-	@GetMapping("/memberLogin.me")
-	public void login(Model model) throws Exception {
-		// Logger.info("login GET .....");
-		
-		SNSLogin snsLogin = new SNSLogin(naverSns);
-		model.addAttribute("naver_url", snsLogin.getNaverAuthURL());
-		
-//		SNSLogin snsLogin = new SNSLogin(naverSns);
-//		model.addAttribute("naver_url", snsLogin.getNaverAuthURL());
-	}
-	 */
-	
-}
-
-

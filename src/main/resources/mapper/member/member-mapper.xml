@@ -43,6 +43,10 @@
 		#{kakaoIdkey}
 	)
 	</insert>
+	
+	<insert id="insertNaverIdkey">
+		insert into member(naver_idkey) values(#{naverIdkey})
+	</insert>
 
 
  
