@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Handles requests for the application home page.
  */
 @Controller
-public class HomeController {
+public class MainpageController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(MainpageController.class);
 	
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home() {
-		return "forward:gonggu/homeList.go";
+	public String mainpage() {
+		return "forward:gonggu/mainList.go";
 	}
 	
 }

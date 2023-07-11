@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<jsp:forward page="/WEB-INF/views/home.jsp"/>
+<jsp:forward page="/WEB-INF/views/mainpage.jsp"/>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="감자마켓" name="title"/>
