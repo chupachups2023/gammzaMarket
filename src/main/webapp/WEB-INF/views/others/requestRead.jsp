@@ -45,7 +45,7 @@
             <div class="ggRead-price">총 <fmt:formatNumber type="number" maxFractionDigits="3" value="${request.price}" /> 포인트 예상</div>
         		</c:when>
         	</c:choose>
-            <div class="ggRead-price">이 공구를 ${reqMember }명이 기다리고 있어요</div>
+            <div class="ggRead-price">이 공구를 ${request.num }명이 기다리고 있어요</div>
             <c:choose>
             	<c:when test="${empty request.link }">
 		            <div><a class="ggRead-link-empty"> &emsp; </a></div>
@@ -80,7 +80,7 @@
         	</c:when>
         	<c:otherwise>
 	        <div class="ggRead-button">
-	            <a href="" class="button">참여신청</a>
+	            <button onclick="enrollRequest();" class="button">참여신청</button>
 	            <a href="" class="button">공구열기</a>
 	        </div>
         	</c:otherwise>
@@ -142,7 +142,19 @@ for(let i=1;i<reqMemArr.length;i++){
     	console.log("실패");
     }
 });
-
+function enrollRequest(){
+	const loginMember="${loginMember.userId}";
+	if(loginMember=="" || loginMember == null){
+		alert("먼저 로그인 해주세요");
+	}else{
+		if(confirm("공구 요청에 참여하시겠습니까?")){
+			location.href="${pageContext.request.contextPath}/ggRequest/enrollRequest.req?requestNo=${request.requestNo}"
+		}else{
+			return
+		}
+	}
+}
+ 
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

@@ -25,5 +25,9 @@ public interface RequestDao {
 
 	int insertRequestMember(RequestMember reqMem);
 
+	int selectRequestMemberByNo(HashMap<String, String> map);
+
+	int updateRequestNum(int requestNo);
+
 
 }

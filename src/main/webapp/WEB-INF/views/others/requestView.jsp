@@ -35,7 +35,8 @@
 					</c:choose>
 				</th>
 				<th class="reqNum"><div>${list.num }명이<br>원해요</div></th>
-				<th class="recentDate">0000년 00월 00일에<br><small>요청 인원이 추가됐어요</small></th>
+				<fmt:parseDate value="${list.recentDate }" var="recentDate" pattern="yyyy-MM-dd"/>
+				<th class="recentDate"><fmt:formatDate value="${recentDate }" pattern="yyyy년 MM월 dd일"/>에<br><small>요청 인원이 추가됐어요</small></th>
 				<th class="viewCount">${list.count }명이<br>봤어요</th>
 			</tr>
 		</c:forEach>

@@ -51,4 +51,14 @@ public class RequestServiceImpl implements RequestService {
 		return requestDao.insertRequestMember(reqMem);
 	}
 
+	@Override
+	public int selectRequestMemberByNo(HashMap<String, String> map) {
+		return requestDao.selectRequestMemberByNo(map);
+	}
+
+	@Override
+	public int updateRequestNum(int requestNo) {
+		return requestDao.updateRequestNum(requestNo);
+	}
+
 }

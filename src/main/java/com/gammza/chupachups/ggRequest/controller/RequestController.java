@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ import com.gammza.chupachups.ggRequest.model.vo.Request;
 import com.gammza.chupachups.ggRequest.model.vo.RequestMember;
 import com.gammza.chupachups.location.controller.LocationController;
 import com.gammza.chupachups.location.model.vo.Location;
+import com.gammza.chupachups.member.model.vo.Member;
 
 
 @Controller
@@ -42,6 +44,11 @@ public class RequestController {
 		map.put("latitude", latitude);
 		map.put("longitude", longitude);
 		ArrayList<Request> requestList=requestService.selectAllRequestList(map);
+		for(int i=0;i<requestList.size();i++) {
+			Request request=requestList.get(i);
+			String regAt=requestService.selectRequestMember(request.getRequestNo()).get(0).getRegAt();
+			request.setRecentDate(regAt);
+		}
 		model.addAttribute("requestList", requestList);
 		
 		return "/others/requestView";
@@ -156,4 +163,36 @@ public class RequestController {
 			return "/others/writeRequest";
 		}
 	}
+	 
+	 @GetMapping("/enrollRequest.req")
+	 public String enrollRequest(HttpSession session, @RequestParam int requestNo,RedirectAttributes redirectAttr) {
+		 Member loginMember=(Member)session.getAttribute("loginMember");
+		 HashMap<String,String> map=new HashMap<String,String>();
+		 map.put("requestNo", String.valueOf(requestNo));
+		 map.put("userId",loginMember.getUserId());
+		 
+		 int count=requestService.selectRequestMemberByNo(map);
+		 if(count>0) {
+			redirectAttr.addFlashAttribute("msg","이미 참가한 요청입니다");
+			return "redirect:/ggRequest/requestAfterEnroll.req?requestNo="+requestNo;
+		 }else {
+			 RequestMember reqMem=new RequestMember();
+			 reqMem.setLatitude(loginMember.getLatitude());
+			 reqMem.setLongitude(loginMember.getLongitude());
+			 reqMem.setLocalCode(loginMember.getLocation());
+			 reqMem.setRequestMember(loginMember.getUserId());
+			 reqMem.setRequestNo(requestNo);
+			requestService.insertRequestMember(reqMem);
+			requestService.updateRequestNum(requestNo);
+			redirectAttr.addFlashAttribute("msg","참가가 완료되었습니다.");
+			return "redirect:/ggRequest/requestAfterEnroll.req?requestNo="+requestNo;
+		 }
+	 }
+	 
+	 @GetMapping("/requestAfterEnroll.req")
+	 public String requestAfterEnroll(@RequestParam int requestNo, Model model) {
+		 Request request=requestService.selectRequest(requestNo);
+		 model.addAttribute("request", request);
+		 return "/others/requestRead";
+	 }
 }
