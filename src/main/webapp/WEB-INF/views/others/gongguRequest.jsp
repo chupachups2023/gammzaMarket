@@ -14,10 +14,10 @@
 			<td colspan="3"  class="sort-type" >
 			</td>
 			<td colspan="3"  class="sort-type align-right">
-			<small>
-				<input type="radio" name="parti-sort" id="regAt" value="2" checked="checked"><label for="regAt"> 신청 순으로 정렬</label>
-				<input type="radio" name="parti-sort" id="endTime" value="0"><label for="endTime"> 마감 순으로 정렬</label> 
-			</small>
+				<small>
+					<input type="radio" name="parti-sort" id="regAt" value="2" checked="checked"><label for="regAt"> 신청 순으로 정렬</label>
+					<input type="radio" name="parti-sort" id="endTime" value="0"><label for="endTime"> 마감 순으로 정렬</label> 
+				</small>
 			</td>
 		</tr>
 		<c:forEach items="${requestList}" var="list" varStatus="j">
