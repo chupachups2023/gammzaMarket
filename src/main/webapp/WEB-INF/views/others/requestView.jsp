@@ -23,20 +23,20 @@
 		<c:forEach items="${requestList}" var="list" varStatus="j">
 			<tr>
 				<th><div class="request-fore">abcd</div></th>
-				<th><div class="request-img"><img src="${pageContext.request.contextPath }/resources/upload/${list.photo1}" width="150px"></img></div></th>
+				<th><div class="request-img"><img src="${pageContext.request.contextPath }/resources/upload/${list.photo1}"/></div></th>
 				<th>
 					<c:choose>
-						<c:when test="${fn:length(list.requestName) gt 25}">
-							<a href="${pageContext.request.contextPath }/request/requestRead.req?gongguNo=${list.requestNo}" class="ggTitle" >${fn:substring(list.requestName, 0, 25)}⋯ </a>
+						<c:when test="${fn:length(list.requestName) gt 35}">
+							<a href="${pageContext.request.contextPath }/ggRequest/requestRead.req?requestNo=${list.requestNo}" class="ggTitle" >${fn:substring(list.requestName, 0, 35)}⋯ </a>
 						</c:when>
 						<c:otherwise>
-							<a href="${pageContext.request.contextPath }/request/requestRead.req?gongguNo=${list.requestNo}" class="ggTitle">${list.requestName} </a>
+							<a href="${pageContext.request.contextPath }/ggRequest/requestRead.req?requestNo=${list.requestNo}" class="ggTitle">${list.requestName} </a>
 						</c:otherwise>
 					</c:choose>
 				</th>
-				<th></th>
-				<th></th>
-				<th></th>
+				<th class="reqNum"><div>${list.num }명이<br>원해요</div></th>
+				<th class="recentDate">0000년 00월 00일에<br><small>요청 인원이 추가됐어요</small></th>
+				<th class="viewCount">${list.count }명이<br>봤어요</th>
 			</tr>
 		</c:forEach>
 		</table>

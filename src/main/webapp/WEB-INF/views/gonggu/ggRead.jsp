@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggRead.css?<%=System.currentTimeMillis() %> %>" type="text/css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggRead.css?<%=System.currentTimeMillis() %>" type="text/css" />
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=44e2b21ec219944c6d834fff124a603d&libraries=services,clusterer"></script>
 <style>

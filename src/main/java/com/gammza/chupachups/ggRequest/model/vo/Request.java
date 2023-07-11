@@ -1,4 +1,4 @@
-package com.gammza.chupachups.request.model.vo;
+package com.gammza.chupachups.ggRequest.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,5 +19,11 @@ public class Request {
 	private String photo2;
 	private String photo3;
 	private int num;
+	private int reqStatus;
+	private int status;
+	private String latitude;
+	private String longitude;
+	private String link;
+	private int count;
+	
 }
- 
