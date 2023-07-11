@@ -254,7 +254,7 @@
 		function success(position) {
 		    const latitude = position.coords.latitude;   // 위도(37.xxxx)
 		    const longitude = position.coords.longitude;
-			location.href="${pageContext.request.contextPath}/request/requestView.req?longitude="+longitude+"&latitude="+latitude;
+			location.href="${pageContext.request.contextPath}/ggRequest/requestView.req?longitude="+longitude+"&latitude="+latitude;
 		}
 		navigator.geolocation.getCurrentPosition(success);
 	}
