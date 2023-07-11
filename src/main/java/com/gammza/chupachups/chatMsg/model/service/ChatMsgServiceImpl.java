@@ -13,10 +13,15 @@ public class ChatMsgServiceImpl implements ChatMsgService {
 	
 	@Autowired
 	private ChatMsgDao chatMsgDao;
-/*
+	
 	@Override
-	public List<ChatMsg> selectChatMsg(ChatMsg chatmsg) {
-		return chatMsgDao.selectChatMsg(chatmsg);
+	public List<ChatMsg> selectChatMsg(String roomNo) {
+		return chatMsgDao.selectChatMsg(roomNo);
 	}
-	*/
+
+	@Override
+	public int insertMsg(ChatMsg chatMsg) {
+		return chatMsgDao.insertMsg(chatMsg);
+	}
+
 }

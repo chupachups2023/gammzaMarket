@@ -1,7 +1,6 @@
 package com.gammza.chupachups.gonggu.model.dao;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.HashMap;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -11,7 +10,7 @@ import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 @Mapper
 public interface GongguDao {
 	
-	ArrayList<Gonggu> selectHomeList();
+	ArrayList<Gonggu> selectMainList();
 	
 	ArrayList<Gonggu> selectggListView(HashMap<String, String> locationMap);
 
@@ -25,17 +24,17 @@ public interface GongguDao {
 
 	int updateGongguCount(int gongguNo);
 
-	int updateEndStatus(int gongguNo);
-
 	int updateGonggu(Gonggu gonggu);
 
 	ArrayList<Gonggu> selectLeadGongguList(String userId);
 
-	ArrayList<Gonggu> searchGonggu(String gongguName);
+	int updateEndStatus(int gongguNo);
+
+	ArrayList<Gonggu> searchGonggu(HashMap<String, String> map);
 	
 	int selectGongguTotalRecored();
 
-	ArrayList<Gonggu> selectOneCategory(int category);
+	ArrayList<Gonggu> selectOneCategory(HashMap<String, String> map);
 
 
 }

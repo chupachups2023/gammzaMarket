@@ -11,7 +11,7 @@
 <form method="post" action="${pageContext.request.contextPath}/location/EnrollLocation.lo" name="loactionFrm">
   <div class="location-body">
         <div class="location-map" id="map"></div>
-        <div>
+        <div class="location-part">
             <div>
                 <div class="location-title">현재 접속 동네</div>
                 <div class="location-cont">
@@ -21,18 +21,33 @@
 		            <input name="legNm"  id="legNm" readonly class="location-curr">
 				</div>
             </div>
-            <div class="location-part">
-                <div class="location-title">우리 동네 근처 옆동네</div>
-                <div class="location-cont">당산동, 당산동4가, 당산동5가, 당산동6가, 합정동, 여의동, 양평동, 영등포동</div>
+            <div>
+                <div class="location-title">현재 인증 동네</div>
+                <div class="location-cont">
+                <c:choose>
+                	<c:when test="${empty loginMember }">
+                	<div class="location-cont" >동네 인증은 로그인 후 가능합니다.</div>
+                	</c:when>
+                	<c:when test="${empty loginLocation }">
+                	<div class="location-cont" >어서 동네 인증을 해주세요!</div>
+                	</c:when>
+                	<c:otherwise>
+                	<div class="location-cont" >${loginLocation.sidoNm } ${loginLocation.sggNm } ${loginLocation.legNm }</div>
+                	</c:otherwise>
+                </c:choose>
+				</div>
             </div>
-            <input type="hidden" id="lon" name="longitude" >
-            <input type="hidden" id="lat" name="latitude" >
-            
+            <div>
+                <div class="location-title">우리 동네 근처 옆동네</div>
+                <div class="location-cont" id="location-cont"></div>
+            </div>
             <div class="location-btn">
                 <input type="button" value="장소 인증하기" class="button" id="location-submit" onclick="locationSubmit();">
             </div>
         </div>
     </div>
+	            <input type="hidden" id="lon" name="longitude" >
+	            <input type="hidden" id="lat" name="latitude" >
 </form>
 <script>
 function locationSubmit(){
@@ -43,6 +58,8 @@ function locationSubmit(){
 		loactionFrm.submit();
 	}
 }
+
+
 function success(position) {
     const latitude = position.coords.latitude;   // 위도(37.xxxx)
     const longitude = position.coords.longitude; // 경도
@@ -77,6 +94,8 @@ function success(position) {
         	});
         	marker.setMap(map);
         	    // 마우스 휠로 지도 확대,축소 가능여부를 설정합니다
+        	    
+			getNearDong(latitude,longitude ); 
     		
         	//카카오맵 클릭 이벤트 추가
         	kakao.maps.event.addListener(map, 'click', (mouseEvent) => {
@@ -98,40 +117,10 @@ function success(position) {
 		            },
 		            success:function(clickresult){
 		            	var clickaddress=clickresult.documents[0].address.address_name;
-			            console.log(clickaddress);
 		            	geoCoe(clickaddress);
 		            	
-		            	var places = new kakao.maps.services.Places();
-						
-		            	let resultArr=[];
+		            	getNearDong(latlng.Ma, latlng.La);
 		            	
-		            	var callback = function(result, status) {
-		            	    if (status === kakao.maps.services.Status.OK) {
-		            	    	for(let i=0;i<result.length;i++){
-		            	    		getOnlyGeoCoe(result[i].address_name,resultArr)
-		            	    	} 
-		            	    	console.log(resultArr);
-		            	    	
-		            	        $.ajax({
-		            	        	type:"post",
-		            	        	url:"nearDong.lo",
-		            	        	date:{"result":resultArr},
-		            	        	traditional : true,
-		            	        	success:function(successResult){
-		            	        		console.log(successResult);
-		            	        	}
-		            	        });
-		            	    }
-		            	};
-
-		            	// 공공기관 코드 검색
-			            	places.keywordSearch('행정복지센터', callback, {
-			            	    // Map 객체를 지정하지 않았으므로 좌표객체를 생성하여 넘겨준다.
-			            	    location: new kakao.maps.LatLng(latlng.Ma, latlng.La),
-			            	    radius:4000,
-			            	    sort_by:"DISTANCE"
-			            	});
-		            		
 		            },
 		            error:function(){
 		            	console.log("실패");
@@ -145,6 +134,46 @@ function success(position) {
         }
     })
 }
+
+function getNearDong(lat, lon){
+   	var places = new kakao.maps.services.Places();
+   	
+   	var callback = function(result, status) {
+   	    if (status === kakao.maps.services.Status.OK) {
+   	    	let addressForCon=[];
+   	    	let placeName=[];
+   	    	for(let i=0;i<result.length;i++){
+   	    		addressForCon.push(result[i].address_name);
+   	    		placeName.push(result[i].place_name);
+   	    	}
+		$.ajax({
+   	        	type:"post",
+   	        	url:"nearDong.lo",
+   	        	traditional : true,
+   	        	data:{'address':addressForCon, 'place':placeName},
+   	        	dataType : 'json',
+   	        	success:function(successResult){
+   	        		const locationCont=document.getElementById("location-cont");
+   	        		let nearDong='';
+   	        		for(let k=0;k<successResult.returnValue.length-1;k++){
+   	        			nearDong+=successResult.returnValue[k]+', ';
+   	        		}
+   	        		nearDong+=successResult.returnValue[successResult.returnValue.length-1];
+   	        		locationCont.innerHTML=nearDong;
+   	        	}
+   	        });
+    	}
+    }
+
+   	// 공공기관 코드 검색
+   	places.keywordSearch('행정복지센터', callback, {
+   	    // Map 객체를 지정하지 않았으므로 좌표객체를 생성하여 넘겨준다.
+   	    location: new kakao.maps.LatLng(lat, lon),
+   	    radius:4000,
+   	    sort_by:"DISTANCE"
+   	});
+}
+
 
 function getUserLocation() {
     if (!navigator.geolocation) {
@@ -205,8 +234,6 @@ function geoCoe(address){
                      	errCnt ++;
  						getAccessToken();
  						console.log(errCnt);
- 						
- 						//window.location.reload()
  					break;																					
  					case -100:																					
  					break;																					
@@ -216,6 +243,7 @@ function geoCoe(address){
  		}																														
  	});																		
 }
+
 function getOnlyGeoCoe(address, arr){
  	address = encodeURIComponent(address);
  	var pagenum = '0';

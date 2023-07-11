@@ -5,27 +5,10 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!-- <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/memberEnroll.css">
-<style>
-/* .id_ok {
-	color: green;
-	display: none;
-}
-
-.id_already {
-	color: red;
-	display: none;
-} */
-/* .guide { display: none; }
-.ok { color: #5EB162; font-size: 12px; }
-.error { color: #FF0606; font-size: 12px; }  */
-
-</style>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="회원가입" name="title"/>
 </jsp:include>
-
-
 
 <div class="enroll-title">
     <h1>회원가입</h1>
@@ -57,16 +40,21 @@
 									 </tr>
 									 <tr>
 											<td>
-												<span style="font-size: 12px;"><em>*아이디는 4~12자의 영문 소문자만 사용 가능</em></span><br>
+												<span style="font-size: 12px;"><em>*아이디는 4~12자의 영문 소문자와 숫자만 사용 가능</em></span><br>
 												<span style="font-size: 12px;"><em>*비밀번호는 영문, 숫자, 특수문자 포함 8~20자리로 입력</em></span><br>
-										 </td>
-									 </tr>
+											</td>
+										</tr>
+											
+										<tr>
+										<td scope="col" class="add" colspan="2">
+												<span class="guide ok">멋진 아이디네요!</span>
+												<span class="guide error">사용할 수 없는 아이디입니다.</span>
+										</td>
+										</tr>
+									 
+
 							 </table>
 										 </div>
-							 <div>
-									<br><span class="guide ok">멋진 아이디네요!</span><br>
-									<span class="guide error">사용할 수 없는 아이디입니다.</span>
-							 </div>
 										 <div class="container2">
 							 <table class="enroll-section">
 								<tr>
@@ -227,7 +215,11 @@
 			}
 			*/
 			
+			/*
+			  - 한글 입력 시
+			  - 4~12글자 제한 
 			
+			*/
 			
 			
 			
@@ -263,7 +255,7 @@
 
 <script type="text/javascript">
 
-	function inputIdChk() {
+	/* function inputIdChk() {
 		enrollfrm.idDuplication.value = "idUnCheck";
 		console.log(enrollfrm.idDuplication.value);
 		
@@ -272,7 +264,7 @@
 	function inputIdChk(id) {
 		enrollfrm.idDuplication.value = "idCheck";
 		console.log(enrollfrm.idDuplication.value);
-	}
+	}  */
 
 	function validation() {
 		var uid = document.getElementById("userId");
@@ -315,12 +307,12 @@
 			return false;
 		}
 		
-		/* // 아이디 대소문자 확인 
+		// 아이디 대소문자 확인 
 		if (!idCfm.test(uid.value)) {
 			alert("아이디는 4~12자의 영문 소문자와 숫자만 사용 가능합니다");
 			uid.focus();
 			return false;
-		} */
+		}
 		
 		// ID 중복확인 작업중 
 		
@@ -368,7 +360,7 @@
 			alert("휴대폰번호를 입력하세요");
 			phone.focus();
 			return false;
-		} else if (phoneCfm.test(phone)) {
+		} else if (!phoneCfm.test(phone)) {
 			alert("휴대폰번호가 올바르지 않습니다");
 			phone.focus();
 			return false;
@@ -398,10 +390,12 @@
 			return false;
 		}
 		
+		/*
 		if (enrollfrm.idDuplication.value != "idCheck") {
 		    alert("아이디 중복 확인이 필요합니다");
 		    return;
 		  }
+		*/
 		
 		
 		

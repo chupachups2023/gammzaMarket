@@ -2,7 +2,6 @@ package com.gammza.chupachups.gonggu.model.service;
 
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.HashMap;
 
 import com.gammza.chupachups.gonggu.model.vo.Gonggu;
@@ -10,16 +9,24 @@ import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 
 public interface GongguService {
 	
-	ArrayList<Gonggu> selectHomeList();
+	ArrayList<Gonggu> searchGonggu(HashMap<String, String> map);
 	
 	ArrayList<Gonggu> selectggListView(HashMap<String,String> locationMap);
-
-	int insertGonggu(Gonggu gonggu);
-
+	
+	ArrayList<Gonggu> selectMainList();
+	
+	ArrayList<Gonggu> selectLeadGongguList(String userId);
+	
+	ArrayList<Gonggu> selectOneCategory(HashMap<String, String> map);
+	
 	Gonggu selectOneGonggu(int gongguNo);
-
+	
+	int insertGonggu(Gonggu gonggu);
+	
+	int selectGongguTotalRecored();
+	
 	int selectLastNum();
-
+	
 	int selectTotalRecored();
 
 	int updateGongguCount(int gongguNo);
@@ -32,8 +39,7 @@ public interface GongguService {
 
 	ArrayList<Gonggu> searchGonggu(String gongguName);
 	
-	int selectGongguTotalRecored();
+	int updateGongguCount(int gongguNo);
 
-	ArrayList<Gonggu> selectOneCategory(int category);
 
 }

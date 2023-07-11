@@ -62,7 +62,7 @@
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
-			<c:if test="${${pi.nowPage ne pi.totalPage && pi.totalPage ne 0}}">
+			<c:if test="${pi.nowPage ne pi.totalPage && pi.totalPage ne 0}">
 				<li><a href="${pageContext.request.contextPath}/mypage/myQuestionList.do?nowPage=${pi.nowPage+1}">다음</a></li>
 			</c:if>
 		</ul>

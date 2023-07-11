@@ -28,11 +28,11 @@ public class Member {
 	private boolean status;
 	private int point;
 	private double temperature;
-	private int kakaoIdkey;
+	private long kakaoIdkey;
 	private String naverIdkey;
 	private int category;
-	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private LocalDate birthday;
+	// @DateTimeFormat(pattern="yyyy-MM-dd")
+	private String birthday;
 	private String latitude;
 	private String longitude;
 

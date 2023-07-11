@@ -12,4 +12,12 @@ public interface MemberService {
 
 	Member checkIdFunc(String userId);
 
+	int insertKakaoMember(Member member);
+
+	Member selectMemberByKakao(Long id);
+
+	Member selectMemberByPhone(String phone);
+
+	Member selectMemberByNaver(String id);
+
 }

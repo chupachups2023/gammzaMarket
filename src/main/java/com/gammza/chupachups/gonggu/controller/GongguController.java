@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -42,6 +44,7 @@ import com.gammza.chupachups.member.model.vo.Member;
 
 @Controller
 @RequestMapping("/gonggu")
+@SessionAttributes({"ggListView"})
 public class GongguController {
 	@Autowired
 	private GongguService gongguService;
@@ -71,7 +74,6 @@ public class GongguController {
 			if(loginMember.getLatitude() == null) {
 				redirectAttr.addFlashAttribute("msg","정확한 주변 공구를 보려면 장소 인증을 먼저 해야 합니다.");
 				mav.setView(new RedirectView("/chupachups/location/location.lo"));
-				
 				return mav;
 			}else {
 				HashMap<String,String> locationMap=new HashMap<String,String>();
@@ -85,7 +87,6 @@ public class GongguController {
 			locationMap.put("latitude", latitude);
 			ggListView = gongguService.selectggListView(locationMap);
 		}
-		
 		for(int i=0;i<ggListView.size();i++) {
 			Location tempLocal=locationService.selectLocationByNo(ggListView.get(i).getLocationNo());
 			String locationName=locationController.SelectLocationName(tempLocal);
@@ -98,23 +99,23 @@ public class GongguController {
 		return mav;
 	}
 	
-	@GetMapping("/homeList.go")
-	public String homeList(Model model) {
-		ArrayList<Gonggu> homeList = gongguService.selectHomeList();
-		for(int i=0;i<homeList.size();i++) {
-			Location tempLocal=locationService.selectLocationByNo(homeList.get(i).getLocationNo());
+	@GetMapping("/mainList.go")
+	public String mainList(Model model) {
+		ArrayList<Gonggu> mainList = gongguService.selectMainList();
+		for(int i=0;i<mainList.size();i++) {
+			Location tempLocal=locationService.selectLocationByNo(mainList.get(i).getLocationNo());
 			String locationName=locationController.SelectLocationName(tempLocal);
-			homeList.get(i).setLocationName(locationName);
+			mainList.get(i).setLocationName(locationName);
 			//홈 띄워질 때마다 공구 상태 관리
-			gongguStatusMgr(homeList.get(i).getGongguNo());
+			gongguStatusMgr(mainList.get(i).getGongguNo());
 		}
-		model.addAttribute("homeList", homeList);
+		model.addAttribute("mainList", mainList);
 		int totalRecord=gongguService.selectTotalRecored();
 		
 		PageInfo pi=Pagination.getPageInfo(totalRecord, 1, 1, 8);
 		model.addAttribute("pi", pi);
 		
-		return "/home";
+		return "/common/mainpage";
 	}
 	
 	//공구 상태 관리
@@ -372,26 +373,61 @@ public class GongguController {
 	 }
 	
 	 @GetMapping("/ggSearch.go")
-	 public String searchGonggu(@RequestParam("gongguName") String gongguName, Model model) {
-		 ArrayList<Gonggu> homeList = gongguService.searchGonggu(gongguName);
+	 public String searchGonggu(@RequestParam("gongguName") String gongguName, Model model,HttpSession session,
+			 @RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude) {
+	 	Member mem=(Member)session.getAttribute("loginMember");
+	 	HashMap<String,String> map=new HashMap<String,String>();
+	 	if(mem==null) {
+	 		map.put("longitude", longitude);
+	 		map.put("latitude", latitude);
+	 	}else {
+	 		map.put("longitude", mem.getLongitude());
+	 		map.put("latitude", mem.getLatitude());
+	 	}
+		 StringTokenizer st=new StringTokenizer(gongguName);
+		 String searchSql="INTERSECT ";
+		 searchSql+=" SELECT * "
+			 		+ " FROM gonggu "
+			 		+ " where gonggu_name LIKE '%"+st.nextToken()+"%' "; 
+		 while(st.hasMoreTokens()) {
+			 searchSql+=" UNION "
+			 		+ " SELECT * "
+			 		+ " FROM gonggu "
+			 		+ " where gonggu_name LIKE '%"+st.nextToken()+"%' "; 
+		 }
+		 searchSql+=" order by 22 desc";
+		 map.put("search", searchSql);
 		 
-		 model.addAttribute("homeList", homeList);
+		 ArrayList<Gonggu> ggListView = gongguService.searchGonggu(map);
+		 
+		 model.addAttribute("ggListView", ggListView);
 		 int totalRecord=gongguService.selectGongguTotalRecored();
 		 
-		 model.addAttribute("gonggu", gongguName);
+		 model.addAttribute("keyword", gongguName);
 		
 		 PageInfo pi=Pagination.getPageInfo(totalRecord, 1, 1, 8);
          model.addAttribute("pi", pi);
-		 
-		 return "/home";
+         
+		 return "/gonggu/ggListView";
 	 }
 	 
 	 @GetMapping("/categoryList.go")
-		public String categoryList(@RequestParam("category") int category, Model model) {
-			ArrayList<Gonggu> categoryList = gongguService.selectOneCategory(category);
+		public String categoryList(@RequestParam("category") int category, Model model, HttpSession session,
+				@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude) {
+		 	Member mem=(Member)session.getAttribute("loginMember");
+		 	HashMap<String,String> map=new HashMap<String,String>();
+		 	if(mem==null) {
+		 		map.put("longitude", longitude);
+		 		map.put("latitude", latitude);
+		 	}else {
+		 		map.put("longitude", mem.getLongitude());
+		 		map.put("latitude", mem.getLatitude());
+		 	}
+		 	map.put("category", String.valueOf(category));
+			ArrayList<Gonggu> categoryList = gongguService.selectOneCategory(map);
 			
-			model.addAttribute("homeList", categoryList);
+			model.addAttribute("ggListView", categoryList);
 			
-			return "/home";
+			return "/gonggu/ggListView";
 		}
 }
