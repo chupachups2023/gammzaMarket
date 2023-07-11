@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.gammza.chupachups.request.model.dao.RequestDao">
+	<resultMap type="request" id="requestMap"></resultMap>
+	<select id="selectAllRequestList" resultMap="requestMap">
+		select *
+		  from request
+		  where 0.0359*0.0359>power(( to_number(longitude)-to_number(#{longitude })),2)+power(( to_number(latitude)-to_number(#{latitude })),2)
+		  and STATUS = 1 AND REQ_STATUS = 0
+	</select>
+</mapper>

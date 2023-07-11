@@ -55,7 +55,7 @@
 					<a class="header-menu headder-cateA">카테고리</a>
 				</div>
 				<a href="javascript:viewAllGonggu();" class="header-menu">공구보기</a> 
-				<a href="" class="header-menu">요청게시판</a> 
+				<a href="javascript:viewRequest();" class="header-menu">요청게시판</a>  
 				<a href="${pageContext.request.contextPath}/location/location.lo" class="header-menu">장소인증</a>
 				<a href="${pageContext.request.contextPath}/gonggu/ggWrite.go" class="header-menu">공구 글쓰기</a>
 			</div>
@@ -194,7 +194,14 @@
 			}
 		    navigator.geolocation.getCurrentPosition(success);
 		}
-			
+		function viewRequest(){
+			function success(position) {
+			    const latitude = position.coords.latitude;   // 위도(37.xxxx)
+			    const longitude = position.coords.longitude;
+				location.href="${pageContext.request.contextPath}/request/requestView.req?longitude="+longitude+"&latitude="+latitude;
+			}
+			navigator.geolocation.getCurrentPosition(success);
+		}
 	    </script>
 	</header>
 	<section>

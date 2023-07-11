@@ -6,24 +6,24 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/ggList_Leader.css?<%=System.currentTimeMillis() %>">
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="연 공구" name="title"/>
+	<jsp:param value="${loginMember.userId }님이 연 공구" name="title"/>
 </jsp:include>
 
 <div id="container">
 	<table class="table" align="center" >
-			<!-- <tr>
+		<tr>
 			<td colspan="3"  class="sort-type" >
 			<small>
-				<input type="checkbox" name="onlyOn" id="onlyOn"><label for="onlyOn"> 마감 공구 제외하고 보기</label>
+				<input type="checkbox" name="onlyOn" id="onlyOn" ><label for="onlyOn"> 마감 공구 제외하고 보기</label>
 			</small>
 			</td>
 			<td colspan="3"  class="sort-type align-right">
 			<small>
-				<input type="radio" name="parti-sort" id="regAt" value="2" checked="checked"><label for="regAt"> 신청 순으로 정렬</label>
-				<input type="radio" name="parti-sort" id="endTime" value="0"><label for="endTime"> 마감 순으로 정렬</label> 
+				<input type="radio" name="parti-sort" id="regAt" value="2" checked="checked"><label for="regAt"> 최근 오픈 순으로 정렬</label>
+				<input type="radio" name="parti-sort" id="endTime" value="0"><label for="endTime"> 마감 임박 순으로 정렬</label> 
 			</small>
 			</td>
-		</tr> -->
+		</tr>
 		<c:forEach items="${leadList}" var="list" varStatus="j">
 			<tr>
 				<th><img src="${pageContext.request.contextPath }/resources/upload/${list.photo1}" width="100px"></img></th>
