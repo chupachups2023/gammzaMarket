@@ -35,4 +35,15 @@ public class RequestServiceImpl implements RequestService {
 	public ArrayList<RequestMember> selectRequestMember(int requestNo) {
 		return requestDao.selectRequestMember(requestNo);
 	}
+
+	@Override
+	public int insertRequest(Request request) {
+		return requestDao.insertRequest(request);
+	}
+
+	@Override
+	public int selectLastNum() {
+		return requestDao.selectLastNum();
+	}
+
 }

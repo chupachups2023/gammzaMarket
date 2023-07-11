@@ -16,4 +16,9 @@ public interface RequestService {
 
 	ArrayList<RequestMember> selectRequestMember(int requestNo);
 
+	int insertRequest(Request request);
+
+	int selectLastNum();
+
+
 }
