@@ -55,7 +55,7 @@
 					<a class="header-menu headder-cateA">카테고리</a>
 				</div>
 				<a href="javascript:viewAllGonggu();" class="header-menu">공구보기</a> 
-				<a href="" class="header-menu">요청게시판</a> 
+				<a href="javascript:viewRequest();" class="header-menu">요청게시판</a> 
 				<a href="${pageContext.request.contextPath}/location/location.lo" class="header-menu">장소인증</a>
 				<a href="${pageContext.request.contextPath}/gonggu/ggWrite.go" class="header-menu">공구 글쓰기</a>
 			</div>
@@ -194,6 +194,33 @@
 	function fn_srchGgLst() {
 		var gongguName = document.getElementById('gongguName').value;
 		
+		const modal = document.getElementById("modal");
+		const openModalBtn = document.getElementById("open-modal");
+		const closeModalBtn = document.getElementById("close-modal");
+		const loginModalBtn = document.getElementById("login-modal");
+		// 모달창 열기
+		openModalBtn.addEventListener("click", () => {
+			modal.style.display = "block";
+			document.body.style.overflow = "hidden"; // 스크롤바 제거
+		});
+		// 모달창 닫기
+		closeModalBtn.addEventListener("click", () => {
+			modal.style.display = "none";
+			document.body.style.overflow = "auto"; // 스크롤바 보이기
+		});
+		// 모달창 닫기
+		loginModalBtn.addEventListener("click", () => {
+			modal.style.display = "none";
+			document.body.style.overflow = "auto"; // 스크롤바 보이기
+			loginFrm.submit();
+		});
+		
+		 function fn_srchGgLst() {
+	            var gongguName = document.getElementById('gongguName').value;
+	            
+	            var url = '${pageContext.request.contextPath}/gonggu/ggSearch.go?gongguName=' + encodeURIComponent(gongguName);
+	            location.href = url;
+	        }
 		var url = '${pageContext.request.contextPath}/gonggu/ggSearch.go?gongguName=' + encodeURIComponent(gongguName);
 		const memLong="${loginMember.longitude}";
 	    
@@ -222,6 +249,14 @@
 		    }
 		}
 	    navigator.geolocation.getCurrentPosition(success);
+	}
+	function viewRequest(){
+		function success(position) {
+		    const latitude = position.coords.latitude;   // 위도(37.xxxx)
+		    const longitude = position.coords.longitude;
+			location.href="${pageContext.request.contextPath}/ggRequest/requestView.req?longitude="+longitude+"&latitude="+latitude;
+		}
+		navigator.geolocation.getCurrentPosition(success);
 	}
 		
 	    </script>

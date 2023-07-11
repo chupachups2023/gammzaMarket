@@ -1,0 +1,48 @@
+@charset "UTF-8";
+@charset "UTF-8";
+#title {
+    text-align: center;
+}
+.table{
+    border-collapse: collapse;
+    width:1200px;
+    margin:50px auto;
+    font-weight:normal;
+    text-align:center;
+}
+th{
+    border-top: solid 1px #808080;
+    border-bottom: solid 1px #808080;
+    font-weight:normal;
+}
+.sort-type{
+	padding-bottom:5px;
+	text-align:left;
+}
+.align-right{
+	text-align:right;
+}
+a:hover{
+	text-decoration:underline;
+	text-underline-position : under;
+}
+.request-img{
+	width: 130px;
+	height: 130px;
+	overflow:hidden;
+	margin:10px;
+	border-radius:20px;
+}
+.request-img>img{
+	width: 130px;
+}
+.request-fore{
+	width:10px;
+	visibility:hidden;
+}
+.reqNum, .viewCount{
+	width:150px;
+}
+.recentDate{
+	width:250px;
+}

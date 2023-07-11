@@ -50,8 +50,6 @@ public class LikeListController {
 			Location likeLocation=locationController.selectLocationByNo(locationNo);
 			String locationName=locationController.SelectLocationName(likeLocation);
 			myLikelist.get(i).setLocationName(locationName);
-			
-			System.out.println(myLikelist.get(i));
 		}
 		model.addAttribute("myLikelist", myLikelist);
 		model.addAttribute("pi", pi);

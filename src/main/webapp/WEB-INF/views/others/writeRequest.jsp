@@ -9,14 +9,6 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="공구 요청하기" name="title"/>
 </jsp:include>
-
-<!-- 
-*제목 수정하기
-*내용 들어갈 곳
-*공구 요청 글쓰기 
--->
-
-	<!-- 공구 참여하기 -->
     <div class="request-title">
         <h1>공구 요청 작성글</h1>
         <hr>
