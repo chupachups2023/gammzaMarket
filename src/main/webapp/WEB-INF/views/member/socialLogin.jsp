@@ -26,15 +26,6 @@
 		text-align: center;
 		padding-bottom: 20px;
 	}
-
-
-
-
-
-
-
-
-
 </style>
 
 
@@ -54,7 +45,7 @@
 					<img src="${pageContext.request.contextPath}/resources/img/header/감자마켓.png" alt="logo" class="header-gamza"> 
 					<img src="${pageContext.request.contextPath}/resources/img/header/한글로고2.png" alt="korlogo" class="header-korlogo">
 				</a>
-				<div>
+				<%-- <div>
 				<c:choose>
 					<c:when test="${empty loginMember}">
 						<button class="header-login btn" id="open-modal">로그인</button>
@@ -69,7 +60,7 @@
 		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
 					</c:otherwise>
 				</c:choose>
-				</div>
+				</div> --%>
 			</div>
 		</div>
 		<div class="header-midout">
@@ -106,23 +97,23 @@
 		</div>
 
 
-		<form action="${pageContext.request.contextPath}/member/memberLogin.me" method="post" id="loginFrm">
+		<form action="${pageContext.request.contextPath}/member/memberLogin.me" method="post" name="loginFrm">
 			<div class="login-content">
 				<div>
 					<h2>로그인</h2>
 					<ul class="login-top">
 						<li class="login-info">
-							<input type="text" placeholder="아이디 입력" name="userId">
+							<input type="text" placeholder="아이디 입력" name="userId" id="userId">
 						</li>
 						<li class="login-info">
-							<input type="password" placeholder="비밀번호 입력" name="userPwd">
+							<input type="password" placeholder="비밀번호 입력" name="userPwd" id="userPwd">
 						</li>
 						<li class="login-chkbox">
 							<input type="checkbox" id="chk1">
 							<label for="chk1">아이디 저장</label>
 						</li>
 						<li class="login-input modal-footer">
-							<input type="button" class="login-btn" value="로그인" id="login-modal">
+							<input type="button" class="login-btn" value="로그인" id="login-modal" onclick="validation();">
 						</li>
 					</ul>
 					<ul class="login-bottom">
@@ -133,8 +124,34 @@
 				</div>
 			</div>
 		</form>
+		
+		
+		
 
 <script>
+	function validation() {
+		var uid = document.getElementById("userId");
+		var pw = document.getElementById("userPwd");
+		
+		if (uid.value == "") {
+			alert("아이디를 입력하세요");
+			uid.focus();
+			return false;
+		}
+		
+		// 비밀번호 확인 
+		if (pw.value == "") {
+			alert("비밀번호를 입력하세요");
+			pw.focus();
+			return false;
+		}
+		
+		document.loginFrm.submit();
+		
+	}
+
+
+
 	$(function(){
 	    $(".header-category").click(function(){
 	        const p1 = $(".category-drop");
@@ -146,7 +163,7 @@
 	    });
 	});
        
-		const modal = document.getElementById("modal");
+		/* const modal = document.getElementById("modal");
 		const openModalBtn = document.getElementById("open-modal");
 		const closeModalBtn = document.getElementById("close-modal");
 		const loginModalBtn = document.getElementById("login-modal");
@@ -165,8 +182,8 @@
 			modal.style.display = "none";
 			document.body.style.overflow = "auto"; // 스크롤바 보이기
 			loginFrm.submit();
-		});
+		}); */
 		
-	    </script>
+</script>
 	</header>
 	<section>

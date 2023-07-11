@@ -52,5 +52,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectMemberByNaver(id);
 	}
 
+	@Override
+	public String insertNaverIdkey(String naverIdkey) {
+		return memberDao.insertNaverIdkey(naverIdkey);
+	}
+
 
 }

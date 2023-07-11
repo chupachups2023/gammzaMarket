@@ -10,7 +10,7 @@ import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 @Mapper
 public interface GongguDao {
 	
-	ArrayList<Gonggu> selectHomeList();
+	ArrayList<Gonggu> selectMainList();
 	
 	ArrayList<Gonggu> selectggListView(HashMap<String, String> locationMap);
 

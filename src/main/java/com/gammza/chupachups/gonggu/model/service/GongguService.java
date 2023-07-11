@@ -13,7 +13,7 @@ public interface GongguService {
 	
 	ArrayList<Gonggu> selectggListView(HashMap<String,String> locationMap);
 	
-	ArrayList<Gonggu> selectHomeList();
+	ArrayList<Gonggu> selectMainList();
 	
 	ArrayList<Gonggu> selectLeadGongguList(String userId);
 	
@@ -28,11 +28,11 @@ public interface GongguService {
 	int selectLastNum();
 	
 	int selectTotalRecored();
-	
+
 	int updateEndStatus(int gongguNo);
-	
+
 	int updateGonggu(Gonggu gonggu);
-	
+
 	int updateGongguCount(int gongguNo);
 
 

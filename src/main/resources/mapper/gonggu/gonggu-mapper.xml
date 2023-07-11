@@ -39,16 +39,10 @@
           where gonggu_no = #{gongguNo}
     </select>
     
-    <select id="selectHomeList" resultMap="gongguMap">
+    <select id="selectMainList" resultMap="gongguMap">
     	select *
     		from gonggu
     		where status=1 and end_status=1
-    	order by pullup_at desc
-    </select>
-    <select id="selectHomeListWithEnd" resultMap="gongguMap">
-    	select *
-    		from gonggu
-    		where status=1
     	order by pullup_at desc
     </select>
 

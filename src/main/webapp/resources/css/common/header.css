@@ -112,6 +112,7 @@ textarea{
     text-decoration: none;
     color: black;
     width: 110px;
+    cursor:pointer;
 }
 .category-list{
     display: flex;

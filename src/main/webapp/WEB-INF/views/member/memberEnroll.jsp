@@ -74,9 +74,20 @@
 								</tr>
 										<tr>
 											<td class="btn-cont">
-												<button type="button" class="bo-small">이메일 인증하기</button>
+												<button type="button" class="bo-small" id="emlChk" >이메일 인증하기</button>
+												
 											</td>
 										</tr>
+								<tr>
+										<td scope="col" class="add">
+												<input type="email" name="emailAuth" id="emailAuth" placeholder="인증번호 6자리를 입력해주세요" required>
+										</td>
+								</tr>
+										<!-- <tr>
+											<td class="btn-cont">
+												<button type="button" class="bo-small" id="emlChk2" >인증</button>
+											</td>
+										</tr> -->
 									 <tr>
 											 <td scope="col" class="add">
 													 <input name="birthday" id="birthday" placeholder="생년월일 8자리 입력 (ex. 2023-01-01)">
@@ -303,7 +314,6 @@
 			return false;
 		}
 		
-		// ID 중복확인 작업중 
 		
 		// 비밀번호 확인 
 		if (pw.value == "") {
@@ -345,15 +355,16 @@
 		}
 		
 		// 휴대폰번호
-		if (phone.value == "") {
+		/* if (phone.value == "") {
 			alert("휴대폰번호를 입력하세요");
 			phone.focus();
 			return false;
-		} else if (!phoneCfm.test(phone)) {
+		} else if (!phoneCfm.test(phone.value)) {
 			alert("휴대폰번호가 올바르지 않습니다");
 			phone.focus();
 			return false;
-		}
+		} */
+		
 		
 		
 		
@@ -397,10 +408,31 @@
 		document.enrollfrm.submit();
 		
 	}
-
-
-
-
+	
+	var code = ""; 		/*	인증번호 저장할 곳	 */
+	$('#emlChk').click(function() {
+		var email = $('#email').val();   /* 입력한 이메일 */
+		console.log('완성된 이메일 : ' + email);		/* 이메일 오는지 확인 */
+		var emailAuth = $('.emailAuth')		/* 인증번호 입력 */
+		
+		 var regExp = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.[a-zA-Z]{2,4}$/;
+		 
+		  if(!regExp.test(email)){
+		    alert("이메일 주소를 입력하세요!");
+		    return false;
+		  }
+			$.ajax({
+				type: 'GET',
+				url: '${pageContext.request.contextPath}/member/mailCheck.me?email=' + email,	/* url을 통해 데이터를 보낼 수 있도록 GET방식, url명을 "mailCheck"로 지정 */
+				success: function(data) {
+					console.log("data : " + data );
+					emailAuth.attr('disabled', false);		/* 데이터가 성공적으로 들어오면 인증번호 입력란이 활성화되도록 */
+					code = data;
+					alert('인증번호가 전송되었습니다.')
+					return true;
+				},
+			});
+		});
 </script>
 
 
