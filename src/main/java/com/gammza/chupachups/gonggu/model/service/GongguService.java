@@ -28,10 +28,16 @@ public interface GongguService {
 	int selectLastNum();
 	
 	int selectTotalRecored();
-	
+
+	int updateGongguCount(int gongguNo);
+
 	int updateEndStatus(int gongguNo);
-	
+
 	int updateGonggu(Gonggu gonggu);
+
+	ArrayList<Gonggu> selectLeadGongguList(String userId);
+
+	ArrayList<Gonggu> searchGonggu(String gongguName);
 	
 	int updateGongguCount(int gongguNo);
 
