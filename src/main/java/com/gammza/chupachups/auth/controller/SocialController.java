@@ -129,28 +129,37 @@ public class SocialController {
 				System.out.println(member);
 				
 				Member loginMember=memberService.selectMemberByKakao(kakaoProfile.getId());
-				
-				if (loginMember == null) { // 카카오 연동을 최초로 하는 신규/기존 회원  (KAKAO_IDKEY == NULL) 
-					model.addAttribute("kakaoIdkey", kakaoProfile.getId());
-					redirectAtt.addFlashAttribute("msg", "카카오 간편로그인 최초 1회 연결이 필요합니다.");
-					return "/member/socialLogin";
-				} else { // 카카오 연동 완료한 회원 
-					model.addAttribute("loginMember", loginMember);
-					return "redirect:/";
+
+				if (loginMember == null) {
+					memberService.insertKakaoMember(member);
+					model.addAttribute("loginMember", member);
+					
+				} else {
+					model.addAttribute("loginMember", member);
 				}
 				
-			}
-			
-			/*
-			@GetMapping("/member/insertKakaoMember")
-			public String insertKakaoMember(Member member, KakaoProfile kakaoProfile) {
-				Member memberCheck = memberService.selectMemberByKakao(kakaoProfile.getId());
-				if (memberCheck == null) {
-					int result = memberService.insertKakaoMember(member);
-				}
+				// model.addAttribute("kakaoIdkey", kakaoProfile.getId());
+				
+				/*
+				 * if (loginMember == null) { // 카카오 연동을 최초로 하는 신규/기존 회원 (KAKAO_IDKEY == NULL)
+				 * model.addAttribute("kakaoIdkey", kakaoProfile.getId());
+				 * redirectAtt.addFlashAttribute("msg", "카카오 간편로그인 최초 1회 연결이 필요합니다."); return
+				 * "/member/socialLogin"; } else { // 카카오 연동 완료한 회원
+				 * model.addAttribute("loginMember", loginMember); return "redirect:/"; }
+				 */
 				return "redirect:/";
 			}
-			*/
+			
+			
+			/*
+			 * @GetMapping("/member/insertKakaoMember") public String
+			 * insertKakaoMember(Member member, KakaoProfile kakaoProfile, Model model) {
+			 * Member memberCheck = memberService.selectMemberByKakao(kakaoProfile.getId());
+			 * if (memberCheck == null) { int result =
+			 * memberService.insertKakaoMember(member); // model.addAttribute("kakaoIdkey",
+			 * kakaoProfile.getId()); } return "redirect:/"; }
+			 */
+			
 			
 
 			// 230711 수정 
@@ -259,16 +268,41 @@ public class SocialController {
 				
 				Member loginMember=memberService.selectMemberByNaver(naverProfile.getResponse().getId());
 				
-				if (loginMember == null) { // 네이버 연동을 최초로 하는 신규/기존 회원  (NAVER_IDKEY == NULL) 
-					model.addAttribute("naverIdkey", naverProfile.getResponse().getId());
-					redirectAtt.addFlashAttribute("msg", "네이버 간편로그인 최초 1회 연결이 필요합니다.");
-					return "/member/socialLogin";
-				} else { // 네이버 연동 완료한 회원 
-					model.addAttribute("loginMember", loginMember);
-					return "redirect:/";
+				if (loginMember == null) {
+					memberService.insertNaverMember(member);
+					model.addAttribute("loginMember", member);
+					
+				} else {
+					model.addAttribute("loginMember", member);
+					
 				}
+				return "redirect:/";
+				
+				
+				
+				
+				
+				
+				
+				
+				/*
+				 * if (loginMember == null) { // 네이버 연동을 최초로 하는 신규/기존 회원 (NAVER_IDKEY == NULL)
+				 * model.addAttribute("naverIdkey", naverProfile.getResponse().getId());
+				 * redirectAtt.addFlashAttribute("msg", "네이버 간편로그인 최초 1회 연결이 필요합니다."); return
+				 * "/member/socialLogin"; } else { // 네이버 연동 완료한 회원
+				 * model.addAttribute("loginMember", loginMember); return "redirect:/"; }
+				 */
 				
 			}
+			
+			/*
+			 * @GetMapping("/member/insertNaverMember") public String
+			 * insertNaverMember(Member member, NaverProfile naverProfile) { Member
+			 * memberCheck =
+			 * memberService.selectMemberByNaver(naverProfile.getResponse().getId()); if
+			 * (memberCheck == null) { int result = memberService.insertNaverMember(member);
+			 * } return "redirect:/"; }
+			 */
 				
 				
 				
