@@ -13,9 +13,7 @@
 	<table> 
 		<tr>
 			<th scope="col" >
-				<input name="userId" placeholder="user01" id="userId" required>
-				<span class="guide ok">아이디 사용가능</span>
-				<span class="guide error">아이디 사용불가</span>
+				아이디 : <input name="userId" placeholder="user01" id="userId" required><br>
 			</th>
 		</tr>
 		<tr>

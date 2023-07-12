@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -94,10 +94,10 @@
         <div class="adminpageBox green" onclick="location.href='${pageContext.request.contextPath}/adminpage/noticeList.bo'">
             <div>공지사항</div>
         </div>
-        <div class="adminpageBox orange" onclick="location.href='#'">
+        <div class="adminpageBox orange" onclick="location.href='${pageContext.request.contextPath}/adminpage/gongguList_Ad.do'">
             <div>전체공구</div>
         </div>
-        <div class="adminpageBox orange" onclick="location.href='#'">
+        <div class="adminpageBox orange" onclick="location.href='${pageContext.request.contextPath}/adminpage/memberList.do'">
             <div class="menuBig">회원정보</div>
         </div>
         <div class="halfbox">
