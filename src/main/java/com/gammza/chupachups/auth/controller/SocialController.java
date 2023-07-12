@@ -281,7 +281,6 @@ public class SocialController {
 					model.addAttribute("loginMember", loginMember);
 					return "redirect:/";
 				}
-				return "redirect:/";
 				
 				
 				

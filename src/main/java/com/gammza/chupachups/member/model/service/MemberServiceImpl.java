@@ -67,6 +67,9 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int updateNaverIdkey(HashMap<String, String> map) {
 		return memberDao.updateNaverIdkey(map);
+	}
+	
+	@Override
 	public String findIdClick(String phone) {
 		return memberDao.findIdClick(phone);
 	}
