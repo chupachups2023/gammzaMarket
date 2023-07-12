@@ -16,11 +16,17 @@ public interface MemberService {
 
 	Member selectMemberByKakao(Long id);
 
-	Member selectMemberByPhone(String phone);
+	/* Member selectMemberByPhone(String phone); */
 
 	Member selectMemberByNaver(String id);
 
 	String insertNaverIdkey(String setNaverIdkey);
+
+	String findIdClick(String phone);
+
+	int insertNaverMember(Member member);
+
+	String findPwdClick(String userId, String phone);
 
 	
 

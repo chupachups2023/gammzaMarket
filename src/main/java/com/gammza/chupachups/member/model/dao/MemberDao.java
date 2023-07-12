@@ -21,8 +21,14 @@ public interface MemberDao {
 
 	Member selectMemberByNaver(String id);
 
-	Member selectMemberByPhone(String phone);
+	/* Member selectMemberByPhone(String phone); */
 
 	String insertNaverIdkey(String naverIdkey);
+
+	String findIdClick(String phone);
+
+	int insertNaverMember(Member member);
+
+	String findPwdClick(String userId, String phone);
 
 }

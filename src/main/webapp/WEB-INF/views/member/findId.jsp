@@ -9,9 +9,9 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="회원가입" name="title"/>
 </jsp:include>
+<%@ include file="findIdModal.jsp" %>
 
-
-	 <!-- 아이디/비밀번호 찾기 -->
+	<!-- 아이디/비밀번호 찾기 -->
     <div class="find-container">
 			<div class="find-content">
 					<nav class="tab-type1">
@@ -25,14 +25,14 @@
 					<li class="login-input"><input type="text" placeholder="아이디 입력"></li>
 					<li class="login-input"><input type="submit" class="login-btn" value="로그인" style="background-color: #CBB376; border: 1px solid #F3D774;"></li>
 			</ul> -->
-			<form action="${pageContext.request.contextPath}/member/findLoginInfo.me" method="post" name="findfrm">
+			<form action="${pageContext.request.contextPath}/member/findId.me" method="post" name="findfrm">
 				<div class="find-content2">
 						<div class="find-id2">
 								<ul>
 										<li><input type="text" name="phone" id="phone" placeholder="휴대폰 번호를 입력해 주세요"></li>
 								</ul>
 								<ul>
-										<li><input type="button" value="찾기" onclick="findLoginInfoForm();"></li>
+										<li><input type="button" id="findId" value="찾기" onclick="findIdClick();"></li>
 								</ul>
 						</div>
 				</div>
@@ -42,7 +42,53 @@
 
 
 		<script>
-			function findLoginInfoForm() {
+			// 아이디 찾기
+			function findIdClick(){
+				var phone = $('#phone').val()
+				
+				$.ajax({
+					url: "${pageContext.request.contextPath}/member/findId.me",
+					type: "post",
+					data: { "phone" : phone },
+					success: function(data) {
+						if (data == 0) {
+							$('#idValue').text("일치하는 아이디가 없습니다.");
+							$('#phone').val('');
+						} else {
+							$('#idValue').text(data);
+							$('#phone').val('');
+							
+						}
+					},
+					 error: function() {
+						 alert("error");
+					}
+				});
+			
+			};
+
+			const modal1 = document.getElementById("modal1")
+			const btnModal1 = document.getElementById("findId")
+	
+			btnModal1.addEventListener("click", e => {
+			    modal1.style.display = "flex"
+			})
+	
+			    
+			const closeBtn1 = modal1.querySelector(".close-area1")
+			closeBtn1.addEventListener("click", e => {
+			    modal1.style.display = "none"
+			})
+	
+			modal1.addEventListener("click", e => {
+			    const evTarget = e.target
+			    if (evTarget.classList.contains("modal1-overlay")) {
+			        modal1.style.display = "none"
+			    }
+			})
+
+			
+			/* function findLoginInfoForm() {
 				// findfrm.phone.value = findfrm.phone.value.trim();
 				// findfrm.phone.value = findfrm.phone.value.replaceAll('-', '');
 
@@ -64,34 +110,9 @@
 
 				document.findfrm.submit();
 
-			}
-
-
-
-
-
+			} */
 
 		</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
    
    <!-- <script type="text/javascript">
