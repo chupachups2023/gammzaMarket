@@ -134,12 +134,14 @@ element.style {
 		<c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage }">
 			<c:choose>
 				<c:when test="${p eq pi.nowPage }">
-					<li class="page-item active"><a class="page-link"
-						href="${pageContext.request.contextPath}/adminpage/noticeList.bo?nowPage=${ p }">${ p }</a></li>
+					<a class="page-link" href="${pageContext.request.contextPath}/adminpage/noticeList.bo?nowPage=${ p }">
+						<li class="page-item active">${ p }</li>
+					</a>
 				</c:when>
 				<c:otherwise>
-					<li class="page-item"><a class="page-link"
-						href="${pageContext.request.contextPath}/adminpage/noticeList.bo?nowPage=${ p }">${ p }</a></li>
+					<a class="page-link" href="${pageContext.request.contextPath}/adminpage/noticeList.bo?nowPage=${ p }">
+						<li class="page-item">${ p }</li>
+					</a>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
