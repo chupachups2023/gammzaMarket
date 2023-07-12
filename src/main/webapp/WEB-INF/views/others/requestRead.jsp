@@ -40,7 +40,11 @@
             </div>
         </div>
         <div class="ggRead-detail">
+        	<c:choose>
+        		<c:when test="${not empty request.price }">
             <div class="ggRead-price">총 <fmt:formatNumber type="number" maxFractionDigits="3" value="${request.price}" /> 포인트 예상</div>
+        		</c:when>
+        	</c:choose>
             <div class="ggRead-price">이 공구를 ${request.num }명이 기다리고 있어요</div>
             <c:choose>
             	<c:when test="${empty request.link }">
@@ -64,13 +68,8 @@
         <c:choose>
         	<c:when test="${request.requestWriter eq loginMember.userId}">
        		<div class="ggRead-button">
-<<<<<<< Updated upstream
-	            <a href="" class="button">글 삭제</a>
-	            <a href="" class="button">공구열기</a>
-=======
 	            <button onclick="deleteReq();" class="button">글 삭제</button>
 	            <a href="${pageContext.request.contextPath}/ggRequest/gongguWrite.req?requestNo=${request.requestNo}" class="button">공구열기</a>
->>>>>>> Stashed changes
         	</div>
         	</c:when>
         	<c:when test="${empty loginMember }">
@@ -81,8 +80,8 @@
         	</c:when>
         	<c:otherwise>
 	        <div class="ggRead-button">
-	            <a href="" class="button">참여신청</a>
-	            <a href="" class="button">공구열기</a>
+	            <button onclick="enrollRequest();" class="button">참여신청</button>
+	            <a href="${pageContext.request.contextPath}/ggRequest/gongguWrite.req?requestNo=${request.requestNo}" class="button">공구열기</a>
 	        </div>
         	</c:otherwise>
         </c:choose>
@@ -143,9 +142,6 @@ for(let i=1;i<reqMemArr.length;i++){
     	console.log("실패");
     }
 });
-<<<<<<< Updated upstream
-
-=======
 function enrollRequest(){
 	const loginMember="${loginMember.userId}";
 	if(loginMember=="" || loginMember == null){
@@ -166,7 +162,7 @@ function deleteReq(){
 	}
 }
  
->>>>>>> Stashed changes
+ 
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

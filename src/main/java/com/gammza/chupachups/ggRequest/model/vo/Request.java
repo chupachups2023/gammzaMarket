@@ -25,5 +25,6 @@ public class Request {
 	private String longitude;
 	private String link;
 	private int count;
+	private String recentDate;
 	
 }

@@ -55,7 +55,7 @@
 
 							 </table>
 										 </div>
-										 <div class="container2">
+										 <div class="container3">
 							 <table class="enroll-section">
 								<tr>
 										<td scope="col" class="add">
@@ -145,90 +145,17 @@
        </div> -->
 
 
-<!-- <script type="text/javascript">
-		
-	    // ID 중복체크 
-		function checkIdFunc() {
-			var userId = $('#userId').val();
-			console.log("사용자 아이디 입력 값: " + userId);
-			
-		    var uid = document.getElementById("userId");
-			
-			if (uid.value == "") {
-			alert("아이디를 입력하세요");
-			uid.focus();
-			return false;
-		}
-		
-			$.ajax({
-				type: "post",
-				url: "${pageContext.request.contextPath}/member/checkId.do",
-				data: { userId : userId },
-				dataType: 'json',
-	            /* contentType : "application/json; charset=utf-8", */
-	            success: function(cnt) {
-	            	if (cnt == 0) {
-	            		$('id_ok').css("display", "inline-block");
-	            		$('.id_already').css("display", "none");
-	            	} else {
-	            		$('.id_already').css("display", "inline-block");
-	            		$('.id_ok').css("display", "none");
-	            		alert("아이디를 다시 입력해 주세요");
-	            		$('#userId').val('');
-	            	}
-	            },
-	            error: function() {
-	            	alert("통신 오류");
-	            }
-	        });
-	    }
-	    
-	
-</script> -->
-
 <script type="text/javascript">
 		document.querySelector("#userId").addEventListener("keyup", (e) => {
 			const ok = document.querySelector(".ok");
 			const error = document.querySelector(".error");
 			const userId = e.target;
 			
-			// var userId = $('#userId').val();
-			
-			/*
-			console.log("사용자 아이디 입력 값: " + userId);
-			
-		    var uid = document.getElementById("userId");
-		    var idCfm = /^[a-z0-9]{4,12}$/;
-		    
-		    
-			if (uid.value == "") {
-			alert("아이디를 입력하세요");
-			uid.focus();
-			return false;
-		}
-			
-			// 아이디 대소문자 확인 
-			if (!idCfm.test(uid.value)) {
-				alert("아이디는 4~12자의 영문 소문자와 숫자만 사용 가능합니다");
-				uid.focus();
-				return false;
-			}
-			*/
-			
-			/*
-			  - 한글 입력 시
-			  - 4~12글자 제한 
-			
-			*/
-			
-			
-			
 			if (userId.value.length < 4) {
 				ok.style.display = "none";
 				error.style.display = "none";
 				return;
 			}
-			
 			
 			$.ajax({
 				url: "${pageContext.request.contextPath}/member/checkId.me",
@@ -297,8 +224,7 @@
 		
 		// 생년월일
 		var birthdayCfm = /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
-		
-		
+
 		
 		// 아이디 확인
 		if (uid.value == "") {
@@ -355,7 +281,7 @@
 		}
 		
 		// 휴대폰번호
-		/* if (phone.value == "") {
+		if (phone.value == "") {
 			alert("휴대폰번호를 입력하세요");
 			phone.focus();
 			return false;
@@ -363,10 +289,7 @@
 			alert("휴대폰번호가 올바르지 않습니다");
 			phone.focus();
 			return false;
-		} */
-		
-		
-		
+		}
 		
 		// 이메일 주소 확인 
 		if (email.value == "") {
@@ -389,24 +312,7 @@
 			birthday.focus();
 			return false;
 		}
-		
-		/*
-		if (enrollfrm.idDuplication.value != "idCheck") {
-		    alert("아이디 중복 확인이 필요합니다");
-		    return;
-		  }
-		*/
-		
-		
-		
-		
-		/* 
-			- 입력 텍스트 font-size 조절 예정
-		*/
-		
-		
 		document.enrollfrm.submit();
-		
 	}
 	
 	var code = ""; 		/*	인증번호 저장할 곳	 */

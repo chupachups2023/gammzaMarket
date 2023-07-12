@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,8 +22,10 @@ import com.gammza.chupachups.common.SpringUtils;
 import com.gammza.chupachups.ggRequest.model.service.RequestService;
 import com.gammza.chupachups.ggRequest.model.vo.Request;
 import com.gammza.chupachups.ggRequest.model.vo.RequestMember;
+import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 import com.gammza.chupachups.location.controller.LocationController;
-
+import com.gammza.chupachups.location.model.vo.Location;
+import com.gammza.chupachups.member.model.vo.Member;
 
 @Controller
 @RequestMapping("/ggRequest")
@@ -48,6 +51,11 @@ public class RequestController {
 		}
 		
 		ArrayList<Request> requestList=requestService.selectAllRequestList(map);
+		for(int i=0;i<requestList.size();i++) {
+			Request request=requestList.get(i);
+			String regAt=requestService.selectRequestMember(request.getRequestNo()).get(0).getRegAt();
+			request.setRecentDate(regAt);
+		}
 		model.addAttribute("requestList", requestList);
 		
 		return "/others/requestView";
@@ -61,7 +69,6 @@ public class RequestController {
 		model.addAttribute("request", ggrequest);
 		
 		ArrayList<RequestMember> reqMember=requestService.selectRequestMember(requestNo);
-		model.addAttribute("reqMember", reqMember);
 		
 		
 		return "/others/requestRead";
@@ -76,7 +83,7 @@ public class RequestController {
 
 	 //요청 글 작성
 	 @PostMapping("/ggRequestFrm.req")
-	 public String ggEnrollFrm(Request request, @RequestParam MultipartFile upPhoto1, @RequestParam MultipartFile upPhoto2,
+	 public String ggEnrollFrm(Request request, Location location, @RequestParam MultipartFile upPhoto1, @RequestParam MultipartFile upPhoto2,
 			@RequestParam MultipartFile upPhoto3, Model model,RedirectAttributes redirectAttr) {
 		 
 		String saveDirectory = application.getRealPath("/resources/upload");
@@ -139,18 +146,30 @@ public class RequestController {
 			}
 		}
 		int result = requestService.insertRequest(request);
+		
+		int localCode=locationController.selectLocation(location).getLocationNo();
+		
+		
 		if(result>0) {
 			int requestNo=requestService.selectLastNum();
 			Request newRequest=requestService.selectRequest(requestNo);
 			model.addAttribute("request", newRequest);
+			
+			RequestMember reqMem=new RequestMember();
+			reqMem.setLatitude(newRequest.getLatitude());
+			reqMem.setLongitude(newRequest.getLongitude());
+			reqMem.setLocalCode(localCode);
+			reqMem.setRequestMember(newRequest.getRequestWriter());
+			reqMem.setRequestNo(newRequest.getRequestNo());
+			
+			int insert=requestService.insertRequestMember(reqMem);
+			
 			return "/others/requestRead";
 		}else {
 			redirectAttr.addFlashAttribute("msg","글 작성에 실패했습니다ㅠ");
 			return "/others/writeRequest";
 		}
 	}
-<<<<<<< Updated upstream
-=======
 	 
 	 @GetMapping("/enrollRequest.req")
 	 public String enrollRequest(HttpSession session, @RequestParam int requestNo,RedirectAttributes redirectAttr) {
@@ -204,12 +223,12 @@ public class RequestController {
 	 public String requestDelete(@RequestParam int requestNo,RedirectAttributes redirectAttr) {
 		 int updateRequestStatus=requestService.updateRequestStatus(requestNo);
 		 
-		 redirectAttr.addFlashAttribute("msg","삭제가 완료되었습니다.");
 		 return "redirect:requestView.req";
 	 }
 	 
 	 public int updateRequestReqStatus(int requestNo) {
 		 return requestService.updateRequestReqStatus(requestNo);
 	 }
->>>>>>> Stashed changes
+  
+  
 }

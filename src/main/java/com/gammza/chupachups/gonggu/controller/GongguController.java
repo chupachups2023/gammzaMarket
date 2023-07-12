@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.gammza.chupachups.chatRoom.model.service.ChatRoomService;
@@ -31,6 +34,9 @@ import com.gammza.chupachups.common.ChangeDate;
 import com.gammza.chupachups.common.SpringUtils;
 import com.gammza.chupachups.common.model.vo.PageInfo;
 import com.gammza.chupachups.common.template.Pagination;
+import com.gammza.chupachups.ggRequest.controller.RequestController;
+import com.gammza.chupachups.ggRequest.model.service.RequestService;
+import com.gammza.chupachups.ggRequest.model.vo.Request;
 import com.gammza.chupachups.gonggu.model.service.GongguService;
 import com.gammza.chupachups.gonggu.model.service.PartiService;
 import com.gammza.chupachups.gonggu.model.vo.Gonggu;
@@ -60,9 +66,20 @@ public class GongguController {
 	private ChatRoomService chatRoomService;
 	@Autowired
 	private PartiService partiService;
+	@Autowired
+	private RequestService requestService;
+	@Autowired
+	private RequestController requestController;
 
 	@GetMapping("/ggWrite.go")
-	public void ggWrite() {	}
+	public void ggWrite(HttpServletRequest request,Model model) {
+		Map<String, Gonggu> flashMap =(Map<String, Gonggu>) RequestContextUtils.getInputFlashMap(request);
+		Gonggu gonggu=null;
+		if(flashMap !=null) {
+			gonggu=flashMap.get("gonggu");
+		}
+		model.addAttribute("gonggu", gonggu);
+	}
 
 	@GetMapping("/ggListView.go")
 	public ModelAndView ggListView(Model model,RedirectAttributes redirectAttr, HttpSession session,
@@ -72,6 +89,7 @@ public class GongguController {
 		ModelAndView mav=new ModelAndView();
 		if(loginMember !=null) {
 			if(loginMember.getLatitude() == null) {
+				System.out.println(loginMember.getLatitude());
 				redirectAttr.addFlashAttribute("msg","정확한 주변 공구를 보려면 장소 인증을 먼저 해야 합니다.");
 				mav.setView(new RedirectView("/chupachups/location/location.lo"));
 				return mav;
@@ -159,14 +177,15 @@ public class GongguController {
 		 
 	 }
 	 
+	
 	 
 	 
 	 @PostMapping("/ggEnrollFrm.go")
 	 public String ggEnrollFrm(Gonggu gonggu, Location map,@RequestParam MultipartFile upPhoto1, @RequestParam MultipartFile upPhoto2,
 			@RequestParam MultipartFile upPhoto3, Model model,RedirectAttributes redirectAttr) {
+		 Request request=requestService.selectRequest(gonggu.getGongguNo());
 		 int locationNo=locationController.selectLocation(map).getLocationNo();
 		 gonggu.setLocationNo(locationNo);
-		 gonggu.setPrice(gonggu.getPrice());
 		if (gonggu.getOpenTime().equals("sysdate")) {
 			gonggu.setEndTime(ChangeDate.chageDate(gonggu.getEndTime()));
 			gonggu.setSendTime(ChangeDate.chageDate(gonggu.getSendTime()));
@@ -192,8 +211,9 @@ public class GongguController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}else {
+			gonggu.setPhoto1(request.getPhoto1());
 		}
-
 		if(upPhoto2.getSize()>0) {
 			String changeFilename=SpringUtils.changeMultipartFile(upPhoto2);
 			photo.add(changeFilename);
@@ -205,6 +225,8 @@ public class GongguController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}else {
+			gonggu.setPhoto2(request.getPhoto2());
 		}
 		if(upPhoto3.getSize()>0) {
 			String changeFilename=SpringUtils.changeMultipartFile(upPhoto3);
@@ -217,6 +239,8 @@ public class GongguController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}else {
+			gonggu.setPhoto3(request.getPhoto3());
 		}
 		if (!photo.isEmpty()) {
 			Collections.sort(photo);
@@ -240,6 +264,11 @@ public class GongguController {
 			Gonggu newGonggu=gongguService.selectOneGonggu(gongguNo);
 			model.addAttribute("gonggu", newGonggu);
 			chatRoomService.insertChatRoom(newGonggu);
+			
+			if(request != null) {
+				requestController.updateRequestReqStatus(request.getRequestNo());
+			}
+			
 			return "/gonggu/ggRead";
 		}else {
 			redirectAttr.addFlashAttribute("msg","글 작성에 실패했습니다ㅠ");
@@ -261,8 +290,6 @@ public class GongguController {
 			@RequestParam MultipartFile upPhoto3, Model model, RedirectAttributes redirectAttr) {
 		 Gonggu Ogonggu=gongguService.selectOneGonggu(newGonggu.getGongguNo());
 		 
-		 newGonggu.setPrice(newGonggu.getPrice());
-		 
 		 int locationNo=locationService.selectLocation(map).getLocationNo();
 		 newGonggu.setLocationNo(locationNo);
 		 //공구 바로 시작하기 처리
@@ -280,7 +307,6 @@ public class GongguController {
 		ArrayList<String> photo = new ArrayList<String>();
 
 		if (upPhoto1.getSize() > 0) {
-			System.out.println("들어옴");
 			if(Ogonggu.getPhoto1() != null) {
 				File file=new File(saveDirectory, Ogonggu.getPhoto1());
 				file.delete();
