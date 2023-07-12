@@ -18,52 +18,46 @@
 	</div>
 	
  	<div class="main-listSec">
- 	
-<div class="list-column">
-        <c:forEach begin="0" end="${fn:length(mainList)/4 }" varStatus="i">
-            <div class="list-row">
-                <c:forEach begin="${i.index*4}" end="${(i.index+1)*4 - 1}" items="${mainList}" var="list" varStatus="j">
-                    <div class="list-goods" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${list.gongguNo }'">
-                        <div class="ggImg gghover">
-                            <img src="${pageContext.request.contextPath}/resources/upload/${list.photo1}" alt="이미지 없음">
-                        </div>
-                            <c:choose>
-                                <c:when test="${fn:length(list.gongguName) gt 10}">
-                        			<div class="ggTitle gghover">${fn:substring(list.gongguName, 0, 10)}...</div>
-                                </c:when>
-                                <c:otherwise>
-                                    <div class="ggTitle gghover">${list.gongguName}</div>
-                                </c:otherwise>
-                            </c:choose>
-                         <c:choose>
-                         	<c:when test="${list.endStatus eq 0 }">
-		                        <div class="gghover when-ggEnd">
-		                        	<div class="ggEnd-tag">마감공구</div>
-		                            <b>
-		                                <fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" />
-		                            </b>
-		                        </div>
-                         	</c:when>
-                         	<c:otherwise>
-		                        <div class="gghover">
-		                            <b>
-		                                <fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" />
-		                            </b>
-		                        </div>
-                         	</c:otherwise>
-                         </c:choose>
-                        <div class="gghover">
-                            <small>${list.locationName}</small>
-                        </div>
-                    </div>
-                </c:forEach>
-            </div>
-        </c:forEach>
-    </div>
-        
-        
-        
-        <div class="moreBtnBox"><button type="button" class="moreBtn button">더보기</button></div>
+        <div class="list-row">
+			<c:forEach items="${mainList}" var="list" varStatus="i">
+				<div class="list-goods" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${list.gongguNo }'">
+					<div class="ggImg gghover">
+					    <img src="${pageContext.request.contextPath}/resources/upload/${list.photo1}" alt="이미지 없음">
+					</div>
+					<c:choose>
+						<c:when test="${fn:length(list.gongguName) gt 10}">
+							<div class="ggTitle gghover">${fn:substring(list.gongguName, 0, 10)}...</div>
+						</c:when>
+						<c:otherwise>
+							<div class="ggTitle gghover">${list.gongguName}</div>
+						</c:otherwise>
+					</c:choose>
+					<c:choose>
+						<c:when test="${list.endStatus eq 0 }">
+							<div class="gghover when-ggEnd">
+								<div class="ggEnd-tag">마감공구</div>
+							    <b>
+							        <fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" />
+							    </b>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="gghover">
+							    <b>
+							        <fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" />
+							    </b>
+							</div>
+						</c:otherwise>
+					</c:choose>
+					<div class="gghover">
+					    <small>${list.locationName}</small>
+					</div>
+				</div>
+			</c:forEach>
+		</div>
+		<div class="moreBtnBox">
+			<button type="button" class="moreBtn button" onclick="moreList();">더보기</button>
+		</div>
 	</div>
 	
 <!-- 	<script>
@@ -82,26 +76,45 @@
 	</script> -->
 	
 	<script>
-	function fn_srchGgLst() {
-		var gongguName = document.getElementById('gongguName').value;
+		/* 무한스크롤 */
+		let page = 8;	//한번에 보여줄 상품 개수
+		$(function(){
+			$(".list-goods").hide();
+			$(".list-goods").slice(0, page).show();
+		});
 		
-		var url = '${pageContext.request.contextPath}/gonggu/ggSearch.go?gongguName=' + encodeURIComponent(gongguName);
+		function moreList(){
+			console.log($(".list-goods:hidden").length);
+			if($(".list-goods:hidden").length >= page){			//보여지지 않은 상품 개수가 보여주고자하는 개수와 같거나 많은지
+				$(".list-goods:hidden").slice(0, page).fadeIn(200); // 클릭시 more 갯수 미정
+				if($(".list-goods:hidden").length == 0){ 		// 컨텐츠 남아있는지 확인
+					$('.moreBtn').fadeOut(100); 				// 컨텐츠 없을 시 버튼 사라짐
+				}
+			}else{
+				$(".list-goods:hidden").slice(0, $(".list-goods:hidden").length).fadeIn();
+				$('.moreBtn').fadeOut(100);
+			}
+		}
 		
-		 if (!navigator.geolocation) {
-	        alert("위치 정보가 지원되지 않습니다.");
-	    }else{
-			function success(position) {
-			    const latitude = position.coords.latitude;   
-			    const longitude = position.coords.longitude;
-			    
-			    location.href=url+"&longitude="+longitude+"&latitude="+latitude;
-			};
-	    	navigator.geolocation.getCurrentPosition(success);
-	    }
-	}
+		
+		function fn_srchGgLst() {
+			var gongguName = document.getElementById('gongguName').value;
+			
+			var url = '${pageContext.request.contextPath}/gonggu/ggSearch.go?gongguName=' + encodeURIComponent(gongguName);
+			
+			 if (!navigator.geolocation) {
+		        alert("위치 정보가 지원되지 않습니다.");
+		    }else{
+				function success(position) {
+				    const latitude = position.coords.latitude;   
+				    const longitude = position.coords.longitude;
+				    
+				    location.href=url+"&longitude="+longitude+"&latitude="+latitude;
+				};
+		    	navigator.geolocation.getCurrentPosition(success);
+		    }
+		}
     </script>
 	
-	 
-	 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
