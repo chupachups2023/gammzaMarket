@@ -129,7 +129,7 @@
         		</c:when>
         		<c:otherwise>
         			<fmt:parseDate value="${gonggu.pullupAt }" var="pullupAt" pattern="yyyy-MM-dd"/>
-		            <div class="ggRead-date">작성 <fmt:formatDate value="${pullupAt }" pattern="yyyy년 MM월 dd일"/></div>
+		            <div class="ggRead-date">끌올 <fmt:formatDate value="${pullupAt }" pattern="yyyy년 MM월 dd일"/></div>
         		</c:otherwise>
         	</c:choose>
             <div><img src="https://cdn-icons-png.flaticon.com/512/138/138533.png" alt="zzim" id="zzim"></div>
@@ -140,9 +140,9 @@
        		<div class="ggRead-button">
 	            <a href="${pageContext.request.contextPath}/gonggu/update.go?gongguNo=${gonggu.gongguNo}" class="button">글 수정</a>
 	            <a href="${pageContext.request.contextPath}/gonggu/gongguEnd.go?gongguNo=${gonggu.gongguNo}" class="button">공구 마감하기</a>
-	            <a href="" class="button">공구삭제</a>
+	            <a href="javascript:deleteGonggu();" class="button">공구삭제</a>
 	            <a href="" class="button">채팅하기</a>
-	            <a href="" class="button">끌올하기</a>
+	            <a href="javascript:pullUpGonggu();" class="button">끌올하기</a>
 	            <a href="${pageContext.request.contextPath}/gonggu/checkPartis.pa?gongguNo=${gonggu.gongguNo}" class="button">참여자확인</a>
         	</div>
         	</c:when>
@@ -264,6 +264,21 @@ pzlogin.addEventListener("click", () => {
 	alert("로그인 후 이용가능합니다");
 	location.href="${pageContext.request.contextPath}/";
 });
+
+function deleteGonggu(){
+	if(confirm("정말로 ${gonggu.gongguName} 공구를 삭제하시겠습니까?")){
+		location.href="${pageContext.request.contextPath}/gonggu/deleteGonggu.go?gongguNo=${gonggu.gongguNo}";
+	}else{
+		return
+	}
+}
+function pullUpGonggu(){
+	if(confirm("${gonggu.gongguName} 공구를 끌올하시겠습니까?")){
+		location.href="${pageContext.request.contextPath}/gonggu/pullUpGonggu.go?gongguNo=${gonggu.gongguNo}";
+	}else{
+		return
+	}
+}
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

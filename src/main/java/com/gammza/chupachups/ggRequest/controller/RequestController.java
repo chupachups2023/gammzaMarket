@@ -39,10 +39,17 @@ public class RequestController {
 	private ServletContext application;
 	
 	@GetMapping("/requestView.req")
-	public String requestView(@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude, Model model) {
+	public String requestView(@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude, Model model,HttpSession session) {
+		Member member=(Member)session.getAttribute("loginMember");
 		HashMap<String,String> map=new HashMap<String,String>();
-		map.put("latitude", latitude);
-		map.put("longitude", longitude);
+		if(member != null) {
+			map.put("latitude", member.getLatitude());
+			map.put("longitude", member.getLongitude());
+		}else {
+			map.put("latitude", latitude);
+			map.put("longitude", longitude);
+		}
+		
 		ArrayList<Request> requestList=requestService.selectAllRequestList(map);
 		for(int i=0;i<requestList.size();i++) {
 			Request request=requestList.get(i);
@@ -213,7 +220,7 @@ public class RequestController {
 	 }
 	 
 	 @GetMapping("/requestDelete.req")
-	 public String requestDelete(@RequestParam int requestNo) {
+	 public String requestDelete(@RequestParam int requestNo,RedirectAttributes redirectAttr) {
 		 int updateRequestStatus=requestService.updateRequestStatus(requestNo);
 		 
 		 return "redirect:requestView.req";
@@ -222,4 +229,6 @@ public class RequestController {
 	 public int updateRequestReqStatus(int requestNo) {
 		 return requestService.updateRequestReqStatus(requestNo);
 	 }
+  
+  
 }

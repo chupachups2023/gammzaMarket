@@ -68,7 +68,7 @@
         <c:choose>
         	<c:when test="${request.requestWriter eq loginMember.userId}">
        		<div class="ggRead-button">
-	            <a href="${pageContext.request.contextPath}/ggRequest/requestDelete.req?requestNo=${request.requestNo}" class="button">글 삭제</a>
+	            <button onclick="deleteReq();" class="button">글 삭제</button>
 	            <a href="${pageContext.request.contextPath}/ggRequest/gongguWrite.req?requestNo=${request.requestNo}" class="button">공구열기</a>
         	</div>
         	</c:when>
@@ -154,6 +154,14 @@ function enrollRequest(){
 		}
 	}
 }
+function deleteReq(){
+	if(confirm("정말로 [${request.requestName}] 요청글을 삭제하시겠습니까?")){
+		location.href="${pageContext.request.contextPath}/ggRequest/requestDelete.req?requestNo=${request.requestNo}"
+	}else{
+		return
+	}
+}
+ 
  
 </script>
 
