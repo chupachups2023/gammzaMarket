@@ -1,8 +1,10 @@
 package com.gammza.chupachups.member.controller;
 
+import java.util.HashMap;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -45,7 +47,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/memberLogin.me")
-	public String memberLogin(String userId, String userPwd, Model model, RedirectAttributes redirectAtt) {
+	public String memberLogin(String userId, String userPwd, Model model, RedirectAttributes redirectAtt,HttpSession session) {
 		System.out.println("userId = " + userId);
 		System.out.println("userPwd = " + userPwd);
 		
@@ -55,6 +57,37 @@ public class MemberController {
 		// 인증
 		if (member != null && passwordEncoder.matches(userPwd, member.getUserPwd())) {
 			model.addAttribute("loginMember", member);	// requestScope => sessionScope 바꾸기
+			
+			Long kakaoIdkey = (Long)session.getAttribute("kakaoIdkey");
+			String naverIdkey = (String)model.getAttribute("naverIdkey");
+			
+			if(kakaoIdkey != null) {
+				HashMap<String,String> map = new HashMap<String,String>();
+				map.put("userId", userId);
+				map.put("kakaoIdkey", String.valueOf(kakaoIdkey));
+				int result=memberService.updateKakaoIdkey(map);
+				member = memberService.selectOneMember(userId);
+				model.addAttribute("loginMember", member);
+				redirectAtt.addFlashAttribute("msg", "카카오 간편로그인 연결이 완료되었습니다.");
+				session.removeAttribute("kakaoIdkey");
+				
+				return "redirect:/";
+			}
+			if(naverIdkey != null) {
+				HashMap<String,String> map = new HashMap<String,String>();
+				map.put("userId", userId);
+				map.put("naverIdkey", naverIdkey);
+				int result=memberService.updateNaverIdkey(map);
+				member = memberService.selectOneMember(userId);
+				model.addAttribute("loginMember", member);
+				redirectAtt.addFlashAttribute("msg", "네이버 간편로그인 연결이 완료되었습니다.");
+				session.removeAttribute("naverIdkey");
+				
+				return "redirect:/";
+			}
+			
+			
+			
 		} else {
 			redirectAtt.addFlashAttribute("msg", "아이디 또는 비밀번호가 맞지 않습니다.");
 		}

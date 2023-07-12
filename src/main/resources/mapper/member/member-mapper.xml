@@ -48,7 +48,16 @@
 		insert into member(naver_idkey) values(#{naverIdkey})
 	</insert>
 
-
+	<update id="updateKakaoIdkey">
+		update member
+		set kakao_idkey=#{kakaoIdkey}
+		where user_id=#{userId}
+	</update>
+	<update id="updateNaverIdkey">
+		update member
+		set naver_idkey=#{naverIdkey}
+		where user_id=#{userId}
+	</update>
  
  	<!-- 카카오 아이디키 검색 -->
  	<select id="selectMemberByKakao" resultMap ="memberMap">

@@ -1,5 +1,7 @@
 package com.gammza.chupachups.member.model.service;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,6 +57,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public String insertNaverIdkey(String naverIdkey) {
 		return memberDao.insertNaverIdkey(naverIdkey);
+	}
+
+	@Override
+	public int updateKakaoIdkey(HashMap<String, String> map) {
+		return memberDao.updateKakaoIdkey(map);
+	}
+
+	@Override
+	public int updateNaverIdkey(HashMap<String, String> map) {
+		return memberDao.updateNaverIdkey(map);
 	}
 
 
