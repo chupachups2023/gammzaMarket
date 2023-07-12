@@ -14,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -27,12 +26,12 @@ public class ChatMsgController {
 	@Autowired
 	private ChatMsgService chatMsgService;
 
-	@GetMapping("/mypage/msgList.do")
-	public String selectChatMsg(HttpServletRequest request, @RequestParam(required = false) String roomNo, Model model) {
+	@GetMapping("/chatRoom/msgList.do")
+	public String selectChatMsg(HttpServletRequest request, @RequestParam(required = false) String roomNo, ChatMsg chatMsg, Model model) {
 		List<ChatMsg> MsgList = chatMsgService.selectChatMsg(roomNo);
-		/* System.out.println("msgList : " + MsgList); */
+		System.out.println("msgList : " + MsgList);
 		model.addAttribute("MsgList", MsgList);
-		return "mypage/chatting";
+		return "jsonView";
 	}
 	
 	@PostMapping("/mypage/insertMsg.do")
