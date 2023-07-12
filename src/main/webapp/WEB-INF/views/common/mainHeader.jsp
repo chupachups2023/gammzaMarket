@@ -14,6 +14,7 @@
 	href="${pageContext.request.contextPath}/resources/img/header/shorcuticon.png">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/header.css?<%=System.currentTimeMillis() %>">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/login.css?<%=System.currentTimeMillis() %>">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <!-- DB에 저장이 잘 되었다면 alert창 띄우기 -->
 <c:if test="${not empty msg}">
@@ -33,16 +34,25 @@
 				<div>
 				<c:choose>
 					<c:when test="${empty loginMember}">
-						<button class="header-login btn" id="open-modal">로그인</button>
+						<button class="header-loginBtn btn" id="open-modal">
+							<!-- <i class="fa-solid fa-arrow-right-to-bracket" style="color: #5eb162;"></i> -->
+							<img src="https://cdn-icons-png.flaticon.com/512/1828/1828395.png" alt="loginButton">
+						</button>
 					</c:when>
 					<c:when test="${loginMember.userId eq 'admin'}">
-						<a href="${pageContext.request.contextPath}/admin/adminMain.ad"><img src="https://cdn-icons-png.flaticon.com/512/5909/5909015.png" alt="adminlogo" class="header-login" ></a>
+						<a href="${pageContext.request.contextPath}/admin/adminMain.ad">
+							<img src="https://cdn-icons-png.flaticon.com/512/5909/5909015.png" alt="adminlogo" class="header-login" >
+						</a>
 		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
 					</c:when>
 					<c:otherwise>
-						<a href="${pageContext.request.contextPath}/mypage/mypageMain.me"><img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login" ></a>
+						<a href="${pageContext.request.contextPath}/mypage/mypageMain.me">
+							<img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login" >
+						</a>
 					<!-- 230627 -->
-		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
+		      			<button class="header-logoutBtn type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">
+		      				<img src="https://cdn-icons-png.flaticon.com/512/1828/1828427.png" alt="logoutButton">
+		      			</button>
 					</c:otherwise>
 				</c:choose>
 				</div>

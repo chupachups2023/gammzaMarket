@@ -44,10 +44,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectMemberByKakao(id);
 	}
 
-	@Override
-	public Member selectMemberByPhone(String phone) {
-		return memberDao.selectMemberByPhone(phone);
-	}
+	/*
+	 * @Override public Member selectMemberByPhone(String phone) { return
+	 * memberDao.selectMemberByPhone(phone); }
+	 */
 
 	@Override
 	public Member selectMemberByNaver(String id) {
@@ -67,6 +67,18 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int updateNaverIdkey(HashMap<String, String> map) {
 		return memberDao.updateNaverIdkey(map);
+	public String findIdClick(String phone) {
+		return memberDao.findIdClick(phone);
+	}
+
+	@Override
+	public int insertNaverMember(Member member) {
+		return memberDao.insertNaverMember(member);
+	}
+
+	@Override
+	public String findPwdClick(String userId, String phone) {
+		return memberDao.findPwdClick(userId, phone);
 	}
 
 

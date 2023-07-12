@@ -150,7 +150,7 @@ public class MemberController {
 	public void memberEnroll() {} 
 	
 	@PostMapping("/memberEnroll.me") 
-	public String memberEnroll(Member member) {
+	public String memberEnroll(Member member, RedirectAttributes redirectAtt) {
 		System.out.println("userPass = " + member);
 		
 		// 비밀번호 암호화
@@ -159,6 +159,9 @@ public class MemberController {
 		member.setUserPwd(encodedPassword);
 		System.out.println("changePass = " + member);
 		int result = memberService.insertMember(member);
+		
+		redirectAtt.addFlashAttribute("msg", "회원가입이 완료되었습니다. 로그인이 필요합니다.");
+		
 		return "redirect:/";
 	}
 		
@@ -202,6 +205,30 @@ public class MemberController {
 		return "/member/findPwd";
 	}
 	
+	@PostMapping("/findId.me")
+	@ResponseBody
+	public String findIdClick(@RequestParam("phone") String phone) {
+		String result = memberService.findIdClick(phone);
+	return result;
+	// return "redirect:/";
+	}
+	
+	@PostMapping("/findPwd.me")
+	@ResponseBody
+	public String findPwdClick(@RequestParam("userId") String userId, @RequestParam("phone") String phone) {
+		System.out.println(userId);
+		System.out.println(phone);
+
+		String result = memberService.findPwdClick(userId, phone);
+	// return result;
+	return "/member/updatePwd";
+	// return "redirect:/";
+	}
+	
+	
+	
+	
+	
 
 	@RequestMapping(value = "/mailCheck.me", method = RequestMethod.GET)
 	@ResponseBody
@@ -241,30 +268,6 @@ public class MemberController {
 		
 		return "redirect:/";		// String 타입으로 반환 후 반환
 	}
-
-	@GetMapping("/findLoginInfo.me")
-	public String findLoginInfo(String phone, Model model, RedirectAttributes redirectAtt) {
-		Member member = memberService.selectMemberByPhone(phone);
-		System.out.println(member);
-//		System.out.println(member.getPhone());
-		
-		if (member == null) {
-			// model.addAttribute("historyBack", true);
-			model.addAttribute("msg", "일치하는 회원이 없습니다.");
-			return "/member/findId";
-		} 
-		
-		// model.addAttribute("historyBack", true);
-		model.addAttribute("msg", String.format("회원의 아이디는 %s 입니다.", member.getUserId()));
-		return "redirect:/"; 
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		// return "member/findLoginInfo";
-	}
+	
+	
+}

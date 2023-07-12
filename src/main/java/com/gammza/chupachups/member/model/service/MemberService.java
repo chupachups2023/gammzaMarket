@@ -18,7 +18,7 @@ public interface MemberService {
 
 	Member selectMemberByKakao(Long id);
 
-	Member selectMemberByPhone(String phone);
+	/* Member selectMemberByPhone(String phone); */
 
 	Member selectMemberByNaver(String id);
 
@@ -27,6 +27,12 @@ public interface MemberService {
 	int updateKakaoIdkey(HashMap<String, String> map);
 
 	int updateNaverIdkey(HashMap<String, String> map);
+
+	String findIdClick(String phone);
+
+	int insertNaverMember(Member member);
+
+	String findPwdClick(String userId, String phone);
 
 	
 
