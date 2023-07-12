@@ -28,4 +28,15 @@
 		from zzim
 		where gonggu_no=#{gongguNo}
 	</select>
+	<select id="selectMyZzim" resultMap="likeListMap">
+		select *
+		from zzim
+		where GONGGU_NO=#{gongguNo} and ZZIM_MEMBER=#{userId}
+	</select>
+	<insert id="insertLikeList">
+		insert into zzim values (zzim_seq.nextval, #{userId}, #{gongguNo}, sysdate)
+	</insert>
+	<select id="selectZzimNo" resultType="_int">
+		select zzim_seq.currval from dual
+	</select>
 </mapper>
