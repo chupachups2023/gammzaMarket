@@ -36,10 +36,17 @@ public class RequestController {
 	private ServletContext application;
 	
 	@GetMapping("/requestView.req")
-	public String requestView(@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude, Model model) {
+	public String requestView(@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude, Model model,HttpSession session) {
+		Member member=(Member)session.getAttribute("loginMember");
 		HashMap<String,String> map=new HashMap<String,String>();
-		map.put("latitude", latitude);
-		map.put("longitude", longitude);
+		if(member != null) {
+			map.put("latitude", member.getLatitude());
+			map.put("longitude", member.getLongitude());
+		}else {
+			map.put("latitude", latitude);
+			map.put("longitude", longitude);
+		}
+		
 		ArrayList<Request> requestList=requestService.selectAllRequestList(map);
 		model.addAttribute("requestList", requestList);
 		
@@ -142,4 +149,67 @@ public class RequestController {
 			return "/others/writeRequest";
 		}
 	}
+<<<<<<< Updated upstream
+=======
+	 
+	 @GetMapping("/enrollRequest.req")
+	 public String enrollRequest(HttpSession session, @RequestParam int requestNo,RedirectAttributes redirectAttr) {
+		 Member loginMember=(Member)session.getAttribute("loginMember");
+		 HashMap<String,String> map=new HashMap<String,String>();
+		 map.put("requestNo", String.valueOf(requestNo));
+		 map.put("userId",loginMember.getUserId());
+		 
+		 int count=requestService.selectRequestMemberByNo(map);
+		 if(count>0) {
+			redirectAttr.addFlashAttribute("msg","이미 참가한 요청입니다");
+			return "redirect:/ggRequest/requestAfterEnroll.req?requestNo="+requestNo;
+		 }else {
+			 RequestMember reqMem=new RequestMember();
+			 reqMem.setLatitude(loginMember.getLatitude());
+			 reqMem.setLongitude(loginMember.getLongitude());
+			 reqMem.setLocalCode(loginMember.getLocation());
+			 reqMem.setRequestMember(loginMember.getUserId());
+			 reqMem.setRequestNo(requestNo);
+			requestService.insertRequestMember(reqMem);
+			requestService.updateRequestNum(requestNo);
+			redirectAttr.addFlashAttribute("msg","참가가 완료되었습니다.");
+			return "redirect:/ggRequest/requestAfterEnroll.req?requestNo="+requestNo;
+		 }
+	 }
+	 
+	 @GetMapping("/requestAfterEnroll.req")
+	 public String requestAfterEnroll(@RequestParam int requestNo, Model model) {
+		 Request request=requestService.selectRequest(requestNo);
+		 model.addAttribute("request", request);
+		 return "/others/requestRead";
+	 }
+	 
+	 @GetMapping("/gongguWrite.req")
+	 public String gongguWrite(@RequestParam int requestNo,Model model,RedirectAttributes redirectAttr) {
+		 Request request=requestService.selectRequest(requestNo);
+		 Gonggu gonggu=new Gonggu();
+		 gonggu.setGongguNo(requestNo);
+		 gonggu.setCategory(request.getCategoryNo());
+		 gonggu.setGongguName(request.getRequestName());
+		 gonggu.setLink(request.getLink());
+		 gonggu.setPhoto1(request.getPhoto1());
+		 gonggu.setPhoto2(request.getPhoto2());
+		 gonggu.setPhoto3(request.getPhoto3());
+		 
+		 redirectAttr.addFlashAttribute("gonggu",gonggu);
+		 return "redirect:/gonggu/ggWrite.go";
+	 }
+	 
+	 @GetMapping("/requestDelete.req")
+	 public String requestDelete(@RequestParam int requestNo,RedirectAttributes redirectAttr) {
+		 int updateRequestStatus=requestService.updateRequestStatus(requestNo);
+		 
+		 redirectAttr.addFlashAttribute("msg","삭제가 완료되었습니다.");
+		 return "redirect:requestView.req";
+	 }
+	 
+	 public int updateRequestReqStatus(int requestNo) {
+		 return requestService.updateRequestReqStatus(requestNo);
+	 }
+>>>>>>> Stashed changes
 }

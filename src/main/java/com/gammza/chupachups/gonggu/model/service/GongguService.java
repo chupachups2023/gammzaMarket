@@ -35,5 +35,10 @@ public interface GongguService {
 
 	int updateGongguCount(int gongguNo);
 
+	int updateGongguStatus(int gongguNo);
+
+	int updatepullUpAt(int gongguNo);
+
+
 
 }

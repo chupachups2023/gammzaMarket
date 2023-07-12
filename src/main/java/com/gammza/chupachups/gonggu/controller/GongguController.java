@@ -412,22 +412,41 @@ public class GongguController {
 	 }
 	 
 	 @GetMapping("/categoryList.go")
-		public String categoryList(@RequestParam("category") int category, Model model, HttpSession session,
-				@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude) {
-		 	Member mem=(Member)session.getAttribute("loginMember");
-		 	HashMap<String,String> map=new HashMap<String,String>();
-		 	if(mem==null) {
-		 		map.put("longitude", longitude);
-		 		map.put("latitude", latitude);
-		 	}else {
-		 		map.put("longitude", mem.getLongitude());
-		 		map.put("latitude", mem.getLatitude());
-		 	}
-		 	map.put("category", String.valueOf(category));
-			ArrayList<Gonggu> categoryList = gongguService.selectOneCategory(map);
-			
-			model.addAttribute("ggListView", categoryList);
-			
-			return "/gonggu/ggListView";
-		}
+	public String categoryList(@RequestParam("category") int category, Model model, HttpSession session,
+			@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude) {
+	 	Member mem=(Member)session.getAttribute("loginMember");
+	 	HashMap<String,String> map=new HashMap<String,String>();
+	 	if(mem==null) {
+	 		map.put("longitude", longitude);
+	 		map.put("latitude", latitude);
+	 	}else {
+	 		map.put("longitude", mem.getLongitude());
+	 		map.put("latitude", mem.getLatitude());
+	 	}
+	 	map.put("category", String.valueOf(category));
+		ArrayList<Gonggu> categoryList = gongguService.selectOneCategory(map);
+		
+		model.addAttribute("ggListView", categoryList);
+		
+		return "/gonggu/ggListView";
+	}
+	 @GetMapping("/deleteGonggu.go")
+	 public String deleteGonggu(@RequestParam int gongguNo, RedirectAttributes redirectAttr) {
+		 
+		 int result=gongguService.updateGongguStatus(gongguNo);
+		 
+		 redirectAttr.addFlashAttribute("msg","삭제가 완료되었습니다.");
+		 
+		 return "redirect:/gonggu/ggListView.go"; 
+	 }
+	 @GetMapping("/pullUpGonggu.go")
+	 public String pullUpGonggu(@RequestParam int gongguNo, RedirectAttributes redirectAttr) {
+		 
+		 int result=gongguService.updatepullUpAt(gongguNo);
+		 
+		 redirectAttr.addFlashAttribute("msg","공구 끌올이 완료되었습니다.");
+		 
+		 return "redirect:/gonggu/ggRead.go?gongguNo="+gongguNo; 
+	 }
+	 
 }

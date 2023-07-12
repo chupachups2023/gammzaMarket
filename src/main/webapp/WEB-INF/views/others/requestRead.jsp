@@ -64,8 +64,13 @@
         <c:choose>
         	<c:when test="${request.requestWriter eq loginMember.userId}">
        		<div class="ggRead-button">
+<<<<<<< Updated upstream
 	            <a href="" class="button">글 삭제</a>
 	            <a href="" class="button">공구열기</a>
+=======
+	            <button onclick="deleteReq();" class="button">글 삭제</button>
+	            <a href="${pageContext.request.contextPath}/ggRequest/gongguWrite.req?requestNo=${request.requestNo}" class="button">공구열기</a>
+>>>>>>> Stashed changes
         	</div>
         	</c:when>
         	<c:when test="${empty loginMember }">
@@ -138,7 +143,30 @@ for(let i=1;i<reqMemArr.length;i++){
     	console.log("실패");
     }
 });
+<<<<<<< Updated upstream
 
+=======
+function enrollRequest(){
+	const loginMember="${loginMember.userId}";
+	if(loginMember=="" || loginMember == null){
+		alert("먼저 로그인 해주세요");
+	}else{
+		if(confirm("공구 요청에 참여하시겠습니까?")){
+			location.href="${pageContext.request.contextPath}/ggRequest/enrollRequest.req?requestNo=${request.requestNo}"
+		}else{
+			return
+		}
+	}
+}
+function deleteReq(){
+	if(confirm("정말로 [${request.requestName}] 요청글을 삭제하시겠습니까?")){
+		location.href="${pageContext.request.contextPath}/ggRequest/requestDelete.req?requestNo=${request.requestNo}"
+	}else{
+		return
+	}
+}
+ 
+>>>>>>> Stashed changes
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

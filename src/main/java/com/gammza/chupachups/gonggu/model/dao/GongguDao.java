@@ -36,5 +36,9 @@ public interface GongguDao {
 
 	ArrayList<Gonggu> selectOneCategory(HashMap<String, String> map);
 
+	int updateGongguStatus(int gongguNo);
+
+	int updatepullUpAt(int gongguNo);
+
 
 }
