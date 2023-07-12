@@ -53,4 +53,14 @@
 		set num= num+1
 		where request_no=#{requestNo}
 	</update>
+	<update id="updateRequestStatus">
+		update request
+		set status=0
+		where request_no=#{requestNo}
+	</update>
+	<update id="updateRequestReqStatus">
+		update request
+		set req_status=1
+		where request_no=#{requestNo}
+	</update>
 </mapper>

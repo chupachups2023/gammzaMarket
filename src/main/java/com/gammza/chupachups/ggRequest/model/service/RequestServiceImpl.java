@@ -61,4 +61,14 @@ public class RequestServiceImpl implements RequestService {
 		return requestDao.updateRequestNum(requestNo);
 	}
 
+	@Override
+	public int updateRequestStatus(int requestNo) {
+		return requestDao.updateRequestStatus(requestNo);
+	}
+
+	@Override
+	public int updateRequestReqStatus(int requestNo) {
+		return requestDao.updateRequestReqStatus(requestNo);
+	}
+
 }

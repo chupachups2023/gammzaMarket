@@ -29,5 +29,9 @@ public interface RequestDao {
 
 	int updateRequestNum(int requestNo);
 
+	int updateRequestStatus(int requestNo);
+
+	int updateRequestReqStatus(int requestNo);
+
 
 }

@@ -68,8 +68,8 @@
         <c:choose>
         	<c:when test="${request.requestWriter eq loginMember.userId}">
        		<div class="ggRead-button">
-	            <a href="" class="button">글 삭제</a>
-	            <a href="" class="button">공구열기</a>
+	            <a href="${pageContext.request.contextPath}/ggRequest/requestDelete.req?requestNo=${request.requestNo}" class="button">글 삭제</a>
+	            <a href="${pageContext.request.contextPath}/ggRequest/gongguWrite.req?requestNo=${request.requestNo}" class="button">공구열기</a>
         	</div>
         	</c:when>
         	<c:when test="${empty loginMember }">
@@ -81,7 +81,7 @@
         	<c:otherwise>
 	        <div class="ggRead-button">
 	            <button onclick="enrollRequest();" class="button">참여신청</button>
-	            <a href="" class="button">공구열기</a>
+	            <a href="${pageContext.request.contextPath}/ggRequest/gongguWrite.req?requestNo=${request.requestNo}" class="button">공구열기</a>
 	        </div>
         	</c:otherwise>
         </c:choose>

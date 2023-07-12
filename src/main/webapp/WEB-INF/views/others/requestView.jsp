@@ -15,8 +15,9 @@
 			</td>
 			<td colspan="3"  class="sort-type align-right">
 				<small>
-					<input type="radio" name="parti-sort" id="regAt" value="2" checked="checked"><label for="regAt"> 신청 순으로 정렬</label>
-					<input type="radio" name="parti-sort" id="endTime" value="0"><label for="endTime"> 마감 순으로 정렬</label> 
+					<input type="radio" name="request-sort" id="recent" value="recent" checked="checked"><label for="recent"> 최신순 정렬</label>&emsp;
+					<input type="radio" name="request-sort" id="member" value="member"><label for="member"> 참가자수 정렬</label> &emsp;
+					<input type="radio" name="request-sort" id="count" value="count"><label for="count"> 조회수 정렬</label> 
 				</small>
 			</td>
 		</tr>

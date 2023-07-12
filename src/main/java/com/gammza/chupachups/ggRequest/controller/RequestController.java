@@ -22,10 +22,10 @@ import com.gammza.chupachups.common.SpringUtils;
 import com.gammza.chupachups.ggRequest.model.service.RequestService;
 import com.gammza.chupachups.ggRequest.model.vo.Request;
 import com.gammza.chupachups.ggRequest.model.vo.RequestMember;
+import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 import com.gammza.chupachups.location.controller.LocationController;
 import com.gammza.chupachups.location.model.vo.Location;
 import com.gammza.chupachups.member.model.vo.Member;
-
 
 @Controller
 @RequestMapping("/ggRequest")
@@ -194,5 +194,32 @@ public class RequestController {
 		 Request request=requestService.selectRequest(requestNo);
 		 model.addAttribute("request", request);
 		 return "/others/requestRead";
+	 }
+	 
+	 @GetMapping("/gongguWrite.req")
+	 public String gongguWrite(@RequestParam int requestNo,Model model,RedirectAttributes redirectAttr) {
+		 Request request=requestService.selectRequest(requestNo);
+		 Gonggu gonggu=new Gonggu();
+		 gonggu.setGongguNo(requestNo);
+		 gonggu.setCategory(request.getCategoryNo());
+		 gonggu.setGongguName(request.getRequestName());
+		 gonggu.setLink(request.getLink());
+		 gonggu.setPhoto1(request.getPhoto1());
+		 gonggu.setPhoto2(request.getPhoto2());
+		 gonggu.setPhoto3(request.getPhoto3());
+		 
+		 redirectAttr.addFlashAttribute("gonggu",gonggu);
+		 return "redirect:/gonggu/ggWrite.go";
+	 }
+	 
+	 @GetMapping("/requestDelete.req")
+	 public String requestDelete(@RequestParam int requestNo) {
+		 int updateRequestStatus=requestService.updateRequestStatus(requestNo);
+		 
+		 return "redirect:requestView.req";
+	 }
+	 
+	 public int updateRequestReqStatus(int requestNo) {
+		 return requestService.updateRequestReqStatus(requestNo);
 	 }
 }
