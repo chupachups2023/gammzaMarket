@@ -121,7 +121,7 @@
         </div>
     </div>
     <div class="ggRead-btn">
-        <div class="ggRead-title-right">
+        <div class="ggRead-title-right"  id="zzim">
             <c:choose>
         		<c:when test="${gonggu.pullupAt eq gonggu.createAt}">
         			<fmt:parseDate value="${gonggu.createAt }" var="createAt" pattern="yyyy-MM-dd"/>
@@ -132,7 +132,8 @@
 		            <div class="ggRead-date">끌올 <fmt:formatDate value="${pullupAt }" pattern="yyyy년 MM월 dd일"/></div>
         		</c:otherwise>
         	</c:choose>
-            <div><img src="https://cdn-icons-png.flaticon.com/512/138/138533.png" alt="zzim" id="zzim"></div>
+            <div id="emptyzzim"><img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="emptyzzim" onclick="addZzim();" ></div>
+            <div id="fullzzim"><img src="https://cdn-icons-png.flaticon.com/512/138/138533.png" alt="fullzzim" onclick="deleteZzim();"></div>
             <div><img src="https://cdn-icons-png.flaticon.com/512/2089/2089736.png" alt="share"></div>
         </div>
         <c:choose>
@@ -201,6 +202,14 @@
 
 <script src="${pageContext.request.contextPath}/resources/js/gonggu/ggRead_Partic.js?<%=System.currentTimeMillis() %>"></script>
 <script>
+
+let zzimNo="${zzim.zzimNo}";
+if(zzimNo==null || zzimNo==""){
+	$("#emptyzzim").css("display","block");
+}else{
+	$("#fullzzim").css("display","block");
+}
+
 const longitude= document.getElementById('longitude').value;
 const latitude= document.getElementById('latitude').value;
 
@@ -278,6 +287,44 @@ function pullUpGonggu(){
 	}else{
 		return
 	}
+}
+	
+function addZzim(){
+	const gongguNo="${gonggu.gongguNo}";
+	const userId="${loginMember.userId}";
+	if(userId == "" || userId == null){
+		alert("찜에 담으려면 먼저 로그인 하세요");
+		return
+	}else{
+		$.ajax({
+	       	type:"get",
+	       	url:"${pageContext.request.contextPath}/mypage/addZzim.zz",
+	       	data:{'gongguNo':gongguNo},
+	       	success:function(result){
+	       		zzimNo=result;
+	       		$("#emptyzzim").css("display","none");
+	       		$("#fullzzim").css("display","block");
+	       	},
+	       	error:function(){
+	       		console.log("찜추가 에러");
+	       	}
+		});
+	}
+}
+function deleteZzim(){
+	const gongguNo="${gonggu.gongguNo}";
+	$.ajax({
+       	type:"get",
+       	url:"${pageContext.request.contextPath}/mypage/deleteZzim.zz",
+       	data:{'zzimNo':zzimNo},
+       	success:function(data){
+       		$("#fullzzim").css("display","none");
+       		$("#emptyzzim").css("display","block");
+       	},
+    	error:function(){
+       		console.log("찜삭제 에러");
+       	}
+	});
 }
 </script>
 

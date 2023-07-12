@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
@@ -152,9 +151,15 @@ public class GongguController {
 	 @GetMapping("/ggRead.go") 
 	 public String ggRead(@RequestParam int gongguNo, Model model, HttpSession session) throws ParseException {
 		 Member loginMember=(Member)session.getAttribute("loginMember");
-		 List<Zzim> zzimList=likeListController.selectZzim(gongguNo);
-		 model.addAttribute("zzimCount", zzimList.size());
-		 
+		 if(loginMember!=null) {
+			 Zzim myZzim=likeListController.selectMyZzim(gongguNo,loginMember.getUserId());
+			 
+			 if(myZzim !=null) {
+				 model.addAttribute("zzim", myZzim);
+			 }else {
+				 model.addAttribute("zzim", null);
+			 }
+		 }
 		 gongguService.updateGongguCount(gongguNo);
 		 Gonggu gonggu = gongguService.selectOneGonggu(gongguNo);
 		 
