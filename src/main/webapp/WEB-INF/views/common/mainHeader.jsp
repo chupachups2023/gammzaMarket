@@ -55,23 +55,23 @@
 					<a class="header-menu headder-cateA">카테고리</a>
 				</div>
 				<a href="javascript:viewAllGonggu();" class="header-menu">공구보기</a> 
-				<a href="" class="header-menu">요청게시판</a> 
+				<a href="javascript:viewRequest();" class="header-menu">요청게시판</a>  
 				<a href="${pageContext.request.contextPath}/location/location.lo" class="header-menu">장소인증</a>
 				<a href="${pageContext.request.contextPath}/gonggu/ggWrite.go" class="header-menu">공구 글쓰기</a>
 			</div>
 		</div>
 		<div class="category-drop">
 			<div class="category-list category-top">
-				 <p onclick="fn_click(1)" id="category1" class="category-menu cloth" style="cursor:pointer;">의류</p>
-				 <p onclick="fn_click(2)" id="category2" class="category-menu makeup" style="cursor:pointer;">화장품/미용</p> 
-				 <p onclick="fn_click(3)" id="category3" class="category-menu food" style="cursor:pointer;">식품/농산물</p> 
-				 <p onclick="fn_click(4)" id="category4" class="category-menu furniture" style="cursor:pointer;">가구/인테리어</p>
+				 <p onclick="fn_click(1)" id="category1" class="category-menu cloth" >의류</p>
+				 <p onclick="fn_click(2)" id="category2" class="category-menu makeup">화장품/미용</p> 
+				 <p onclick="fn_click(3)" id="category3" class="category-menu food">식품/농산물</p> 
+				 <p onclick="fn_click(4)" id="category4" class="category-menu furniture" >가구/인테리어</p>
 			</div>
 			<div class="category-list category-bottom">
-				<p onclick="fn_click(5)" id="category5" class="category-menu delivery" style="cursor:pointer;">배달음식</p> 
-				<p onclick="fn_click(6)" id="category6" class="category-menu baby" style="cursor:pointer;">유아동</p> 
-				<p onclick="fn_click(7)" id="category7" class="category-menu homeware" style="cursor:pointer;">생활용품</p> 
-				<p onclick="fn_click(8)" id="category8" class="category-menu pet" style="cursor:pointer;">반려동물용품</p>
+				<p onclick="fn_click(5)" id="category5" class="category-menu delivery" >배달음식</p> 
+				<p onclick="fn_click(6)" id="category6" class="category-menu baby" >유아동</p> 
+				<p onclick="fn_click(7)" id="category7" class="category-menu homeware" >생활용품</p> 
+				<p onclick="fn_click(8)" id="category8" class="category-menu pet" >반려동물용품</p>
 			</div>
 		</div>
 
@@ -194,7 +194,14 @@
 			}
 		    navigator.geolocation.getCurrentPosition(success);
 		}
-			
+		function viewRequest(){
+			function success(position) {
+			    const latitude = position.coords.latitude;   // 위도(37.xxxx)
+			    const longitude = position.coords.longitude;
+				location.href="${pageContext.request.contextPath}/ggRequest/requestView.req?longitude="+longitude+"&latitude="+latitude;
+			}
+			navigator.geolocation.getCurrentPosition(success);
+		}
 	    </script>
 	</header>
 	<section>

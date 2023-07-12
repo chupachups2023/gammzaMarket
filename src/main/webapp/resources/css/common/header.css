@@ -112,6 +112,7 @@ textarea{
     text-decoration: none;
     color: black;
     width: 110px;
+    cursor:pointer;
 }
 .category-list{
     display: flex;
@@ -138,6 +139,7 @@ textarea{
     border:solid 1px #60b565b7;
     color:white;
     font-weight:bold;
+    font-size:16px;
   }
   .button:hover{
     background: rgb(35, 117, 84);

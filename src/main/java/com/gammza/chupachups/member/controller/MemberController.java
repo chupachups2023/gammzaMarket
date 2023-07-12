@@ -1,16 +1,19 @@
 package com.gammza.chupachups.member.controller;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Random;
+
+import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -32,6 +35,9 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
+	@Autowired
+	private JavaMailSender mailSender;
+	
 	
 	@GetMapping("/memberLogin.me")
 	public String memberLogin() {
@@ -52,6 +58,32 @@ public class MemberController {
 		} else {
 			redirectAtt.addFlashAttribute("msg", "아이디 또는 비밀번호가 맞지 않습니다.");
 		}
+		
+//		String kakaoIdkey = (String) model.getAttribute("kakaoIdkey");
+//		String naverIdkey = (String) model.getAttribute("naverIdkey");
+//		
+//		System.out.println("naverIdkey: " + naverIdkey);
+//		System.out.println(member);
+//		
+//		if (naverIdkey == null) { // 일반 로그인한 상태 
+//			memberService.insertNaverIdkey(member.getNaverIdkey());
+//			return "redirect:/";
+//			
+//			
+//		} else {
+//			return "redirect:/";
+//		}
+		
+		
+		
+		/*
+		 * Member loginMember=memberService.selectMemberByKakao();
+		 * 
+		 * if (loginMember == null) { // 카카오 연동을 최초로 하는 신규/기존 회원 (KAKAO_IDKEY == NULL)
+		 * model.addAttribute("kakaoIdkey", kakaoProfile.getId()); //
+		 * redirectAtt.addFlashAttribute("msg", "카카오 간편로그인 최초 1회 연결이 필요합니다."); return
+		 * "/member/socialLogin";
+		 */
 		return "redirect:/";
 	}
 	
@@ -93,7 +125,6 @@ public class MemberController {
 		String encodedPassword = passwordEncoder.encode(rawPassword);
 		member.setUserPwd(encodedPassword);
 		System.out.println("changePass = " + member);
-		
 		int result = memberService.insertMember(member);
 		return "redirect:/";
 	}
@@ -130,25 +161,71 @@ public class MemberController {
 	// 아이디/비밀번호 찾기 
 	@GetMapping("/findId.me")
 	public String findId() {
-		return "member/findId";
+		return "/member/findId";
 	}
 
 	@GetMapping("/findPwd.me")
 	public String findPwd() {
-		return "member/findPwd";
+		return "/member/findPwd";
 	}
 	
+
+	@RequestMapping(value = "/mailCheck.me", method = RequestMethod.GET)
+	@ResponseBody
+	public String mailCheck(String email, String userId, Model model) throws Exception {
+		System.out.println("이메일 데이터 전송 확인");	// 확인용
+		System.out.println("인증 이메일 : " + email);
+		
+		// 인증번호 생성
+		Random random = new Random();
+		int checkNum = random.nextInt(888888) + 111111;
+		System.out.println("인증번호 : " + checkNum);
+		model.addAttribute("emailAuth", checkNum);
+		
+		// 이메일 전송 내용
+		String setFrom = "kr.suhyunchoi96@gmail.com";		// 발신 이메일
+		String toMail = email;					// 받는 이메일
+		String title = "[본인인증] 감자마켓 인증 이메일 입니다. ";
+		String content = 
+								"<h2>안녕하세요 감자마켓 입니다!</h2><br><br>"
+							+	"인증 번호는 " + checkNum + "입니다.<br><br>"
+							+	"해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+		
+		// 이메일 전송 코드
+		try {
+			MimeMessage msg = mailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(msg, true, "UTF-8");
+			helper.setFrom(setFrom);
+			helper.setTo(toMail);
+			helper.setSubject(title);
+			helper.setText(content, true);
+			mailSender.send(msg);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		String num = Integer.toString(checkNum);		// ajax를 뷰로 반환시 데이터 타입은 String 타입만 가능
+		
+		return "redirect:/";		// String 타입으로 반환 후 반환
+	}
+
 	@GetMapping("/findLoginInfo.me")
 	public String findLoginInfo(String phone, Model model, RedirectAttributes redirectAtt) {
 		Member member = memberService.selectMemberByPhone(phone);
+		System.out.println(member);
+//		System.out.println(member.getPhone());
 		
 		if (member == null) {
+			// model.addAttribute("historyBack", true);
 			model.addAttribute("msg", "일치하는 회원이 없습니다.");
-			return "redirect:/";
+			return "/member/findId";
+		} 
+		
+		// model.addAttribute("historyBack", true);
+		model.addAttribute("msg", String.format("회원의 아이디는 %s 입니다.", member.getUserId()));
+		return "redirect:/"; 
 		}
 		
-		model.addAttribute("msg", String.format("회원의 아이디는 %s 입니다.", member.getUserId()));
-		return "redirect:/";
 		
 		
 		
@@ -158,29 +235,3 @@ public class MemberController {
 		
 		// return "member/findLoginInfo";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/* 네이버 관련 수정중  
-	@GetMapping("/memberLogin.me")
-	public void login(Model model) throws Exception {
-		// Logger.info("login GET .....");
-		
-		SNSLogin snsLogin = new SNSLogin(naverSns);
-		model.addAttribute("naver_url", snsLogin.getNaverAuthURL());
-		
-//		SNSLogin snsLogin = new SNSLogin(naverSns);
-//		model.addAttribute("naver_url", snsLogin.getNaverAuthURL());
-	}
-	 */
-	
-}
-
-

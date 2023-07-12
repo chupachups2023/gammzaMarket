@@ -28,11 +28,11 @@ public interface GongguService {
 	int selectLastNum();
 	
 	int selectTotalRecored();
-	
+
 	int updateEndStatus(int gongguNo);
-	
+
 	int updateGonggu(Gonggu gonggu);
-	
+
 	int updateGongguCount(int gongguNo);
 
 

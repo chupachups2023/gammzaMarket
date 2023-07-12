@@ -1,5 +1,3 @@
-console.log("메롱");
-
 const sliderWrap = document.querySelector(".ggRead-slider-wrap");
 const sliderImg = document.querySelector(".ggRead-slider-img");  // 보여지는 영역
 const sliderInner = document.querySelector(".ggRead-slider-inner");  // 움직이는 영역

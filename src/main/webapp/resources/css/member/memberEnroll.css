@@ -57,7 +57,22 @@ h1 {
     background-color: #F9F9F9; 
     border: 1px solid #E9D296; 
     border-radius: 30px;
-    height: 200px;
+    height: 230px;
+}    
+
+.container3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* text-align: center;  */
+    width: 450px; 
+    /* margin:auto;  */
+    margin-top: 40px;
+    background-color: #F9F9F9; 
+    border: 1px solid #E9D296; 
+    border-radius: 30px;
+    height: 300px;
 }    
 
 .lo {
@@ -118,6 +133,7 @@ th, td {
     border: none;
     font-size: 15px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .btn-cont {
@@ -133,6 +149,7 @@ th, td {
     border: none;
     font-size: 13px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .td span {
