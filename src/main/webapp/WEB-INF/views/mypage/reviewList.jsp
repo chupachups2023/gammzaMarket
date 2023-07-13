@@ -16,10 +16,22 @@
     </div>
 
     <br><br><br>
+<<<<<<< Updated upstream
         
         <table class="allGGListTable">
             <tr class="allGGt">
                 <td width="10%">번호</td>
+=======
+                <table class="allGGListTable" id="partiReview">
+                <c:if test="${empty partiReview }">
+                <tr>
+                	<td colspan="5">공구에 참여해서 받은 리뷰가 아직 없습니다.</td>
+                </tr>
+                </c:if>
+        <c:forEach items="${partiReview }" var="plist" varStatus="i">
+            <tr class="allGGt" >
+                <td width="10%">${plist.reviewNo }</td>
+>>>>>>> Stashed changes
                 <td width="20%">
                 	공구글 제목<br>
                 	총대 아이디
@@ -58,6 +70,7 @@
         
 
 
+<<<<<<< Updated upstream
         <%-- 
 
         <table class="allGGListTable">
@@ -77,6 +90,41 @@
                 </tr>
 
             </c:forEach>
+=======
+        <table class="allGGListTable" id="leaderReview">
+        <c:if test="${empty leaderReview }">
+        <tr>
+        	<td colspan="5">공구를 열어서 받은 리뷰가 아직 없습니다.</td>
+        </tr>
+        </c:if>
+        <c:forEach items="${leaderReview }" var="lList">
+            <tr class="allGGt" >
+                <td width="10%">${lList.reviewNo }</td>
+                <td width="20%">
+                <c:if test="${fn:length(lList.gongguName) gt 10}">
+                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${list.gongguNo }'">${fn:substring(lList.gongguName, 0, 10)}⋯</div>
+                </c:if>
+                <c:if test="${fn:length(lList.gongguName) le 10}">
+                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${list.gongguNo }'">${fn:substring(lList.gongguName, 0, 10)}</div>
+                </c:if>
+                	${lList.reviewWriter }
+                </td>
+                
+                <td width="35%">
+                	<div class="reviewContent" onclick="reviewDetailModal(${lList.reviewNo});"><pre>${lList.reviewContent }</pre></div>
+                </td>
+                <td width="20%"><div class="reviewRate">점수:
+                <c:forEach begin="1" end="${lList.rate }">
+					<span class="star">★</span>
+                </c:forEach>
+                <c:forEach begin="${lList.rate+1 }" end="5">
+					<span class="emptystar">★</span>
+                </c:forEach></div></td>
+                <fmt:parseDate value="${lList.reviewDate }" var="reviewDate" pattern="yyyy-MM-dd"/>
+                <td width="15%"><small><fmt:formatDate value="${reviewDate }" pattern="yyyy년 MM월 dd일"/></small></td>
+            </tr>
+        </c:forEach>
+>>>>>>> Stashed changes
         </table>
 
          --%>
