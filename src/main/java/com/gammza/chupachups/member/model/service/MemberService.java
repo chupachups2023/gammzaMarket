@@ -28,6 +28,10 @@ public interface MemberService {
 
 	String findPwdClick(String userId, String phone);
 
+	int updatePwd(Member member);
+
+	Member selectOneMemberByEmail(String email);
+
 	
 
 }
