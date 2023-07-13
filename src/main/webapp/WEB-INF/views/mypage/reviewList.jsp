@@ -29,6 +29,12 @@
 
     <br><br><br>
                 <table class="allGGListTable" id="partiReview">
+                <c:if test="${empty partiReview }">
+                <tr>
+                	<td colspan="5">공구에 참여해서 받은 리뷰가 아직 없습니다.</td>
+                </tr>
+                </c:if>
+    <table class="allGGListTable" id="partiReview">
         <c:forEach items="${partiReview }" var="plist" varStatus="i">
             <tr class="allGGt" >
                 <td width="10%">${plist.reviewNo }</td>
@@ -59,8 +65,12 @@
         </c:forEach>
         </table>
 
-
-        <table class="allGGListTable" id="leaderReview">
+    <table class="allGGListTable" id="leaderReview">
+        <c:if test="${empty leaderReview }">
+        <tr>
+        	<td colspan="5">공구를 열어서 받은 리뷰가 아직 없습니다.</td>
+        </tr>
+        </c:if>
         <c:forEach items="${leaderReview }" var="lList">
             <tr class="allGGt" >
                 <td width="10%">${lList.reviewNo }</td>
@@ -73,7 +83,6 @@
                 </c:if>
                 	${lList.reviewWriter }
                 </td>
-                
                 <td width="35%">
                 	<div class="reviewContent" onclick="reviewDetailModal(${lList.reviewNo});"><pre>${lList.reviewContent }</pre></div>
                 </td>
@@ -89,6 +98,7 @@
             </tr>
         </c:forEach>
         </table>
+
 
 </div>
 

@@ -24,6 +24,11 @@
 			</small>
 			</td>
 		</tr>
+		<c:if test="${empty leadList }">
+        <tr>
+        	<th colspan="6" height="100px">아직 공구를 연 적이 없어요</th>
+        </tr>
+        </c:if>
 		<c:forEach items="${leadList}" var="list" varStatus="j">
 			<tr>
 				<th><img src="${pageContext.request.contextPath }/resources/upload/${list.photo1}" width="100px"></img></th>

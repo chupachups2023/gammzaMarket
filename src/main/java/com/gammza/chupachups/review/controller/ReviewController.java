@@ -3,15 +3,18 @@ package com.gammza.chupachups.review.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.gammza.chupachups.gonggu.model.service.GongguService;
 import com.gammza.chupachups.gonggu.model.service.PartiService;
 import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 import com.gammza.chupachups.gonggu.model.vo.Parti;
@@ -27,6 +30,8 @@ public class ReviewController {
 	private ReviewService reviewService; 
 	@Autowired
 	private PartiService partiService;
+	@Autowired
+	private GongguService gongguService;
 	
 	@GetMapping("/reviewList.re")
 	public String reviewList(HttpSession session, Model model) {
@@ -86,9 +91,35 @@ public class ReviewController {
 		int result=reviewService.selectWroteReviewCheck(map);
 		
 		Parti parti=partiService.selectOneParti(map);
+		Gonggu gonggu=gongguService.selectOneGonggu(gongguNo);
 		
 		model.addAttribute("parti", parti);
 		model.addAttribute("result", result);
+		model.addAttribute("gonggu", gonggu);
+		return "jsonView";
+	}
+	
+	@PostMapping("/writeReview.re")
+	public String writeReview(HttpServletRequest request, HttpSession session, Model model) {
+		String receiverId=request.getParameter("receiverId");
+		int rate=Integer.parseInt(request.getParameter("rate"));
+		String reviewContent=request.getParameter("reviewContent");
+		int gongguNo=Integer.parseInt(request.getParameter("gongguNo"));
+		
+		String userId=((Member)session.getAttribute("loginMember")).getUserId();
+		
+		Review review=new Review();
+		review.setGongguNo(gongguNo);
+		review.setRate(rate);
+		review.setReviewContent(reviewContent);
+		review.setReceiverId(receiverId);
+		review.setReviewWriter(userId);
+		
+		int result=reviewService.insertReview(review);
+		if(result>0) {
+			model.addAttribute("result", result);
+		}
+		
 		return "jsonView";
 	}
 }

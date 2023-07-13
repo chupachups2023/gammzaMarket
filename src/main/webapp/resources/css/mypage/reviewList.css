@@ -21,6 +21,11 @@
         font-size: large;
         font-weight: bold;
     }
+    
+.reviewBtn:hover{
+	cursor:pointer;
+	background: rgb(35, 117, 84);
+}
     .readerR {
         margin-left: 30%;
     }

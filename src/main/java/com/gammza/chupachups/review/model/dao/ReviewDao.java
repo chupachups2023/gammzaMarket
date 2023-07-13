@@ -18,4 +18,6 @@ public interface ReviewDao {
 
 	int selectWroteReviewCheck(HashMap<String, String> map);
 
+	int insertReview(Review review);
+
 }
