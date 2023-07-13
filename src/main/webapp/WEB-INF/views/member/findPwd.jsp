@@ -22,17 +22,19 @@
 							</ul>
 					</nav>
 			</div>
-			<form action="${pageContext.request.contextPath}/member/findPwd.me" method="post">
+			<form action="${pageContext.request.contextPath}/member/authPwd.me" method="post">
 				<div class="find-content2">
 						<div class="find-id2">
 								<ul>
-										<li><input type="text" name="userId"  id="userId" placeholder="아이디를 입력해 주세요"></li>
+										<li><input type="text" name="userId"  id="userId" placeholder="아이디를 입력해 주세요" required=""></li>
 								</ul>
 								<ul>
-										<li><input type="text" name="phone" id="phone" placeholder="휴대폰 번호를 입력해 주세요"></li>
+										<li><input type="email" name="email" id="email" placeholder="이메일 주소를 입력해 주세요" required="/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i"></li>
+										<!-- <input type="text" name="phone" id="phone" placeholder="휴대폰 번호를 입력해 주세요" required="/^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/"> -->
 								</ul>
 								<ul>
-										<li><input type="button" value="찾기" onclick="findPwdClick();"></li>
+										<li><input type="submit" id="pwdCheck" value="찾기"></li>
+										<!-- onclick="findPwdClick();" -->
 								</ul>
 						</div>
 				</div>
@@ -40,7 +42,7 @@
 		</div>
 
 
-	<script>
+	<!-- <script>
 	// 비밀번호 찾기
 	function findPwdClick(){
 		var userId = $('#userId').val()
@@ -89,27 +91,7 @@
 	    }
 	})
 	
-	
-	
-	
-	
-	
-	</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	</script> -->
 
 
    
