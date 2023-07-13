@@ -189,7 +189,11 @@ public class MemberController {
 	}
 	
 	@GetMapping("/memberInfo.me")
-	public String memberInfo() { 
+	public String memberInfo(Model model, HttpSession session) { 
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		String userId = loginMember.getUserId();
+		Member member = memberService.selectOneMember(userId);
+		model.addAttribute("member", member);
 		return "/mypage/memberInfo";
 	}
 	
