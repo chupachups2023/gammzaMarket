@@ -145,7 +145,7 @@ public class MemberController {
 	
 	@RequestMapping(value = "/mailCheck.me", method = RequestMethod.GET)
 	@ResponseBody
-	public String mailCheck(String email, String userId, Model model) throws Exception {
+	public String mailCheck(String email, Model model) throws Exception {
 		System.out.println("이메일 데이터 전송 확인");	// 확인용
 		System.out.println("인증 이메일 : " + email);
 		
@@ -156,7 +156,7 @@ public class MemberController {
 		model.addAttribute("emailAuth", checkNum);
 		
 		// 이메일 전송 내용
-		String setFrom = "kr.suhyunchoi96@gmail.com";		// 발신 이메일
+		String setFrom = "gammzamarket@gmail.com";		// 발신 이메일
 		String toMail = email;					// 받는 이메일
 		String title = "[본인인증] 감자마켓 인증 이메일 입니다. ";
 		String content = 
@@ -177,9 +177,9 @@ public class MemberController {
 			e.printStackTrace();
 		}
 		
-		String num = Integer.toString(checkNum);		// ajax를 뷰로 반환시 데이터 타입은 String 타입만 가능
+		return Integer.toString(checkNum);		// ajax를 뷰로 반환시 데이터 타입은 String 타입만 가능
 		
-		return "redirect:/";		// String 타입으로 반환 후 반환
+		//return "redirect:/";		// String 타입으로 반환 후 반환
 	}
 
 	@GetMapping("/findLoginInfo.me")
