@@ -44,24 +44,23 @@
 		$('#loginWarning').css('display', 'none');
 	}
 	
-		    const latitude = "${location.latitude}";
-		    const longitude = "${location.longitude}";
-		    
-			$.ajax({
-		    	type:"get",
-		    	url:"https://dapi.kakao.com/v2/local/geo/coord2address.json?x="+longitude+"&y="+latitude+"&input_coord=WGS84",
-		    	beforeSend: function (header) {
-		    		header.setRequestHeader("Authorization","KakaoAK 840539f3651afe19f12cc19a1dc9e0ab");
-		        },
-		        success:function(result){
-		        	var address=result.documents[0].address.address_name;
-		        	let arr=address.split(" ");
-		        	add=arr[0]+" "+arr[1]+" "+arr[2];
-		        	document.getElementById("address").innerHTML=add;
-		        	
-		        }
-			})
-		    
+    const latitude = "${location.latitude}";
+    const longitude = "${location.longitude}";
+    
+	$.ajax({
+    	type:"get",
+    	url:"https://dapi.kakao.com/v2/local/geo/coord2address.json?x="+longitude+"&y="+latitude+"&input_coord=WGS84",
+    	beforeSend: function (header) {
+    		header.setRequestHeader("Authorization","KakaoAK 840539f3651afe19f12cc19a1dc9e0ab");
+        },
+        success:function(result){
+        	var address=result.documents[0].address.address_name;
+        	let arr=address.split(" ");
+        	add=arr[0]+" "+arr[1]+" "+arr[2];
+        	document.getElementById("address").innerHTML=add;
+        	
+        }
+	})
 	
 </script>
 
