@@ -134,6 +134,7 @@ public class SocialController {
 					return "redirect:/socialLogin.me";
 				} else { // 카카오 연동 완료한 회원 
 					model.addAttribute("loginMember", loginMember);
+					redirectAtt.addFlashAttribute("msg", member.getName()+ "님 환영합니다💚");
 					return "redirect:/";
 				}
 				
@@ -279,6 +280,7 @@ public class SocialController {
 					return "redirect:/socialLogin.me";
 				} else { // 네이버 연동 완료한 회원 
 					model.addAttribute("loginMember", loginMember);
+					redirectAtt.addFlashAttribute("msg", member.getName()+ "님 환영합니다💚");
 					return "redirect:/";
 				}
 				

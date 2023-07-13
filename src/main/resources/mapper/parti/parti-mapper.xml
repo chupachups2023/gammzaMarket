@@ -28,8 +28,9 @@
 		order by reg_at desc
 	</select>
 	<select id="selectOneParti" resultMap="partiMap">
-		select * from parti_tb
-		where gonggu_no=#{gongguNo} and parti_member=#{userId}
+		select p.*, g.gonggu_name from parti_tb p, gonggu g
+		where g.gonggu_no=p.gonggu_no  and
+		p.gonggu_no=#{gongguNo} and p.parti_member=#{userId}
 	</select>
 	<update id="updatePartiStatusByLeader">
 		update parti_tb

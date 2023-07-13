@@ -90,7 +90,7 @@ public class MemberController {
 				return "redirect:/";
 			}
 			
-			
+			redirectAtt.addFlashAttribute("msg", member.getName()+ "님 환영합니다💚");
 			
 		} else {
 			redirectAtt.addFlashAttribute("msg", "아이디 또는 비밀번호가 맞지 않습니다.");
