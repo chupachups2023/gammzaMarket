@@ -110,6 +110,21 @@
  		where phone = #{phone} and user_Id = #{userId}
  	</select>
  	
+ 	<!-- 회원정보조회 -->
+ 	<select id="selectOneMemberByEmail" resultType="Member">
+ 		select * from member
+ 		where email = #{email}
+ 	</select>
+ 	
+ 	<!-- 비밀번호 변경 -->
+ 	<update id="updatePwd">
+ 		update member
+ 		set user_pwd = #{userPwd}
+ 		where email = #{email}
+ 	</update>
+ 	
+ 	
+ 	
  	
  	
  	
