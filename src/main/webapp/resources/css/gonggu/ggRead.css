@@ -251,7 +251,14 @@
     text-decoration: underline;
     text-underline-position : under;
 }
-.ggRead-section{
+#ggRead-section{
     margin: 0 auto;
+}
+#emptyzzim{
+	opacity:0.2;
+	display:none
+}
+#fullzzim{
+	display:none
 }
 

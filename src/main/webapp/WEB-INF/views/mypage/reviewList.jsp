@@ -3,83 +3,101 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="마이 리뷰게시판" name="title"/>
+	<jsp:param value="${loginMember.userId }님의 리뷰" name="title"/>
 </jsp:include>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/reviewList.css">
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/reviewList.css?<%=System.currentTimeMillis() %>">
+<style>
+	.emptystar{
+		opacity:0.15;
+		font-size:17px;
+	}
+	.star{
+		color:RGB(252, 213, 63);
+		font-size:17px;
+	}
+	.reviewRate span{
+		margin-right:-5px;
+	}
+</style>
 
 <div class="allGGList">
     <div id="reviewCategory">
-        <button class="btn reviewBtn readerR" onclick="">총대로 받은 리뷰</button>&emsp;&emsp;
-        <button class="btn reviewBtn particR" onclick="">참가자로 받은 리뷰</button>
+        <button class="btn reviewBtn readerR" onclick="showLeader();">총대로 받은 리뷰</button>&emsp;&emsp;
+        <button class="btn reviewBtn particR" onclick="showParti();">참가자로 받은 리뷰</button>
     </div>
 
     <br><br><br>
-        
-        <table class="allGGListTable">
-            <tr class="allGGt">
-                <td width="10%">번호</td>
-                <td width="20%">
-                	공구글 제목<br>
-                	총대 아이디
-                </td>
-                <td width="40%">
-                	<button class="btn btn-reviewDetail" type="button" onclick="reviewDetailModal();">리뷰 내용</button>
-                </td>
-                <td width="20%">점수: ⭐⭐⭐⭐⭐</td>
-                <td width="10%">게시날짜</td>
-            </tr>
-            <tr class="allGGt">
-                <td width="10%">번호</td>
-                <td width="20%">
-                	공구글 제목<br>
-                	총대 아이디
-                </td>
-                <td width="40%">
-                	<button class="btn btn-reviewDetail" type="button" onclick="reviewDetailModal();">리뷰 내용</button>
-                </td>
-                <td width="20%">점수: ⭐⭐⭐⭐⭐</td>
-                <td width="10%">게시날짜</td>
-            </tr>
-            <tr class="allGGt">
-                <td width="10%">번호</td>
-                <td width="20%">
-                	공구글 제목<br>
-                	총대 아이디
-                </td>
-                <td width="40%">
-                	<button class="btn btn-reviewDetail" type="button" onclick="reviewDetailModal();">리뷰 내용</button>
-                </td>
-                <td width="20%">점수: ⭐⭐⭐⭐⭐</td>
-                <td width="10%">게시날짜</td>
-            </tr>
-        </table>
-        
-
-
-        <%-- 
-
-        <table class="allGGListTable">
-            <c:forEach >
-                <tr class="allGGt">
-                    <td width="10%">번호</td>
-                    <td width="20%">
-                        공구글 제목<br>
-                        총대 아이디
-                    </td>
-                    <td width="40%">
-                        <button class="btn btn-reviewDetail" type="button" onclick="reviewDetailModal();">리뷰 내용</button>
-                    </td>
-                    <td width="20%">점수: </td>
-                    <td width="10%">게시날짜</td>
-                    
+   <table class="allGGListTable" id="partiReview">
+                <c:if test="${empty partiReview }">
+                <tr>
+                	<td colspan="5">공구에 참여해서 받은 리뷰가 아직 없습니다.</td>
                 </tr>
+                </c:if>
+        <c:forEach items="${partiReview }" var="plist" varStatus="i">
+            <tr class="allGGt" >
+                <td width="10%">${plist.reviewNo }</td>
+                <td width="20%">
+                <c:if test="${fn:length(plist.gongguName) gt 10}">
+                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${plist.gongguNo }'">${fn:substring(plist.gongguName, 0, 10)}⋯</div>
+                </c:if>
+                <c:if test="${fn:length(plist.gongguName) le 10}">
+                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${plist.gongguNo }'">${fn:substring(plist.gongguName, 0, 10)}</div>
+                </c:if>
+                	${plist.reviewWriter }
+                </td>
+                
+                <td width="35%">
+                	<div class="reviewContent" onclick="reviewDetailModal(${plist.reviewNo});"><pre>${plist.reviewContent }</pre></div>
+                </td>
+                <td width="20%"><div class="reviewRate">점수: 
+                <c:forEach begin="1" end="${plist.rate }">
+					<span class="star">★</span>
+                </c:forEach>
+                <c:forEach begin="${plist.rate+1 }" end="5">
+					<span class="emptystar">★</span>
+                </c:forEach>
+				</div></td>
+                <fmt:parseDate value="${plist.reviewDate }" var="reviewDate" pattern="yyyy-MM-dd"/>
+                <td width="15%"><small><fmt:formatDate value="${reviewDate }" pattern="yyyy년 MM월 dd일"/></small></td>
+            </tr>
+        </c:forEach>
+   </table>
 
-            </c:forEach>
+    <table class="allGGListTable" id="leaderReview">
+        <c:if test="${empty leaderReview }">
+        <tr>
+        	<td colspan="5">공구를 열어서 받은 리뷰가 아직 없습니다.</td>
+        </tr>
+        </c:if>
+        <c:forEach items="${leaderReview }" var="lList">
+            <tr class="allGGt" >
+                <td width="10%">${lList.reviewNo }</td>
+                <td width="20%">
+                <c:if test="${fn:length(lList.gongguName) gt 10}">
+                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${lList.gongguNo }'">${fn:substring(lList.gongguName, 0, 10)}⋯</div>
+                </c:if>
+                <c:if test="${fn:length(lList.gongguName) le 10}">
+                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${lList.gongguNo }'">${fn:substring(lList.gongguName, 0, 10)}</div>
+                </c:if>
+                	${lList.reviewWriter }
+                </td>
+                <td width="35%">
+                	<div class="reviewContent" onclick="reviewDetailModal(${lList.reviewNo});"><pre>${lList.reviewContent }</pre></div>
+                </td>
+                <td width="20%"><div class="reviewRate">점수:
+                <c:forEach begin="1" end="${lList.rate }">
+					<span class="star">★</span>
+                </c:forEach>
+                <c:forEach begin="${lList.rate+1 }" end="5">
+					<span class="emptystar">★</span>
+                </c:forEach></div></td>
+                <fmt:parseDate value="${lList.reviewDate }" var="reviewDate" pattern="yyyy-MM-dd"/>
+                <td width="15%"><small><fmt:formatDate value="${reviewDate }" pattern="yyyy년 MM월 dd일"/></small></td>
+            </tr>
+        </c:forEach>
         </table>
 
-         --%>
 
 </div>
 
@@ -96,15 +114,18 @@
 	      </div>
 	      <div class="modalR-body">
 				<table class="reviewModal">
-					<tr height="50px">
-						<td width="50%">
-							&emsp;<b>공구물건 : </b> <br>
-							&emsp;<b>리뷰 작성자 : </b>
+					<tr height="30px">
+						<td width="50%" colspan="2">
+							<b>공구물건 : </b> <span id="reviewGongguName"></span><br>
 						</td>
-						<td width="50%">&emsp;<b>점수 : </b></td>
 					</tr>	
+					<tr height="30px">
+						<td><b>리뷰 작성자 : </b> <span id="reviewWriter"></span></td>
+						<td width="50%"><b>점수 : </b><span id="rate"></span>
+		                </td>
+					</tr>
 					<tr>
-						<td colspan="2">&emsp;리뷰내용</td>
+						<td colspan="2"><span id="reviewContent"></span><br></td>
 					</tr>			
 				</table>
 	      </div>
@@ -116,14 +137,48 @@
 	</div>
 
 <script>
- 	function reviewDetailModal(){
+$("#partiReview").css("display", "none");
+
+function showLeader(){
+	$("#partiReview").css("display", "none");
+	$("#leaderReview").css("display", "table");
+}
+function showParti(){
+	$("#partiReview").css("display", "table");
+	$("#leaderReview").css("display", "none");
+}
+
+ 	function reviewDetailModal(reviewNo){
  		$('.modalR').addClass('show');
  		$('.modalR-dialog').addClass('show');
+ 		
+ 		$.ajax({
+ 			type:"get",
+ 			url:"${pageContext.request.contextPath}/review/getReview.re",
+ 			data:{"reviewNo" : reviewNo},
+ 			success:function(re){
+ 				review=re.review;
+ 				console.log(review.gongguName)
+ 				document.getElementById("reviewGongguName").innerHTML=review.gongguName;
+ 				document.getElementById("reviewWriter").innerHTML=review.reviewWriter;
+ 				document.getElementById("reviewContent").innerHTML=review.reviewContent;
+ 				let star='';
+ 				for(let i=1;i<=review.rate*1;i++){
+ 					star+="<span class='star'>★</span>";
+ 				}
+ 				for(let i=review.rate*1+1;i<=5;i++){
+ 					star+="<span class='emptystar'>★</span>";
+ 				}
+ 				document.getElementById("rate").innerHTML=star;
+ 			}
+ 			
+ 		})
  	};
  	function mClose(){
  		$('.modalR').removeClass('show');
  		$('.modalR-dialog').removeClass('show');
  	};
+ 	
 </script>
 
 

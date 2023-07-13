@@ -2,7 +2,7 @@
 	/* 공구게시판 */
     .GGlistSec {
         width: 1200px;
-        margin: 50px auto;
+        margin: 30px auto;
        position:relative;
     }
     /* 한 줄에 세 이미지 박스 */
@@ -50,6 +50,10 @@
 		color: black;
 		font-size: 15px;
 		/* position: relative; */
+	}
+	.currAdd{
+		width:1200px;
+		margin: 20px auto;
 	}
 
 .loginWarning img{

@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!-- <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/memberEnroll.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/memberEnroll.css?<%=System.currentTimeMillis() %>">
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="회원가입" name="title"/>
@@ -83,11 +83,12 @@
 												<input type="email" name="emailAuth" id="emailAuth" placeholder="인증번호 6자리를 입력해주세요" required>
 										</td>
 								</tr>
-										<!-- <tr>
+										<tr>
 											<td class="btn-cont">
 												<button type="button" class="bo-small" id="emlChk2" >인증</button>
+												<input type="hidden" id="emailAuthKey" name="emailAuthKey">
 											</td>
-										</tr> -->
+										</tr>
 									 <tr>
 											 <td scope="col" class="add">
 													 <input name="birthday" id="birthday" placeholder="생년월일 8자리 입력 (ex. 2023-01-01)">
@@ -204,6 +205,7 @@
 		// phone = phone.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
 		
 		var email = document.getElementById("email");
+		var authKey = document.getElementById("emailAuthKey");
 		var birthday = document.getElementById("birthday");
 		
 		// 정규표현식
@@ -221,6 +223,9 @@
 		
 		// 이메일 
 		var emailCfm = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+		
+		// 인증번호 
+		var authCfm = /^[0-9]{1,6}$/;
 		
 		// 생년월일
 		var birthdayCfm = /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
@@ -302,6 +307,13 @@
 			return false;
 		}
 		
+		// 인증번호 확인
+		if($('#emailAuth').val() != authKey.value) {
+			alert("인증번호가 일치하지 않습니다.");
+			emailAuth.focus();
+			return false;
+		}
+		
 		// 생년월일 
 		if (birthday.value == "") {
 			alert("생년월일을 입력하세요");
@@ -331,7 +343,8 @@
 				type: 'GET',
 				url: '${pageContext.request.contextPath}/member/mailCheck.me?email=' + email,	/* url을 통해 데이터를 보낼 수 있도록 GET방식, url명을 "mailCheck"로 지정 */
 				success: function(data) {
-					console.log("data : " + data );
+					console.log("인증번호 : " + data);
+					$('input[name=emailAuthKey]').attr('value', data);
 					emailAuth.attr('disabled', false);		/* 데이터가 성공적으로 들어오면 인증번호 입력란이 활성화되도록 */
 					code = data;
 					alert('인증번호가 전송되었습니다.')
@@ -339,6 +352,20 @@
 				},
 			});
 		});
+		
+	$('#emlChk2').click(function() {
+		var inputCode = $('#emailAuth').val();
+		var checkResult = $("#emailAuth");
+		var authKey = document.getElementById("emailAuthKey");
+		
+		if($('#emailAuth').val() != authKey.value) {
+			alert("인증번호가 일치하지 않습니다.");
+			return false;
+		} else if($('#emailAuth').val() == authKey.value) {
+			alert("인증번호가 일치합니다.");
+			return true;
+		}
+	});
 </script>
 
 

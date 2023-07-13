@@ -35,4 +35,40 @@ public class RequestServiceImpl implements RequestService {
 	public ArrayList<RequestMember> selectRequestMember(int requestNo) {
 		return requestDao.selectRequestMember(requestNo);
 	}
+
+	@Override
+	public int insertRequest(Request request) {
+		return requestDao.insertRequest(request);
+	}
+
+	@Override
+	public int selectLastNum() {
+		return requestDao.selectLastNum();
+	}
+
+	@Override
+	public int insertRequestMember(RequestMember reqMem) {
+		return requestDao.insertRequestMember(reqMem);
+	}
+
+	@Override
+	public int selectRequestMemberByNo(HashMap<String, String> map) {
+		return requestDao.selectRequestMemberByNo(map);
+	}
+
+	@Override
+	public int updateRequestNum(int requestNo) {
+		return requestDao.updateRequestNum(requestNo);
+	}
+
+	@Override
+	public int updateRequestStatus(int requestNo) {
+		return requestDao.updateRequestStatus(requestNo);
+	}
+
+	@Override
+	public int updateRequestReqStatus(int requestNo) {
+		return requestDao.updateRequestReqStatus(requestNo);
+	}
+
 }

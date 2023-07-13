@@ -13,7 +13,7 @@ public class Request {
 	private int requestNo;
 	private String requestWriter;
 	private String requestName;
-	private int price;
+	private String price;
 	private int categoryNo;
 	private String photo1;
 	private String photo2;
@@ -25,5 +25,6 @@ public class Request {
 	private String longitude;
 	private String link;
 	private int count;
+	private String recentDate;
 	
 }

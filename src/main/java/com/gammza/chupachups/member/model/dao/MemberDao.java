@@ -1,5 +1,7 @@
 package com.gammza.chupachups.member.model.dao;
 
+import java.util.HashMap;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.gammza.chupachups.member.model.vo.Member;
@@ -24,6 +26,10 @@ public interface MemberDao {
 	/* Member selectMemberByPhone(String phone); */
 
 	String insertNaverIdkey(String naverIdkey);
+
+	int updateKakaoIdkey(HashMap<String, String> map);
+
+	int updateNaverIdkey(HashMap<String, String> map);
 
 	String findIdClick(String phone);
 

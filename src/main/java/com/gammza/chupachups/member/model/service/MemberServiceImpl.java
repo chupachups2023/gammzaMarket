@@ -1,5 +1,7 @@
 package com.gammza.chupachups.member.model.service;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -61,6 +63,16 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.insertNaverIdkey(naverIdkey);
 	}
 
+	@Override
+	public int updateKakaoIdkey(HashMap<String, String> map) {
+		return memberDao.updateKakaoIdkey(map);
+	}
+
+	@Override
+	public int updateNaverIdkey(HashMap<String, String> map) {
+		return memberDao.updateNaverIdkey(map);
+	}
+	
 	@Override
 	public String findIdClick(String phone) {
 		return memberDao.findIdClick(phone);

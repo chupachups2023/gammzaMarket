@@ -16,4 +16,19 @@ public interface RequestService {
 
 	ArrayList<RequestMember> selectRequestMember(int requestNo);
 
+	int insertRequest(Request request);
+
+	int selectLastNum();
+
+	int insertRequestMember(RequestMember reqMem);
+
+	int selectRequestMemberByNo(HashMap<String, String> map);
+
+	int updateRequestNum(int requestNo);
+
+	int updateRequestStatus(int requestNo);
+
+	int updateRequestReqStatus(int requestNo);
+
+
 }

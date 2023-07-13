@@ -21,6 +21,11 @@
         font-size: large;
         font-weight: bold;
     }
+    
+.reviewBtn:hover{
+	cursor:pointer;
+	background: rgb(35, 117, 84);
+}
     .readerR {
         margin-left: 30%;
     }
@@ -94,4 +99,20 @@
         border-radius: 5px;
         color: aliceblue;
         font-weight: bold;
+    }
+    .modalR-title{
+    	margin-top: 40px;
+    }
+    .reviewContent:hover{
+    	text-decoration:underline;
+    	text-underline-position : under;
+    	cursor:pointer;
+    }
+    .gongguName:hover{
+    	text-decoration:underline;
+    	text-underline-position : under;
+    	cursor:pointer;
+    }
+    #reviewDetailModal td{
+    	padding:7px;
     }

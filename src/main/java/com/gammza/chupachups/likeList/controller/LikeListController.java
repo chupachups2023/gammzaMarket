@@ -1,5 +1,6 @@
 package com.gammza.chupachups.likeList.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gammza.chupachups.common.model.vo.PageInfo;
 import com.gammza.chupachups.common.template.Pagination;
@@ -65,5 +67,40 @@ public class LikeListController {
 	
 	public List<Zzim> selectZzim(int gongguNo) {
 		return likeListService.selectZzim(gongguNo);
+	}
+
+	public Zzim selectMyZzim(int gongguNo, String userId) {
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put("gongguNo", String.valueOf(gongguNo));
+		map.put("userId", userId);
+		
+		return likeListService.selectMyZzim(map);
+	}
+	
+	@ResponseBody
+	@GetMapping("/addZzim.zz")
+	public int addZzim(@RequestParam int gongguNo, HttpSession session, Model model) {
+		Member loginMember=(Member)session.getAttribute("loginMember");
+		HashMap<String,String> map=new HashMap<String,String>();
+		map.put("gongguNo", String.valueOf(gongguNo));
+		map.put("userId", loginMember.getUserId());
+		likeListService.insertLikeList(map);
+		int zzimNo=likeListService.selectZzimNo();
+		Zzim zzim= new Zzim();
+		zzim.setGongguNo(gongguNo);
+		zzim.setZzimMember(loginMember.getUserId());
+		zzim.setZzimNo(zzimNo);
+		
+		model.addAttribute("zzim", zzim);
+		
+		return zzimNo;
+	}
+	
+	@ResponseBody
+	@GetMapping("/deleteZzim.zz")
+	public String deleteZzim(@RequestParam int zzimNo, Model model) {
+		likeListService.deleteZzim(String.valueOf(zzimNo));
+		model.addAttribute("zzim", null);
+		return "성공";
 	}
 }
