@@ -205,6 +205,7 @@
 		// phone = phone.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
 		
 		var email = document.getElementById("email");
+		var authKey = document.getElementById("emailAuthKey");
 		var birthday = document.getElementById("birthday");
 		
 		// 정규표현식
@@ -222,6 +223,9 @@
 		
 		// 이메일 
 		var emailCfm = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+		
+		// 인증번호 
+		var authCfm = /^[0-9]{1,6}$/;
 		
 		// 생년월일
 		var birthdayCfm = /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
@@ -301,6 +305,17 @@
 			alert("잘못된 이메일 형식입니다");
 			email.focus();
 			return false;
+		}
+		
+		// 인증번호 확인
+		if($('#emailAuth').val() != authKey.value) {
+			alert("인증번호가 일치하지 않습니다.");
+			emailAuth.focus();
+			return false;
+		} else if(!authCfm.test(authKey.value)) {
+			alert("인증번호가 일치합니다.");
+			emailAuth.focus();
+			return true;
 		}
 		
 		// 생년월일 
