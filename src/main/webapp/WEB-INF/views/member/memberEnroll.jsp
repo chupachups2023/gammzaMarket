@@ -83,11 +83,12 @@
 												<input type="email" name="emailAuth" id="emailAuth" placeholder="인증번호 6자리를 입력해주세요" required>
 										</td>
 								</tr>
-										<!-- <tr>
+										<tr>
 											<td class="btn-cont">
 												<button type="button" class="bo-small" id="emlChk2" >인증</button>
+												<input type="hidden" id="emailAuthKey" name="emailAuthKey">
 											</td>
-										</tr> -->
+										</tr>
 									 <tr>
 											 <td scope="col" class="add">
 													 <input name="birthday" id="birthday" placeholder="생년월일 8자리 입력 (ex. 2023-01-01)">
@@ -331,7 +332,8 @@
 				type: 'GET',
 				url: '${pageContext.request.contextPath}/member/mailCheck.me?email=' + email,	/* url을 통해 데이터를 보낼 수 있도록 GET방식, url명을 "mailCheck"로 지정 */
 				success: function(data) {
-					console.log("data : " + data );
+					console.log("인증번호 : " + data);
+					$('input[name=emailAuthKey]').attr('value', data);
 					emailAuth.attr('disabled', false);		/* 데이터가 성공적으로 들어오면 인증번호 입력란이 활성화되도록 */
 					code = data;
 					alert('인증번호가 전송되었습니다.')
@@ -339,6 +341,20 @@
 				},
 			});
 		});
+		
+	$('#emlChk2').click(function() {
+		var inputCode = $('#emailAuth').val();
+		var checkResult = $("#emailAuth");
+		var authKey = document.getElementById("emailAuthKey");
+		
+		if($('#emailAuth').val() != authKey.value) {
+			alert("인증번호가 일치하지 않습니다.");
+			return false;
+		} else if($('#emailAuth').val() == authKey.value) {
+			alert("인증번호가 일치합니다.");
+			return true;
+		}
+	});
 </script>
 
 
