@@ -1,5 +1,7 @@
 package com.gammza.chupachups.member.model.service;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,10 +44,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectMemberByKakao(id);
 	}
 
-	@Override
-	public Member selectMemberByPhone(String phone) {
-		return memberDao.selectMemberByPhone(phone);
-	}
+	/*
+	 * @Override public Member selectMemberByPhone(String phone) { return
+	 * memberDao.selectMemberByPhone(phone); }
+	 */
 
 	@Override
 	public Member selectMemberByNaver(String id) {
@@ -55,6 +57,31 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public String insertNaverIdkey(String naverIdkey) {
 		return memberDao.insertNaverIdkey(naverIdkey);
+	}
+
+	@Override
+	public int updateKakaoIdkey(HashMap<String, String> map) {
+		return memberDao.updateKakaoIdkey(map);
+	}
+
+	@Override
+	public int updateNaverIdkey(HashMap<String, String> map) {
+		return memberDao.updateNaverIdkey(map);
+	}
+	
+	@Override
+	public String findIdClick(String phone) {
+		return memberDao.findIdClick(phone);
+	}
+
+	@Override
+	public int insertNaverMember(Member member) {
+		return memberDao.insertNaverMember(member);
+	}
+
+	@Override
+	public String findPwdClick(String userId, String phone) {
+		return memberDao.findPwdClick(userId, phone);
 	}
 
 

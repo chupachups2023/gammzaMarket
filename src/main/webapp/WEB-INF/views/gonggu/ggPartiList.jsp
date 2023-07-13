@@ -21,6 +21,10 @@
 	.userId_bold{
 		font-weight:bold;
 	}
+	.writeReview:hover{
+		text-decoration:underline;
+		cursor:pointer;
+	}
 </style>
 	<h1 align="center">
 		<c:choose>
@@ -53,8 +57,12 @@
 						<c:when test="${list.status eq 0 }">
 							참여 대기
 						</c:when>
-						<c:otherwise>
+						<c:when test="${list.status eq 1 }">
 							참여 중
+						</c:when>
+						<c:otherwise>
+							수령 완료
+							<div class="writeReview" onclick="reviewWriteCheck('${list.userId}');"><small>참가자 리뷰쓰기</small></div>
 						</c:otherwise>
 					</c:choose>
 				</th>
@@ -68,11 +76,6 @@
 		</table>
 		<button class="long-btn button" onclick="addMember();">공구 참여자로 추가하기</button>
 	</div>
-<<<<<<< Updated upstream
-<script>
-	
-=======
-	
 	
 		<!-- 리뷰보기 모달창 -->
 	
@@ -118,7 +121,6 @@
 	
 	
 <script>
-  
 	function reviewWriteCheck(id){
 		let userId=id;
 		$.ajax({
@@ -143,7 +145,6 @@
 			
 		})
 	}
->>>>>>> Stashed changes
 	function addMember(){
 		
 		var rowData = [];
@@ -159,15 +160,6 @@
 			let id = td.eq(2).text();
 			totalNum+=num*1;
 			arr.push(id);
-			
-		/*	rowData.push(tr.text());
-			
-		 	// td.eq(0)은 체크박스 이므로  td.eq(1)의 값부터 가져온다.
-			var no = td.eq(1).text()+", "
-			var userid = td.eq(2).text()+", ";
-			var name = td.eq(3).text()+", ";
-			var email = td.eq(4).text()+", ";
-			 */
 		});
 		const maxNum="${gonggu.num}";
 		console.log(maxNum);
@@ -181,12 +173,7 @@
 			location.href="${pageContext.request.contextPath }/gonggu/partiMemSelect.pa"+strr;
 		}
 	};
-	
-/*	
-var table = document.getElementById('partiTable');
-      var rowList = table.rows;
 
-<<<<<<< Updated upstream
 		for (i=0; i<rowList.length; i++) {
 			var row = rowList[i];
         	var tdNum = 7;     //아래 for문에서 사용하기 위해 row 하위에 존재하는 td의 갯수를 구합니다.
@@ -202,7 +189,6 @@ var table = document.getElementById('partiTable');
         
       }
 */
-=======
  	function reviewDetailModal(){
  		$('.modalR').addClass('show');
  		$('.modalR-dialog').addClass('show');
@@ -244,7 +230,6 @@ var table = document.getElementById('partiTable');
  		}
  	}
  	
->>>>>>> Stashed changes
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

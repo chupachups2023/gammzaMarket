@@ -44,11 +44,36 @@
 	)
 	</insert>
 	
+	<insert id="insertNaverMember">
+		insert into member(user_id, user_pwd, name, phone, email, create_at, status, point, temperature, naver_idkey)
+		values(
+		'naver',
+		'naver',
+		#{name},
+		'naver',
+		'naver',
+		default,
+		default,
+		default,
+		default,
+		#{naverIdkey}
+	)
+	</insert>
+	
 	<insert id="insertNaverIdkey">
 		insert into member(naver_idkey) values(#{naverIdkey})
 	</insert>
 
-
+	<update id="updateKakaoIdkey">
+		update member
+		set kakao_idkey=#{kakaoIdkey}
+		where user_id=#{userId}
+	</update>
+	<update id="updateNaverIdkey">
+		update member
+		set naver_idkey=#{naverIdkey}
+		where user_id=#{userId}
+	</update>
  
  	<!-- 카카오 아이디키 검색 -->
  	<select id="selectMemberByKakao" resultMap ="memberMap">
@@ -73,14 +98,28 @@
  		where user_id = #{userId}
  	</select> --> 	
  	
- 	<select id="selectMemberByPhone" resultMap ="memberMap">
+ 	<!-- <select id="selectMemberByPhone" resultMap ="memberMap">
  		select * from member
  		where phone = #{phone}
- 	</select>
+ 	</select> -->
 
  	<select id="selectOneMember" resultMap="memberMap">
  		SELECT * FROM MEMBER
  		join location on(location = location_no)
  		 where user_id = #{userId}
  	</select>
+ 	
+ 	<select id="findIdClick" resultType="String">
+ 		select * from member
+ 		where phone = #{phone}
+ 	</select>
+ 	
+ 	<select id="findPwdClick" resultType="String">
+ 		select * from member
+ 		where phone = #{phone} and user_Id = #{userId}
+ 	</select>
+ 	
+ 	
+ 	
+ 	
  </mapper>

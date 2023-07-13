@@ -14,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.client.RestTemplate;
@@ -111,7 +110,6 @@ public class SocialController {
 				} catch (JsonProcessingException e) {
 					e.printStackTrace();
 				}
-				
 				System.out.println("KAKAO_IDKEY: " + kakaoProfile.getId());
 				System.out.println("KAKAO_NICKNAME: " + kakaoProfile.getKakao_account().getProfile().getNickname());
 				
@@ -130,16 +128,23 @@ public class SocialController {
 				
 				Member loginMember=memberService.selectMemberByKakao(kakaoProfile.getId());
 				
-				if (loginMember == null) { // 카카오 연동을 최초로 하는 신규/기존 회원  (KAKAO_IDKEY == NULL) 
-					model.addAttribute("kakaoIdkey", kakaoProfile.getId());
+				if (loginMember == null) { // 카카오 연동을 최초로 하는 신규/기존 회원  (KAKAO_IDKEY == NULL)
+					session.setAttribute("kakaoIdkey", kakaoProfile.getId());
 					redirectAtt.addFlashAttribute("msg", "카카오 간편로그인 최초 1회 연결이 필요합니다.");
-					return "/member/socialLogin";
+					return "redirect:/socialLogin.me";
 				} else { // 카카오 연동 완료한 회원 
 					model.addAttribute("loginMember", loginMember);
+					redirectAtt.addFlashAttribute("msg", member.getName()+ "님 환영합니다💚");
 					return "redirect:/";
 				}
 				
 			}
+			
+			 @GetMapping("/socialLogin.me") 
+			 public String socialLogin() {
+				 return "/member/socialLogin"; 
+			 }
+			 
 			
 			/*
 			@GetMapping("/member/insertKakaoMember")
@@ -150,7 +155,17 @@ public class SocialController {
 				}
 				return "redirect:/";
 			}
-			*/
+			
+			
+			/*
+			 * @GetMapping("/member/insertKakaoMember") public String
+			 * insertKakaoMember(Member member, KakaoProfile kakaoProfile, Model model) {
+			 * Member memberCheck = memberService.selectMemberByKakao(kakaoProfile.getId());
+			 * if (memberCheck == null) { int result =
+			 * memberService.insertKakaoMember(member); // model.addAttribute("kakaoIdkey",
+			 * kakaoProfile.getId()); } return "redirect:/"; }
+			 */
+			
 			
 
 			// 230711 수정 
@@ -260,15 +275,40 @@ public class SocialController {
 				Member loginMember=memberService.selectMemberByNaver(naverProfile.getResponse().getId());
 				
 				if (loginMember == null) { // 네이버 연동을 최초로 하는 신규/기존 회원  (NAVER_IDKEY == NULL) 
-					model.addAttribute("naverIdkey", naverProfile.getResponse().getId());
+					session.setAttribute("naverIdkey", naverProfile.getResponse().getId());
 					redirectAtt.addFlashAttribute("msg", "네이버 간편로그인 최초 1회 연결이 필요합니다.");
-					return "/member/socialLogin";
+					return "redirect:/socialLogin.me";
 				} else { // 네이버 연동 완료한 회원 
 					model.addAttribute("loginMember", loginMember);
+					redirectAtt.addFlashAttribute("msg", member.getName()+ "님 환영합니다💚");
 					return "redirect:/";
 				}
 				
+				
+				
+				
+				
+				
+				
+				
+				/*
+				 * if (loginMember == null) { // 네이버 연동을 최초로 하는 신규/기존 회원 (NAVER_IDKEY == NULL)
+				 * model.addAttribute("naverIdkey", naverProfile.getResponse().getId());
+				 * redirectAtt.addFlashAttribute("msg", "네이버 간편로그인 최초 1회 연결이 필요합니다."); return
+				 * "/member/socialLogin"; } else { // 네이버 연동 완료한 회원
+				 * model.addAttribute("loginMember", loginMember); return "redirect:/"; }
+				 */
+				
 			}
+			
+			/*
+			 * @GetMapping("/member/insertNaverMember") public String
+			 * insertNaverMember(Member member, NaverProfile naverProfile) { Member
+			 * memberCheck =
+			 * memberService.selectMemberByNaver(naverProfile.getResponse().getId()); if
+			 * (memberCheck == null) { int result = memberService.insertNaverMember(member);
+			 * } return "redirect:/"; }
+			 */
 				
 				
 				

@@ -4,7 +4,7 @@
     font-weight: normal;
     font-style: normal;
 }
-body{
+body, pre{
     font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
 }
 textarea{
@@ -26,6 +26,37 @@ textarea{
     opacity: 0.35;
     margin-right: -7px;
     }
+
+.header-loginBtn {
+	border: 0;
+	background: transparent;
+}
+
+.header-loginBtn img {
+	width: 40px;
+    opacity: 0.35;
+    cursor: pointer;
+}
+
+.header-loginBtn i {
+	width: 40px;
+    opacity: 0.35;
+    cursor: pointer;
+}
+
+.header-logoutBtn {
+	border: 0;
+	background: transparent;
+}
+
+.header-logoutBtn img {
+	width: 40px;
+    opacity: 0.35;
+    cursor: pointer;
+}
+
+
+
     
 .header-head{
     display: flex;

@@ -100,3 +100,19 @@
         color: aliceblue;
         font-weight: bold;
     }
+    .modalR-title{
+    	margin-top: 40px;
+    }
+    .reviewContent:hover{
+    	text-decoration:underline;
+    	text-underline-position : under;
+    	cursor:pointer;
+    }
+    .gongguName:hover{
+    	text-decoration:underline;
+    	text-underline-position : under;
+    	cursor:pointer;
+    }
+    #reviewDetailModal td{
+    	padding:7px;
+    }

@@ -1,8 +1,10 @@
 package com.gammza.chupachups.member.controller;
 
+import java.util.HashMap;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -45,7 +47,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/memberLogin.me")
-	public String memberLogin(String userId, String userPwd, Model model, RedirectAttributes redirectAtt) {
+	public String memberLogin(String userId, String userPwd, Model model, RedirectAttributes redirectAtt,HttpSession session) {
 		System.out.println("userId = " + userId);
 		System.out.println("userPwd = " + userPwd);
 		
@@ -55,6 +57,37 @@ public class MemberController {
 		// 인증
 		if (member != null && passwordEncoder.matches(userPwd, member.getUserPwd())) {
 			model.addAttribute("loginMember", member);	// requestScope => sessionScope 바꾸기
+			
+			Long kakaoIdkey = (Long)session.getAttribute("kakaoIdkey");
+			String naverIdkey = (String)model.getAttribute("naverIdkey");
+			
+			if(kakaoIdkey != null) {
+				HashMap<String,String> map = new HashMap<String,String>();
+				map.put("userId", userId);
+				map.put("kakaoIdkey", String.valueOf(kakaoIdkey));
+				int result=memberService.updateKakaoIdkey(map);
+				member = memberService.selectOneMember(userId);
+				model.addAttribute("loginMember", member);
+				redirectAtt.addFlashAttribute("msg", "카카오 간편로그인 연결이 완료되었습니다.");
+				session.removeAttribute("kakaoIdkey");
+				
+				return "redirect:/";
+			}
+			if(naverIdkey != null) {
+				HashMap<String,String> map = new HashMap<String,String>();
+				map.put("userId", userId);
+				map.put("naverIdkey", naverIdkey);
+				int result=memberService.updateNaverIdkey(map);
+				member = memberService.selectOneMember(userId);
+				model.addAttribute("loginMember", member);
+				redirectAtt.addFlashAttribute("msg", "네이버 간편로그인 연결이 완료되었습니다.");
+				session.removeAttribute("naverIdkey");
+				
+				return "redirect:/";
+			}
+			
+			redirectAtt.addFlashAttribute("msg", member.getName()+ "님 환영합니다💚");
+			
 		} else {
 			redirectAtt.addFlashAttribute("msg", "아이디 또는 비밀번호가 맞지 않습니다.");
 		}
@@ -117,7 +150,7 @@ public class MemberController {
 	public void memberEnroll() {} 
 	
 	@PostMapping("/memberEnroll.me") 
-	public String memberEnroll(Member member) {
+	public String memberEnroll(Member member, RedirectAttributes redirectAtt) {
 		System.out.println("userPass = " + member);
 		
 		// 비밀번호 암호화
@@ -126,6 +159,9 @@ public class MemberController {
 		member.setUserPwd(encodedPassword);
 		System.out.println("changePass = " + member);
 		int result = memberService.insertMember(member);
+		
+		redirectAtt.addFlashAttribute("msg", "회원가입이 완료되었습니다. 로그인이 필요합니다.");
+		
 		return "redirect:/";
 	}
 		
@@ -153,7 +189,11 @@ public class MemberController {
 	}
 	
 	@GetMapping("/memberInfo.me")
-	public String memberInfo() { 
+	public String memberInfo(Model model, HttpSession session) { 
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		String userId = loginMember.getUserId();
+		Member member = memberService.selectOneMember(userId);
+		model.addAttribute("member", member);
 		return "/mypage/memberInfo";
 	}
 	
@@ -169,10 +209,34 @@ public class MemberController {
 		return "/member/findPwd";
 	}
 	
+	@PostMapping("/findId.me")
+	@ResponseBody
+	public String findIdClick(@RequestParam("phone") String phone) {
+		String result = memberService.findIdClick(phone);
+	return result;
+	// return "redirect:/";
+	}
+	
+	@PostMapping("/findPwd.me")
+	@ResponseBody
+	public String findPwdClick(@RequestParam("userId") String userId, @RequestParam("phone") String phone) {
+		System.out.println(userId);
+		System.out.println(phone);
+
+		String result = memberService.findPwdClick(userId, phone);
+	// return result;
+	return "/member/updatePwd";
+	// return "redirect:/";
+	}
+	
+	
+	
+	
+	
 
 	@RequestMapping(value = "/mailCheck.me", method = RequestMethod.GET)
 	@ResponseBody
-	public String mailCheck(String email, String userId, Model model) throws Exception {
+	public String mailCheck(String email, Model model) throws Exception {
 		System.out.println("이메일 데이터 전송 확인");	// 확인용
 		System.out.println("인증 이메일 : " + email);
 		
@@ -183,7 +247,7 @@ public class MemberController {
 		model.addAttribute("emailAuth", checkNum);
 		
 		// 이메일 전송 내용
-		String setFrom = "kr.suhyunchoi96@gmail.com";		// 발신 이메일
+		String setFrom = "gammzamarket@gmail.com";		// 발신 이메일
 		String toMail = email;					// 받는 이메일
 		String title = "[본인인증] 감자마켓 인증 이메일 입니다. ";
 		String content = 
@@ -204,34 +268,10 @@ public class MemberController {
 			e.printStackTrace();
 		}
 		
-		String num = Integer.toString(checkNum);		// ajax를 뷰로 반환시 데이터 타입은 String 타입만 가능
+		return Integer.toString(checkNum);		// ajax를 뷰로 반환시 데이터 타입은 String 타입만 가능
 		
-		return "redirect:/";		// String 타입으로 반환 후 반환
+		//return "redirect:/";		// String 타입으로 반환 후 반환
 	}
-
-	@GetMapping("/findLoginInfo.me")
-	public String findLoginInfo(String phone, Model model, RedirectAttributes redirectAtt) {
-		Member member = memberService.selectMemberByPhone(phone);
-		System.out.println(member);
-//		System.out.println(member.getPhone());
-		
-		if (member == null) {
-			// model.addAttribute("historyBack", true);
-			model.addAttribute("msg", "일치하는 회원이 없습니다.");
-			return "/member/findId";
-		} 
-		
-		// model.addAttribute("historyBack", true);
-		model.addAttribute("msg", String.format("회원의 아이디는 %s 입니다.", member.getUserId()));
-		return "redirect:/"; 
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		// return "member/findLoginInfo";
-	}
+	
+	
+}

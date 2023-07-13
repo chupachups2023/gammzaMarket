@@ -19,3 +19,4 @@ public class Review {
 	private String reviewDate;
 	private String gongguName;
 }
+

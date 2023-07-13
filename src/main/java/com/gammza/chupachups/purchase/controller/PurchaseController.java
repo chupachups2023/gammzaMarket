@@ -64,7 +64,7 @@ public class PurchaseController {
 	public void pointPurChk(@RequestParam String pointOrderNum, Model model) {
 		model.addAttribute(pointOrderNum);
 	}
-	
+//	비공개 깃헙이라 넣었지만 restKey는 공개되면 문제가 생길 수 있으니 포폴 사용시 삭제해주세요.
 	private IamportClient client = new IamportClient("0801753876651112","hdMMqurzCCIPb4MfLwsghA1aKzvKJoSmXrpR4jd68bDiZCvciaqVu1lR7HHjrXYzWNuyDHzSWotRohBi");
 	
 	@ResponseBody

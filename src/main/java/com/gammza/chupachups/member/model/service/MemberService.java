@@ -1,5 +1,7 @@
 package com.gammza.chupachups.member.model.service;
 
+import java.util.HashMap;
+
 import com.gammza.chupachups.member.model.vo.Member;
 
 public interface MemberService {
@@ -16,11 +18,21 @@ public interface MemberService {
 
 	Member selectMemberByKakao(Long id);
 
-	Member selectMemberByPhone(String phone);
+	/* Member selectMemberByPhone(String phone); */
 
 	Member selectMemberByNaver(String id);
 
 	String insertNaverIdkey(String setNaverIdkey);
+
+	int updateKakaoIdkey(HashMap<String, String> map);
+
+	int updateNaverIdkey(HashMap<String, String> map);
+
+	String findIdClick(String phone);
+
+	int insertNaverMember(Member member);
+
+	String findPwdClick(String userId, String phone);
 
 	
 

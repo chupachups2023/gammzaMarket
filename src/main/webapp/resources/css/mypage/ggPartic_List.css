@@ -60,8 +60,6 @@ a:hover{
 	text-decoration:underline;
 	text-underline-position : under;
 }
-<<<<<<< Updated upstream
-=======
 /* 마이페이지 리뷰상세보기 모달 */
     .modalR {
     	position: fixed;
@@ -141,7 +139,6 @@ a:hover{
     font-size: 1.5rem;
     color: #dddddd9c;
     height:35px;
-    
   }
   .star input {
     width: 100%;
@@ -177,4 +174,3 @@ a:hover{
   	display: flex;
     justify-content: center;
   }
->>>>>>> Stashed changes
