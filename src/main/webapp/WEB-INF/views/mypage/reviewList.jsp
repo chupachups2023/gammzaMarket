@@ -7,7 +7,19 @@
 </jsp:include>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/reviewList.css?<%=System.currentTimeMillis() %>">
-
+<style>
+	.emptystar{
+		opacity:0.15;
+		font-size:17px;
+	}
+	.star{
+		color:RGB(252, 213, 63);
+		font-size:17px;
+	}
+	.reviewRate span{
+		margin-right:-5px;
+	}
+</style>
 
 <div class="allGGList">
     <div id="reviewCategory">
@@ -17,7 +29,7 @@
 
     <br><br><br>
                 <table class="allGGListTable" id="partiReview">
-        <c:forEach items="${partiReview }" var="plist">
+        <c:forEach items="${partiReview }" var="plist" varStatus="i">
             <tr class="allGGt" >
                 <td width="10%">${plist.reviewNo }</td>
                 <td width="20%">
@@ -33,7 +45,14 @@
                 <td width="35%">
                 	<div class="reviewContent" onclick="reviewDetailModal(${plist.reviewNo});"><pre>${plist.reviewContent }</pre></div>
                 </td>
-                <td width="20%">점수: ⭐⭐⭐⭐⭐</td>
+                <td width="20%"><div class="reviewRate">점수: 
+                <c:forEach begin="1" end="${plist.rate }">
+					<span class="star">★</span>
+                </c:forEach>
+                <c:forEach begin="${plist.rate+1 }" end="5">
+					<span class="emptystar">★</span>
+                </c:forEach>
+				</div></td>
                 <fmt:parseDate value="${plist.reviewDate }" var="reviewDate" pattern="yyyy-MM-dd"/>
                 <td width="15%"><small><fmt:formatDate value="${reviewDate }" pattern="yyyy년 MM월 dd일"/></small></td>
             </tr>
@@ -58,7 +77,13 @@
                 <td width="35%">
                 	<div class="reviewContent" onclick="reviewDetailModal(${lList.reviewNo});"><pre>${lList.reviewContent }</pre></div>
                 </td>
-                <td width="20%">점수: ⭐⭐⭐⭐⭐</td>
+                <td width="20%"><div class="reviewRate">점수:
+                <c:forEach begin="1" end="${lList.rate }">
+					<span class="star">★</span>
+                </c:forEach>
+                <c:forEach begin="${lList.rate+1 }" end="5">
+					<span class="emptystar">★</span>
+                </c:forEach></div></td>
                 <fmt:parseDate value="${lList.reviewDate }" var="reviewDate" pattern="yyyy-MM-dd"/>
                 <td width="15%"><small><fmt:formatDate value="${reviewDate }" pattern="yyyy년 MM월 dd일"/></small></td>
             </tr>
@@ -87,7 +112,8 @@
 					</tr>	
 					<tr height="30px">
 						<td><b>리뷰 작성자 : </b> <span id="reviewWriter"></span></td>
-						<td width="50%"><b>점수 : </b><span id="rate"></span><br></td>
+						<td width="50%"><b>점수 : </b><span id="rate"></span>
+		                </td>
 					</tr>
 					<tr>
 						<td colspan="2"><span id="reviewContent"></span><br></td>
@@ -127,6 +153,14 @@ function showParti(){
  				document.getElementById("reviewGongguName").innerHTML=review.gongguName;
  				document.getElementById("reviewWriter").innerHTML=review.reviewWriter;
  				document.getElementById("reviewContent").innerHTML=review.reviewContent;
+ 				let star='';
+ 				for(let i=1;i<=review.rate*1;i++){
+ 					star+="<span class='star'>★</span>";
+ 				}
+ 				for(let i=review.rate*1+1;i<=5;i++){
+ 					star+="<span class='emptystar'>★</span>";
+ 				}
+ 				document.getElementById("rate").innerHTML=star;
  			}
  			
  		})
@@ -135,20 +169,6 @@ function showParti(){
  		$('.modalR').removeClass('show');
  		$('.modalR-dialog').removeClass('show');
  	};
- 	partisize="${fn:length(list) }"
- 	console.log(partisize)
-<%-- 	$(function(){
-		<%
-		for(int i=0;i<alist.size();i++){
-			int star=alist.get(i).getRate();
-			for(int j=0;j<star;j++){
-				%>
-			$(".Star<%=i %> .st<%=j %>").css("color","#f4e41c");
-				<%
-			}
-		}
-		%>
-	}) --%>
  	
 </script>
 

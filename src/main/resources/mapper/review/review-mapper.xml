@@ -20,5 +20,8 @@
 	select * from gonggu
 	where GONGGU_WRITER=#{userId}
 	</select>
-	
+	<select id="selectWroteReviewCheck" resultType="_int">
+	select count(*) from review
+	where RECEIVER_ID=#{userId} and REVIEW_WRITER=#{loginMemberId}
+	</select>
 </mapper>

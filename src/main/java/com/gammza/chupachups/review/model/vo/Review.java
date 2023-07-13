@@ -15,7 +15,7 @@ public class Review {
 	private String reviewWriter;
 	private String reviewContent;
 	private String receiverId;
-	private double rate;
+	private int rate;
 	private String reviewDate;
 	private String gongguName;
 }

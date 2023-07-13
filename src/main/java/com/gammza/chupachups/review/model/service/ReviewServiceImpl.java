@@ -1,6 +1,7 @@
 package com.gammza.chupachups.review.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,11 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public Review selectOneReview(int reviewNo) {
 		return reviewDao.selectOneReview(reviewNo);
+	}
+
+	@Override
+	public int selectWroteReviewCheck(HashMap<String, String> map) {
+		return reviewDao.selectWroteReviewCheck(map);
 	}
 
 }
