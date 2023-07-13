@@ -53,7 +53,7 @@
 				<th><div>신청 확인 중</div></th>
 				<th><button class="non"></button></th>
 			</c:when>
-			<c:when test="${list.status eq 1 and list.endStatus eq 1}">
+			<c:when test="${list.status eq 1}">
 				<th><div>공구 진행 중</div></th>
 				<th><button class="bon" onclick='receive("${list.gongguName}",${list.gongguNo });'>물건 받기 완료</button></th>
 			</c:when>

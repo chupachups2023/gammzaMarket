@@ -28,13 +28,12 @@
     </div>
 
     <br><br><br>
-                <table class="allGGListTable" id="partiReview">
+   <table class="allGGListTable" id="partiReview">
                 <c:if test="${empty partiReview }">
                 <tr>
                 	<td colspan="5">공구에 참여해서 받은 리뷰가 아직 없습니다.</td>
                 </tr>
                 </c:if>
-    <table class="allGGListTable" id="partiReview">
         <c:forEach items="${partiReview }" var="plist" varStatus="i">
             <tr class="allGGt" >
                 <td width="10%">${plist.reviewNo }</td>
@@ -63,7 +62,7 @@
                 <td width="15%"><small><fmt:formatDate value="${reviewDate }" pattern="yyyy년 MM월 dd일"/></small></td>
             </tr>
         </c:forEach>
-        </table>
+   </table>
 
     <table class="allGGListTable" id="leaderReview">
         <c:if test="${empty leaderReview }">
@@ -76,10 +75,10 @@
                 <td width="10%">${lList.reviewNo }</td>
                 <td width="20%">
                 <c:if test="${fn:length(lList.gongguName) gt 10}">
-                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${list.gongguNo }'">${fn:substring(lList.gongguName, 0, 10)}⋯</div>
+                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${lList.gongguNo }'">${fn:substring(lList.gongguName, 0, 10)}⋯</div>
                 </c:if>
                 <c:if test="${fn:length(lList.gongguName) le 10}">
-                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${list.gongguNo }'">${fn:substring(lList.gongguName, 0, 10)}</div>
+                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${lList.gongguNo }'">${fn:substring(lList.gongguName, 0, 10)}</div>
                 </c:if>
                 	${lList.reviewWriter }
                 </td>
