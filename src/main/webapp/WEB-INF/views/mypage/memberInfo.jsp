@@ -20,7 +20,7 @@
     background-color: #F9F9F9; 
     border: 1px solid #E9D296; 
     border-radius: 30px;
-    height: 500px;
+	padding: 20px;
 }    
   
 #memInfoTable th {
@@ -29,7 +29,7 @@
 	width:35%;
 }
 #memInfoTable td {
-    padding: 7px;
+    padding: 7px 0;
 	text-align: justify;
 	width:65%;
 }
@@ -41,58 +41,57 @@
 	resize: none;
 	font-size: 17px;
 }
+.readonlyCursor {
+	cursor: default;
+}
 #infoBtn {
     text-align: center;
     margin: auto;
     margin-top: 20px;
 }
 .bo {
-    width: 120px; 
+    width: 130px; 
     height: 30px; 
     background: rgba(94, 177, 98, 0.75); 
     color: white; 
     border-radius: 30px;
     border: none;
-}
-.bo-small {
-    width: 220px; 
-    height: 30px; 
-    background: rgba(94, 177, 98, 0.75); 
-    color: white; 
-    border-radius: 0 10px 10px 10px;
-    border: none;
-    font-size: 13px;
+    font-size: 17px;
     font-weight: bold;
     cursor: pointer;
 }
 
 </style>
 <h1 id="title">나의 회원정보</h1>
+<form name="updateFrm" method="post" action="${pageContext.request.contextPath }/member/updateMember.do">
 <div id="MemInfoContainer">
 	<table id="memInfoTable"> 
 		<tr>
 			<th>아이디 : </th>
 			<td>
-				<input name="userId" class="infoInput" id="userId" value="${member.userId}" readonly><br>
+				<input name="userId" class="infoInput readonlyCursor" id="userId" value="${member.userId}" readonly>
 			</td>
 		</tr>
 		<tr>
 			<th>현재 비밀번호 : </th>
 			<td>
-				<input class="infoInput" type="password" placeholder="정보 수정시 입력해주세요" name="userPwd" required>
+				<input class="infoInput" type="password" placeholder="탈퇴/정보 수정시 입력해주세요" id="insertPwd" name="insertPwd" required>
 			</td>
 		</tr>
 		<tr>
 			<th>새 비밀번호 : </th>
 			<td>
-				<input class="infoInput" type="password" placeholder="새 비밀번호 변경시 작성해주세요" name="rePwd">
+				<input class="infoInput" type="password" placeholder="새 비밀번호 변경시 작성해주세요"  id="newPwd" name="newPwd">
 			</td>
 		</tr>
-		<tr><td colspan="2"><br></td></tr>
+	</table>
+</div>
+<div id="MemInfoContainer">
+	<table id="memInfoTable">
 		<tr>
 			<th>이름 : </th>
 			<td>
-				<input class="infoInput" name="name" value="${member.name}" readonly>
+				<input class="infoInput readonlyCursor" name="name" value="${member.name}" readonly>
 			</td>
 		</tr>
 		<tr>
@@ -110,29 +109,65 @@
 		<tr>
 			<th>생년월일 : </th>
 			<td>
-				<input class="infoInput" id="birthday" name="birthday">
+				<input class="infoInput readonlyCursor" id="birthday" name="birthday" readonly>
 			</td>
 		</tr>
-		
-		<br>
 	</table>
 </div>
+
 <div id="infoBtn">
 	<button type="submit" class="bo">회원정보 수정</button>&emsp;
 	<button type="previous" class="bo">뒤로가기</button>&emsp;
-	<button type="quit" class="bo">탈퇴하기</button>
+	<button type="button" class="bo" onclick="deleteUser();">탈퇴하기</button>
 </div>
+</form>
 <script>
 	$(function(){
-		let birthday = ${member.birthday};
-		const year = birthday.slice(4);
-		console.log(year);
+		let birthday = new Date('${member.birthday}');
+		const year = birthday.getFullYear();
 		const month = ('0' + (birthday.getMonth() + 1)).slice(-2);
 		const day = ('0' + birthday.getDate()).slice(-2);
-		birthday = `${year}년 ${month}월 ${day}일`;
+		birthday = year+"년 " + month + "월 " + day +"일";
 		$("#birthday").val(birthday);
-		console.log();
+		
+		
 	})
+	
+	function deleteUser(){
+		if(checkPwd() == false) {
+			return;
+		}
+		location.href="";
+	}
+	
+	
+	function checkPwd() {
+		//비밀번호 입력 유무 체크
+		const insertPwd = $("#insertPwd").val();
+		if(insertPwd == null || insertPwd == ""){
+			alert("본인확인을 위해 현재 비밀번호를 입력해주세요.");
+			return false;
+		}
+		
+		//비밀번호 대조
+		$.ajax({
+			url : "checkPwd.do",
+			type : "post",
+			data : {'insertPwd' : insertPwd},
+			success : function(result) {
+				console.log("ajax: " +result);
+							if(result == "false"){
+								alert("비밀번호가 맞지 않습니다. 다시 입력해주세요.");
+								return false;
+								}
+					},
+			error:function() {
+				console.log("ajax통신실패");
+				}
+		});
+	}
+	
+	
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

@@ -1,9 +1,12 @@
 package com.gammza.chupachups.member.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -171,21 +175,35 @@ public class MemberController {
 	}
 	
 	@PostMapping("/memberUpdate.me")
-	public String memberUpdate(Member member, Model model, RedirectAttributes redirectAtt) {
-		// pw암호화해서 member.userPwd에 넣기
-		String rawPassword = member.getUserPwd();
-		String encodedPassword = passwordEncoder.encode(rawPassword);
-		member.setUserPwd(encodedPassword);
-		
-		int result = memberService.updateMember(member);
-		
-		if(result > 0) {
-			redirectAtt.addFlashAttribute("msg", "회원정보 수정 성공");
-		} else {
-			redirectAtt.addFlashAttribute("msg", "회원정보 수정 실패");
+	public String memberUpdate(Member insertMem, Model model, @RequestParam String newPwd, RedirectAttributes redirectAtt) {
+		Member member = memberService.selectOneMember(insertMem.getUserId());
+		if(passwordEncoder.matches(insertMem.getUserPwd(), member.getUserPwd())) {
+			String rawPassword = member.getUserPwd();
+			String encodedPassword = passwordEncoder.encode(rawPassword);
+			member.setUserPwd(encodedPassword);
+			
+			int result = memberService.updateMember(member);
+			
+			if(result > 0) {
+				redirectAtt.addFlashAttribute("msg", "회원정보 수정 성공");
+			} else {
+				redirectAtt.addFlashAttribute("msg", "회원정보 수정 실패");
+			}
+		}else {
+			redirectAtt.addFlashAttribute("msg", "비밀번호가 맞지 않습니다.");
 		}
+		return "redirect:/member/memberInfo.me";
+	}
+	
+	@PostMapping("/checkPwd.do")
+	public void checkPwd(@RequestParam String insertPwd, HttpSession session, HttpServletResponse response) throws ServletException, IOException{
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		String userId = loginMember.getUserId();
+		Member member = memberService.selectOneMember(userId);
 		
-		return "redirect:/member/memberInfo.me?userId="+member.getUserId();
+		boolean result = passwordEncoder.matches(insertPwd, member.getUserPwd());
+		
+		response.getWriter().print(result);
 	}
 	
 	@GetMapping("/memberInfo.me")
