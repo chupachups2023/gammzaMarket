@@ -15,22 +15,22 @@
 			<div class="find-content">
 					<nav class="tab-type1">
 							<ul class="find-id">
-									<li><a href="${pageContext.request.contextPath}/member/findPwd.me"  class="tab-on">비밀번호 찾기</a></li>
-									<li><a href="${pageContext.request.contextPath}/member/findId.me">새로운 비밀번호 설정</a></li>
+									<li><a href="#" class="tab-on">새로운 비밀번호 설정</a></li>
 							</ul>
 					</nav>
 			</div>
-			<form action="${pageContext.request.contextPath}/" method="post">
+			<form action="${pageContext.request.contextPath}/member/updatePwd.me" method="post">
 				<div class="find-content2">
 						<div class="find-id2">
 								<ul>
-										<li><input type="password" name=""  id="" placeholder="새로운 비밀번호를 입력해 주세요"></li>
+										<li><input type="password" name="userPwd"  id="userPwd" placeholder="새로운 비밀번호 입력"></li>
 								</ul>
 								<ul>
-										<li><input type="password" name="" id="" placeholder="한번 더 입력해 주세요"></li>
+										<li><input type="password" id="userPwdChk" placeholder="새로운 비밀번호 확인"></li>
 								</ul>
 								<ul>
-										<li><input type="button" value="찾기" onclick=""></li>
+										<li><input type="submit" id="pwdCheck" value="변경"></li>
+										<%-- <li><input type="hidden" name="email" value="<%= email %>"></li> --%>
 								</ul>
 						</div>
 				</div>
