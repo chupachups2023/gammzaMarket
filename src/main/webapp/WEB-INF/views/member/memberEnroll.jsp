@@ -312,10 +312,6 @@
 			alert("인증번호가 일치하지 않습니다.");
 			emailAuth.focus();
 			return false;
-		} else if(!authCfm.test(authKey.value)) {
-			alert("인증번호가 일치합니다.");
-			emailAuth.focus();
-			return true;
 		}
 		
 		// 생년월일 
