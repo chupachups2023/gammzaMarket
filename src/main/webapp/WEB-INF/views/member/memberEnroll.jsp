@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!-- <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/memberEnroll.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/memberEnroll.css?<%=System.currentTimeMillis() %>">
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="회원가입" name="title"/>
