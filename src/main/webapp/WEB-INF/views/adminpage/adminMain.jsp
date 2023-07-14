@@ -97,7 +97,7 @@
         <div class="adminpageBox orange" onclick="location.href='${pageContext.request.contextPath}/adminpage/gongguList_Ad.do'">
             <div>전체공구</div>
         </div>
-        <div class="adminpageBox orange" onclick="location.href='${pageContext.request.contextPath}/adminpage/memberList.do'">
+        <div class="adminpageBox orange" onclick="location.href='${pageContext.request.contextPath}/member/memberList.do'">
             <div class="menuBig">회원정보</div>
         </div>
         <div class="halfbox">

@@ -35,5 +35,9 @@ public class Member {
 	private String birthday;
 	private String latitude;
 	private String longitude;
+	
+	
+	private String createAt2;
+	private String status2;
 
 }

@@ -2,6 +2,7 @@
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -9,6 +10,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -27,6 +30,8 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.gammza.chupachups.common.model.vo.PageInfo;
+import com.gammza.chupachups.common.template.Pagination;
 import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 import com.gammza.chupachups.member.model.service.MemberService;
 import com.gammza.chupachups.member.model.vo.Member;
@@ -199,10 +204,8 @@ public class MemberController {
 	public String changeStatus(@ModelAttribute("loginMember") Member member, RedirectAttributes redirectAtt, SessionStatus status) {
 		String userId = member.getUserId();
 		int result1 = memberService.selectProceedingGonggu(userId);
-		System.out.println(result1);
 		
 		if(result1 == 0) {
-			member.setStatus(0);
 			int result2 = memberService.changeStatus(userId);
 			if(result2 > 0) {
 				status.setComplete();
@@ -216,6 +219,24 @@ public class MemberController {
 			return "redirect:/member/memberInfo.me";
 		}
 	}	
+	
+	@GetMapping("/changeStatus_Ad.do")
+	public String changeStatus_Ad(@RequestParam String userId, @RequestParam int nowPage, RedirectAttributes redirectAtt) {
+		int result1 = memberService.selectProceedingGonggu(userId);
+		
+		if(result1 == 0) {
+			int result2 = memberService.changeStatus(userId);
+			if(result2 > 0) {
+				redirectAtt.addFlashAttribute("msg", "회원 탈퇴 성공");
+			} else {
+				redirectAtt.addFlashAttribute("msg", "회원정보 탈퇴 실패, 다시 시도해주세요");
+			}
+			return "redirect:/member/memberList.do?nowPage="+nowPage;
+		}else {
+			redirectAtt.addFlashAttribute("msg", "진행중인 공구가 있습니다");
+			return "redirect:/member/memberList.do?nowPage="+nowPage;
+		}
+	}
 	
 	@PostMapping("/checkPwd.do")
 	public void checkPwd(@RequestParam String insertPwd, @ModelAttribute("loginMember") Member member, HttpServletResponse response, RedirectAttributes redirectAtt) throws ServletException, IOException{
@@ -417,5 +438,20 @@ public class MemberController {
 		//return "redirect:/";		// String 타입으로 반환 후 반환
 	}
 	
-	
+	@GetMapping("/memberList.do")
+	public String memberList(@RequestParam(defaultValue="1") int nowPage, Model model) {
+		int totalRecord = memberService.selectTotalRecord();
+		int limit = 10;
+		int offset = (nowPage -1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		PageInfo pi = Pagination.getPageInfo(totalRecord, nowPage, limit, 5);
+		
+		List<Member> memberList = memberService.selectMemberList(rowBounds);
+		System.out.println(memberList);
+		model.addAttribute("memberList", memberList);
+		model.addAttribute("pi", pi);
+		
+		return "/adminpage/memberList";
+	}
 }
