@@ -9,12 +9,10 @@
 </jsp:include>
 	<div class="mainSearchSec">
 		<h2>어떤 공구를 찾으세요?</h2>
-		<form action="" method="get">
-			<div class="header-searchbox">
-				<img src="${pageContext.request.contextPath}/resources/img/header/search.png" alt="" class="header-searchicon" onclick="fn_srchGgLst()">
-				<input type="text" class="mainHeader-search" name="gongguName" id="gongguName" value="${keyword}" onkeyup="if(window.event.keyCode==13){fn_srchGgLst()}"> 
-			</div>
-		</form>
+		<div class="header-searchbox">
+			<img src="${pageContext.request.contextPath}/resources/img/header/search.png" alt="" class="header-searchicon" onclick="fn_srchGgLst()">
+			<input type="text" class="mainHeader-search" name="gongguName" id="gongguName" value="${keyword}" onkeyup="if(window.event.keyCode==13){fn_srchGgLst()}"> 
+		</div>
 	</div>
 	
  	<div class="main-listSec">
