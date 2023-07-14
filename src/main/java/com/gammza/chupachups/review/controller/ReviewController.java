@@ -41,19 +41,21 @@ public class ReviewController {
 		
 		ArrayList<Review> partiReview=new ArrayList<Review>();
 		ArrayList<Review> leaderReview=new ArrayList<Review>();
-		int count=0;
+		int count=-1;
 		for(int i=0;i<recieved.size();i++) {
 			for(int j=0;j<leadedGonggu.size();j++) {
 				if(recieved.get(i).getGongguNo()==leadedGonggu.get(j).getGongguNo()) {
 					leaderReview.add(recieved.get(i));
 					count=-1;
+					break;
 				}else {	count=i;}
 			}
 			if(count==i) {
 				partiReview.add(recieved.get(i));
 			}
 		}
-		
+//		System.out.println("참가자로 받음"+partiReview.get(0).getReviewContent());
+//		System.out.println("총대로 받음"+leaderReview.get(0).getReviewContent());
 		model.addAttribute("partiReview", partiReview);
 		model.addAttribute("leaderReview", leaderReview);
 		

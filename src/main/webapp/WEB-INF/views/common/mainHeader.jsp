@@ -89,21 +89,17 @@
 		<!--로그인 모달창 수정본 -->
 		<div class="modal" tabindex="-1" id="modal">
 			<div class="modal-dialog">
-
-				<!-- <div class="modal-header">
-					<h5 class="modal-title">로그인</h5>
-				</div> -->
-				<form action="${pageContext.request.contextPath}/member/memberLogin.me" method="post" id="loginFrm">
+				<form action="${pageContext.request.contextPath}/member/memberLogin.me" method="post" id="loginFrm" name="loginFrm">
 					<div class="modal-login">
-						<div class="modal-bg"></div>
+						<div class="modal-bg" onclick="loginModalClose();"></div>
 						<div class="modal-content">
 							<h2>로그인</h2>
 							<ul class="login-top">
 								<li class="login-info">
-									<input type="text" placeholder="아이디 입력" name="userId">
+									<input type="text" placeholder="아이디 입력" name="userId" onkeyup="loginEnterEvent(event);">
 								</li>
 								<li class="login-info">
-									<input type="password" placeholder="비밀번호 입력" name="userPwd">
+									<input type="password" placeholder="비밀번호 입력" name="userPwd" onkeyup="loginEnterEvent(event);">
 								</li>
 								<li class="login-chkbox">
 									<input type="checkbox" id="chk1">
@@ -133,8 +129,7 @@
 											</a> 
 									</ul>
 									<br>
-									<a id="close-modal" class="modal-closeBtn">닫기</a>
-									<!-- <button type="button" id="close-modal">임시닫기버튼</button> -->
+									<a id="close-modal" class="modal-closeBtn"  onclick="loginModalClose();">닫기</a>
 								</div>
 							</div>
 						</div>
@@ -164,14 +159,14 @@
 			document.body.style.overflow = "hidden"; // 스크롤바 제거
 		});
 		// 모달창 닫기
-		closeModalBtn.addEventListener("click", () => {
-			modal.style.display = "none";
-			document.body.style.overflow = "auto"; // 스크롤바 보이기
-		});
+	// 모달창 닫기
+	function loginModalClose(){
+		modal.style.display = "none";
+		document.body.style.overflow = "auto"; // 스크롤바 보이기
+	}
 		// 모달창 닫기
 		loginModalBtn.addEventListener("click", () => {
-			modal.style.display = "none";
-			document.body.style.overflow = "auto"; // 스크롤바 보이기
+			loginModalClose();
 			loginFrm.submit();
 		});
 		
@@ -211,6 +206,11 @@
 				location.href="${pageContext.request.contextPath}/ggRequest/requestView.req?longitude="+longitude+"&latitude="+latitude;
 			}
 			navigator.geolocation.getCurrentPosition(success);
+		}
+		function loginEnterEvent(e){
+			if(e.keyCode==13){
+				loginFrm.submit();
+			}
 		}
 	    </script>
 	</header>
