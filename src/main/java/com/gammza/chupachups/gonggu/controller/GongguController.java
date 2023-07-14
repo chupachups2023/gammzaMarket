@@ -43,7 +43,7 @@ import com.gammza.chupachups.member.model.vo.Member;
 
 @Controller
 @RequestMapping("/gonggu")
-@SessionAttributes({"ggListView"})
+@SessionAttributes({"gonggu"})
 public class GongguController {
 	@Autowired
 	private GongguService gongguService;
