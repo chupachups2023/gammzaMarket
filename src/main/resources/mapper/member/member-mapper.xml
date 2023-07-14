@@ -157,7 +157,7 @@
 	
 	<!-- 관리자 회원관리 리스트 -->
 	<select id="selectMemberList" resultMap="memberMap">
-		select *
+		select user_id, temperature, substr(create_at, 0, 10) "create_at2", replace(replace(status,0,'탈퇴'),1,'활동') "status2"
 		from member
 		order by create_at desc
 	</select>
