@@ -4,12 +4,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/findIdPwd.css">
-<%-- <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/default.css"> --%>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="회원가입" name="title"/>
 </jsp:include>
-
 
 	<!-- 비밀번호 찾기(인증번호 입력 -->
     <div class="find-container">
@@ -35,15 +33,5 @@
 				</div>
 			</form>
 		</div>
-		
-		
-		
-		
-		
-		
-		
-		
-
-		
 		
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
