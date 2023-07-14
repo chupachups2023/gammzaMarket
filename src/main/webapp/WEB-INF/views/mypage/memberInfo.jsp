@@ -63,7 +63,7 @@
 
 </style>
 <h1 id="title">나의 회원정보</h1>
-<form name="updateFrm" method="post" action="${pageContext.request.contextPath }/member/updateMember.do">
+<form name="updateFrm" method="post" action="${pageContext.request.contextPath }/member/memberUpdate.me">
 <div id="MemInfoContainer">
 	<table id="memInfoTable"> 
 		<tr>
@@ -97,47 +97,52 @@
 		<tr>
 			<th>휴대폰 : </th>
 			<td>
-				<input class="infoInput" name="birthday" value="${member.phone}">
+				<input class="infoInput" name="phone" value="${member.phone}">
 			</td>
 		</tr>
 		<tr>
 			<th>이메일 : </th>
 			<td>
-				<input class="infoInput" name="birthday" value="${member.email}">
+				<input class="infoInput" name="email" value="${member.email}">
 			</td>
 		</tr>
 		<tr>
 			<th>생년월일 : </th>
 			<td>
-				<input class="infoInput readonlyCursor" id="birthday" name="birthday" readonly>
+				<input class="infoInput" id="birthday" name="birthday">
 			</td>
 		</tr>
 	</table>
 </div>
 
 <div id="infoBtn">
-	<button type="submit" class="bo">회원정보 수정</button>&emsp;
+	<button type="button" class="bo" onclick="updateMember();">회원정보 수정</button>&emsp;
 	<button type="previous" class="bo">뒤로가기</button>&emsp;
 	<button type="button" class="bo" onclick="deleteUser();">탈퇴하기</button>
 </div>
 </form>
 <script>
 	$(function(){
-		let birthday = new Date('${member.birthday}');
+		 let birthday = new Date('${member.birthday}');
 		const year = birthday.getFullYear();
 		const month = ('0' + (birthday.getMonth() + 1)).slice(-2);
 		const day = ('0' + birthday.getDate()).slice(-2);
-		birthday = year+"년 " + month + "월 " + day +"일";
-		$("#birthday").val(birthday);
-		
-		
+		birthday = [year, month, day].join('-');
+		$("#birthday").val(birthday); 
 	})
+	
+	function updateMember() {
+		if(checkPwd() == false) {
+			return;
+		}
+		updateFrm.submit();
+	}
 	
 	function deleteUser(){
 		if(checkPwd() == false) {
 			return;
 		}
-		location.href="";
+		location.href="${pageContext.request.contextPath}/member/changeStatus.do";
 	}
 	
 	

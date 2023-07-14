@@ -74,6 +74,22 @@
 		set naver_idkey=#{naverIdkey}
 		where user_id=#{userId}
 	</update>
+	
+	<update id="updateMember">
+		update member
+		set user_pwd = #{userPwd},
+			email = #{email},
+			phone = #{phone},
+			birthday = #{birthday},
+		where user_id = #{userId}
+	</update>
+	<!-- 탈퇴상태로 돌리기 -->	 	
+ 	<update id="changeStatus">
+		update member
+		set status = 0,
+			update_at = SYSDATE
+		where user_id = #{userId}
+	</update>
  
  	<!-- 카카오 아이디키 검색 -->
  	<select id="selectMemberByKakao" resultMap ="memberMap">
@@ -118,8 +134,7 @@
  		select * from member
  		where phone = #{phone} and user_Id = #{userId}
  	</select>
- 	
- 	
+
  	
  	
  </mapper>

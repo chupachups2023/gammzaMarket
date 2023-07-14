@@ -84,5 +84,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.findPwdClick(userId, phone);
 	}
 
+	@Override
+	public int changeStatus(String userId) {
+		return memberDao.changeStatus(userId);
+	}
+
 
 }

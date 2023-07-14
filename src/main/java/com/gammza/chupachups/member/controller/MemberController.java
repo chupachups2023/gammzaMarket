@@ -175,25 +175,35 @@ public class MemberController {
 	}
 	
 	@PostMapping("/memberUpdate.me")
-	public String memberUpdate(Member insertMem, Model model, @RequestParam String newPwd, RedirectAttributes redirectAtt) {
-		Member member = memberService.selectOneMember(insertMem.getUserId());
-		if(passwordEncoder.matches(insertMem.getUserPwd(), member.getUserPwd())) {
-			String rawPassword = member.getUserPwd();
-			String encodedPassword = passwordEncoder.encode(rawPassword);
-			member.setUserPwd(encodedPassword);
-			
-			int result = memberService.updateMember(member);
-			
-			if(result > 0) {
-				redirectAtt.addFlashAttribute("msg", "회원정보 수정 성공");
-			} else {
-				redirectAtt.addFlashAttribute("msg", "회원정보 수정 실패");
-			}
-		}else {
-			redirectAtt.addFlashAttribute("msg", "비밀번호가 맞지 않습니다.");
+	public String memberUpdate(Member member, Model model, @RequestParam String newPwd, RedirectAttributes redirectAtt) {
+		String encodedPassword = passwordEncoder.encode(newPwd);
+		member.setUserPwd(encodedPassword);
+		
+		int result = memberService.updateMember(member);
+		
+		if(result > 0) {
+			redirectAtt.addFlashAttribute("msg", "회원정보 수정 성공");
+		} else {
+			redirectAtt.addFlashAttribute("msg", "회원정보 수정 실패");
 		}
 		return "redirect:/member/memberInfo.me";
 	}
+	
+	@GetMapping("/changeStatus.do")
+	public String changeStatus(HttpSession session, RedirectAttributes redirectAtt) {
+		Member member = (Member) session.getAttribute("loginMember");
+		String userId = member.getUserId();
+		member.setStatus(0);
+		int result = memberService.changeStatus(userId);
+		if(result > 0) {
+			redirectAtt.addFlashAttribute("msg", "회원정보 수정 성공");
+			session.invalidate();
+		} else {
+			redirectAtt.addFlashAttribute("msg", "회원정보 수정 실패");
+		}
+		return "redirect:/";
+	}
+		
 	
 	@PostMapping("/checkPwd.do")
 	public void checkPwd(@RequestParam String insertPwd, HttpSession session, HttpServletResponse response) throws ServletException, IOException{

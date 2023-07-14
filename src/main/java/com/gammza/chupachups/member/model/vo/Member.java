@@ -25,7 +25,7 @@ public class Member {
 	private String email;
 	private LocalDateTime createAt;
 	private LocalDateTime updateAt;
-	private boolean status;
+	private int status;
 	private int point;
 	private double temperature;
 	private long kakaoIdkey;

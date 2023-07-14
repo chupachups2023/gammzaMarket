@@ -37,4 +37,6 @@ public interface MemberDao {
 
 	String findPwdClick(String userId, String phone);
 
+	int changeStatus(String userId);
+
 }

@@ -34,6 +34,8 @@ public interface MemberService {
 
 	String findPwdClick(String userId, String phone);
 
+	int changeStatus(String userId);
+
 	
 
 }
