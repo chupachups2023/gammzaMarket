@@ -94,11 +94,19 @@
         <c:choose>
         	<c:when test="${gonggu.gongguWriter eq loginMember.userId}">
        		<div class="ggRead-button">
-	            <a href="${pageContext.request.contextPath}/gonggu/update.go?gongguNo=${gonggu.gongguNo}" class="button">글 수정</a>
-	            <a href="${pageContext.request.contextPath}/gonggu/gongguEnd.go?gongguNo=${gonggu.gongguNo}" class="button">공구 마감하기</a>
+	            <a href="${pageContext.request.contextPath}/gonggu/update.go?gongguNo=${gonggu.gongguNo}" class="button">공구 수정</a>
+	            <a href="${pageContext.request.contextPath}/gonggu/gongguEnd.go?gongguNo=${gonggu.gongguNo}" class="button">공구 마감</a>
 	            <a href="javascript:deleteGonggu();" class="button">공구삭제</a>
 	            <a href="" class="button">채팅하기</a>
 	            <a href="javascript:pullUpGonggu();" class="button">끌올하기</a>
+	            <a href="${pageContext.request.contextPath}/gonggu/checkPartis.pa?gongguNo=${gonggu.gongguNo}" class="button">참여자확인</a>
+        	</div>
+        	</c:when>
+        	<c:when test="${loginMember.userId eq 'admin'}">
+       		<div class="ggRead-button">
+	            <a href="${pageContext.request.contextPath}/gonggu/update.go?gongguNo=${gonggu.gongguNo}" class="button">공구 수정</a>
+	            <a href="${pageContext.request.contextPath}/gonggu/gongguEnd.go?gongguNo=${gonggu.gongguNo}" class="button">공구 마감</a>
+	            <a href="javascript:deleteGonggu();" class="button">공구삭제</a>
 	            <a href="${pageContext.request.contextPath}/gonggu/checkPartis.pa?gongguNo=${gonggu.gongguNo}" class="button">참여자확인</a>
         	</div>
         	</c:when>
