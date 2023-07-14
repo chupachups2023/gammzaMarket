@@ -48,11 +48,6 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectMemberByKakao(id);
 	}
 
-	/*
-	 * @Override public Member selectMemberByPhone(String phone) { return
-	 * memberDao.selectMemberByPhone(phone); }
-	 */
-
 	@Override
 	public Member selectMemberByNaver(String id) {
 		return memberDao.selectMemberByNaver(id);
@@ -89,19 +84,13 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int updatePwd(Member member) {
-		String updatePwd = passwordEncoder.encode(member.getUserPwd());
-		member.setUserPwd(updatePwd);
-		System.out.println("changePass = " + member);
-		
-		
-		return memberDao.updatePwd(member);
-	}
-
-	@Override
 	public Member selectOneMemberByEmail(String email) {
 		return memberDao.selectOneMemberByEmail(email);
 	}
 
+	@Override
+	public int updatePwd(Member tempMember) {
+		return memberDao.updatePwd(tempMember);
+	}
 
 }
