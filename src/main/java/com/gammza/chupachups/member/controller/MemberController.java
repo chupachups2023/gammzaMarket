@@ -1,23 +1,29 @@
  package com.gammza.chupachups.member.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Random;
-
+import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gammza.chupachups.gonggu.model.vo.Gonggu;
@@ -36,6 +42,9 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
+	@Autowired
+	private JavaMailSender mailSender;
+	
 	
 	@GetMapping("/memberLogin.me")
 	public String memberLogin() {
@@ -43,7 +52,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/memberLogin.me")
-	public String memberLogin(String userId, String userPwd, Model model, RedirectAttributes redirectAtt) {
+	public String memberLogin(String userId, String userPwd, Model model, RedirectAttributes redirectAtt,HttpSession session) {
 		System.out.println("userId = " + userId);
 		System.out.println("userPwd = " + userPwd);
 		
@@ -53,9 +62,66 @@ public class MemberController {
 		// 인증
 		if (member != null && passwordEncoder.matches(userPwd, member.getUserPwd())) {
 			model.addAttribute("loginMember", member);	// requestScope => sessionScope 바꾸기
+			
+			Long kakaoIdkey = (Long)session.getAttribute("kakaoIdkey");
+			String naverIdkey = (String)model.getAttribute("naverIdkey");
+			
+			if(kakaoIdkey != null) {
+				HashMap<String,String> map = new HashMap<String,String>();
+				map.put("userId", userId);
+				map.put("kakaoIdkey", String.valueOf(kakaoIdkey));
+				int result=memberService.updateKakaoIdkey(map);
+				member = memberService.selectOneMember(userId);
+				model.addAttribute("loginMember", member);
+				redirectAtt.addFlashAttribute("msg", "카카오 간편로그인 연결이 완료되었습니다.");
+				session.removeAttribute("kakaoIdkey");
+				
+				return "redirect:/";
+			}
+			if(naverIdkey != null) {
+				HashMap<String,String> map = new HashMap<String,String>();
+				map.put("userId", userId);
+				map.put("naverIdkey", naverIdkey);
+				int result=memberService.updateNaverIdkey(map);
+				member = memberService.selectOneMember(userId);
+				model.addAttribute("loginMember", member);
+				redirectAtt.addFlashAttribute("msg", "네이버 간편로그인 연결이 완료되었습니다.");
+				session.removeAttribute("naverIdkey");
+				
+				return "redirect:/";
+			}
+			
+			redirectAtt.addFlashAttribute("msg", member.getName()+ "님 환영합니다💚");
+			
 		} else {
 			redirectAtt.addFlashAttribute("msg", "아이디 또는 비밀번호가 맞지 않습니다.");
 		}
+		
+//		String kakaoIdkey = (String) model.getAttribute("kakaoIdkey");
+//		String naverIdkey = (String) model.getAttribute("naverIdkey");
+//		
+//		System.out.println("naverIdkey: " + naverIdkey);
+//		System.out.println(member);
+//		
+//		if (naverIdkey == null) { // 일반 로그인한 상태 
+//			memberService.insertNaverIdkey(member.getNaverIdkey());
+//			return "redirect:/";
+//			
+//			
+//		} else {
+//			return "redirect:/";
+//		}
+		
+		
+		
+		/*
+		 * Member loginMember=memberService.selectMemberByKakao();
+		 * 
+		 * if (loginMember == null) { // 카카오 연동을 최초로 하는 신규/기존 회원 (KAKAO_IDKEY == NULL)
+		 * model.addAttribute("kakaoIdkey", kakaoProfile.getId()); //
+		 * redirectAtt.addFlashAttribute("msg", "카카오 간편로그인 최초 1회 연결이 필요합니다."); return
+		 * "/member/socialLogin";
+		 */
 		return "redirect:/";
 	}
 	
@@ -70,63 +136,7 @@ public class MemberController {
 		
 		return "jsonView";
 	}
-	
-	/*
-	@PostMapping("/checkId.do")
-	@ResponseBody
-	public Map<String, Object> checkIdFunc(@RequestParam("userId") String userId, Map<String, Object> map) {
-		Map<String, Object> result = new HashMap<>();
 		
-		Member member = memberService.checkIdFunc(userId);
-		System.out.println("userId = " + userId);
-		
-		return map;
-}
-*/
-		
-	/*
-	@PostMapping("/checkId.do")
-	@ResponseBody
-	public int checkIdFunc(@RequestParam("userId") String userId) {
-		int cnt = memberService.checkIdFunc(userId);
-		return cnt;
-	}
-	*/
-		
-	/*
-	@ResponseBody
-	@PostMapping(value="/checkId.do", produces = "application/json; charset=UTF-8")
-	public Map<String, Boolean> checkIdFunc(String userId){
-		Member member = memberService.selectOneMember(userId);
-		boolean flag = (member == null);
-		Map<String, Boolean> map = new HashMap<String, Boolean>();
-		map.put("flag", flag);
-		return map;
-		
-		/*
-		int count = 0;
-		Map<Object, Object> map = new HashMap<Object, Object>();
-		count = memberService.checkIdFunc(userId);
-		map.put("cnt", count);
-		return map;
-	}
-	 */
-	
-	
-	/*
-	@GetMapping("/memberLogin.me")
-	public void login(Model model) throws Exception {
-		// Logger.info("login GET .....");
-		
-		SNSLogin snsLogin = new SNSLogin(naverSns);
-		model.addAttribute("naver_url", snsLogin.getNaverAuthURL());
-		
-//		SNSLogin snsLogin = new SNSLogin(naverSns);
-//		model.addAttribute("naver_url", snsLogin.getNaverAuthURL());
-	}
-	 */
-	
-	
 	
 	// @SessionAttributes + model 통해 로그인정보를 관리하는 경우
 	/*
@@ -145,7 +155,7 @@ public class MemberController {
 	public void memberEnroll() {} 
 	
 	@PostMapping("/memberEnroll.me") 
-	public String memberEnroll(Member member) {
+	public String memberEnroll(Member member, RedirectAttributes redirectAtt) {
 		System.out.println("userPass = " + member);
 		
 		// 비밀번호 암호화
@@ -153,8 +163,10 @@ public class MemberController {
 		String encodedPassword = passwordEncoder.encode(rawPassword);
 		member.setUserPwd(encodedPassword);
 		System.out.println("changePass = " + member);
-		
 		int result = memberService.insertMember(member);
+		
+		redirectAtt.addFlashAttribute("msg", "회원가입이 완료되었습니다. 로그인이 필요합니다.");
+		
 		return "redirect:/";
 	}
 		
@@ -164,38 +176,78 @@ public class MemberController {
 	}
 	
 	@PostMapping("/memberUpdate.me")
-	public String memberUpdate(Member member, Model model, RedirectAttributes redirectAtt) {
-		// pw암호화해서 member.userPwd에 넣기
-		String rawPassword = member.getUserPwd();
-		String encodedPassword = passwordEncoder.encode(rawPassword);
-		member.setUserPwd(encodedPassword);
-		
+	public String memberUpdate(Member member, Model model, @RequestParam String newPwd, RedirectAttributes redirectAtt) {
+		if(newPwd.length() > 0) {
+			String encodedPassword = passwordEncoder.encode(newPwd);
+			member.setUserPwd(encodedPassword);
+		}else {
+			String encodedPassword = passwordEncoder.encode(member.getUserPwd());
+			member.setUserPwd(encodedPassword);
+		}
 		int result = memberService.updateMember(member);
 		
 		if(result > 0) {
-			redirectAtt.addFlashAttribute("msg", "회원정보 수정 성공");
+			redirectAtt.addFlashAttribute("msg", "회원정보 수정되셨습니다");
 		} else {
 			redirectAtt.addFlashAttribute("msg", "회원정보 수정 실패");
 		}
+		return "redirect:/member/memberInfo.me";
+	}
+	
+	@GetMapping("/changeStatus.do")
+	public String changeStatus(HttpSession session, RedirectAttributes redirectAtt, SessionStatus status) {
+		Member member = (Member) session.getAttribute("loginMember");
+		String userId = member.getUserId();
+		int result1 = memberService.selectProceedingGonggu(userId);
+		System.out.println(result1);
 		
-		return "redirect:/member/memberInfo.me?userId="+member.getUserId();
+		if(result1 == 0) {
+			member.setStatus(0);
+			int result2 = memberService.changeStatus(userId);
+			if(result2 > 0) {
+				status.setComplete();
+				redirectAtt.addFlashAttribute("msg", "회원 탈퇴되셨습니다");
+			} else {
+				redirectAtt.addFlashAttribute("msg", "회원정보 탈퇴 실패, 다시 시도해주세요");
+			}
+			return "redirect:/";
+		}else {
+			redirectAtt.addFlashAttribute("msg", "진행중인 공구를 모두 끝내시고 탈퇴 진행해주세요");
+			return "redirect:/member/memberInfo.me";
+		}
+	}	
+	
+	@PostMapping("/checkPwd.do")
+	public void checkPwd(@RequestParam String insertPwd, HttpSession session, HttpServletResponse response, RedirectAttributes redirectAtt) throws ServletException, IOException{
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		String userId = loginMember.getUserId();
+		Member member = memberService.selectOneMember(userId);
+		
+		boolean result = passwordEncoder.matches(insertPwd, member.getUserPwd());
+		response.getWriter().print(result);
 	}
 	
 	@GetMapping("/memberInfo.me")
-	public String memberInfo() { 
+	public String memberInfo(Model model, HttpSession session) { 
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		String userId = loginMember.getUserId();
+		Member member = memberService.selectOneMember(userId);
+		model.addAttribute("member", member);
 		return "/mypage/memberInfo";
 	}
 	
+	/* 
+		수정중!! 
 	
 	// 아이디/비밀번호 찾기 
 	@GetMapping("/findId.me")
 	public String findId() {
-		return "member/findId";
+		return "/member/findId";
 	}
 
 	@GetMapping("/findPwd.me")
 	public String findPwd() {
-		return "member/findPwd";
+		return "/member/findPwd";
 	}
 	
 	@PostMapping("/findId.me")
@@ -315,14 +367,12 @@ public class MemberController {
 	
 	
 	
-	
 	/*
 	@PostMapping("/findPwd.me")
 	@ResponseBody
 	public String findPwdClick(@RequestParam("userId") String userId, @RequestParam("phone") String phone) {
 		System.out.println(userId);
 		System.out.println(phone);
-
 		String result = memberService.findPwdClick(userId, phone);
 	// return result;
 	return "/member/updatePwd";
@@ -374,12 +424,5 @@ public class MemberController {
 		//return "redirect:/";		// String 타입으로 반환 후 반환
 	}
 	
-	@GetMapping("/userPf.bo")
-	public String selectUserPf(@RequestParam String gongguNo, Model model) {
-		model.addAttribute("gongguNo", gongguNo);
-		return "/others/userProfile";
-	}
 	
 }
-
-

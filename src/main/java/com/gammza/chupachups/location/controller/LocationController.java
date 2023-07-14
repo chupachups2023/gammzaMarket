@@ -1,8 +1,10 @@
 package com.gammza.chupachups.location.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -38,7 +41,7 @@ public class LocationController {
 		
 		if(fullLocation != null) {
 			return fullLocation;
-		}else if(less !=null){
+		}else if(less.size()!=0){
 			return less.get(0);
 		}else {
 			return locationService.selectLocationLest(map).get(0);
@@ -65,6 +68,7 @@ public class LocationController {
 	@PostMapping("/location/EnrollLocation.lo")
 	public ModelAndView enrollLocation(Location location, HttpSession session,Model model, RedirectAttributes redirectAttr,
 			@RequestParam String longitude,@RequestParam String latitude) {
+		System.out.println(location);
 		Location fullLocation=selectLocation(location);
 		
 		Member mem=(Member)session.getAttribute("loginMember");
@@ -93,16 +97,42 @@ public class LocationController {
 	}
 	
 	@GetMapping("/location/location.lo")
-	public String location(Model model) {
+	public String location(Model model,HttpSession session) {
+		Member mem=(Member)session.getAttribute("loginMember");
+		if(mem != null) {
+			Location loginLocation=locationService.selectLocationByNo(mem.getLocation());
+			model.addAttribute("loginLocation", loginLocation);
+		}
 		return "/member/location";
 	}
 	
 	@PostMapping("/location/nearDong.lo")
-	public String nearDong(HttpServletRequest request) {
-		String[] result = request.getParameterValues("result");
-		System.out.println("들어오긴 함");
-		System.out.println(Arrays.toString(result));
-		return "성공!";
+	@ResponseBody
+	public Map<String,String[]> nearDong(HttpServletRequest request) {
+		String address[]=request.getParameterValues("address");
+		String place[]=request.getParameterValues("place");
+		
+		HashSet<String> returnValue=new HashSet<>();
+		for(int i=0;i<address.length;i++) {
+			String tem[]=address[i].split(" ");
+			String tem2[]=place[i].split("주민");
+			Location location=new Location();
+			location.setSidoNm(tem[0]);
+			location.setSggNm(tem[1]);
+			location.setAdmNm(tem2[0]);
+			location.setLegNm(tem[2]);
+			
+			String name=SelectLocationName(location);
+			returnValue.add(name);
+		}
+		Iterator<String> ir=returnValue.iterator();
+		String dongName[]=new String[returnValue.size()];
+		for(int i=0;i<returnValue.size();i++) {
+			dongName[i]=ir.next();
+		}
+		Map<String,String[]> returnV=new HashMap<String,String[]>();
+		returnV.put("returnValue", dongName);
+		return returnV;
 	}
 	
 }

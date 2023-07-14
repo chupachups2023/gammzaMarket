@@ -28,4 +28,23 @@
 	<!-- #6.2 해당 인터페이스 구현 객체를 동적으로 생성하여 빈으로 사용(Dao를 동적으로 만들어줌) 전체 적용됨-->
 	<mybatis-spring:scan base-package="com.gammza.chupachups.**.dao"/>
 	
+	<bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="gammzamarket@gmail.com" />
+		<property name="password" value="qaamxprphwlnyaxi" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.debug">true</prop>
+				<prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
+				<prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
+			</props>
+		</property>
+	</bean>
+	
 </beans>

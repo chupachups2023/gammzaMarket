@@ -7,25 +7,103 @@
  	<resultMap type="member" id="memberMap"></resultMap>
  	
  	<insert id="insertMember">
- 		INSERT INTO MEMBER(USER_ID, USER_PWD, NAME, PHONE, LOCATION, EMAIL, CREATE_AT, UPDATE_AT, STATUS, POINT, TEMPERATURE, KAKAO_IDKEY, NAVER_IDKEY, BIRTHDAY) 
- 		VALUES(
- 			#{userId},
- 			#{userPwd},
-      #{name},
- 			#{phone},
- 			1,
- 			#{email},
- 			DEFAULT,
- 			#{updateAt},
- 			DEFAULT,
- 			DEFAULT,
- 			DEFAULT,
- 			null,
- 			null,
- 			#{birthday}
- 		)
- 	</insert>
+	  insert into member(user_id, user_pwd, name, phone, location, email, create_at, update_at, status, point, temperature, kakao_idkey, naver_idkey, birthday, latitude, longitude) 
+	  values ( 
+	    #{userId},
+	    #{userPwd},
+	    #{name},
+	    #{phone},
+	    1,
+	    #{email},
+	    default,
+	    #{updateAt},
+	    default,
+	    default,
+	    default,
+	    null,
+	    null,
+	    #{birthday},
+	    null,
+	    null
+	  )
+	</insert>
+
+	<insert id="insertKakaoMember">
+		insert into member(user_id, user_pwd, name, phone, email, create_at, status, point, temperature, kakao_idkey)
+		values(
+		'kakao',
+		'kakao',
+		#{name},
+		'kakao',
+		'kakao',
+		default,
+		default,
+		default,
+		default,
+		#{kakaoIdkey}
+	)
+	</insert>
+	
+	<insert id="insertNaverMember">
+		insert into member(user_id, user_pwd, name, phone, email, create_at, status, point, temperature, naver_idkey)
+		values(
+		'naver',
+		'naver',
+		#{name},
+		'naver',
+		'naver',
+		default,
+		default,
+		default,
+		default,
+		#{naverIdkey}
+	)
+	</insert>
+	
+	<insert id="insertNaverIdkey">
+		insert into member(naver_idkey) values(#{naverIdkey})
+	</insert>
+
+	<update id="updateKakaoIdkey">
+		update member
+		set kakao_idkey=#{kakaoIdkey}
+		where user_id=#{userId}
+	</update>
+	<update id="updateNaverIdkey">
+		update member
+		set naver_idkey=#{naverIdkey}
+		where user_id=#{userId}
+	</update>
+	
+	<update id="updateMember">
+		update member
+		set user_pwd = #{userPwd},
+			email = #{email},
+			phone = #{phone},
+			birthday = #{birthday}
+		where user_id = #{userId}
+	</update>
+	<!-- 탈퇴상태로 돌리기 -->	 	
+ 	<update id="changeStatus">
+		update member
+		set status = 0,
+			update_at = SYSDATE,
+			kakao_idkey = null,
+			naver_idkey = null
+		where user_id = #{userId}
+	</update>
+	
+ 
+ 	<!-- 카카오 아이디키 검색 -->
+ 	<select id="selectMemberByKakao" resultMap ="memberMap">
+ 		select * from member where KAKAO_IDKEY=#{id}
+ 	</select>
  	
+ 	<!-- 네이버 아이디키 검색 -->
+ 	<select id="selectMemberByNaver" resultMap ="memberMap">
+ 		select * from member where NAVER_IDKEY=#{id}
+ 	</select>
+
  	
  	
  	<!-- 아이디 중복체크 -->
@@ -33,11 +111,55 @@
 		select * from member 
 		where user_id = #{userId}
 	</select>
+
+	<!-- <select id="selectOneMember" resultMap="memberMap">
+ 		select * from member
+ 		where user_id = #{userId}
+ 	</select> --> 	
  	
+ 	<!-- <select id="selectMemberByPhone" resultMap ="memberMap">
+ 		select * from member
+ 		where phone = #{phone}
+ 	</select> -->
 
  	<select id="selectOneMember" resultMap="memberMap">
  		SELECT * FROM MEMBER
  		join location on(location = location_no)
  		 where user_id = #{userId}
  	</select>
+ 	
+ 	<select id="findIdClick" resultType="String">
+ 		select * from member
+ 		where phone = #{phone}
+ 	</select>
+ 	
+ 	<select id="findPwdClick" resultType="String">
+ 		select * from member
+ 		where phone = #{phone} and user_Id = #{userId}
+ 	</select>
+ 	
+ 	<!-- 회원정보조회 -->
+ 	<select id="selectOneMemberByEmail" resultType="Member">
+ 		select * from member
+ 		where email = #{email}
+ 	</select>
+ 	
+ 	<!-- 탈퇴전 진행중인 공구확인 -->
+ 	<select id="selectProceedingGonggu" resultType="_int">
+		select count(*) from gonggu
+		where gonggu_writer = #{userId} and end_status = 1
+	</select>
+ 	
+ 	<!-- 비밀번호 변경 -->
+ 	<update id="updatePwd">
+ 		update member
+ 		set user_pwd = #{userPwd}
+ 		where email = #{email}
+ 	</update>
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
  </mapper>

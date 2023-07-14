@@ -1,105 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/pointPurchase.css">
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="포인트결제" name="title"/>
+	<jsp:param value="포인트결제" name="title" />
 </jsp:include>
-<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+<script type="text/javascript"
+	src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <style>
-	/* 포인트결제창 */
-    .pointPurchaseSec {
-		width: 1000px;
-		margin: 30px auto;
-	}
-    .pointPurchaseSec>h1 {
-        text-align: center;
-        font-size:30px;
-    }
-    #pointPurchaseBox {
-      border-radius: 10px;
-      border: 2px solid rgba(176, 164, 122, 1);
-      overflow: hidden;
-    }
 
-	/* 충전 포인트 선택칸 */
+</style>
 
-    .pointPurchaseTable {
-		border-collapse: collapse;
-      	width: 1000px;
-	
-    }
-    .pointPurchaseTable tbody td{
-		border: 1px solid rgba(176, 164, 122, 1);
-    	font-size: 20px;
-		text-align: right;
-		font-weight: bold;
-		width: 25%;
-    }
-	.pointSel {
-		padding: 50px 20px;
-	}
-	.pointSel:hover {
-		background-color: rgb(184, 182, 182);
-		color: white;
-	}
-	.clicking {
-		background-color: rgba(48, 175, 86, 0.753);
-		color: white;
-	}
-    .pointG{
-		font-size: 25px;
-		color: #fce38c;
-		text-align: left;
-    }
-	
-	/* 약관박스 */
-    #clause{
-		border: 1px solid;
-		width: 500px;
-		padding: 15px;
-		display: inline-block;
-	}
-	
-	/* 결제버튼 */
-	#purchaseBtn {
-		border: none;
-		border-radius: 5px;
-		width: 80px;
-		font-size: 25px;
-		background-color: rgb(242, 210, 163);
-		margin-left:90%;
-	}
-
-	#payBox {
-		margin-left: 50px;
-	}
-	#viewPg, #viewPrice {
-		border:none;
-		font-size:20px;
-		text-align:right;
-		width:140px;
-	}
-    
-</style>	
-
-<script>
-
-</script>
 
 <div class="pointPurchaseSec">
-    <h1>포인트 결제</h1>
-    <hr>
-	<br><br>
+	<h1>포인트 결제</h1>
+	<hr>
+	<br> <br>
 	<form>
-		<div id="pointPurchaseBox">	
+		<div id="pointPurchaseBox">
 			<table class="pointPurchaseTable">
 				<thead>
 					<tr>
-						<td colspan="4">
-							&emsp;잔여 포인트 : ${member.point} p<br>
-							&emsp;충전 후 포인트 : <b id="afterP">${member.point} p</b>
+						<td colspan="4">&emsp;잔여 포인트 : ${loginMember.point} p<br>
+							&emsp;충전 후 포인트 : <b id="afterP">${loginMember.point} p</b>
 						</td>
 					</tr>
 				</thead>
@@ -108,7 +33,7 @@
 						<td>
 							<div class="pointSel">
 								<h3 class="pointG">10,000p</h3>
-								<h4>10,000 원</h5>
+								<h4>10,000 원</h4>
 								<input type="hidden" class="price" value="10000">
 							</div>
 						</td>
@@ -127,7 +52,7 @@
 							</div>
 						</td>
 						<td>
-							<div class="pointSel" >
+							<div class="pointSel">
 								<h3 class="pointG">100,000p</h3>
 								<h4>100,000 원</h4>
 								<input type="hidden" class="price" value="100000">
@@ -137,16 +62,11 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<td style="text-align: right;">
-							결제가능 수단&emsp;&emsp;
-						</td>
+						<td style="text-align: right;">결제가능 수단&emsp;&emsp;</td>
 						<td colspan="3">
-								<input type="radio" name="purchaseSelect" class="pg" value="kakaopay"> <span>카카오페이</span><br>
-								<input type="radio" name="purchaseSelect" class="pg" value="naverpay"> <span>네이버페이</span><br>
-								<input type="radio" name="purchaseSelect" class="pg" value="bank"> <span>계좌이체</span><br>
-								<input type="radio" name="purchaseSelect" class="pg" value="html5_inicis"> <span>신용/체크 카드</span>
-							
-						</td>
+							<input type="radio" name="purchaseSelect" class="pg" value="kakaopay"> <span>카카오페이</span><br>
+							<input type="radio" name="purchaseSelect" class="pg" value="danal"> <span>핸드폰 소액결제</span><br> 
+							<input type="radio" name="purchaseSelect" class="pg" value="html5_inicis"> <span>신용/체크 카드</span></td>
 					</tr>
 				</tfoot>
 			</table>
@@ -154,20 +74,21 @@
 		<div>
 			<br>
 			<div id="payBox">
-				결제수단 : <input id="viewPg"><br>
-				결제가격 : <input id="viewPrice"><br>
-				<br>이대로 진행하시려면 결제를 눌러주세요.<br>
-			</div> 
+				결제수단 : <input id="viewPg"><br> 
+				결제가격 : <input	id="viewPrice"><br> <br>
+				이대로 진행하시려면 결제를 눌러주세요.<br>
+			</div>
 
 		</div>
-		<br><br><br><br>
+		<br> <br> <br> <br>
 		<div>
 			<div id="clause">
 				<textarea id="clauseContent" cols="60" rows="7" readonly>약관내용
 				</textarea>
-				<input type="checkbox" id="clauseCkh" required> 약관을 다 읽었으며 동의하고 결제합니다
+				<input type="checkbox" id="clauseCkh" required> 약관을 다 읽었으며
+				동의하고 결제합니다
 			</div>
-			<button id="purchaseBtn" type="button" onclick="requestPay();">결제</button>
+			<button type="button" id="purchaseBtn" onclick="requestPay();">결제</button>
 		</div>
 	</form>
 </div>
@@ -180,7 +101,7 @@
 
 <script>
 	/* 포인트 선택 */
-	$('.pointSel').click(function(){
+ 	$('.pointSel').click(function(){
   		$('.pointSel').removeClass('clicking');
   		$(this).addClass('clicking');
   		var price1 = $(this).children('input').val();
@@ -188,79 +109,79 @@
   		$('#orderName').val($(this).children('h3').text());
   		$('#pointPrice').val(price1);
   		var afterP = 0;
-  		afterP = Number(${member.point})+Number(price1)+" p";
+  		afterP = Number(${loginMember.point})+Number(price1)+" p";
   		$('#afterP').text(afterP);
 	});
 
 	/* 결제방식 선택 */
 	$(':radio').click(function() {
-		const pg = $(':radio:checked').val();
 		$('#viewPg').val($(':radio:checked').next().text());
 		$('#selectedPg').val(pg);
-		
-		if(pg != "bank") {
-			$('#purchaseBtn').attr("onclick", 'requestPay('+'"'+pg+'"'+');');	//계좌이체 외 결제수단은 requestPay()에서 처리
-		}else {
-			$('#purchaseBtn').removeAttr("onclick");
-			$('#purchaseBtn').attr("onclick", 'bank();');	//계좌이체는 모달창으로 띄우기//미완성
-			
-		}
-	});
+	}); 
 
 	/* 결제 */
 	const IMP = window.IMP; 
 	IMP.init("imp36052417"); 
 	
-	function requestPay(pg) {
-		const merchant_uid = orderNum();
+	function requestPay() {
+		if($('#viewPg').val() == "" || $('#viewPrice').val() == ""){
+			alert("포인트 종류와 결제수단을 선택해주세요");
+			return;
+		}
 		if(!$('#clauseCkh').is(':checked')){
 			alert("약관을 읽고 동의해주세요");
 			return;
 		}
-		if(pg == "bank") {
-			
-		}else{
-			const pointPrice = $('#pointPrice').val();
-		    IMP.request_pay({
-		        pg : pg,		//결제하는 pg종류
-		        pay_method : 'card',
-		        merchant_uid: merchant_uid,		//  상점에서 관리하는 주문 번호(겹치지않는 번호로)
-		        name : $('#orderName').val()+"oint",			
-		        amount : pointPrice,
-		        buyer_email : '${member.email}',
-		        buyer_name : '${member.name}',
-		        buyer_tel : '${member.phone}',
-	
-		    }, function (data) {
-		    	if(data.success) {     //결제성공시
-		    		var msg = $('#orderName').val()+"oint" + "충전되셨습니다";
-					$.ajax({
-						url:'updatePoint.do',
-						type:'post',
-						data: {
-							pointOrderNum : merchant_uid,
-							pointName : $('#orderName').val()+"oint",
-							pointPrice : pointPrice,
-							paymentMethod : $('#viewPg').val(),
+		const pg = $(':radio:checked').val();
+		const merchant_uid = orderNum();
+		const name = $('#orderName').val()+"oint";
+		const pointPrice = $('#pointPrice').val();
+		console.log(pg);
+	    IMP.request_pay({
+	        pg : pg,		//결제하는 pg종류
+	        pay_method : 'card',
+	        merchant_uid: merchant_uid,		//  상점에서 관리하는 주문 번호(겹치지않는 번호로)
+	        name : name,	
+	        amount : pointPrice,
+	        buyer_email : '${loginMember.email}',
+	        buyer_name : '${loginMember.name}',
+	        buyer_tel : '${loginMember.phone}',
+	    }, function (rsp) { 
+	    	if(rsp.success){
+	    		$.ajax({
+	    			type: 'post',
+	    			url : '${pageContext.request.contextPath}/member/verifyAmount/' + rsp.imp_uid,
+	    			error:function(){alert("실패1");}
+	    		}).done(function(data) {  
+		    		if(pointPrice == data.response.amount){
+		    			const paymentMethod = $('#viewPg').val();
+		    			data = JSON.stringify({
+							pointOrderNum : rsp.merchant_uid,
+							pointName : rsp.name,
+							pointPrice : rsp.amount,
+							paymentMethod : paymentMethod,
 							purchasedTime : new Date()
-						}
-					}); 
-				}else {
-					alert("결제실패원인: " + data.error_msg);
-				}
-		    	alert(msg);
-		    	document.location.href="${pageContext.request.contextPath}/mypage/mypageMain.me";
-		    });
-		}
-	}
-	
-	
-	
-	
-	
-	/* 계좌이체 선택시 */	//미완성
-	function bank() {
-		
+		    			});
+		    			jQuery.ajax({
+							url:'updatePoint.do',
+							type:'post',
+							dataType: 'json',
+                            contentType: 'application/json',
+                            data : data,
+                            error: function(){
+                            	alert("실패2");
+                            }
+						}); 
+				    	alert(name + " 충전되셨습니다");
+				    	document.location.href="${pageContext.request.contextPath}/mypage/mypageMain.me";
+		    		}else {
+		    			alert("결제실패");
+		    		}
+				});
+	    	}else{
+    			alert("결제실패 : " + rsp.error_msg );
+    		};
+		})
 	}
 	
 	

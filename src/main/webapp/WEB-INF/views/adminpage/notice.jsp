@@ -6,14 +6,9 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/adminpage/notice.css">
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="제목" name="title" />
+	<jsp:param value="공지사항" name="title" />
 </jsp:include>
 
-<!-- 
-*제목 수정하기
-*내용 들어갈 곳
-*관리자페이지 공지사항
- -->
 <style>
 #navPage {
 	display: flex;
@@ -139,12 +134,14 @@ element.style {
 		<c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage }">
 			<c:choose>
 				<c:when test="${p eq pi.nowPage }">
-					<li class="page-item active"><a class="page-link"
-						href="${pageContext.request.contextPath}/adminpage/noticeList.bo?nowPage=${ p }">${ p }</a></li>
+					<a class="page-link" href="${pageContext.request.contextPath}/adminpage/noticeList.bo?nowPage=${ p }">
+						<li class="page-item active">${ p }</li>
+					</a>
 				</c:when>
 				<c:otherwise>
-					<li class="page-item"><a class="page-link"
-						href="${pageContext.request.contextPath}/adminpage/noticeList.bo?nowPage=${ p }">${ p }</a></li>
+					<a class="page-link" href="${pageContext.request.contextPath}/adminpage/noticeList.bo?nowPage=${ p }">
+						<li class="page-item">${ p }</li>
+					</a>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>

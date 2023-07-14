@@ -7,9 +7,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.gammza.chupachups.chatRoom.model.service.ChatRoomService;
@@ -30,11 +33,15 @@ import com.gammza.chupachups.common.ChangeDate;
 import com.gammza.chupachups.common.SpringUtils;
 import com.gammza.chupachups.common.model.vo.PageInfo;
 import com.gammza.chupachups.common.template.Pagination;
+import com.gammza.chupachups.ggRequest.controller.RequestController;
+import com.gammza.chupachups.ggRequest.model.service.RequestService;
+import com.gammza.chupachups.ggRequest.model.vo.Request;
 import com.gammza.chupachups.gonggu.model.service.GongguService;
 import com.gammza.chupachups.gonggu.model.service.PartiService;
 import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 import com.gammza.chupachups.gonggu.model.vo.Parti;
 import com.gammza.chupachups.likeList.controller.LikeListController;
+import com.gammza.chupachups.likeList.model.service.LikeListService;
 import com.gammza.chupachups.likeList.model.vo.Zzim;
 import com.gammza.chupachups.location.controller.LocationController;
 import com.gammza.chupachups.location.model.service.LocationService;
@@ -56,12 +63,26 @@ public class GongguController {
 	@Autowired
 	private LikeListController likeListController;
 	@Autowired
+	private LikeListService likeListService;
+	@Autowired
 	private ChatRoomService chatRoomService;
 	@Autowired
 	private PartiService partiService;
-
+	@Autowired
+	private RequestService requestService;
+	@Autowired
+	private RequestController requestController;
+	
+	//요청하기에서 연동해서 글 쓸 때
 	@GetMapping("/ggWrite.go")
-	public void ggWrite() {	}
+	public void ggWrite(HttpServletRequest request,Model model) {
+		Map<String, Gonggu> flashMap =(Map<String, Gonggu>) RequestContextUtils.getInputFlashMap(request);
+		Gonggu gonggu=null;
+		if(flashMap !=null) {
+			gonggu=flashMap.get("gonggu");
+		}
+		model.addAttribute("gonggu", gonggu);
+	}
 
 	@GetMapping("/ggListView.go")
 	public ModelAndView ggListView(Model model,RedirectAttributes redirectAttr, HttpSession session,
@@ -69,54 +90,54 @@ public class GongguController {
 		Member loginMember=(Member) session.getAttribute("loginMember");
 		ArrayList<Gonggu> ggListView;
 		ModelAndView mav=new ModelAndView();
+		HashMap<String,String> locationMap=new HashMap<String,String>();
+		
 		if(loginMember !=null) {
 			if(loginMember.getLatitude() == null) {
+				System.out.println(loginMember.getLatitude());
 				redirectAttr.addFlashAttribute("msg","정확한 주변 공구를 보려면 장소 인증을 먼저 해야 합니다.");
 				mav.setView(new RedirectView("/chupachups/location/location.lo"));
-				
 				return mav;
 			}else {
-				HashMap<String,String> locationMap=new HashMap<String,String>();
 				locationMap.put("longitude", loginMember.getLongitude());
 				locationMap.put("latitude", loginMember.getLatitude());
 				ggListView = gongguService.selectggListView(locationMap);
 			}
 		}else {
-			HashMap<String,String> locationMap=new HashMap<String,String>();
 			locationMap.put("longitude", longitude);
 			locationMap.put("latitude", latitude);
 			ggListView = gongguService.selectggListView(locationMap);
 		}
-		
 		for(int i=0;i<ggListView.size();i++) {
 			Location tempLocal=locationService.selectLocationByNo(ggListView.get(i).getLocationNo());
 			String locationName=locationController.SelectLocationName(tempLocal);
 			ggListView.get(i).setLocationName(locationName);
 			
 		}
+		model.addAttribute("location", locationMap);
 		model.addAttribute("ggListView", ggListView);
 		mav.setViewName("/gonggu/ggListView");
 		
 		return mav;
 	}
 	
-	@GetMapping("/homeList.go")
-	public String homeList(Model model) {
-		ArrayList<Gonggu> homeList = gongguService.selectHomeList();
-		for(int i=0;i<homeList.size();i++) {
-			Location tempLocal=locationService.selectLocationByNo(homeList.get(i).getLocationNo());
+	@GetMapping("/mainList.go")
+	public String mainList(Model model) {
+		ArrayList<Gonggu> mainList = gongguService.selectMainList();
+		for(int i=0;i<mainList.size();i++) {
+			Location tempLocal=locationService.selectLocationByNo(mainList.get(i).getLocationNo());
 			String locationName=locationController.SelectLocationName(tempLocal);
-			homeList.get(i).setLocationName(locationName);
+			mainList.get(i).setLocationName(locationName);
 			//홈 띄워질 때마다 공구 상태 관리
-			gongguStatusMgr(homeList.get(i).getGongguNo());
+			gongguStatusMgr(mainList.get(i).getGongguNo());
 		}
-		model.addAttribute("homeList", homeList);
+		model.addAttribute("mainList", mainList);
 		int totalRecord=gongguService.selectTotalRecored();
 		
 		PageInfo pi=Pagination.getPageInfo(totalRecord, 1, 1, 8);
 		model.addAttribute("pi", pi);
 		
-		return "/home";
+		return "/common/mainpage";
 	}
 	
 	//공구 상태 관리
@@ -133,11 +154,18 @@ public class GongguController {
 	}
 	
 	 @GetMapping("/ggRead.go") 
-	 public String ggRead(@RequestParam int gongguNo, Model model, HttpSession session) throws ParseException {
+	 public String ggRead(@RequestParam int gongguNo, Model model, HttpSession session, HttpServletRequest request, RedirectAttributes redirectAttributes) throws ParseException {
 		 Member loginMember=(Member)session.getAttribute("loginMember");
-		 List<Zzim> zzimList=likeListController.selectZzim(gongguNo);
-		 model.addAttribute("zzimCount", zzimList.size());
-		 
+		 if(loginMember!=null) {
+			 Zzim myZzim=likeListController.selectMyZzim(gongguNo,loginMember.getUserId());
+			 if(myZzim !=null) {
+				 model.addAttribute("zzim", myZzim);
+			 }else {
+				 model.addAttribute("zzim", null);
+			 }
+		 }
+		 int zzimCount=likeListService.selectZzim(gongguNo).size();
+		 model.addAttribute("zzimCount", zzimCount);
 		 gongguService.updateGongguCount(gongguNo);
 		 Gonggu gonggu = gongguService.selectOneGonggu(gongguNo);
 		 
@@ -154,20 +182,25 @@ public class GongguController {
 		 
 		 if(gonggu.getEndStatus()==1) {
 			 return "/gonggu/ggRead"; 
+		 }else if(gonggu.getStatus()==0){
+			 redirectAttributes.addFlashAttribute("msg", "삭제된 글입니다.");
+			 String referer = request.getHeader("Referer");
+			 return "redirect:"+ referer;
 		 }else {
 			 return "/gonggu/ggEnd"; 
 		 }
 		 
 	 }
 	 
+	
 	 
 	 
 	 @PostMapping("/ggEnrollFrm.go")
 	 public String ggEnrollFrm(Gonggu gonggu, Location map,@RequestParam MultipartFile upPhoto1, @RequestParam MultipartFile upPhoto2,
 			@RequestParam MultipartFile upPhoto3, Model model,RedirectAttributes redirectAttr) {
+		 Request request=requestService.selectRequest(gonggu.getGongguNo());
 		 int locationNo=locationController.selectLocation(map).getLocationNo();
 		 gonggu.setLocationNo(locationNo);
-		 gonggu.setPrice(gonggu.getPrice());
 		if (gonggu.getOpenTime().equals("sysdate")) {
 			gonggu.setEndTime(ChangeDate.chageDate(gonggu.getEndTime()));
 			gonggu.setSendTime(ChangeDate.chageDate(gonggu.getSendTime()));
@@ -193,8 +226,9 @@ public class GongguController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}else {
+			gonggu.setPhoto1(request.getPhoto1());
 		}
-
 		if(upPhoto2.getSize()>0) {
 			String changeFilename=SpringUtils.changeMultipartFile(upPhoto2);
 			photo.add(changeFilename);
@@ -206,6 +240,8 @@ public class GongguController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}else {
+			gonggu.setPhoto2(request.getPhoto2());
 		}
 		if(upPhoto3.getSize()>0) {
 			String changeFilename=SpringUtils.changeMultipartFile(upPhoto3);
@@ -218,6 +254,8 @@ public class GongguController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}else {
+			gonggu.setPhoto3(request.getPhoto3());
 		}
 		if (!photo.isEmpty()) {
 			Collections.sort(photo);
@@ -241,6 +279,11 @@ public class GongguController {
 			Gonggu newGonggu=gongguService.selectOneGonggu(gongguNo);
 			model.addAttribute("gonggu", newGonggu);
 			chatRoomService.insertChatRoom(newGonggu);
+			
+			if(request != null) {
+				requestController.updateRequestReqStatus(request.getRequestNo());
+			}
+			
 			return "/gonggu/ggRead";
 		}else {
 			redirectAttr.addFlashAttribute("msg","글 작성에 실패했습니다ㅠ");
@@ -262,8 +305,6 @@ public class GongguController {
 			@RequestParam MultipartFile upPhoto3, Model model, RedirectAttributes redirectAttr) {
 		 Gonggu Ogonggu=gongguService.selectOneGonggu(newGonggu.getGongguNo());
 		 
-		 newGonggu.setPrice(newGonggu.getPrice());
-		 
 		 int locationNo=locationService.selectLocation(map).getLocationNo();
 		 newGonggu.setLocationNo(locationNo);
 		 //공구 바로 시작하기 처리
@@ -281,7 +322,6 @@ public class GongguController {
 		ArrayList<String> photo = new ArrayList<String>();
 
 		if (upPhoto1.getSize() > 0) {
-			System.out.println("들어옴");
 			if(Ogonggu.getPhoto1() != null) {
 				File file=new File(saveDirectory, Ogonggu.getPhoto1());
 				file.delete();
@@ -374,26 +414,80 @@ public class GongguController {
 	 }
 	
 	 @GetMapping("/ggSearch.go")
-	 public String searchGonggu(@RequestParam("gongguName") String gongguName, Model model) {
-		 ArrayList<Gonggu> homeList = gongguService.searchGonggu(gongguName);
+	 public String searchGonggu(@RequestParam("gongguName") String gongguName, Model model,HttpSession session,
+			 @RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude) {
+	 	Member mem=(Member)session.getAttribute("loginMember");
+	 	HashMap<String,String> map=new HashMap<String,String>();
+	 	if(mem==null) {
+	 		map.put("longitude", longitude);
+	 		map.put("latitude", latitude);
+	 	}else {
+	 		map.put("longitude", mem.getLongitude());
+	 		map.put("latitude", mem.getLatitude());
+	 	}
+		 StringTokenizer st=new StringTokenizer(gongguName);
+		 String searchSql="INTERSECT ";
+		 searchSql+=" SELECT * "
+			 		+ " FROM gonggu "
+			 		+ " where gonggu_name LIKE '%"+st.nextToken()+"%' "; 
+		 while(st.hasMoreTokens()) {
+			 searchSql+=" UNION "
+			 		+ " SELECT * "
+			 		+ " FROM gonggu "
+			 		+ " where gonggu_name LIKE '%"+st.nextToken()+"%' "; 
+		 }
+		 searchSql+=" order by 22 desc";
+		 map.put("search", searchSql);
 		 
-		 model.addAttribute("homeList", homeList);
+		 ArrayList<Gonggu> ggListView = gongguService.searchGonggu(map);
+		 
+		 model.addAttribute("ggListView", ggListView);
 		 int totalRecord=gongguService.selectGongguTotalRecored();
 		 
-		 model.addAttribute("gonggu", gongguName);
+		 model.addAttribute("keyword", gongguName);
 		
 		 PageInfo pi=Pagination.getPageInfo(totalRecord, 1, 1, 8);
          model.addAttribute("pi", pi);
-		 
-		 return "/home";
+         
+		 return "/gonggu/ggListView";
 	 }
 	 
 	 @GetMapping("/categoryList.go")
-		public String categoryList(@RequestParam("category") int category, Model model) {
-			ArrayList<Gonggu> categoryList = gongguService.selectOneCategory(category);
-			
-			model.addAttribute("homeList", categoryList);
-			
-			return "/home";
-		}
+	public String categoryList(@RequestParam("category") int category, Model model, HttpSession session,
+			@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude) {
+	 	Member mem=(Member)session.getAttribute("loginMember");
+	 	HashMap<String,String> map=new HashMap<String,String>();
+	 	if(mem==null) {
+	 		map.put("longitude", longitude);
+	 		map.put("latitude", latitude);
+	 	}else {
+	 		map.put("longitude", mem.getLongitude());
+	 		map.put("latitude", mem.getLatitude());
+	 	}
+	 	map.put("category", String.valueOf(category));
+		ArrayList<Gonggu> categoryList = gongguService.selectOneCategory(map);
+		
+		model.addAttribute("ggListView", categoryList);
+		
+		return "/gonggu/ggListView";
+	}
+	 @GetMapping("/deleteGonggu.go")
+	 public String deleteGonggu(@RequestParam int gongguNo, RedirectAttributes redirectAttr) {
+		 
+		 gongguService.updateGongguStatus(gongguNo);
+		 
+		 redirectAttr.addFlashAttribute("msg","삭제가 완료되었습니다.");
+		 
+		 return "redirect:/"; 
+	 }
+	 @GetMapping("/pullUpGonggu.go")
+	 public String pullUpGonggu(@RequestParam int gongguNo, RedirectAttributes redirectAttr) {
+		 
+		 gongguService.updatepullUpAt(gongguNo);
+		 
+		 redirectAttr.addFlashAttribute("msg","공구 끌올이 완료되었습니다.");
+		 
+		 return "redirect:/gonggu/ggRead.go?gongguNo="+gongguNo; 
+	 }
+	 
 }

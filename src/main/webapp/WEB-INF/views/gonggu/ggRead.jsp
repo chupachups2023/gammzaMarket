@@ -3,54 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggRead.css?<%=System.currentTimeMillis() %> %>" type="text/css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggRead.css?<%=System.currentTimeMillis() %>" type="text/css" />
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=44e2b21ec219944c6d834fff124a603d&libraries=services,clusterer"></script>
-<style>
-.modal-report {
-		display:none;
-		}
-.report-bg {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 9999;
-}
-.report-content {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-49%, -50%);
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        z-index: 10000;
-}
-
-#close-report {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background-color: transparent;
-        border: none;
-        font-size: 18px;
-        cursor: pointer;
-}
-#reportContent{
-	resize:none;
-	padding:5px;
-}
-.report-gongguName, #reportWriter{
-	border:none;
-	width:500px;
-	font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
-	font-size:16px
-}
-</style>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="${gonggu.gongguName }" name="title" />
@@ -100,7 +55,7 @@
             <div class="ggRead-price">개당 <fmt:formatNumber type="number" maxFractionDigits="3" value="${gonggu.price}" /> 포인트</div>
             <div class="ggRead-num">
                 <div>${gonggu.num}개 나눠요<span>/</span></div>
-                <div class="ggRead-on"> 지금 <span>${gonggu.num - partiNum}개</span> 남았어요</div>
+                <div class="ggRead-on"> 지금 <span>${gonggu.num - partiNum}개(명)</span> 남았어요</div>
             </div><input type="hidden" id="endtime" value="${gonggu.endTime }">
             <fmt:parseDate value="${gonggu.endTime }" var="endTime" pattern="yyyy-MM-dd HH:mm"/>
             <div class="ggRead-endtime"><fmt:formatDate value="${endTime }" pattern="yyyy년 MM월 dd일 HH시 mm분"/>까지 기다려요</div>
@@ -121,7 +76,7 @@
         </div>
     </div>
     <div class="ggRead-btn">
-        <div class="ggRead-title-right">
+        <div class="ggRead-title-right"  id="zzim">
             <c:choose>
         		<c:when test="${gonggu.pullupAt eq gonggu.createAt}">
         			<fmt:parseDate value="${gonggu.createAt }" var="createAt" pattern="yyyy-MM-dd"/>
@@ -129,20 +84,21 @@
         		</c:when>
         		<c:otherwise>
         			<fmt:parseDate value="${gonggu.pullupAt }" var="pullupAt" pattern="yyyy-MM-dd"/>
-		            <div class="ggRead-date">작성 <fmt:formatDate value="${pullupAt }" pattern="yyyy년 MM월 dd일"/></div>
+		            <div class="ggRead-date">끌올 <fmt:formatDate value="${pullupAt }" pattern="yyyy년 MM월 dd일"/></div>
         		</c:otherwise>
         	</c:choose>
-            <div><img src="https://cdn-icons-png.flaticon.com/512/138/138533.png" alt="zzim" id="zzim"></div>
-            <div><img src="https://cdn-icons-png.flaticon.com/512/2089/2089736.png" alt="share"></div>
+            <div id="emptyzzim"><img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="emptyzzim" onclick="addZzim();" ></div>
+            <div id="fullzzim"><img src="https://cdn-icons-png.flaticon.com/512/138/138533.png" alt="fullzzim" onclick="deleteZzim();"></div>
+            <div><img src="https://cdn-icons-png.flaticon.com/512/2089/2089736.png" alt="share" onclick="clip();"></div>
         </div>
         <c:choose>
         	<c:when test="${gonggu.gongguWriter eq loginMember.userId}">
        		<div class="ggRead-button">
 	            <a href="${pageContext.request.contextPath}/gonggu/update.go?gongguNo=${gonggu.gongguNo}" class="button">글 수정</a>
 	            <a href="${pageContext.request.contextPath}/gonggu/gongguEnd.go?gongguNo=${gonggu.gongguNo}" class="button">공구 마감하기</a>
-	            <a href="" class="button">공구삭제</a>
+	            <a href="javascript:deleteGonggu();" class="button">공구삭제</a>
 	            <a href="" class="button">채팅하기</a>
-	            <a href="" class="button">끌올하기</a>
+	            <a href="javascript:pullUpGonggu();" class="button">끌올하기</a>
 	            <a href="${pageContext.request.contextPath}/gonggu/checkPartis.pa?gongguNo=${gonggu.gongguNo}" class="button">참여자확인</a>
         	</div>
         	</c:when>
@@ -170,7 +126,7 @@
             </c:otherwise>
         </c:choose>
             <div class="ggRead-info">
-                <div>관심 수 <span>${zzimCount }</span> · </div>
+                <div>관심 수 <span id="zzimCount">${zzimCount }</span> · </div>
                 <div>조회 수 <span>${gonggu.count }</span></div>
                 <input type="hidden" value="${gonggu.longitude }" id="longitude">
                 <input type="hidden" value="${gonggu.latitude }" id="latitude">
@@ -183,7 +139,7 @@
 <div class="modal-report" id="report" tabindex="-1">
     <form action="${pageContext.request.contextPath}/report/insertReport.do" method="post" id="reportFrm">
 
-        <div class="report-bg"></div>
+        <div class="report-bg" onclick="closeModal();"></div>
         <div class="report-content" id="report">
             <h2>신고하기</h2>
             <ul class="report-top">
@@ -193,7 +149,7 @@
                 <li class="report-input modal-footer"><input type="button" class="report-btn button" value="신고하기" id="report-modal"></li>
             </ul>
             <br>
-            <button type="button" id="close-report">취소</button>
+            <button type="button" id="close-report" onclick="closeModal();">취소</button>
         </div>
         <input type="hidden" id="gongguNo" name="gongguNo" value="${gonggu.gongguNo}" />
     </form>
@@ -201,6 +157,14 @@
 
 <script src="${pageContext.request.contextPath}/resources/js/gonggu/ggRead_Partic.js?<%=System.currentTimeMillis() %>"></script>
 <script>
+
+let zzimNo="${zzim.zzimNo}";
+if(zzimNo==null || zzimNo==""){
+	$("#emptyzzim").css("display","block");
+}else{
+	$("#fullzzim").css("display","block");
+}
+
 const longitude= document.getElementById('longitude').value;
 const latitude= document.getElementById('latitude').value;
 
@@ -250,20 +214,90 @@ openReportBtn.addEventListener("click", () => {
 	
 });
 // 모달창 닫기
-closeReportBtn.addEventListener("click", () => {
+function closeModal() {
 	report.style.display = "none";
 	document.body.style.overflow = "auto"; 
-});
+}
 // 모달창 닫기
 reportModalBtn.addEventListener("click", () => {
-	report.style.display = "none";
-	document.body.style.overflow = "auto";
+	closeModal();
 	reportFrm.submit();
 });
 pzlogin.addEventListener("click", () => {
 	alert("로그인 후 이용가능합니다");
 	location.href="${pageContext.request.contextPath}/";
 });
-</script>
 
+function deleteGonggu(){
+	if(confirm("정말로 ${gonggu.gongguName} 공구를 삭제하시겠습니까?")){
+		location.href="${pageContext.request.contextPath}/gonggu/deleteGonggu.go?gongguNo=${gonggu.gongguNo}";
+	}else{
+		return
+	}
+}
+function pullUpGonggu(){
+	if(confirm("${gonggu.gongguName} 공구를 끌올하시겠습니까?")){
+		location.href="${pageContext.request.contextPath}/gonggu/pullUpGonggu.go?gongguNo=${gonggu.gongguNo}";
+	}else{
+		return
+	}
+}
+function addZzim(){
+	let zzimC=document.getElementById("zzimCount");
+	const gongguNo="${gonggu.gongguNo}";
+	const userId="${loginMember.userId}";
+	if(userId == "" || userId == null){
+		alert("찜에 담으려면 먼저 로그인 하세요");
+		return
+	}else{
+		$.ajax({
+	       	type:"get",
+	       	url:"${pageContext.request.contextPath}/mypage/addZzim.zz",
+	       	data:{'gongguNo':gongguNo},
+	       	success:function(result){
+	       		zzimNo=result;
+	       		$("#emptyzzim").css("display","none");
+	       		$("#fullzzim").css("display","block");
+	       		zzimC.innerHTML=zzimC.innerHTML*1+1;
+	       	},
+	       	error:function(){
+	       		console.log("찜추가 에러");
+	       	}
+		});
+	}
+}
+function deleteZzim(){
+	let zzimC=document.getElementById("zzimCount");
+	const gongguNo="${gonggu.gongguNo}";
+	$.ajax({
+       	type:"get",
+       	url:"${pageContext.request.contextPath}/mypage/deleteZzim.zz",
+       	data:{'zzimNo':zzimNo},
+       	success:function(data){
+       		$("#fullzzim").css("display","none");
+       		$("#emptyzzim").css("display","block");
+       		zzimC.innerHTML=zzimC.innerHTML-1;
+       	},
+    	error:function(){
+       		console.log("찜삭제 에러");
+       	}
+	});
+}
+function clip(){
+
+    var url = '';    // <a>태그에서 호출한 함수인 clip 생성
+    var textarea = document.createElement("textarea");  
+    //url 변수 생성 후, textarea라는 변수에 textarea의 요소를 생성
+    
+    document.body.appendChild(textarea); //</body> 바로 위에 textarea를 추가(임시 공간이라 위치는 상관 없음)
+    url = window.document.location.href;  //url에는 현재 주소값을 넣어줌
+    textarea.value = url;  // textarea 값에 url를 넣어줌
+    textarea.select();  //textarea를 설정
+    document.execCommand("copy");   // 복사
+    document.body.removeChild(textarea); //extarea 요소를 없애줌
+    
+    alert("주소가 복사되었습니다.")  // 알림창
+}
+</script>
+<input type="hidden" id="text">
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

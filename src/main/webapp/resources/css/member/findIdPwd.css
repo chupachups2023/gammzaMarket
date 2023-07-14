@@ -7,6 +7,10 @@
   margin: 0;
 }
 
+.find-container {
+  height: 60vh;
+}
+
 .find-content {
   display: flex;
   justify-content: center;
@@ -90,6 +94,7 @@ nav {
   width: 300px;
   height: 45px;
   margin-bottom: 8px;
+  border: 1px solid #e9e9e9;
 }
 
 .find-id2 ul li input[type=text] {
@@ -118,4 +123,107 @@ nav {
 input:focus { 
 	outline: 1px solid #ddd;
 }
+
+/* 아이디 찾기 모달 */
+.modal1-overlay {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: none;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background: rgba(255, 255, 255, 0.25);
+	z-index: 9;
+	/* 
+	-webkit-backdrop-filter: blur(1.5px);
+	backdrop-filter: blur(1.5px);
+	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+	border-radius: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.18); */
+	
+}
+
+/* 모달창 */       
+.modal1-window {
+   background-color: #ffffff;
+   /*
+   backdrop-filter: blur( 13.5px );
+   box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 ); 
+   -webkit-backdrop-filter: blur( 13.5px );
+   */
+   border-radius: 10px;
+   border: 2px solid #E9D296;
+   width: 310px;
+   height: 165px;
+   position: relative;
+   top: -100px;
+   padding: 50px;
+   /* z-index: 9; */
+}
+
+.title1 {
+    padding: 40px 0;
+    display: inline;
+    /* text-shadow: 1px 1px 2px gray; */
+    color: #5EB162;
+    
+}
+.title1 h2 {
+	text-align: center;
+	padding: 20px 0;
+    /* display: inline; */
+}
+.close-area1 {
+    position: absolute;
+    right: 12px;
+    top: 4px;
+    cursor: pointer;
+    background: url("close-icon.png") no-repeat; /* 경로 수정 예정 */
+    color: transparent;
+    width: 34px;
+    height: 34px;
+}
+
+.content1 {
+    margin-top: 20px;
+    padding: 0px 10px;
+    /* text-shadow: 1px 1px 2px gray; */
+    color: #5EB162;
+    font-size: 18px;
+}
+
+.modal-result {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

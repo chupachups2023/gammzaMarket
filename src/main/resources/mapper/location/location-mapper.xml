@@ -7,21 +7,28 @@
 	<resultMap type="location" id="locationMap"></resultMap>
 	<select id="selectLocation" resultMap="locationMap">
 		select * from location 
-		 where SIDO_NM=#{sidoNm} and SGG_NM = #{sggNm} and ADM_NM = #{admNm} and LEG_NM = #{legNm} 
+		 where SIDO_NM = #{sidoNm}
+		   and SGG_NM = #{sggNm}
+		   and ADM_NM = #{admNm} 
+		   and LEG_NM = #{legNm} 
 	</select>
 	<select id="selectLocationLess" resultMap="locationMap">
 		select * from location 
-		 where SIDO_NM=#{sidoNm} and SGG_NM = #{sggNm} and LEG_NM = #{legNm} 
+		where SIDO_NM = #{sidoNm}
+		   and SGG_NM = #{sggNm}
+		   and LEG_NM = #{legNm} 
 	</select>
 	<select id="selectLocationLest" resultMap="locationMap">
 		select * from location 
-		 where SIDO_NM=#{sidoNm} and SGG_NM = #{sggNm} and ADM_NM = #{admNm} 
+		where SIDO_NM = #{sidoNm}
+		   and SGG_NM = #{sggNm}
+		   and LEG_NM = #{admNm} 
 	</select>
 	<select id="selectlegCount" resultType="_int">
-		select count(*) from location where SIDO_NM=#{sidoNm} and SGG_NM = #{sggNm} and LEG_NM = #{legNm} 
+		select count(*) from location where SIDO_NM LIKE '%'||#{sidoNm}||'%' and SGG_NM = #{sggNm} and LEG_NM = #{legNm} 
 	</select>
 	<select id="selectadmCount" resultType="_int">
-		select count(*) from location where SIDO_NM=#{sidoNm} and SGG_NM = #{sggNm} and ADM_NM = #{admNm} 
+		select count(*) from location where SIDO_NM LIKE '%'||#{sidoNm}||'%' and SGG_NM = #{sggNm} and ADM_NM = #{admNm} 
 	</select>
 	<select id="selectLocationByNo" resultMap="locationMap">
 		select * from location 

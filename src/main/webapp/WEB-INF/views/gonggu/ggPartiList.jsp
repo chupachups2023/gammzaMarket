@@ -21,6 +21,10 @@
 	.userId_bold{
 		font-weight:bold;
 	}
+	.writeReview:hover{
+		text-decoration:underline;
+		cursor:pointer;
+	}
 </style>
 	<h1 align="center">
 		<c:choose>
@@ -53,8 +57,12 @@
 						<c:when test="${list.status eq 0 }">
 							참여 대기
 						</c:when>
-						<c:otherwise>
+						<c:when test="${list.status eq 1 }">
 							참여 중
+						</c:when>
+						<c:otherwise>
+							수령 완료
+							<div class="writeReview" onclick="reviewWriteCheck('${list.userId}');"><small>참가자 리뷰쓰기</small></div>
 						</c:otherwise>
 					</c:choose>
 				</th>
@@ -68,8 +76,75 @@
 		</table>
 		<button class="long-btn button" onclick="addMember();">공구 참여자로 추가하기</button>
 	</div>
-<script>
 	
+		<!-- 리뷰보기 모달창 -->
+	
+	<div class="modalR" id="reviewDetailModal">
+	  <div class="modalR-dialog">
+	    <div class="modalR-content">
+	    <form name="writeReviewFrm">
+	      <div class="modalR-header" style="text-align:center;">
+	        <h4 class="modalR-title">리뷰쓰기</h4>
+	      </div>
+	      <div class="modalR-body">
+				<table class="reviewModal">
+					<tr height="30px">
+						<td width="50%" colspan="2">
+							<b>공구물건 : </b> <span id="ggName"></span><br>
+						</td>
+					</tr>	
+					<tr height="30px">
+						<td class="receiverId"><b>리뷰 받는 사람 : </b><input name="receiverId"  id="receiver"></td>
+						<td width="24%"><b>점수 : </b>
+							<span class="star">
+								<input type="range" oninput="drawStar(this)" value="100" step="1" min="1" max="1000">
+	        					★★★★★
+								<span>★★★★★</span>
+							</span>
+							<input type="hidden" name="rate" id="rate" value="5">
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2"><pre><textarea name="reviewContent" class="reviewContent"></textarea></pre><br></td>
+					</tr>
+				</table>
+					<input type="hidden" name="gongguNo" id="ggNo">
+	      </div>
+	      <div class="modalR-footer">
+		        <button type="button" class="button" onclick="javascrip:reviewSubmit();">작성완료</button>
+		        <button type="button" class="button" onclick="javascrip:mClose();">닫기</button>
+	      </div>
+	      </form>
+	    </div>
+	  </div>
+	</div>
+	
+	
+<script>
+	function reviewWriteCheck(id){
+		let userId=id;
+		$.ajax({
+			url:"${pageContext.request.contextPath }/review/reviewWriteCheck.re",
+			data:{"userId":userId, "gongguNo":${gonggu.gongguNo}},
+			success:function(result){
+				const parti=result.parti;
+				const check=result.result*1;
+				console.log(check)
+				if(check>0){
+					alert("이미 작성을 완료하였습니다.")
+				}else{
+					reviewDetailModal(parti.gongguNo,parti.partiMember);
+					document.getElementById("receiver").value=parti.partiMember;
+					document.getElementById("ggName").innerHTML=parti.gongguName;
+					document.getElementById("ggNo").value=parti.gongguNo;
+				}
+			},
+			error:function(){
+				console.log("에러!!!!")
+			}
+			
+		})
+	}
 	function addMember(){
 		
 		var rowData = [];
@@ -85,15 +160,6 @@
 			let id = td.eq(2).text();
 			totalNum+=num*1;
 			arr.push(id);
-			
-		/*	rowData.push(tr.text());
-			
-		 	// td.eq(0)은 체크박스 이므로  td.eq(1)의 값부터 가져온다.
-			var no = td.eq(1).text()+", "
-			var userid = td.eq(2).text()+", ";
-			var name = td.eq(3).text()+", ";
-			var email = td.eq(4).text()+", ";
-			 */
 		});
 		const maxNum="${gonggu.num}";
 		console.log(maxNum);
@@ -107,26 +173,49 @@
 			location.href="${pageContext.request.contextPath }/gonggu/partiMemSelect.pa"+strr;
 		}
 	};
-	
-/*	
-var table = document.getElementById('partiTable');
-      var rowList = table.rows;
 
-		for (i=0; i<rowList.length; i++) {
-			var row = rowList[i];
-        	var tdNum = 7;     //아래 for문에서 사용하기 위해 row 하위에 존재하는 td의 갯수를 구합니다.
-        var arr="";
-        row.onclick = function() {
-              var row_value2 = this.cells[2].innerHTML;
-             arr2=row_value2.replace('<b>','');
-             arr2=arr2.replace('</b>','');
-              var row_value3 = this.cells[3].innerHTML;
-            arr=row_value3.split('개')[0];
-        	console.log(arr2);
-        };
-        
-      }
-*/
+
+ 	function reviewDetailModal(){
+ 		$('.modalR').addClass('show');
+ 		$('.modalR-dialog').addClass('show');
+ 	};
+ 	function mClose(){
+ 		$('.modalR').removeClass('show');
+ 		$('.modalR-dialog').removeClass('show');
+ 	};
+ 	let drawStar = (target) => {
+ 		let val=Math.ceil(target.value/200);
+ 		let wid=val * 20+"%";
+ 	    document.querySelector(".star span").style.width = wid;
+ 	    $("#rate").attr("value",val);
+ 	  }
+ 	function reviewSubmit(){
+ 		let receiverId=writeReviewFrm.receiverId.value
+ 		let rate=writeReviewFrm.rate.value
+ 		let reviewContent=writeReviewFrm.reviewContent.value
+ 		let gongguNo=writeReviewFrm.gongguNo.value
+ 		
+ 		if(reviewContent==""){
+ 			alert("내용을 입력해주세요")
+ 			return
+ 		}else{
+ 			$.ajax({
+ 				type:"post",
+ 				url: "${pageContext.request.contextPath }/review/writeReview.re",
+ 				data: {"receiverId":receiverId,
+ 					   "rate":rate,
+ 					   "reviewContent":reviewContent,
+ 					   "gongguNo":gongguNo
+ 					  },
+ 				success:function(result0){
+ 					const result=result0.result
+ 					
+ 					mClose();
+ 				}
+ 			})
+ 		}
+ 	}
+ 	
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

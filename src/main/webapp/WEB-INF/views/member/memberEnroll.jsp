@@ -4,28 +4,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!-- <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/memberEnroll.css">
-<style>
-/* .id_ok {
-	color: green;
-	display: none;
-}
-
-.id_already {
-	color: red;
-	display: none;
-} */
-/* .guide { display: none; }
-.ok { color: #5EB162; font-size: 12px; }
-.error { color: #FF0606; font-size: 12px; }  */
-
-</style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/memberEnroll.css?<%=System.currentTimeMillis() %>">
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="회원가입" name="title"/>
 </jsp:include>
-
-
 
 <div class="enroll-title">
     <h1>회원가입</h1>
@@ -57,17 +40,22 @@
 									 </tr>
 									 <tr>
 											<td>
-												<span style="font-size: 12px;"><em>*아이디는 4~12자의 영문 소문자만 사용 가능</em></span><br>
+												<span style="font-size: 12px;"><em>*아이디는 4~12자의 영문 소문자와 숫자만 사용 가능</em></span><br>
 												<span style="font-size: 12px;"><em>*비밀번호는 영문, 숫자, 특수문자 포함 8~20자리로 입력</em></span><br>
-										 </td>
-									 </tr>
+											</td>
+										</tr>
+											
+										<tr>
+										<td scope="col" class="add" colspan="2">
+												<span class="guide ok">멋진 아이디네요!</span>
+												<span class="guide error">사용할 수 없는 아이디입니다.</span>
+										</td>
+										</tr>
+									 
+
 							 </table>
 										 </div>
-							 <div>
-									<br><span class="guide ok">멋진 아이디네요!</span><br>
-									<span class="guide error">사용할 수 없는 아이디입니다.</span>
-							 </div>
-										 <div class="container2">
+										 <div class="container3">
 							 <table class="enroll-section">
 								<tr>
 										<td scope="col" class="add">
@@ -86,7 +74,19 @@
 								</tr>
 										<tr>
 											<td class="btn-cont">
-												<button type="button" class="bo-small">이메일 인증하기</button>
+												<button type="button" class="bo-small" id="emlChk" >이메일 인증하기</button>
+												
+											</td>
+										</tr>
+								<tr>
+										<td scope="col" class="add">
+												<input type="email" name="emailAuth" id="emailAuth" placeholder="인증번호 6자리를 입력해주세요" required>
+										</td>
+								</tr>
+										<tr>
+											<td class="btn-cont">
+												<button type="button" class="bo-small" id="emlChk2" >인증</button>
+												<input type="hidden" id="emailAuthKey" name="emailAuthKey">
 											</td>
 										</tr>
 									 <tr>
@@ -146,86 +146,17 @@
        </div> -->
 
 
-<!-- <script type="text/javascript">
-		
-	    // ID 중복체크 
-		function checkIdFunc() {
-			var userId = $('#userId').val();
-			console.log("사용자 아이디 입력 값: " + userId);
-			
-		    var uid = document.getElementById("userId");
-			
-			if (uid.value == "") {
-			alert("아이디를 입력하세요");
-			uid.focus();
-			return false;
-		}
-		
-			$.ajax({
-				type: "post",
-				url: "${pageContext.request.contextPath}/member/checkId.do",
-				data: { userId : userId },
-				dataType: 'json',
-	            /* contentType : "application/json; charset=utf-8", */
-	            success: function(cnt) {
-	            	if (cnt == 0) {
-	            		$('id_ok').css("display", "inline-block");
-	            		$('.id_already').css("display", "none");
-	            	} else {
-	            		$('.id_already').css("display", "inline-block");
-	            		$('.id_ok').css("display", "none");
-	            		alert("아이디를 다시 입력해 주세요");
-	            		$('#userId').val('');
-	            	}
-	            },
-	            error: function() {
-	            	alert("통신 오류");
-	            }
-	        });
-	    }
-	    
-	
-</script> -->
-
 <script type="text/javascript">
 		document.querySelector("#userId").addEventListener("keyup", (e) => {
 			const ok = document.querySelector(".ok");
 			const error = document.querySelector(".error");
 			const userId = e.target;
 			
-			// var userId = $('#userId').val();
-			
-			/*
-			console.log("사용자 아이디 입력 값: " + userId);
-			
-		    var uid = document.getElementById("userId");
-		    var idCfm = /^[a-z0-9]{4,12}$/;
-		    
-		    
-			if (uid.value == "") {
-			alert("아이디를 입력하세요");
-			uid.focus();
-			return false;
-		}
-			
-			// 아이디 대소문자 확인 
-			if (!idCfm.test(uid.value)) {
-				alert("아이디는 4~12자의 영문 소문자와 숫자만 사용 가능합니다");
-				uid.focus();
-				return false;
-			}
-			*/
-			
-			
-			
-			
-			
 			if (userId.value.length < 4) {
 				ok.style.display = "none";
 				error.style.display = "none";
 				return;
 			}
-			
 			
 			$.ajax({
 				url: "${pageContext.request.contextPath}/member/checkId.me",
@@ -252,7 +183,7 @@
 
 <script type="text/javascript">
 
-	function inputIdChk() {
+	/* function inputIdChk() {
 		enrollfrm.idDuplication.value = "idUnCheck";
 		console.log(enrollfrm.idDuplication.value);
 		
@@ -261,7 +192,7 @@
 	function inputIdChk(id) {
 		enrollfrm.idDuplication.value = "idCheck";
 		console.log(enrollfrm.idDuplication.value);
-	}
+	}  */
 
 	function validation() {
 		var uid = document.getElementById("userId");
@@ -274,6 +205,7 @@
 		// phone = phone.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
 		
 		var email = document.getElementById("email");
+		var authKey = document.getElementById("emailAuthKey");
 		var birthday = document.getElementById("birthday");
 		
 		// 정규표현식
@@ -292,10 +224,12 @@
 		// 이메일 
 		var emailCfm = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 		
+		// 인증번호 
+		var authCfm = /^[0-9]{1,6}$/;
+		
 		// 생년월일
 		var birthdayCfm = /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
-		
-		
+
 		
 		// 아이디 확인
 		if (uid.value == "") {
@@ -304,14 +238,13 @@
 			return false;
 		}
 		
-		/* // 아이디 대소문자 확인 
+		// 아이디 대소문자 확인 
 		if (!idCfm.test(uid.value)) {
 			alert("아이디는 4~12자의 영문 소문자와 숫자만 사용 가능합니다");
 			uid.focus();
 			return false;
-		} */
+		}
 		
-		// ID 중복확인 작업중 
 		
 		// 비밀번호 확인 
 		if (pw.value == "") {
@@ -357,13 +290,11 @@
 			alert("휴대폰번호를 입력하세요");
 			phone.focus();
 			return false;
-		} else if (phoneCfm.test(phone)) {
+		} else if (!phoneCfm.test(phone.value)) {
 			alert("휴대폰번호가 올바르지 않습니다");
 			phone.focus();
 			return false;
 		}
-		
-		
 		
 		// 이메일 주소 확인 
 		if (email.value == "") {
@@ -373,6 +304,13 @@
 		} else if (!emailCfm.test(email.value)) {
 			alert("잘못된 이메일 형식입니다");
 			email.focus();
+			return false;
+		}
+		
+		// 인증번호 확인
+		if($('#emailAuth').val() != authKey.value) {
+			alert("인증번호가 일치하지 않습니다.");
+			emailAuth.focus();
 			return false;
 		}
 		
@@ -386,27 +324,48 @@
 			birthday.focus();
 			return false;
 		}
-		
-		if (enrollfrm.idDuplication.value != "idCheck") {
-		    alert("아이디 중복 확인이 필요합니다");
-		    return;
-		  }
-		
-		
-		
-		
-		/* 
-			- 입력 텍스트 font-size 조절 예정
-		*/
-		
-		
 		document.enrollfrm.submit();
-		
 	}
-
-
-
-
+	
+	var code = ""; 		/*	인증번호 저장할 곳	 */
+	$('#emlChk').click(function() {
+		var email = $('#email').val();   /* 입력한 이메일 */
+		console.log('완성된 이메일 : ' + email);		/* 이메일 오는지 확인 */
+		var emailAuth = $('.emailAuth')		/* 인증번호 입력 */
+		
+		 var regExp = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.[a-zA-Z]{2,4}$/;
+		 
+		  if(!regExp.test(email)){
+		    alert("이메일 주소를 입력하세요!");
+		    return false;
+		  }
+			$.ajax({
+				type: 'GET',
+				url: '${pageContext.request.contextPath}/member/mailCheck.me?email=' + email,	/* url을 통해 데이터를 보낼 수 있도록 GET방식, url명을 "mailCheck"로 지정 */
+				success: function(data) {
+					console.log("인증번호 : " + data);
+					$('input[name=emailAuthKey]').attr('value', data);
+					emailAuth.attr('disabled', false);		/* 데이터가 성공적으로 들어오면 인증번호 입력란이 활성화되도록 */
+					code = data;
+					alert('인증번호가 전송되었습니다.')
+					return true;
+				},
+			});
+		});
+		
+	$('#emlChk2').click(function() {
+		var inputCode = $('#emailAuth').val();
+		var checkResult = $("#emailAuth");
+		var authKey = document.getElementById("emailAuthKey");
+		
+		if($('#emailAuth').val() != authKey.value) {
+			alert("인증번호가 일치하지 않습니다.");
+			return false;
+		} else if($('#emailAuth').val() == authKey.value) {
+			alert("인증번호가 일치합니다.");
+			return true;
+		}
+	});
 </script>
 
 

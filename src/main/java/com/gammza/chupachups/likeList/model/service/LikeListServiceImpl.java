@@ -1,5 +1,6 @@
 package com.gammza.chupachups.likeList.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -33,5 +34,20 @@ public class LikeListServiceImpl implements LikeListService {
 	@Override
 	public List<Zzim> selectZzim(int gongguNo) {
 		return likeListDao.selectZzim(gongguNo);
+	}
+
+	@Override
+	public Zzim selectMyZzim(HashMap<String, String> map) {
+		return likeListDao.selectMyZzim(map);
+	}
+
+	@Override
+	public int insertLikeList(HashMap<String, String> map) {
+		return likeListDao.insertLikeList(map);
+	}
+
+	@Override
+	public int selectZzimNo() {
+		return likeListDao.selectZzimNo();
 	}
 }

@@ -30,8 +30,8 @@
     line-height: 50px;
     border-radius: 20px;
     transition: all 0.2s ;
-    background: rgb(200 200 200);;
-    border:solid 1px rgb(200 200 200);;
+    background: rgb(200 200 200);
+    border:solid 1px rgb(200 200 200);
     color:white;
     font-weight:bold;
 }
