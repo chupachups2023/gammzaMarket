@@ -1,7 +1,9 @@
 package com.gammza.chupachups.member.model.service;
 
 import java.util.HashMap;
+import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -111,6 +113,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int selectProceedingGonggu(String userId) {
 		return memberDao.selectProceedingGonggu(userId);
+	}
+
+	@Override
+	public int selectTotalRecord() {
+		return memberDao.selectTotalRecord();
+	}
+
+	@Override
+	public List<Member> selectMemberList(RowBounds rowBounds) {
+		return memberDao.selectMemberList(rowBounds);
 	}
 
 }
