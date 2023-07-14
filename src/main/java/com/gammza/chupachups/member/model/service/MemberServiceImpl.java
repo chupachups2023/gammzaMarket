@@ -125,4 +125,9 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectMemberList(rowBounds);
 	}
 
+	@Override
+	public int updateMember_Ad(Member member) {
+		return memberDao.updateMember_Ad(member);
+	}
+
 }

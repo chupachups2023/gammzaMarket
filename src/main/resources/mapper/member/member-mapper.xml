@@ -80,7 +80,23 @@
 		set user_pwd = #{userPwd},
 			email = #{email},
 			phone = #{phone},
-			birthday = #{birthday}
+			birthday = #{birthday},
+			update_at = SYSDATE
+		where user_id = #{userId}
+	</update>
+	<update id="updateMember_Ad">
+		update member
+		set user_id = #{newUserId},
+			user_pwd = #{userPwd},
+			name = #{name},
+			email = #{email},
+			phone = #{phone},
+			point = #{point},
+			temperature = #{temperature},
+			kakao_idkey = #{kakaoIdkey},
+			naver_idkey = #{naverIdkey},
+			birthday = #{birthday},
+			update_at = SYSDATE
 		where user_id = #{userId}
 	</update>
 	<!-- 탈퇴상태로 돌리기 -->	 	

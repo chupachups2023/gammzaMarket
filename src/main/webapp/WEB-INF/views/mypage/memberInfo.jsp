@@ -117,7 +117,7 @@
 
 <div id="infoBtn">
 	<button type="button" class="bo" onclick="updateMember();">회원정보 수정</button>&emsp;
-	<button type="previous" class="bo">뒤로가기</button>&emsp;
+	<button type="button" class="bo" onclick="location.href='${pageContext.request.contextPath}/mypage/mypageMain.me'">뒤로가기</button>&emsp;
 	<button type="button" class="bo" onclick="deleteUser();">탈퇴하기</button>
 </div>
 </form>

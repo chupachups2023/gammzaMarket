@@ -51,4 +51,6 @@ public interface MemberDao {
 
 	List<Member> selectMemberList(RowBounds rowBounds);
 
+	int updateMember_Ad(Member member);
+
 }
