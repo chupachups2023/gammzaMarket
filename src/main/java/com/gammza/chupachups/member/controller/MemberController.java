@@ -2,6 +2,7 @@
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -9,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -16,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,14 +28,22 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.gammza.chupachups.common.model.vo.PageInfo;
+import com.gammza.chupachups.common.template.Pagination;
+import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 import com.gammza.chupachups.member.model.service.MemberService;
 import com.gammza.chupachups.member.model.vo.Member;
+import com.gammza.chupachups.review.model.service.ReviewService;
+import com.gammza.chupachups.review.model.vo.Review;
 
 @Controller
 @RequestMapping("/member")
 @SessionAttributes({"loginMember"})
 
 public class MemberController {
+	
+	@Autowired
+	private ReviewService reviewService; 
 	
 	@Autowired
 	private MemberService memberService;
@@ -193,14 +204,11 @@ public class MemberController {
 	}
 	
 	@GetMapping("/changeStatus.do")
-	public String changeStatus(HttpSession session, RedirectAttributes redirectAtt, SessionStatus status) {
-		Member member = (Member) session.getAttribute("loginMember");
+	public String changeStatus(@ModelAttribute("loginMember") Member member, RedirectAttributes redirectAtt, SessionStatus status) {
 		String userId = member.getUserId();
 		int result1 = memberService.selectProceedingGonggu(userId);
-		System.out.println(result1);
 		
 		if(result1 == 0) {
-			member.setStatus(0);
 			int result2 = memberService.changeStatus(userId);
 			if(result2 > 0) {
 				status.setComplete();
@@ -215,21 +223,32 @@ public class MemberController {
 		}
 	}	
 	
-	@PostMapping("/checkPwd.do")
-	public void checkPwd(@RequestParam String insertPwd, HttpSession session, HttpServletResponse response, RedirectAttributes redirectAtt) throws ServletException, IOException{
-		Member loginMember = (Member) session.getAttribute("loginMember");
-		String userId = loginMember.getUserId();
-		Member member = memberService.selectOneMember(userId);
+	@GetMapping("/changeStatus_Ad.do")
+	public String changeStatus_Ad(@RequestParam String userId, @RequestParam int nowPage, RedirectAttributes redirectAtt) {
+		int result1 = memberService.selectProceedingGonggu(userId);
 		
+		if(result1 == 0) {
+			int result2 = memberService.changeStatus(userId);
+			if(result2 > 0) {
+				redirectAtt.addFlashAttribute("msg", "회원 탈퇴 성공");
+			} else {
+				redirectAtt.addFlashAttribute("msg", "회원정보 탈퇴 실패, 다시 시도해주세요");
+			}
+			return "redirect:/member/memberList.do?nowPage="+nowPage;
+		}else {
+			redirectAtt.addFlashAttribute("msg", "진행중인 공구가 있습니다");
+			return "redirect:/member/memberList.do?nowPage="+nowPage;
+		}
+	}
+	
+	@PostMapping("/checkPwd.do")
+	public void checkPwd(@RequestParam String insertPwd, @ModelAttribute("loginMember") Member member, HttpServletResponse response, RedirectAttributes redirectAtt) throws ServletException, IOException{
 		boolean result = passwordEncoder.matches(insertPwd, member.getUserPwd());
 		response.getWriter().print(result);
 	}
 	
 	@GetMapping("/memberInfo.me")
-	public String memberInfo(Model model, HttpSession session) { 
-		Member loginMember = (Member) session.getAttribute("loginMember");
-		String userId = loginMember.getUserId();
-		Member member = memberService.selectOneMember(userId);
+	public String memberInfo(Model model, @ModelAttribute("loginMember") Member member) { 
 		model.addAttribute("member", member);
 		return "/mypage/memberInfo";
 	}
@@ -422,5 +441,37 @@ public class MemberController {
 		//return "redirect:/";		// String 타입으로 반환 후 반환
 	}
 	
-	
+
+	@GetMapping("/userPf.bo")
+	public String userPf(Model model, HttpServletRequest request, HttpSession hs) {
+		Review review = (Review)hs.getAttribute("review");
+		
+		String userpr = request.getParameter("userPr");
+		String userpp = request.getParameter("userPp");
+		String userpl = request.getParameter("userPl");
+		model.addAttribute("userpr", userpr);
+		model.addAttribute("userpp", userpp);
+		model.addAttribute("userpl", userpl);
+		model.addAttribute("review", review);
+		Member loginmember = memberService.selectOneMember(userpl);
+		model.addAttribute("member", loginmember);
+		System.out.println(userpr +" , " + userpp +" , " + userpl);
+		return "/others/userProfile";
+
+	@GetMapping("/memberList.do")
+	public String memberList(@RequestParam(defaultValue="1") int nowPage, Model model) {
+		int totalRecord = memberService.selectTotalRecord();
+		int limit = 10;
+		int offset = (nowPage -1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		PageInfo pi = Pagination.getPageInfo(totalRecord, nowPage, limit, 5);
+		
+		List<Member> memberList = memberService.selectMemberList(rowBounds);
+		System.out.println(memberList);
+		model.addAttribute("memberList", memberList);
+		model.addAttribute("pi", pi);
+		
+		return "/adminpage/memberList";
+	}
 }
