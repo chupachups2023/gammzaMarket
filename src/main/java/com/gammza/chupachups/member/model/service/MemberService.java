@@ -1,6 +1,9 @@
 package com.gammza.chupachups.member.model.service;
 
 import java.util.HashMap;
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
 
 import com.gammza.chupachups.member.model.vo.Member;
 
@@ -34,6 +37,17 @@ public interface MemberService {
 
 	Member selectOneMemberByEmail(String email);
 
+
 	int updatePwd(Member tempMember);
+
+	int selectProceedingGonggu(String userId);
+
+	int changeStatus(String userId);
+
+	int selectTotalRecord();
+
+	List<Member> selectMemberList(RowBounds rowBounds);
+
+	int updateMember_Ad(Member member);
 
 }

@@ -25,7 +25,7 @@ public class Member {
 	private String email;
 	private LocalDateTime createAt;
 	private LocalDateTime updateAt;
-	private boolean status;
+	private int status;
 	private int point;
 	private double temperature;
 	private long kakaoIdkey;
@@ -35,5 +35,9 @@ public class Member {
 	private String birthday;
 	private String latitude;
 	private String longitude;
-
+	
+	
+	private String createAt2;
+	private String status2;
+	private String newUserId;
 }

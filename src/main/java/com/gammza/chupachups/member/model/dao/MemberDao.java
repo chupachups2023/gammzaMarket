@@ -1,8 +1,10 @@
 package com.gammza.chupachups.member.model.dao;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.session.RowBounds;
 
 import com.gammza.chupachups.member.model.vo.Member;
 
@@ -39,6 +41,17 @@ public interface MemberDao {
 
 	Member selectOneMemberByEmail(String email);
 
+
 	int updatePwd(Member tempMember);
+
+	int changeStatus(String userId);
+
+	int selectProceedingGonggu(String userId);
+
+	int selectTotalRecord();
+
+	List<Member> selectMemberList(RowBounds rowBounds);
+
+	int updateMember_Ad(Member member);
 
 }

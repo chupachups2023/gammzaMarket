@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.gammza.chupachups.gonggu.model.service.GongguService;
 import com.gammza.chupachups.gonggu.model.service.PartiService;
@@ -24,6 +25,7 @@ import com.gammza.chupachups.review.model.vo.Review;
 
 @RequestMapping("/review")
 @Controller
+@SessionAttributes({"review"})
 public class ReviewController {
 	
 	@Autowired
@@ -41,19 +43,19 @@ public class ReviewController {
 		
 		ArrayList<Review> partiReview=new ArrayList<Review>();
 		ArrayList<Review> leaderReview=new ArrayList<Review>();
-		int count=0;
+		int count=-1;
 		for(int i=0;i<recieved.size();i++) {
 			for(int j=0;j<leadedGonggu.size();j++) {
 				if(recieved.get(i).getGongguNo()==leadedGonggu.get(j).getGongguNo()) {
 					leaderReview.add(recieved.get(i));
 					count=-1;
+					break;
 				}else {	count=i;}
 			}
 			if(count==i) {
 				partiReview.add(recieved.get(i));
 			}
 		}
-		
 		model.addAttribute("partiReview", partiReview);
 		model.addAttribute("leaderReview", leaderReview);
 		

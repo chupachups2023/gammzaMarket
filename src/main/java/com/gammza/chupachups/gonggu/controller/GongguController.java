@@ -41,6 +41,7 @@ import com.gammza.chupachups.gonggu.model.service.PartiService;
 import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 import com.gammza.chupachups.gonggu.model.vo.Parti;
 import com.gammza.chupachups.likeList.controller.LikeListController;
+import com.gammza.chupachups.likeList.model.service.LikeListService;
 import com.gammza.chupachups.likeList.model.vo.Zzim;
 import com.gammza.chupachups.location.controller.LocationController;
 import com.gammza.chupachups.location.model.service.LocationService;
@@ -49,7 +50,7 @@ import com.gammza.chupachups.member.model.vo.Member;
 
 @Controller
 @RequestMapping("/gonggu")
-@SessionAttributes({"ggListView"})
+@SessionAttributes({"gonggu"})
 public class GongguController {
 	@Autowired
 	private GongguService gongguService;
@@ -61,6 +62,8 @@ public class GongguController {
 	private LocationController locationController;
 	@Autowired
 	private LikeListController likeListController;
+	@Autowired
+	private LikeListService likeListService;
 	@Autowired
 	private ChatRoomService chatRoomService;
 	@Autowired
@@ -83,14 +86,21 @@ public class GongguController {
 
 	@GetMapping("/ggListView.go")
 	public ModelAndView ggListView(Model model,RedirectAttributes redirectAttr, HttpSession session,
-				@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude) {
+				@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude,
+				@RequestParam(defaultValue="PULLUP_AT") String sort,@RequestParam(defaultValue="1") int end) {
 		Member loginMember=(Member) session.getAttribute("loginMember");
 		ArrayList<Gonggu> ggListView;
 		ModelAndView mav=new ModelAndView();
-		HashMap<String,String> location=new HashMap<String,String>();
-		location.put("longitude", longitude);
-		location.put("latitude", latitude);
-		model.addAttribute("location", location);
+		HashMap<String,String> locationMap=new HashMap<String,String>();
+		locationMap.put("sortby", sort);
+		model.addAttribute("sortByHidden", sort);
+		String endStatus="AND END_STATUS = 1";
+		if(end == 0) {
+			endStatus=" ";
+		}
+		locationMap.put("endStatus", endStatus);
+		model.addAttribute("endStatus", end);
+		
 		if(loginMember !=null) {
 			if(loginMember.getLatitude() == null) {
 				System.out.println(loginMember.getLatitude());
@@ -98,13 +108,11 @@ public class GongguController {
 				mav.setView(new RedirectView("/chupachups/location/location.lo"));
 				return mav;
 			}else {
-				HashMap<String,String> locationMap=new HashMap<String,String>();
 				locationMap.put("longitude", loginMember.getLongitude());
 				locationMap.put("latitude", loginMember.getLatitude());
 				ggListView = gongguService.selectggListView(locationMap);
 			}
 		}else {
-			HashMap<String,String> locationMap=new HashMap<String,String>();
 			locationMap.put("longitude", longitude);
 			locationMap.put("latitude", latitude);
 			ggListView = gongguService.selectggListView(locationMap);
@@ -115,6 +123,7 @@ public class GongguController {
 			ggListView.get(i).setLocationName(locationName);
 			
 		}
+		model.addAttribute("location", locationMap);
 		model.addAttribute("ggListView", ggListView);
 		mav.setViewName("/gonggu/ggListView");
 		
@@ -158,13 +167,14 @@ public class GongguController {
 		 Member loginMember=(Member)session.getAttribute("loginMember");
 		 if(loginMember!=null) {
 			 Zzim myZzim=likeListController.selectMyZzim(gongguNo,loginMember.getUserId());
-			 
 			 if(myZzim !=null) {
 				 model.addAttribute("zzim", myZzim);
 			 }else {
 				 model.addAttribute("zzim", null);
 			 }
 		 }
+		 int zzimCount=likeListService.selectZzim(gongguNo).size();
+		 model.addAttribute("zzimCount", zzimCount);
 		 gongguService.updateGongguCount(gongguNo);
 		 Gonggu gonggu = gongguService.selectOneGonggu(gongguNo);
 		 

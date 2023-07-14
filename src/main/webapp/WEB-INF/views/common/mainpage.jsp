@@ -30,23 +30,11 @@
 							<div class="ggTitle gghover">${list.gongguName}</div>
 						</c:otherwise>
 					</c:choose>
-					<c:choose>
-						<c:when test="${list.endStatus eq 0 }">
-							<div class="gghover when-ggEnd">
-								<div class="ggEnd-tag">마감공구</div>
-							    <b>
-							        <fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" />
-							    </b>
-							</div>
-						</c:when>
-						<c:otherwise>
-							<div class="gghover">
-							    <b>
-							        <fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" />
-							    </b>
-							</div>
-						</c:otherwise>
-					</c:choose>
+					<div class="gghover">
+					    <b>
+						<fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" />
+					    </b>
+					</div>
 					<div class="gghover">
 					    <small>${list.locationName}</small>
 					</div>

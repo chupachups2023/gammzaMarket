@@ -39,7 +39,9 @@ public class RequestController {
 	private ServletContext application;
 	
 	@GetMapping("/requestView.req")
-	public String requestView(@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude, Model model,HttpSession session) {
+	public String requestView(@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude, 
+			Model model,HttpSession session , @RequestParam(defaultValue="recent") String sort) {
+		model.addAttribute("hiddenSort", sort);
 		Member member=(Member)session.getAttribute("loginMember");
 		HashMap<String,String> map=new HashMap<String,String>();
 		if(member != null) {
@@ -49,8 +51,9 @@ public class RequestController {
 			map.put("latitude", latitude);
 			map.put("longitude", longitude);
 		}
-		
+		map.put("sort", sort);
 		ArrayList<Request> requestList=requestService.selectAllRequestList(map);
+		
 		for(int i=0;i<requestList.size();i++) {
 			Request request=requestList.get(i);
 			String regAt=requestService.selectRequestMember(request.getRequestNo()).get(0).getRegAt();
@@ -68,11 +71,17 @@ public class RequestController {
 		Request ggrequest=requestService.selectRequest(requestNo);
 		model.addAttribute("request", ggrequest);
 		
-		ArrayList<RequestMember> reqMember=requestService.selectRequestMember(requestNo);
-		
-		
 		return "/others/requestRead";
 	}
+	
+	@PostMapping("/requestMember.req")
+	public String requestMember(@RequestParam int requestNo, Model model) {
+		ArrayList<RequestMember> reqMember=requestService.selectRequestMember(requestNo);
+		model.addAttribute("reqMember", reqMember);
+		
+		return "jsonView";
+	}
+	
 	@GetMapping("/writeRequest.req")
 	public String writeRequest() {
 		return "/others/writeRequest";

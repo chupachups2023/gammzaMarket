@@ -1,7 +1,9 @@
 package com.gammza.chupachups.member.model.service;
 
 import java.util.HashMap;
+import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -91,6 +93,30 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int updatePwd(Member tempMember) {
 		return memberDao.updatePwd(tempMember);
+
+  @Override
+	public int changeStatus(String userId) {
+		return memberDao.changeStatus(userId);
+	}
+
+	@Override
+	public int selectProceedingGonggu(String userId) {
+		return memberDao.selectProceedingGonggu(userId);
+	}
+
+	@Override
+	public int selectTotalRecord() {
+		return memberDao.selectTotalRecord();
+	}
+
+	@Override
+	public List<Member> selectMemberList(RowBounds rowBounds) {
+		return memberDao.selectMemberList(rowBounds);
+	}
+
+	@Override
+	public int updateMember_Ad(Member member) {
+		return memberDao.updateMember_Ad(member);
 	}
 
 }

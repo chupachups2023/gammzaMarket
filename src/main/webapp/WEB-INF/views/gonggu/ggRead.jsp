@@ -6,51 +6,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggRead.css?<%=System.currentTimeMillis() %>" type="text/css" />
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=44e2b21ec219944c6d834fff124a603d&libraries=services,clusterer"></script>
-<style>
-.modal-report {
-		display:none;
-		}
-.report-bg {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 9999;
-}
-.report-content {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-49%, -50%);
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        z-index: 10000;
-}
-
-#close-report {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background-color: transparent;
-        border: none;
-        font-size: 18px;
-        cursor: pointer;
-}
-#reportContent{
-	resize:none;
-	padding:5px;
-}
-.report-gongguName, #reportWriter{
-	border:none;
-	width:500px;
-	font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
-	font-size:16px
-}
-</style>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="${gonggu.gongguName }" name="title" />
@@ -62,7 +17,7 @@
         <div class="ggRead-title">
             <div class="ggRead-writer ggRead-writer-none">${gonggu.gongguWriter }</div>
             <div class="ggRead-name">${gonggu.gongguName }</div>
-            <div class="ggRead-writer" onclick="">${gonggu.gongguWriter }</div>
+            <div class="ggRead-writer" onclick="location.href='${pageContext.request.contextPath}/member/userPf.bo?userPr=${gonggu.gongguWriter}'">${gonggu.gongguWriter }</div>
         </div>
     </div>
     <hr class="ggRead-hr">
@@ -139,11 +94,19 @@
         <c:choose>
         	<c:when test="${gonggu.gongguWriter eq loginMember.userId}">
        		<div class="ggRead-button">
-	            <a href="${pageContext.request.contextPath}/gonggu/update.go?gongguNo=${gonggu.gongguNo}" class="button">글 수정</a>
-	            <a href="${pageContext.request.contextPath}/gonggu/gongguEnd.go?gongguNo=${gonggu.gongguNo}" class="button">공구 마감하기</a>
+	            <a href="${pageContext.request.contextPath}/gonggu/update.go?gongguNo=${gonggu.gongguNo}" class="button">공구 수정</a>
+	            <a href="${pageContext.request.contextPath}/gonggu/gongguEnd.go?gongguNo=${gonggu.gongguNo}" class="button">공구 마감</a>
 	            <a href="javascript:deleteGonggu();" class="button">공구삭제</a>
 	            <a href="" class="button">채팅하기</a>
 	            <a href="javascript:pullUpGonggu();" class="button">끌올하기</a>
+	            <a href="${pageContext.request.contextPath}/gonggu/checkPartis.pa?gongguNo=${gonggu.gongguNo}" class="button">참여자확인</a>
+        	</div>
+        	</c:when>
+        	<c:when test="${loginMember.userId eq 'admin'}">
+       		<div class="ggRead-button">
+	            <a href="${pageContext.request.contextPath}/gonggu/update.go?gongguNo=${gonggu.gongguNo}" class="button">공구 수정</a>
+	            <a href="${pageContext.request.contextPath}/gonggu/gongguEnd.go?gongguNo=${gonggu.gongguNo}" class="button">공구 마감</a>
+	            <a href="javascript:deleteGonggu();" class="button">공구삭제</a>
 	            <a href="${pageContext.request.contextPath}/gonggu/checkPartis.pa?gongguNo=${gonggu.gongguNo}" class="button">참여자확인</a>
         	</div>
         	</c:when>
@@ -171,7 +134,7 @@
             </c:otherwise>
         </c:choose>
             <div class="ggRead-info">
-                <div>관심 수 <span>${zzimCount }</span> · </div>
+                <div>관심 수 <span id="zzimCount">${zzimCount }</span> · </div>
                 <div>조회 수 <span>${gonggu.count }</span></div>
                 <input type="hidden" value="${gonggu.longitude }" id="longitude">
                 <input type="hidden" value="${gonggu.latitude }" id="latitude">
@@ -184,7 +147,7 @@
 <div class="modal-report" id="report" tabindex="-1">
     <form action="${pageContext.request.contextPath}/report/insertReport.do" method="post" id="reportFrm">
 
-        <div class="report-bg"></div>
+        <div class="report-bg" onclick="closeModal();"></div>
         <div class="report-content" id="report">
             <h2>신고하기</h2>
             <ul class="report-top">
@@ -194,7 +157,7 @@
                 <li class="report-input modal-footer"><input type="button" class="report-btn button" value="신고하기" id="report-modal"></li>
             </ul>
             <br>
-            <button type="button" id="close-report">취소</button>
+            <button type="button" id="close-report" onclick="closeModal();">취소</button>
         </div>
         <input type="hidden" id="gongguNo" name="gongguNo" value="${gonggu.gongguNo}" />
     </form>
@@ -259,14 +222,13 @@ openReportBtn.addEventListener("click", () => {
 	
 });
 // 모달창 닫기
-closeReportBtn.addEventListener("click", () => {
+function closeModal() {
 	report.style.display = "none";
 	document.body.style.overflow = "auto"; 
-});
+}
 // 모달창 닫기
 reportModalBtn.addEventListener("click", () => {
-	report.style.display = "none";
-	document.body.style.overflow = "auto";
+	closeModal();
 	reportFrm.submit();
 });
 pzlogin.addEventListener("click", () => {
@@ -288,8 +250,8 @@ function pullUpGonggu(){
 		return
 	}
 }
-	
 function addZzim(){
+	let zzimC=document.getElementById("zzimCount");
 	const gongguNo="${gonggu.gongguNo}";
 	const userId="${loginMember.userId}";
 	if(userId == "" || userId == null){
@@ -304,6 +266,7 @@ function addZzim(){
 	       		zzimNo=result;
 	       		$("#emptyzzim").css("display","none");
 	       		$("#fullzzim").css("display","block");
+	       		zzimC.innerHTML=zzimC.innerHTML*1+1;
 	       	},
 	       	error:function(){
 	       		console.log("찜추가 에러");
@@ -312,6 +275,7 @@ function addZzim(){
 	}
 }
 function deleteZzim(){
+	let zzimC=document.getElementById("zzimCount");
 	const gongguNo="${gonggu.gongguNo}";
 	$.ajax({
        	type:"get",
@@ -320,6 +284,7 @@ function deleteZzim(){
        	success:function(data){
        		$("#fullzzim").css("display","none");
        		$("#emptyzzim").css("display","block");
+       		zzimC.innerHTML=zzimC.innerHTML-1;
        	},
     	error:function(){
        		console.log("찜삭제 에러");

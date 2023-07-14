@@ -63,7 +63,7 @@
     <div class="ggRead-btn">
         <div class="ggRead-title-right">
         	<div>조회 수 <span>${request.count }</span></div>
-            <div><img src="https://cdn-icons-png.flaticon.com/512/2089/2089736.png" alt="share"></div>
+            <div><img src="https://cdn-icons-png.flaticon.com/512/2089/2089736.png" alt="share" onclick="clip();"></div>
         </div>
         <c:choose>
         	<c:when test="${request.requestWriter eq loginMember.userId}">
@@ -93,55 +93,49 @@
 const longitude= "${request.longitude}";
 const latitude= "${request.latitude}";
 
-let reqMem="${reqMember}";
-let reqMemberLocation=[];
-let reqMemArr=reqMem.replace("[","").replace("]","").split("RequestMember");
-
-for(let i=1;i<reqMemArr.length;i++){
-	
-	let arr1=reqMemArr[i].split(",");
-	let lat=arr1[3].split("=");
-	let arr2=reqMemArr[i].split(",");
-	let lon=arr2[4].split("=");
-	
-	reqMemberLocation.push({"latitude":lat[1],"longitude":lon[1]});
-}
-
- $.ajax({
-	type:"get",
-	url:"https://dapi.kakao.com/v2/local/geo/coord2address.json?x="+longitude+"&y="+latitude+"&input_coord=WGS84",
-	beforeSend: function (header) {
-		header.setRequestHeader("Authorization","KakaoAK 840539f3651afe19f12cc19a1dc9e0ab");
-    },
-    success:function(result){
-    	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-    	var options = { //지도를 생성할 때 필요한 기본 옵션
-    		center: new kakao.maps.LatLng(latitude, longitude), //지도의 중심좌표.
-    		level: 6 //지도의 레벨(확대, 축소 정도);
-    		
-    	};
-    	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-    	
-    	var markerPosition  = new kakao.maps.LatLng(latitude, longitude);
-    	var marker = new kakao.maps.Marker({
-    	    position: markerPosition
-    	});
-    	marker.setMap(map);
-    	
-    	for(let i=0;i<reqMemberLocation.length;i++){
-	    	var markerPosition  = new kakao.maps.LatLng(reqMemberLocation[i].latitude, reqMemberLocation[i].longitude); 
-	
-	    	var marker = new kakao.maps.Marker({
-	    	    position: markerPosition
-	    	});
-	
-	    	marker.setMap(map);
-    	}
-    },
-    error:function(){
-    	console.log("실패");
-    }
+$.ajax({
+	url:"${pageContext.request.contextPath}/ggRequest/requestMember.req",
+	type:"post",
+	data:{"requestNo" : "${request.requestNo}"},
+	success:function(result){
+		const reqMember=result.reqMember;
+		console.log(reqMember[0].longitude)
+		
+		 $.ajax({
+			type:"get",
+			url:"https://dapi.kakao.com/v2/local/geo/coord2address.json?x="+longitude+"&y="+latitude+"&input_coord=WGS84",
+			beforeSend: function (header) {
+				header.setRequestHeader("Authorization","KakaoAK 840539f3651afe19f12cc19a1dc9e0ab");
+		    },
+		    success:function(result){
+		    	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+		    	var options = { //지도를 생성할 때 필요한 기본 옵션
+		    		center: new kakao.maps.LatLng(latitude, longitude), //지도의 중심좌표.
+		    		level: 6 //지도의 레벨(확대, 축소 정도);
+	    		};
+		    	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+		    	
+		    	for(let i=0;i<reqMember.length;i++){
+			    	var markerPosition  = new kakao.maps.LatLng(reqMember[i].latitude, reqMember[i].longitude); 
+			
+			    	var marker = new kakao.maps.Marker({
+			    	    position: markerPosition
+			    	});
+			
+			    	marker.setMap(map);
+		    	}
+		    },
+		    error:function(){
+		    	console.log("실패");
+		    }
+		});
+	},
+	error:function(){
+		console.log("에러")
+	}
 });
+
+
 function enrollRequest(){
 	const loginMember="${loginMember.userId}";
 	if(loginMember=="" || loginMember == null){
@@ -161,7 +155,22 @@ function deleteReq(){
 		return
 	}
 }
- 
+
+function clip(){
+
+    var url = '';    // <a>태그에서 호출한 함수인 clip 생성
+    var textarea = document.createElement("textarea");  
+    //url 변수 생성 후, textarea라는 변수에 textarea의 요소를 생성
+    
+    document.body.appendChild(textarea); //</body> 바로 위에 textarea를 추가(임시 공간이라 위치는 상관 없음)
+    url = window.document.location.href;  //url에는 현재 주소값을 넣어줌
+    textarea.value = url;  // textarea 값에 url를 넣어줌
+    textarea.select();  //textarea를 설정
+    document.execCommand("copy");   // 복사
+    document.body.removeChild(textarea); //extarea 요소를 없애줌
+    
+    alert("주소가 복사되었습니다.")  // 알림창
+}
  
 </script>
 

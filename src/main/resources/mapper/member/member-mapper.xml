@@ -28,7 +28,7 @@
 	  )
 	</insert>
 
-	<insert id="insertKakaoMember">
+<!-- 	<insert id="insertKakaoMember">
 		insert into member(user_id, user_pwd, name, phone, email, create_at, status, point, temperature, kakao_idkey)
 		values(
 		'kakao',
@@ -58,11 +58,11 @@
 		default,
 		#{naverIdkey}
 	)
-	</insert>
+	</insert> -->
 	
-	<insert id="insertNaverIdkey">
+<!-- 	<insert id="insertNaverIdkey">
 		insert into member(naver_idkey) values(#{naverIdkey})
-	</insert>
+	</insert> -->
 
 	<update id="updateKakaoIdkey">
 		update member
@@ -74,6 +74,41 @@
 		set naver_idkey=#{naverIdkey}
 		where user_id=#{userId}
 	</update>
+	
+	<update id="updateMember">
+		update member
+		set user_pwd = #{userPwd},
+			email = #{email},
+			phone = #{phone},
+			birthday = #{birthday},
+			update_at = SYSDATE
+		where user_id = #{userId}
+	</update>
+	<update id="updateMember_Ad">
+		update member
+		set user_id = #{newUserId},
+			user_pwd = #{userPwd},
+			name = #{name},
+			email = #{email},
+			phone = #{phone},
+			point = #{point},
+			temperature = #{temperature},
+			kakao_idkey = #{kakaoIdkey},
+			naver_idkey = #{naverIdkey},
+			birthday = #{birthday},
+			update_at = SYSDATE
+		where user_id = #{userId}
+	</update>
+	<!-- 탈퇴상태로 돌리기 -->	 	
+ 	<update id="changeStatus">
+		update member
+		set status = 0,
+			update_at = SYSDATE,
+			kakao_idkey = null,
+			naver_idkey = null
+		where user_id = #{userId}
+	</update>
+	
  
  	<!-- 카카오 아이디키 검색 -->
  	<select id="selectMemberByKakao" resultMap ="memberMap">
@@ -112,6 +147,26 @@
  		select * from member
  		where email = #{email}
  	</select>
+ 	
+ 	<!-- 탈퇴전 진행중인 공구확인 -->
+ 	<select id="selectProceedingGonggu" resultType="_int">
+		select count(*) from gonggu
+		where gonggu_writer = #{userId} and end_status = 1
+	</select>
+	
+	<select id="selectTotalRecord" resultType="_int">
+		select count(*)
+		from member
+	</select>
+	
+	<!-- 관리자 회원관리 리스트 -->
+	<select id="selectMemberList" resultMap="memberMap">
+		select user_id, temperature, substr(create_at, 0, 10) "create_at2", replace(replace(status,0,'탈퇴'),1,'활동') "status2"
+		from member
+		order by create_at desc
+	</select>
+	
+	
  	
  	<!-- 비밀번호 변경 -->
  	<update id="updatePwd">

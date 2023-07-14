@@ -61,7 +61,7 @@
 			</div>
 			<div class="header-searchbox">
 				<img src="${pageContext.request.contextPath}/resources/img/header/search.png" alt="" class="header-searchicon" onclick="fn_srchGgLst();"> 
-				<input type="text" class="header-search" value="${keyword }" name="gongguName" id="gongguName" onkeyup="enterEvent(event);">
+				<input type="text" class="header-search" value="${keyword }" name="gongguName" id="gongguName" onkeyup="searchEnterEvent(event);">
 			</div>
 		</div>
 		<div class="category-drop">
@@ -84,20 +84,17 @@
 		<div class="modal" tabindex="-1" id="modal">
 			<div class="modal-dialog">
 
-				<!-- <div class="modal-header">
-					<h5 class="modal-title">로그인</h5>
-				</div> -->
-				<form action="${pageContext.request.contextPath}/member/memberLogin.me" method="post" id="loginFrm">
+				<form action="${pageContext.request.contextPath}/member/memberLogin.me" method="post" id="loginFrm" name="loginFrm">
 					<div class="modal-login">
-						<div class="modal-bg"></div>
+						<div class="modal-bg" onclick="loginModalClose();"></div>
 						<div class="modal-content">
 							<h2>로그인</h2>
 							<ul class="login-top">
 								<li class="login-info">
-									<input type="text" placeholder="아이디 입력" name="userId">
+									<input type="text" placeholder="아이디 입력" name="userId"  onkeyup="loginEnterEvent(event);">
 								</li>
 								<li class="login-info">
-									<input type="password" placeholder="비밀번호 입력" name="userPwd">
+									<input type="password" placeholder="비밀번호 입력" name="userPwd"  onkeyup="loginEnterEvent(event);">
 								</li>
 								<li class="login-chkbox">
 									<input type="checkbox" id="chk1">
@@ -127,7 +124,7 @@
 											</a> 
 									</ul>
 									<br>
-									<a id="close-modal" class="modal-closeBtn">닫기</a>
+									<a id="close-modal" class="modal-closeBtn" onclick="loginModalClose();">닫기</a>
 									<!-- <button type="button" id="close-modal">임시닫기버튼</button> -->
 								</div>
 							</div>
@@ -164,9 +161,14 @@
 	    navigator.geolocation.getCurrentPosition(success);
 	};
 	
-	function enterEvent(e){
+	function searchEnterEvent(e){
 		if(e.keyCode==13){
 			fn_srchGgLst();
+		}
+	}
+	function loginEnterEvent(e){
+		if(e.keyCode==13){
+			loginFrm.submit();
 		}
 	}
 	
@@ -180,47 +182,26 @@
 		document.body.style.overflow = "hidden"; // 스크롤바 제거
 	});
 	// 모달창 닫기
-	closeModalBtn.addEventListener("click", () => {
+	function loginModalClose(){
 		modal.style.display = "none";
 		document.body.style.overflow = "auto"; // 스크롤바 보이기
-	});
+	}
 	// 모달창 닫기
 	loginModalBtn.addEventListener("click", () => {
-		modal.style.display = "none";
-		document.body.style.overflow = "auto"; // 스크롤바 보이기
+		loginModalClose();
 		loginFrm.submit();
 	});
 	
 	function fn_srchGgLst() {
 		var gongguName = document.getElementById('gongguName').value;
 		
-		const modal = document.getElementById("modal");
-		const openModalBtn = document.getElementById("open-modal");
-		const closeModalBtn = document.getElementById("close-modal");
-		const loginModalBtn = document.getElementById("login-modal");
-		// 모달창 열기
-		openModalBtn.addEventListener("click", () => {
-			modal.style.display = "block";
-			document.body.style.overflow = "hidden"; // 스크롤바 제거
-		});
-		// 모달창 닫기
-		closeModalBtn.addEventListener("click", () => {
-			modal.style.display = "none";
-			document.body.style.overflow = "auto"; // 스크롤바 보이기
-		});
-		// 모달창 닫기
-		loginModalBtn.addEventListener("click", () => {
-			modal.style.display = "none";
-			document.body.style.overflow = "auto"; // 스크롤바 보이기
-			loginFrm.submit();
-		});
-		
 		 function fn_srchGgLst() {
-	            var gongguName = document.getElementById('gongguName').value;
-	            
-	            var url = '${pageContext.request.contextPath}/gonggu/ggSearch.go?gongguName=' + encodeURIComponent(gongguName);
-	            location.href = url;
-	        }
+            var gongguName = document.getElementById('gongguName').value;
+            
+            var url = '${pageContext.request.contextPath}/gonggu/ggSearch.go?gongguName=' + encodeURIComponent(gongguName);
+            location.href = url;
+        }
+		 
 		var url = '${pageContext.request.contextPath}/gonggu/ggSearch.go?gongguName=' + encodeURIComponent(gongguName);
 		const memLong="${loginMember.longitude}";
 	    
@@ -261,4 +242,4 @@
 		
 	    </script>
 	</header>
-	<section>
+	<section id='wrapper-whole-section'>
