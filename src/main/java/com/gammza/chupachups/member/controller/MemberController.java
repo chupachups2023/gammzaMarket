@@ -7,6 +7,7 @@ import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -30,7 +31,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gammza.chupachups.common.model.vo.PageInfo;
 import com.gammza.chupachups.common.template.Pagination;
-import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 import com.gammza.chupachups.member.model.service.MemberService;
 import com.gammza.chupachups.member.model.vo.Member;
 import com.gammza.chupachups.review.model.service.ReviewService;
@@ -457,6 +457,7 @@ public class MemberController {
 		model.addAttribute("member", loginmember);
 		System.out.println(userpr +" , " + userpp +" , " + userpl);
 		return "/others/userProfile";
+	}
 
 	@GetMapping("/memberList.do")
 	public String memberList(@RequestParam(defaultValue="1") int nowPage, Model model) {
