@@ -3,12 +3,13 @@
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Random;
-import javax.mail.MessagingException;
+
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -23,18 +24,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 import com.gammza.chupachups.member.model.service.MemberService;
 import com.gammza.chupachups.member.model.vo.Member;
+import com.gammza.chupachups.review.model.service.ReviewService;
+import com.gammza.chupachups.review.model.vo.Review;
 
 @Controller
 @RequestMapping("/member")
 @SessionAttributes({"loginMember"})
 
 public class MemberController {
+	
+	@Autowired
+	private ReviewService reviewService; 
 	
 	@Autowired
 	private MemberService memberService;
@@ -424,5 +428,20 @@ public class MemberController {
 		//return "redirect:/";		// String 타입으로 반환 후 반환
 	}
 	
-	
+	@GetMapping("/userPf.bo")
+	public String userPf(Model model, HttpServletRequest request, HttpSession hs) {
+		Review review = (Review)hs.getAttribute("review");
+		
+		String userpr = request.getParameter("userPr");
+		String userpp = request.getParameter("userPp");
+		String userpl = request.getParameter("userPl");
+		model.addAttribute("userpr", userpr);
+		model.addAttribute("userpp", userpp);
+		model.addAttribute("userpl", userpl);
+		model.addAttribute("review", review);
+		Member loginmember = memberService.selectOneMember(userpl);
+		model.addAttribute("member", loginmember);
+		System.out.println(userpr +" , " + userpp +" , " + userpl);
+		return "/others/userProfile";
+	}
 }
