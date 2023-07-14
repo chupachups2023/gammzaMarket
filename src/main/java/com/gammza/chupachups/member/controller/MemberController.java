@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -195,8 +196,7 @@ public class MemberController {
 	}
 	
 	@GetMapping("/changeStatus.do")
-	public String changeStatus(HttpSession session, RedirectAttributes redirectAtt, SessionStatus status) {
-		Member member = (Member) session.getAttribute("loginMember");
+	public String changeStatus(@ModelAttribute("loginMember") Member member, RedirectAttributes redirectAtt, SessionStatus status) {
 		String userId = member.getUserId();
 		int result1 = memberService.selectProceedingGonggu(userId);
 		System.out.println(result1);
@@ -218,20 +218,13 @@ public class MemberController {
 	}	
 	
 	@PostMapping("/checkPwd.do")
-	public void checkPwd(@RequestParam String insertPwd, HttpSession session, HttpServletResponse response, RedirectAttributes redirectAtt) throws ServletException, IOException{
-		Member loginMember = (Member) session.getAttribute("loginMember");
-		String userId = loginMember.getUserId();
-		Member member = memberService.selectOneMember(userId);
-		
+	public void checkPwd(@RequestParam String insertPwd, @ModelAttribute("loginMember") Member member, HttpServletResponse response, RedirectAttributes redirectAtt) throws ServletException, IOException{
 		boolean result = passwordEncoder.matches(insertPwd, member.getUserPwd());
 		response.getWriter().print(result);
 	}
 	
 	@GetMapping("/memberInfo.me")
-	public String memberInfo(Model model, HttpSession session) { 
-		Member loginMember = (Member) session.getAttribute("loginMember");
-		String userId = loginMember.getUserId();
-		Member member = memberService.selectOneMember(userId);
+	public String memberInfo(Model model, @ModelAttribute("loginMember") Member member) { 
 		model.addAttribute("member", member);
 		return "/mypage/memberInfo";
 	}
