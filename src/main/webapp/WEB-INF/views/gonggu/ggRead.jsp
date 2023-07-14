@@ -6,51 +6,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gonggu/ggRead.css?<%=System.currentTimeMillis() %>" type="text/css" />
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=44e2b21ec219944c6d834fff124a603d&libraries=services,clusterer"></script>
-<style>
-.modal-report {
-		display:none;
-		}
-.report-bg {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 9999;
-}
-.report-content {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-49%, -50%);
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        z-index: 10000;
-}
-
-#close-report {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background-color: transparent;
-        border: none;
-        font-size: 18px;
-        cursor: pointer;
-}
-#reportContent{
-	resize:none;
-	padding:5px;
-}
-.report-gongguName, #reportWriter{
-	border:none;
-	width:500px;
-	font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
-	font-size:16px
-}
-</style>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="${gonggu.gongguName }" name="title" />
@@ -184,7 +139,7 @@
 <div class="modal-report" id="report" tabindex="-1">
     <form action="${pageContext.request.contextPath}/report/insertReport.do" method="post" id="reportFrm">
 
-        <div class="report-bg"></div>
+        <div class="report-bg" onclick="closeModal();"></div>
         <div class="report-content" id="report">
             <h2>신고하기</h2>
             <ul class="report-top">
@@ -194,7 +149,7 @@
                 <li class="report-input modal-footer"><input type="button" class="report-btn button" value="신고하기" id="report-modal"></li>
             </ul>
             <br>
-            <button type="button" id="close-report">취소</button>
+            <button type="button" id="close-report" onclick="closeModal();">취소</button>
         </div>
         <input type="hidden" id="gongguNo" name="gongguNo" value="${gonggu.gongguNo}" />
     </form>
@@ -259,14 +214,13 @@ openReportBtn.addEventListener("click", () => {
 	
 });
 // 모달창 닫기
-closeReportBtn.addEventListener("click", () => {
+function closeModal() {
 	report.style.display = "none";
 	document.body.style.overflow = "auto"; 
-});
+}
 // 모달창 닫기
 reportModalBtn.addEventListener("click", () => {
-	report.style.display = "none";
-	document.body.style.overflow = "auto";
+	closeModal();
 	reportFrm.submit();
 });
 pzlogin.addEventListener("click", () => {

@@ -87,10 +87,8 @@ public class GongguController {
 		Member loginMember=(Member) session.getAttribute("loginMember");
 		ArrayList<Gonggu> ggListView;
 		ModelAndView mav=new ModelAndView();
-		HashMap<String,String> location=new HashMap<String,String>();
-		location.put("longitude", longitude);
-		location.put("latitude", latitude);
-		model.addAttribute("location", location);
+		HashMap<String,String> locationMap=new HashMap<String,String>();
+		
 		if(loginMember !=null) {
 			if(loginMember.getLatitude() == null) {
 				System.out.println(loginMember.getLatitude());
@@ -98,13 +96,11 @@ public class GongguController {
 				mav.setView(new RedirectView("/chupachups/location/location.lo"));
 				return mav;
 			}else {
-				HashMap<String,String> locationMap=new HashMap<String,String>();
 				locationMap.put("longitude", loginMember.getLongitude());
 				locationMap.put("latitude", loginMember.getLatitude());
 				ggListView = gongguService.selectggListView(locationMap);
 			}
 		}else {
-			HashMap<String,String> locationMap=new HashMap<String,String>();
 			locationMap.put("longitude", longitude);
 			locationMap.put("latitude", latitude);
 			ggListView = gongguService.selectggListView(locationMap);
@@ -115,6 +111,7 @@ public class GongguController {
 			ggListView.get(i).setLocationName(locationName);
 			
 		}
+		model.addAttribute("location", locationMap);
 		model.addAttribute("ggListView", ggListView);
 		mav.setViewName("/gonggu/ggListView");
 		

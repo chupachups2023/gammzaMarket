@@ -21,48 +21,12 @@
 </style>
 
 <div class="allGGList">
-    <div id="reviewCategory">
+    <div class="reviewCategory">
         <button class="btn reviewBtn readerR" onclick="showLeader();">총대로 받은 리뷰</button>&emsp;&emsp;
         <button class="btn reviewBtn particR" onclick="showParti();">참가자로 받은 리뷰</button>
     </div>
 
     <br><br><br>
-   <table class="allGGListTable" id="partiReview">
-                <c:if test="${empty partiReview }">
-                <tr>
-                	<td colspan="5">공구에 참여해서 받은 리뷰가 아직 없습니다.</td>
-                </tr>
-                </c:if>
-        <c:forEach items="${partiReview }" var="plist" varStatus="i">
-            <tr class="allGGt" >
-                <td width="10%">${plist.reviewNo }</td>
-                <td width="20%">
-                <c:if test="${fn:length(plist.gongguName) gt 10}">
-                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${plist.gongguNo }'">${fn:substring(plist.gongguName, 0, 10)}⋯</div>
-                </c:if>
-                <c:if test="${fn:length(plist.gongguName) le 10}">
-                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${plist.gongguNo }'">${fn:substring(plist.gongguName, 0, 10)}</div>
-                </c:if>
-                	${plist.reviewWriter }
-                </td>
-                
-                <td width="35%">
-                	<div class="reviewContent" onclick="reviewDetailModal(${plist.reviewNo});"><pre>${plist.reviewContent }</pre></div>
-                </td>
-                <td width="20%"><div class="reviewRate">점수: 
-                <c:forEach begin="1" end="${plist.rate }">
-					<span class="star">★</span>
-                </c:forEach>
-                <c:forEach begin="${plist.rate+1 }" end="5">
-					<span class="emptystar">★</span>
-                </c:forEach>
-				</div></td>
-                <fmt:parseDate value="${plist.reviewDate }" var="reviewDate" pattern="yyyy-MM-dd"/>
-                <td width="15%"><small><fmt:formatDate value="${reviewDate }" pattern="yyyy년 MM월 dd일"/></small></td>
-            </tr>
-        </c:forEach>
-   </table>
-
     <table class="allGGListTable" id="leaderReview">
         <c:if test="${empty leaderReview }">
         <tr>
@@ -73,30 +37,67 @@
             <tr class="allGGt" >
                 <td width="10%">${lList.reviewNo }</td>
                 <td width="20%">
-                <c:if test="${fn:length(lList.gongguName) gt 10}">
-                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${lList.gongguNo }'">${fn:substring(lList.gongguName, 0, 10)}⋯</div>
-                </c:if>
-                <c:if test="${fn:length(lList.gongguName) le 10}">
-                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${lList.gongguNo }'">${fn:substring(lList.gongguName, 0, 10)}</div>
-                </c:if>
-                	${lList.reviewWriter }
+	                <c:if test="${fn:length(lList.gongguName) gt 10}">
+	                	<a class="gongguName" href="${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${lList.gongguNo }">${fn:substring(lList.gongguName, 0, 10)}⋯</a>
+	                </c:if>
+	                <c:if test="${fn:length(lList.gongguName) le 10}">
+	                	<a class="gongguName" href="${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${lList.gongguNo }">${fn:substring(lList.gongguName, 0, 10)}</a>
+	                </c:if>
+                	<br><a href="">${lList.reviewWriter }</a>
                 </td>
                 <td width="35%">
                 	<div class="reviewContent" onclick="reviewDetailModal(${lList.reviewNo});"><pre>${lList.reviewContent }</pre></div>
                 </td>
                 <td width="20%"><div class="reviewRate">점수:
-                <c:forEach begin="1" end="${lList.rate }">
-					<span class="star">★</span>
-                </c:forEach>
-                <c:forEach begin="${lList.rate+1 }" end="5">
-					<span class="emptystar">★</span>
-                </c:forEach></div></td>
+	                <c:forEach begin="1" end="${lList.rate }">
+						<span class="star">★</span>
+	                </c:forEach>
+	                <c:forEach begin="${lList.rate+1 }" end="5">
+						<span class="emptystar">★</span>
+	                </c:forEach></div>
+                </td>
                 <fmt:parseDate value="${lList.reviewDate }" var="reviewDate" pattern="yyyy-MM-dd"/>
                 <td width="15%"><small><fmt:formatDate value="${reviewDate }" pattern="yyyy년 MM월 dd일"/></small></td>
             </tr>
+		</c:forEach>
+	</table>
+    
+    
+   <table class="allGGListTable" id="partiReview">
+        <c:if test="${empty partiReview }">
+            <tr>
+            	<td colspan="5">공구에 참여해서 받은 리뷰가 아직 없습니다.</td>
+            </tr>
+        </c:if>
+        <c:forEach items="${partiReview }" var="plist" varStatus="i">
+            <tr class="allGGt" >
+                <td width="10%">${plist.reviewNo }</td>
+                <td width="20%">
+	                <c:if test="${fn:length(plist.gongguName) gt 10}">
+	                	<a class="gongguName" href="${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${lList.gongguNo }">${fn:substring(plist.gongguName, 0, 10)}⋯</a>
+	                </c:if>
+	                <c:if test="${fn:length(plist.gongguName) le 10}">
+	                	<a class="gongguName" href="${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${lList.gongguNo }">${fn:substring(plist.gongguName, 0, 10)}</a>
+	                </c:if>
+                	<br><a href="">${plist.reviewWriter }</a>
+                </td>
+                <td width="35%">
+                	<div class="reviewContent" onclick="reviewDetailModal(${plist.reviewNo});"><pre>${plist.reviewContent }</pre></div>
+                </td>
+                <td width="20%"><div class="reviewRate">점수: 
+	                <c:forEach begin="1" end="${plist.rate }">
+						<span class="star">★</span>
+	                </c:forEach>
+	                <c:forEach begin="${plist.rate+1 }" end="5">
+						<span class="emptystar">★</span>
+	                </c:forEach>
+					</div>
+				</td>
+                	<fmt:parseDate value="${plist.reviewDate }" var="reviewDate" pattern="yyyy-MM-dd"/>
+                <td width="15%"><small><fmt:formatDate value="${reviewDate }" pattern="yyyy년 MM월 dd일"/></small></td>
+            </tr>
         </c:forEach>
-        </table>
-
+   </table>
 
 </div>
 
@@ -106,33 +107,31 @@
 		<!-- 리뷰보기 모달창 -->
 	
 	<div class="modalR" id="reviewDetailModal">
-	  <div class="modalR-dialog">
-	    <div class="modalR-content">
-	      <div class="modalR-header" style="text-align:center;">
-	        <h4 class="modalR-title">리뷰보기</h4>
-	      </div>
-	      <div class="modalR-body">
-				<table class="reviewModal">
-					<tr height="30px">
-						<td width="50%" colspan="2">
-							<b>공구물건 : </b> <span id="reviewGongguName"></span><br>
-						</td>
-					</tr>	
-					<tr height="30px">
-						<td><b>리뷰 작성자 : </b> <span id="reviewWriter"></span></td>
-						<td width="50%"><b>점수 : </b><span id="rate"></span>
-		                </td>
-					</tr>
-					<tr>
-						<td colspan="2"><span id="reviewContent"></span><br></td>
-					</tr>			
-				</table>
-	      </div>
-	      <div class="modalR-footer">
-	        <br><button type="button" class="btn-close" onclick="javascrip:mClose();">닫기</button><br><br>
-	      </div>
-	    </div>
-	  </div>
+		<div class="modal-bg" onclick="mClose()"></div>
+		<div class="modalR-dialog">
+			<div class="modalR-content">
+				<div class="modalR-header" style="text-align:center;"><h4 class="modalR-title">리뷰보기</h4></div>
+				<div class="modalR-body">
+					<table class="reviewModal">
+						<tr height="30px">
+							<td width="50%" colspan="2">
+								<b>공구물건 : </b> <span id="reviewGongguName"></span><br>
+							</td>
+						</tr>	
+						<tr height="30px">
+							<td><b>리뷰 작성자 : </b> <span id="reviewWriter"></span></td>
+							<td width="50%"><b>점수 : </b><span id="rate"></span></td>
+						</tr>
+						<tr>
+							<td colspan="2"><span id="reviewContent"></span><br></td>
+						</tr>			
+					</table>
+				</div>
+				<div class="modalR-footer">
+		        	<button type="button" class="button" onclick="javascrip:mClose();">닫기</button>
+				</div>
+			</div>
+		</div>
 	</div>
 
 <script>
