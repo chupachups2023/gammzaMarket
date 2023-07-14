@@ -10,15 +10,24 @@
 	margin: 20 40 40 40;
 	property: overflow-y, values: auto hidden visible scroll;
 }
+
 .c-List {
 	overflow-y: auto;
 	overflow-x: hidden;
 	visibility: visible;
 	scroll-behavior: smooth;
 }
+
 .msgBox {
-	border: 1px solid;
-	width: 100%
+	border: 0px solid;
+	height: 5%;
+	width: auto;
+	background-color: bisque;
+	border-radius: 7px;
+}
+
+.body {
+	height: 700px;
 }
 </style>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
@@ -43,26 +52,35 @@
 					<c:forEach items="${chatRoomList}" var="chatRoom">
 						<%-- <c:if test="${parti.status eq 1 or chatRoom.roomOwner eq loginMember.userId}"> </c:if>--%>
 						<li class="css-v2yhcd">
-							<div class="selected css-y6c1l4 chatRoomItem" id="${chatRoom.roomNo}" data-room-no="${chatRoom.roomNo}" data-user-id="${loginMember.userId}">
-								<input type="hidden" class="${chatRoom.roomNo}_roomNo" id="roomNo" value="${chatRoom.roomNo}">
-								<input type="hidden" id="userId" value="${loginMember.userId}">
+							<div class="selected css-y6c1l4 chatRoomItem"
+								id="${chatRoom.roomNo}" data-room-no="${chatRoom.roomNo}"
+								data-user-id="${loginMember.userId}">
+								<input type="hidden" class="${chatRoom.roomNo}_roomNo"
+									id="roomNo" value="${chatRoom.roomNo}"> <input
+									type="hidden" id="userId" value="${loginMember.userId}">
 								<div class="preview-title-wrap">
 									<span class="preview-nickname" id="roomOwner">${chatRoom.roomOwner}</span>
 									<div class="sub-text">
-										<span id="gongguNo">${chatRoom.gongguNo }</span> <span
-											id="lastChat">${chatRoom.lastChat}</span>
-											
+										<span id="gongguNo">${chatRoom.gongguNo}</span> 
+										<span id="lastChat">${chatRoom.lastChat}</span>
 									</div>
-								</div> <img
-								src="${pageContext.request.contextPath}/resources/upload/${list.photo1}"
-								alt="이미지 없음" width="50px">
-						</div>
+								</div>
+								<c:forEach items="${mainList}" var="list" varStatus="i">
+									<c:if test="${chatRoom.gongguNo eq list.gongguNo }">
+										<img
+											src="${pageContext.request.contextPath}/resources/upload/${list.photo1}"
+											alt="이미지 없음" width="50px">
+									</c:if>
+								</c:forEach>
+							</div>
+
 							<div class="common-bg-hover only-hover css-q6qzi5">
 								<span class="option-controller"> <svg width="36"
 										height="36" viewBox="0 0 1024 1024" version="1.1"
 										xmlns="http://www.w3.org/2000/svg"></svg>
 								</span>
-							</div></li>
+							</div>
+						</li>
 					</c:forEach>
 				</ul>
 			</nav>
@@ -82,10 +100,11 @@
 								</svg>
 					</div>
 				</div>
-		
-				<div id="result" style="height: 300px" width="900px" class="c-List">
+
+				<div id="result" style="height: 500px" width="900px" class="c-List">
 					<input type="hidden" id="chatWriter" value="${loginMember.userId}">
-					<input type="hidden" class="${chatRoom.roomNo}_roomNo" id="roomNo" value="${chatRoom.roomNo}">
+					<input type="hidden" class="${chatRoom.roomNo}_roomNo" id="roomNo"
+						value="${chatRoom.roomNo}">
 					<%-- <jsp:include page="/WEB-INF/views/mypage/chatDetail.jsp" /> --%>
 				</div>
 				<div>
@@ -103,103 +122,102 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
-var currentRoomNo = null;
+	var currentRoomNo = null;
 
-$(document).ready(function() {
-	$(".chatRoomItem").click(function() {
-		var roomNo = $(this).data("room-no");
-		var userId = $(this).data("user-id");
-		currentRoomNo = roomNo;
-		$("#chatRoomOwner").text(userId);
-		msgList(roomNo);
+	$(document).ready(function() {
+		$(".chatRoomItem").click(function() {
+			var roomNo = $(this).data("room-no");
+			var userId = $(this).data("user-id");
+			currentRoomNo = roomNo;
+			$("#chatRoomOwner").text(userId);
+			msgList(roomNo);
+		});
+
+		setInterval(function() {
+			if (currentRoomNo) {
+				msgList(currentRoomNo);
+			}
+		}, 1000);
 	});
-	
-	setInterval(function() {
-		if (currentRoomNo) {
-			msgList(currentRoomNo);
-		}
-	}, 1000);
-});
-function msgList(roomNo) {
-	  var userId = $("#userId").val();
-	  $.ajax({
-	    url: "${pageContext.request.contextPath}/chatRoom/msgList.do",
-	    data: {
-	      roomNo: roomNo
-	    },
-	    success: function(list) {
-	      const msgList = list.MsgList;
-	      let result = "";
-	      for (let i in msgList) {
-	        let mList = msgList[i];
-	        if (userId == mList.chatWriter) {
-	          result += 
-	        	"<div id='msgList'>" +
-	            "<div class='chat-msg'>" +
-	            "<div align='right' id='chatWriter'>" + 
-	            "<table class='msgBox'>" + "<tr>" + "<td align='right'>" +  mList.chatContent + 
-	            "</td>" + "</tr>" + "</table>" + 
-	            "</div>" +
-	            "</div>" +
-	            "</div>" ;
-	        } else {
-	          result +=   
-	        	"<div id='msgList'>" +
-	            "<div class='chat-msg'>" +
-	            "<div>" + mList.chatWriter + "</div>" +
-	            "<table class='msgBox'>" + "<tr>" + "<td>" +
-	            "<div>" + mList.chatContent + "</div>" +
-	            "</td>" + "</tr>" + "</table>" +
-	            "</div>" +
-	            "</div>";
-	        }
-	      }
-	      $("#result").html(result);
-	      scrollToBottom();
-	    },
-	    error: function() {
-	      console.log("리스트 조회 실패");
-	    }
-	  });
+	function msgList(roomNo) {
+		var userId = $("#userId").val();
+		$.ajax({
+			url : "${pageContext.request.contextPath}/chatRoom/msgList.do",
+			data : {
+				roomNo : roomNo
+			},
+			success : function(list) {
+				const msgList = list.MsgList;
+				let result = "";
+				for ( let i in msgList) {
+					let mList = msgList[i];
+					if (userId == mList.chatWriter) {
+						result += "<div id='msgList'>"
+								+ "<div class='chat-msg' id='chat-msg'>"
+								+ "<div align='right' id='chatWriter'>"
+								+ "<table class='msgBox'>" + "<tr>"
+								+ "<td align='right' width='90%' height='10%'>"
+								+ mList.chatContent + "</td>" + "</tr>"
+								+ "</table>" + "</div>" + "</div>" + "</div>";
+					} else {
+						result += "<div id='msgList'>"
+								+ "<div class='chat-msg' id='chat-msg'>"
+								+ "<div>" + mList.chatWriter + "</div>"
+								+ "<table class='msgBox'>" + "<tr>" + "<td>"
+								+ "<div width='80%'>" + mList.chatContent
+								+ "</div>" + "</td>" + "</tr>" + "</table>"
+								+ "</div>" + "</div>";
+					}
+				}
+				$("#result").html(result);
+			},
+			error : function() {
+				console.log("리스트 조회 실패");
+			}
+		});
 	}
-
+	$(function() {
+		$(".selected").click(function() {
+			scrollToBottom();
+		});
+	});
 
 	function insertMsg() {
-		  var chatContent = $("#chatContent").val();
-		  var chatWriter = $("#userId").val();
-		  var roomNo = $("#roomNo").val();
-		  $.ajax({
-		    url: "${pageContext.request.contextPath}/mypage/insertMsg.do",
-		    method: "POST",
-		    data: {
-		      chatContent: chatContent,
-		      chatWriter: chatWriter,
-		      roomNo: roomNo
-		    },
-		    success: function(result) {
-		      if (result > 0) {
-		    	  console.log("메시지 전송 성공!");
-		        $("#chatContent").val("");
-		        msgList(roomNo);
-		      } else {
-		    	  console.log("메시지 전송 성공!");
-		    	  $("#chatContent").val("");
-			        msgList(roomNo);
-		      }
-		    },
-		    error: function() {
-		      console.log("메시지 전송 실패");
-		      console.log(roomNo);
-		    }
-		  });
-		}
+		var chatContent = $("#chatContent").val();
+		var chatWriter = $("#userId").val();
+		var roomNo = $("#roomNo").val();
+		$.ajax({
+			url : "${pageContext.request.contextPath}/mypage/insertMsg.do",
+			method : "POST",
+			data : {
+				chatContent : chatContent,
+				chatWriter : chatWriter,
+				roomNo : roomNo
+			},
+			success : function(result) {
+				if (result > 0) {
+					console.log("메시지 전송 성공!");
+					$("#chatContent").val("");
+					msgList(roomNo);
+				} else {
+					console.log("메시지 전송 성공!");
+					$("#chatContent").val("");
+					msgList(roomNo);
+				}
+				scrollToBottom();
+			},
+			error : function() {
+				console.log("메시지 전송 실패");
+				console.log(roomNo);
+			}
+		});
+	}
 	function scrollToBottom() {
-	  var element = document.getElementById("result");
-	  element.scrollTop = element.scrollHeight;
+		var element = document.getElementById("result");
+		element.scrollTop = element.scrollHeight;
 	}
 
 	window.addEventListener("load", function() {
-	  scrollToBottom();
+		scrollToBottom();
 	});
-
 </script>

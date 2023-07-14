@@ -1,5 +1,4 @@
-package com.gammza.chupachups.member.controller;
-
+ package com.gammza.chupachups.member.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -28,6 +27,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 import com.gammza.chupachups.member.model.service.MemberService;
 import com.gammza.chupachups.member.model.vo.Member;
 
@@ -347,8 +347,6 @@ public class MemberController {
 		
 		
 	}
-	*/
-	
 	
 	
 	
@@ -368,7 +366,6 @@ public class MemberController {
 	public String findPwdClick(@RequestParam("userId") String userId, @RequestParam("phone") String phone) {
 		System.out.println(userId);
 		System.out.println(phone);
-
 		String result = memberService.findPwdClick(userId, phone);
 	// return result;
 	return "/member/updatePwd";
