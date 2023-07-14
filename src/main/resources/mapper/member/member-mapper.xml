@@ -80,14 +80,16 @@
 		set user_pwd = #{userPwd},
 			email = #{email},
 			phone = #{phone},
-			birthday = #{birthday},
+			birthday = #{birthday}
 		where user_id = #{userId}
 	</update>
 	<!-- 탈퇴상태로 돌리기 -->	 	
  	<update id="changeStatus">
 		update member
 		set status = 0,
-			update_at = SYSDATE
+			update_at = SYSDATE,
+			kakao_idkey = null,
+			naver_idkey = null
 		where user_id = #{userId}
 	</update>
  
@@ -134,7 +136,10 @@
  		select * from member
  		where phone = #{phone} and user_Id = #{userId}
  	</select>
-
+	<select id="selectProceedingGonggu" resultType="_int">
+		select count(*) from gonggu
+		where gonggu_writer = #{userId} and end_status = 1
+	</select>
  	
  	
  </mapper>

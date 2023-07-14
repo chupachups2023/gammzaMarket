@@ -75,7 +75,7 @@
 		<tr>
 			<th>현재 비밀번호 : </th>
 			<td>
-				<input class="infoInput" type="password" placeholder="탈퇴/정보 수정시 입력해주세요" id="insertPwd" name="insertPwd" required>
+				<input class="infoInput" type="password" placeholder="탈퇴/정보 수정시 입력해주세요" id="insertPwd" name="userPwd" required>
 			</td>
 		</tr>
 		<tr>
@@ -132,22 +132,6 @@
 	})
 	
 	function updateMember() {
-		if(checkPwd() == false) {
-			return;
-		}
-		updateFrm.submit();
-	}
-	
-	function deleteUser(){
-		if(checkPwd() == false) {
-			return;
-		}
-		location.href="${pageContext.request.contextPath}/member/changeStatus.do";
-	}
-	
-	
-	function checkPwd() {
-		//비밀번호 입력 유무 체크
 		const insertPwd = $("#insertPwd").val();
 		if(insertPwd == null || insertPwd == ""){
 			alert("본인확인을 위해 현재 비밀번호를 입력해주세요.");
@@ -160,11 +144,11 @@
 			type : "post",
 			data : {'insertPwd' : insertPwd},
 			success : function(result) {
-				console.log("ajax: " +result);
 							if(result == "false"){
 								alert("비밀번호가 맞지 않습니다. 다시 입력해주세요.");
-								return false;
-								}
+							}else {
+								updateFrm.submit();
+							}
 					},
 			error:function() {
 				console.log("ajax통신실패");
@@ -172,6 +156,32 @@
 		});
 	}
 	
+	function deleteUser(){
+		if(confirm("탈퇴 전 환불요청 완료하시고 진행중인 모든 공구를 마치셨는지 확인후 신청해주십시오.")){
+			const insertPwd = $("#insertPwd").val();
+			if(insertPwd == null || insertPwd == ""){
+				alert("본인확인을 위해 현재 비밀번호를 입력해주세요.");
+				return false;
+			}
+			
+			//비밀번호 대조
+			$.ajax({
+				url : "checkPwd.do",
+				type : "post",
+				data : {'insertPwd' : insertPwd},
+				success : function(result) {
+								if(result == "false"){
+									alert("비밀번호가 맞지 않습니다. 다시 입력해주세요.");
+								}else {
+									location.href="${pageContext.request.contextPath}/member/changeStatus.do";
+								}
+						},
+				error:function() {
+					console.log("ajax통신실패");
+					}
+			});
+		};
+	}
 	
 </script>
 

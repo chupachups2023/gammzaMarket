@@ -36,6 +36,8 @@ public interface MemberService {
 
 	int changeStatus(String userId);
 
+	int selectProceedingGonggu(String userId);
+
 	
 
 }

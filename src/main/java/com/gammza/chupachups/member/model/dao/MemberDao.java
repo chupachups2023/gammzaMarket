@@ -39,4 +39,6 @@ public interface MemberDao {
 
 	int changeStatus(String userId);
 
+	int selectProceedingGonggu(String userId);
+
 }

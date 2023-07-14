@@ -89,5 +89,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.changeStatus(userId);
 	}
 
+	@Override
+	public int selectProceedingGonggu(String userId) {
+		return memberDao.selectProceedingGonggu(userId);
+	}
+
 
 }
