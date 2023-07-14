@@ -200,6 +200,23 @@ public class MemberController {
 		return "redirect:/member/memberInfo.me";
 	}
 	
+	@PostMapping("/memberUpdate_Ad.me")
+	public String memberUpdate_Ad(Member member, Model model, @RequestParam String newPwd, @RequestParam int nowPage, RedirectAttributes redirectAtt) {
+		if(newPwd.length() > 0) {
+			String encodedPassword = passwordEncoder.encode(newPwd);
+			member.setUserPwd(encodedPassword);
+		}
+		
+		int result = memberService.updateMember_Ad(member);
+		
+		if(result > 0) {
+			redirectAtt.addFlashAttribute("msg", "회원정보가 수정되었습니다");
+		} else {
+			redirectAtt.addFlashAttribute("msg", "회원정보 수정 실패");
+		}
+		return "redirect:/member/memberList.do?nowPage="+nowPage;
+	}
+	
 	@GetMapping("/changeStatus.do")
 	public String changeStatus(@ModelAttribute("loginMember") Member member, RedirectAttributes redirectAtt, SessionStatus status) {
 		String userId = member.getUserId();
@@ -248,6 +265,13 @@ public class MemberController {
 	public String memberInfo(Model model, @ModelAttribute("loginMember") Member member) { 
 		model.addAttribute("member", member);
 		return "/mypage/memberInfo";
+	}	
+	@GetMapping("/memberInfo_Ad.me")
+	public String memberInfo_Ad(Model model, @RequestParam String userId, @RequestParam int nowPage) { 
+		Member member = memberService.selectOneMember(userId);
+		model.addAttribute("member", member);
+		model.addAttribute("nowPage", nowPage);
+		return "/adminpage/memberInfo_Ad";
 	}
 	
 	/* 

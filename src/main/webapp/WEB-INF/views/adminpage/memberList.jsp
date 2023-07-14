@@ -104,7 +104,7 @@
 			<c:forEach items="${memberList}" var="member" varStatus="s">
 				<tr>
 					<td>${pi.totalRecord - ((pi.nowPage-1)*pi.numPerPage)-s.index}</td>
-					<td class="title"><a href="${pageContext.request.contextPath}/member/memberInfo_Ad.do?nowPage=${pi.nowPage}&userId=${member.userId}">${member.userId}</a></td>
+					<td class="title"><a href="${pageContext.request.contextPath}/member/memberInfo_Ad.me?nowPage=${pi.nowPage}&userId=${member.userId}">${member.userId}</a></td>
 					<td>${member.temperature}</td>
 					<td>${member.createAt2}</td>
 					<td>${member.status2}</td>
