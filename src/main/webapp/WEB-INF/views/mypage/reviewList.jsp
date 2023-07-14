@@ -5,8 +5,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="${loginMember.userId }님의 리뷰" name="title"/>
 </jsp:include>
-
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/order/userProfile.css?<%=System.currentTimeMillis() %>">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/reviewList.css?<%=System.currentTimeMillis() %>">
 <style>
 	.emptystar{
 		opacity:0.15;
