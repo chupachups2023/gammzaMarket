@@ -17,7 +17,7 @@
         <div class="ggRead-title">
             <div class="ggRead-writer ggRead-writer-none">${gonggu.gongguWriter }</div>
             <div class="ggRead-name">${gonggu.gongguName }</div>
-            <div class="ggRead-writer" onclick="">${gonggu.gongguWriter }</div>
+            <div class="ggRead-writer" onclick="location.href='${pageContext.request.contextPath}/member/userPf.bo?gongguNo=${gonggu.gongguNo}'">${gonggu.gongguWriter }</div>
         </div>
     </div>
     <hr class="ggRead-hr">
