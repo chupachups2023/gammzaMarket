@@ -126,7 +126,7 @@
             </c:otherwise>
         </c:choose>
             <div class="ggRead-info">
-                <div>관심 수 <span>${zzimCount }</span> · </div>
+                <div>관심 수 <span id="zzimCount">${zzimCount }</span> · </div>
                 <div>조회 수 <span>${gonggu.count }</span></div>
                 <input type="hidden" value="${gonggu.longitude }" id="longitude">
                 <input type="hidden" value="${gonggu.latitude }" id="latitude">
@@ -242,8 +242,8 @@ function pullUpGonggu(){
 		return
 	}
 }
-	
 function addZzim(){
+	let zzimC=document.getElementById("zzimCount");
 	const gongguNo="${gonggu.gongguNo}";
 	const userId="${loginMember.userId}";
 	if(userId == "" || userId == null){
@@ -258,6 +258,7 @@ function addZzim(){
 	       		zzimNo=result;
 	       		$("#emptyzzim").css("display","none");
 	       		$("#fullzzim").css("display","block");
+	       		zzimC.innerHTML=zzimC.innerHTML*1+1;
 	       	},
 	       	error:function(){
 	       		console.log("찜추가 에러");
@@ -266,6 +267,7 @@ function addZzim(){
 	}
 }
 function deleteZzim(){
+	let zzimC=document.getElementById("zzimCount");
 	const gongguNo="${gonggu.gongguNo}";
 	$.ajax({
        	type:"get",
@@ -274,6 +276,7 @@ function deleteZzim(){
        	success:function(data){
        		$("#fullzzim").css("display","none");
        		$("#emptyzzim").css("display","block");
+       		zzimC.innerHTML=zzimC.innerHTML-1;
        	},
     	error:function(){
        		console.log("찜삭제 에러");

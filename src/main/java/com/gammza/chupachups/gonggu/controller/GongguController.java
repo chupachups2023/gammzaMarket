@@ -41,6 +41,7 @@ import com.gammza.chupachups.gonggu.model.service.PartiService;
 import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 import com.gammza.chupachups.gonggu.model.vo.Parti;
 import com.gammza.chupachups.likeList.controller.LikeListController;
+import com.gammza.chupachups.likeList.model.service.LikeListService;
 import com.gammza.chupachups.likeList.model.vo.Zzim;
 import com.gammza.chupachups.location.controller.LocationController;
 import com.gammza.chupachups.location.model.service.LocationService;
@@ -61,6 +62,8 @@ public class GongguController {
 	private LocationController locationController;
 	@Autowired
 	private LikeListController likeListController;
+	@Autowired
+	private LikeListService likeListService;
 	@Autowired
 	private ChatRoomService chatRoomService;
 	@Autowired
@@ -155,13 +158,14 @@ public class GongguController {
 		 Member loginMember=(Member)session.getAttribute("loginMember");
 		 if(loginMember!=null) {
 			 Zzim myZzim=likeListController.selectMyZzim(gongguNo,loginMember.getUserId());
-			 
 			 if(myZzim !=null) {
 				 model.addAttribute("zzim", myZzim);
 			 }else {
 				 model.addAttribute("zzim", null);
 			 }
 		 }
+		 int zzimCount=likeListService.selectZzim(gongguNo).size();
+		 model.addAttribute("zzimCount", zzimCount);
 		 gongguService.updateGongguCount(gongguNo);
 		 Gonggu gonggu = gongguService.selectOneGonggu(gongguNo);
 		 

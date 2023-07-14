@@ -68,11 +68,17 @@ public class RequestController {
 		Request ggrequest=requestService.selectRequest(requestNo);
 		model.addAttribute("request", ggrequest);
 		
-		ArrayList<RequestMember> reqMember=requestService.selectRequestMember(requestNo);
-		
-		
 		return "/others/requestRead";
 	}
+	
+	@PostMapping("/requestMember.req")
+	public String requestMember(@RequestParam int requestNo, Model model) {
+		ArrayList<RequestMember> reqMember=requestService.selectRequestMember(requestNo);
+		model.addAttribute("reqMember", reqMember);
+		
+		return "jsonView";
+	}
+	
 	@GetMapping("/writeRequest.req")
 	public String writeRequest() {
 		return "/others/writeRequest";
