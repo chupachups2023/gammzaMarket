@@ -18,6 +18,7 @@
 					<input type="radio" name="request-sort" id="recent" value="recent" checked="checked"><label for="recent"> 최신순 정렬</label>&emsp;
 					<input type="radio" name="request-sort" id="member" value="member"><label for="member"> 참가자수 정렬</label> &emsp;
 					<input type="radio" name="request-sort" id="count" value="count"><label for="count"> 조회수 정렬</label> 
+					<input type="hidden" id="hiddenSort" value="${hiddenSort }">
 				</small>
 			</td>
 		</tr>
@@ -45,5 +46,34 @@
 	</div>
 	<div class="writeRequestBtn" onclick="location.href='${pageContext.request.contextPath }/ggRequest/writeRequest.req'"><img alt="글쓰기" src="https://cdn-icons-png.flaticon.com/512/148/148764.png"><div>글쓰기</div></div>
 
+<script>
 
+function success(position) {
+    const latitude = position.coords.latitude;   // 위도(37.xxxx)
+    const longitude = position.coords.longitude;
+	const currSort=document.getElementById("hiddenSort").value;
+	
+	$(":radio[name='request-sort'][value='" + currSort + "']").attr('checked', true);
+    
+	$("input:radio[name=request-sort]").on('click', function() {
+		let requestSort=$("input:radio[name=request-sort]:checked").val();
+		console.log(requestSort);
+		if ( requestSort == currSort ){
+			return;
+		}else{
+			if(requestSort == "recent"){
+				location.href="${pageContext.request.contextPath}/ggRequest/requestView.req?latitude="+latitude+"&longitude="+longitude+"&sort=recent"
+			}else if(requestSort =="member"){
+				location.href="${pageContext.request.contextPath}/ggRequest/requestView.req?latitude="+latitude+"&longitude="+longitude+"&sort=member"
+			}else{
+				location.href="${pageContext.request.contextPath}/ggRequest/requestView.req?latitude="+latitude+"&longitude="+longitude+"&sort=count"
+			}
+		}
+		
+	});
+}
+
+navigator.geolocation.getCurrentPosition(success);
+
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

@@ -7,11 +7,27 @@
 	<resultMap type="request" id="requestMap"></resultMap>
 	<resultMap type="requestmember" id="requestMemberMap"></resultMap>
 	<select id="selectAllRequestList" resultMap="requestMap">
-		select *
-		  from request
-		  where 0.0359*0.0359>power(( to_number(longitude)-to_number(#{longitude })),2)+power(( to_number(latitude)-to_number(#{latitude })),2)
-		  and STATUS = 1 AND REQ_STATUS = 0
-		  order by request_no desc
+		<if test="sort.equals('recent')">
+			select *
+			  from request
+			  where 0.0359*0.0359>power(( to_number(longitude)-to_number(#{longitude })),2)+power(( to_number(latitude)-to_number(#{latitude })),2)
+			  and STATUS = 1 AND REQ_STATUS = 0
+			  order by request_no desc
+		</if>
+		<if test="sort.equals('member')">
+			select *
+			  from request
+			  where 0.0359*0.0359>power(( to_number(longitude)-to_number(#{longitude })),2)+power(( to_number(latitude)-to_number(#{latitude })),2)
+			  and STATUS = 1 AND REQ_STATUS = 0
+			  order by num desc
+		</if>
+		<if test="sort.equals('count')">
+			select *
+			  from request
+			  where 0.0359*0.0359>power(( to_number(longitude)-to_number(#{longitude })),2)+power(( to_number(latitude)-to_number(#{latitude })),2)
+			  and STATUS = 1 AND REQ_STATUS = 0
+			  order by count desc
+		</if>
 	</select>
 	<update id="updateRequestCount">
 		update request

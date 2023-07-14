@@ -54,8 +54,6 @@ public class ReviewController {
 				partiReview.add(recieved.get(i));
 			}
 		}
-//		System.out.println("참가자로 받음"+partiReview.get(0).getReviewContent());
-//		System.out.println("총대로 받음"+leaderReview.get(0).getReviewContent());
 		model.addAttribute("partiReview", partiReview);
 		model.addAttribute("leaderReview", leaderReview);
 		

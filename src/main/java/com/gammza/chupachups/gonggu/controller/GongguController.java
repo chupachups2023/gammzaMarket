@@ -86,11 +86,20 @@ public class GongguController {
 
 	@GetMapping("/ggListView.go")
 	public ModelAndView ggListView(Model model,RedirectAttributes redirectAttr, HttpSession session,
-				@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude) {
+				@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude,
+				@RequestParam(defaultValue="PULLUP_AT") String sort,@RequestParam(defaultValue="1") int end) {
 		Member loginMember=(Member) session.getAttribute("loginMember");
 		ArrayList<Gonggu> ggListView;
 		ModelAndView mav=new ModelAndView();
 		HashMap<String,String> locationMap=new HashMap<String,String>();
+		locationMap.put("sortby", sort);
+		model.addAttribute("sortByHidden", sort);
+		String endStatus="AND END_STATUS = 1";
+		if(end == 0) {
+			endStatus=" ";
+		}
+		locationMap.put("endStatus", endStatus);
+		model.addAttribute("endStatus", end);
 		
 		if(loginMember !=null) {
 			if(loginMember.getLatitude() == null) {

@@ -3,12 +3,12 @@
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Random;
-import javax.mail.MessagingException;
+
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -23,10 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 import com.gammza.chupachups.member.model.service.MemberService;
 import com.gammza.chupachups.member.model.vo.Member;
 
@@ -64,7 +62,7 @@ public class MemberController {
 			model.addAttribute("loginMember", member);	// requestScope => sessionScope 바꾸기
 			
 			Long kakaoIdkey = (Long)session.getAttribute("kakaoIdkey");
-			String naverIdkey = (String)model.getAttribute("naverIdkey");
+			String naverIdkey = (String)session.getAttribute("naverIdkey");
 			
 			if(kakaoIdkey != null) {
 				HashMap<String,String> map = new HashMap<String,String>();
