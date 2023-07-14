@@ -41,4 +41,8 @@ public interface MemberDao {
 
 	Member selectOneMemberByEmail(String email);
 
+	int changeStatus(String userId);
+
+	int selectProceedingGonggu(String userId);
+
 }

@@ -38,6 +38,10 @@ public interface MemberService {
 
 	Member selectOneMemberByEmail(String email);
 
+	int selectProceedingGonggu(String userId);
+
+	int changeStatus(String userId);
+
 	
 
 }

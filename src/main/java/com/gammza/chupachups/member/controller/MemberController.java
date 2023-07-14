@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Random;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -175,21 +176,55 @@ public class MemberController {
 	}
 	
 	@PostMapping("/memberUpdate.me")
-	public String memberUpdate(Member member, Model model, RedirectAttributes redirectAtt) {
-		// pw암호화해서 member.userPwd에 넣기
-		String rawPassword = member.getUserPwd();
-		String encodedPassword = passwordEncoder.encode(rawPassword);
-		member.setUserPwd(encodedPassword);
-		
+	public String memberUpdate(Member member, Model model, @RequestParam String newPwd, RedirectAttributes redirectAtt) {
+		if(newPwd.length() > 0) {
+			String encodedPassword = passwordEncoder.encode(newPwd);
+			member.setUserPwd(encodedPassword);
+		}else {
+			String encodedPassword = passwordEncoder.encode(member.getUserPwd());
+			member.setUserPwd(encodedPassword);
+		}
 		int result = memberService.updateMember(member);
 		
 		if(result > 0) {
-			redirectAtt.addFlashAttribute("msg", "회원정보 수정 성공");
+			redirectAtt.addFlashAttribute("msg", "회원정보 수정되셨습니다");
 		} else {
 			redirectAtt.addFlashAttribute("msg", "회원정보 수정 실패");
 		}
+		return "redirect:/member/memberInfo.me";
+	}
+	
+	@GetMapping("/changeStatus.do")
+	public String changeStatus(HttpSession session, RedirectAttributes redirectAtt, SessionStatus status) {
+		Member member = (Member) session.getAttribute("loginMember");
+		String userId = member.getUserId();
+		int result1 = memberService.selectProceedingGonggu(userId);
+		System.out.println(result1);
 		
-		return "redirect:/member/memberInfo.me?userId="+member.getUserId();
+		if(result1 == 0) {
+			member.setStatus(0);
+			int result2 = memberService.changeStatus(userId);
+			if(result2 > 0) {
+				status.setComplete();
+				redirectAtt.addFlashAttribute("msg", "회원 탈퇴되셨습니다");
+			} else {
+				redirectAtt.addFlashAttribute("msg", "회원정보 탈퇴 실패, 다시 시도해주세요");
+			}
+			return "redirect:/";
+		}else {
+			redirectAtt.addFlashAttribute("msg", "진행중인 공구를 모두 끝내시고 탈퇴 진행해주세요");
+			return "redirect:/member/memberInfo.me";
+		}
+	}	
+	
+	@PostMapping("/checkPwd.do")
+	public void checkPwd(@RequestParam String insertPwd, HttpSession session, HttpServletResponse response, RedirectAttributes redirectAtt) throws ServletException, IOException{
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		String userId = loginMember.getUserId();
+		Member member = memberService.selectOneMember(userId);
+		
+		boolean result = passwordEncoder.matches(insertPwd, member.getUserPwd());
+		response.getWriter().print(result);
 	}
 	
 	@GetMapping("/memberInfo.me")

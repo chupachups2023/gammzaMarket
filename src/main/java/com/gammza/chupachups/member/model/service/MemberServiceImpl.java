@@ -103,5 +103,14 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectOneMemberByEmail(email);
 	}
 
+	@Override
+	public int changeStatus(String userId) {
+		return memberDao.changeStatus(userId);
+	}
+
+	@Override
+	public int selectProceedingGonggu(String userId) {
+		return memberDao.selectProceedingGonggu(userId);
+	}
 
 }
