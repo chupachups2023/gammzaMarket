@@ -3,18 +3,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/order/userProfile.css?<%=System.currentTimeMillis() %>">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/mainPage.css?<%=System.currentTimeMillis() %>">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="OOO님의 프로필" name="title"/>
+	<jsp:param value="${userpr}${userpp}${userpl}님의 프로필" name="title"/>
 </jsp:include>
 
-	<div align="center" class="mainPage-title">
-		<h1>💚 OOO님의 프로필</h1>
+	<div align="center" class="mainPage-title">	
+		<h1 id="userId" class="userId">💚 ${userpr}${userpl}${userpp}${member.userId}님의 프로필</h1>
 	</div>
 	<div align="center">
 		<span class="point">매너온도</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-		<span class="point2">30.5도 <img src="${pageContext.request.contextPath}/resources/img/mypage/빈감자 1.png" width="35px"></span>
+		<span class="point2">30.5도<img src="${pageContext.request.contextPath}/resources/img/mypage/빈감자 1.png" width="35px"></span>
 		<div class="bar">	
 			<div class="bar2" id="bar"></div>
 		</div>

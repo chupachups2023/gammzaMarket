@@ -43,7 +43,7 @@
 	                <c:if test="${fn:length(lList.gongguName) le 10}">
 	                	<a class="gongguName" href="${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${lList.gongguNo }">${fn:substring(lList.gongguName, 0, 10)}</a>
 	                </c:if>
-                	<br><a href="">${lList.reviewWriter }</a>
+                	<br><a href="${pageContext.request.contextPath}/member/userPf.bo?userPl=${lList.reviewWriter}">${lList.reviewWriter}</a>
                 </td>
                 <td width="35%">
                 	<div class="reviewContent" onclick="reviewDetailModal(${lList.reviewNo});"><pre>${lList.reviewContent }</pre></div>
@@ -79,7 +79,7 @@
 	                <c:if test="${fn:length(plist.gongguName) le 10}">
 	                	<a class="gongguName" href="${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${lList.gongguNo }">${fn:substring(plist.gongguName, 0, 10)}</a>
 	                </c:if>
-                	<br><a href="">${plist.reviewWriter }</a>
+                	<br><a href="${pageContext.request.contextPath}/member/userPf.bo?userPp=${plist.reviewWriter}">${plist.reviewWriter }</a>
                 </td>
                 <td width="35%">
                 	<div class="reviewContent" onclick="reviewDetailModal(${plist.reviewNo});"><pre>${plist.reviewContent }</pre></div>
