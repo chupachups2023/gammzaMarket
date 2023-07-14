@@ -21,3 +21,7 @@ th{
 .align-right{
 	text-align:right;
 }
+a:hover{
+	text-decoration:underline;
+	text-underline-position:under;
+}

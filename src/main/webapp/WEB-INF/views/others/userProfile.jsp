@@ -1,33 +1,30 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="${loginMember.userId }님의 리뷰" name="title"/>
-</jsp:include>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/reviewList.css?<%=System.currentTimeMillis() %>">
-<style>
-	.emptystar{
-		opacity:0.15;
-		font-size:17px;
-	}
-	.star{
-		color:RGB(252, 213, 63);
-		font-size:17px;
-	}
-	.reviewRate span{
-		margin-right:-5px;
-	}
-</style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/order/userProfile.css?<%=System.currentTimeMillis() %>">
 
-<div class="allGGList">
-    <div id="reviewCategory">
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+	<jsp:param value="OOO님의 프로필" name="title"/>
+</jsp:include>
+
+	<div align="center" class="mainPage-title">
+		<h1>💚 OOO님의 프로필</h1>
+	</div>
+	<div align="center">
+		<span class="point">매너온도</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+		<span class="point2">30.5도 <img src="${pageContext.request.contextPath}/resources/img/mypage/빈감자 1.png" width="35px"></span>
+		<div class="bar">	
+			<div class="bar2" id="bar"></div>
+		</div>
+	</div>
+	<div class="reviewCategory">
         <button class="btn reviewBtn readerR" onclick="showLeader();">총대로 받은 리뷰</button>&emsp;&emsp;
         <button class="btn reviewBtn particR" onclick="showParti();">참가자로 받은 리뷰</button>
     </div>
-
-    <br><br><br>
-   <table class="allGGListTable" id="partiReview">
+    
+    <table class="allGGListTable" id="partiReview">
                 <c:if test="${empty partiReview }">
                 <tr>
                 	<td colspan="5">공구에 참여해서 받은 리뷰가 아직 없습니다.</td>
@@ -96,14 +93,8 @@
             </tr>
         </c:forEach>
         </table>
-
-
-</div>
-
-
-
-
-		<!-- 리뷰보기 모달창 -->
+        
+        		<!-- 리뷰보기 모달창 -->
 	
 	<div class="modalR" id="reviewDetailModal">
 	  <div class="modalR-dialog">
@@ -134,8 +125,13 @@
 	    </div>
 	  </div>
 	</div>
-
-<script>
+        
+        
+	<script>
+		$(function(){
+			var wid=700/100*${loginMember.temperature}; /* 온도 */
+			document.getElementById("bar").style.width=wid;
+		})
 $("#partiReview").css("display", "none");
 
 function showLeader(){
@@ -179,7 +175,4 @@ function showParti(){
  	};
  	
 </script>
-
-
-
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

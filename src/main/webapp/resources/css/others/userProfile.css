@@ -1,9 +1,53 @@
 @charset "UTF-8";
-	/* 마이페이지 리뷰게시판 */
-    .allGGList {
-        width: 1500px;
-        margin: 30px auto;
-    }
+.mypageTitle{
+	width:600px;
+	display:flex;
+	flex-direction:row;
+	justify-content: space-between;
+	align-items: center;
+}
+.point {
+    width: 160px;
+    color: rgba(0,0,0,1);
+    padding-right: 165px;
+    font-weight: bold;
+    font-size: 30px;
+}
+.point2 {
+    width: 179px;
+    color: rgba(0,0,0,1);
+    padding-left: 165px;
+    font-weight: bold;
+    font-size: 30px;
+}
+.bar {
+    width: 700px;
+    height: 20px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 90px;
+    background: rgba(255,255,255,0);
+    border: 1px solid rgba(0,0,0,1);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+.bar2 {
+    height: 20px;
+    margin: auto;
+    margin-left: 0;
+    background: rgba(243,207,159,1);
+    top: 101px;
+    left: 0px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    overflow: hidden;
+}
     /* 리뷰 카테고리박스 */
     .reviewCategory {
         text-align: center;
@@ -43,12 +87,6 @@
         vertical-align: middle;
         border-bottom: 1px solid;
         height: 100px;}
-    
-    
-    .btn-reviewDetail{
-    	border:none;
-    	background:none
-    }
     
 	/* 마이페이지 리뷰상세보기 모달 */
     .modalR {

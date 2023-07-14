@@ -41,4 +41,9 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewDao.selectWroteReviewCheck(map);
 	}
 
+	@Override
+	public int insertReview(Review review) {
+		return reviewDao.insertReview(review);
+	}
+
 }

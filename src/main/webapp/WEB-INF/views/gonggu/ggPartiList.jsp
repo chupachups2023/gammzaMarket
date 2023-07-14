@@ -77,13 +77,12 @@
 		<button class="long-btn button" onclick="addMember();">공구 참여자로 추가하기</button>
 	</div>
 	
-	
 		<!-- 리뷰보기 모달창 -->
 	
 	<div class="modalR" id="reviewDetailModal">
 	  <div class="modalR-dialog">
 	    <div class="modalR-content">
-	    <form action="">
+	    <form name="writeReviewFrm">
 	      <div class="modalR-header" style="text-align:center;">
 	        <h4 class="modalR-title">리뷰쓰기</h4>
 	      </div>
@@ -106,14 +105,14 @@
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2"><pre id="reviewContent"><textarea></textarea></pre><br></td>
+						<td colspan="2"><pre><textarea name="reviewContent" class="reviewContent"></textarea></pre><br></td>
 					</tr>
 				</table>
 					<input type="hidden" name="gongguNo" id="ggNo">
 	      </div>
 	      <div class="modalR-footer">
-		        <button type="button" class="btn-close" onclick="javascrip:mClose();">작성완료</button>
-		        <button type="button" class="btn-close" onclick="javascrip:mClose();">닫기</button>
+		        <button type="button" class="button" onclick="javascrip:reviewSubmit();">작성완료</button>
+		        <button type="button" class="button" onclick="javascrip:mClose();">닫기</button>
 	      </div>
 	      </form>
 	    </div>
@@ -122,14 +121,6 @@
 	
 	
 <script>
-
-let drawStar = (target) => {
-	let val=Math.ceil(target.value/200);
-	let wid=val * 20+"%";
-    document.querySelector(".star span").style.width = wid;
-    $("#rate").attr("value",val);
-  }
-  
 	function reviewWriteCheck(id){
 		let userId=id;
 		$.ajax({
@@ -183,6 +174,7 @@ let drawStar = (target) => {
 		}
 	};
 
+
  	function reviewDetailModal(){
  		$('.modalR').addClass('show');
  		$('.modalR-dialog').addClass('show');
@@ -191,7 +183,38 @@ let drawStar = (target) => {
  		$('.modalR').removeClass('show');
  		$('.modalR-dialog').removeClass('show');
  	};
- 	
+ 	let drawStar = (target) => {
+ 		let val=Math.ceil(target.value/200);
+ 		let wid=val * 20+"%";
+ 	    document.querySelector(".star span").style.width = wid;
+ 	    $("#rate").attr("value",val);
+ 	  }
+ 	function reviewSubmit(){
+ 		let receiverId=writeReviewFrm.receiverId.value
+ 		let rate=writeReviewFrm.rate.value
+ 		let reviewContent=writeReviewFrm.reviewContent.value
+ 		let gongguNo=writeReviewFrm.gongguNo.value
+ 		
+ 		if(reviewContent==""){
+ 			alert("내용을 입력해주세요")
+ 			return
+ 		}else{
+ 			$.ajax({
+ 				type:"post",
+ 				url: "${pageContext.request.contextPath }/review/writeReview.re",
+ 				data: {"receiverId":receiverId,
+ 					   "rate":rate,
+ 					   "reviewContent":reviewContent,
+ 					   "gongguNo":gongguNo
+ 					  },
+ 				success:function(result0){
+ 					const result=result0.result
+ 					
+ 					mClose();
+ 				}
+ 			})
+ 		}
+ 	}
  	
 </script>
 

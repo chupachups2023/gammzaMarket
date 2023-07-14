@@ -37,8 +37,8 @@ public interface MemberDao {
 
 	String findPwdClick(String userId, String phone);
 
-	int changeStatus(String userId);
+	int updatePwd(Member member);
 
-	int selectProceedingGonggu(String userId);
+	Member selectOneMemberByEmail(String email);
 
 }

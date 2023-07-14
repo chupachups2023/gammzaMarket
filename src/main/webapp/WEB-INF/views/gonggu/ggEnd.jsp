@@ -97,7 +97,7 @@
         	<c:when test="${gonggu.gongguWriter eq loginMember.userId}">
        		<div class="ggRead-button">
 	            <a href="" class="button-end-writer">공구 마감하기</a>
-	            <a href="" class="button-end-writer">공구삭제</a>
+	            <a href="javascript:deleteGonggu();"" class="button-end-writer">공구삭제</a>
 	            <a href="" class="button-end-writer">채팅하기</a>
 	            <a href="${pageContext.request.contextPath}/gonggu/checkPartis.pa?gongguNo=${gonggu.gongguNo}" class="button-end-writer">참여자확인</a>
         	</div>
@@ -155,6 +155,13 @@ const latitude= document.getElementById('latitude').value;
     	console.log("실패");
     }
 }) 
+function deleteGonggu(){
+	if(confirm("정말로 ${gonggu.gongguName} 공구를 삭제하시겠습니까?")){
+		location.href="${pageContext.request.contextPath}/gonggu/deleteGonggu.go?gongguNo=${gonggu.gongguNo}";
+	}else{
+		return
+	}
+}
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

@@ -7,21 +7,24 @@
 	<resultMap type="review" id="reviewMap"></resultMap>
 	<resultMap type="gonggu" id="gongguMap"></resultMap>
 	<select id="selectRecievedReview" resultMap="reviewMap">
-	select r.* , g.gonggu_Name
-	from review r, gonggu g
-	where r.gonggu_no=g.gonggu_no and  r.RECEIVER_ID=#{userId}
+		select r.* , g.gonggu_Name
+		from review r, gonggu g
+		where r.gonggu_no=g.gonggu_no and  r.RECEIVER_ID=#{userId}
 	</select>
 	<select id="selectOneReview" resultMap="reviewMap">
-	select r.* , g.gonggu_Name
-	from review r, gonggu g
-	where r.gonggu_no=g.gonggu_no and r.review_no=#{reviewNo}
+		select r.* , g.gonggu_Name
+		from review r, gonggu g
+		where r.gonggu_no=g.gonggu_no and r.review_no=#{reviewNo}
 	</select>
 	<select id="selectAllMyGonggu" resultMap="gongguMap">
-	select * from gonggu
-	where GONGGU_WRITER=#{userId}
+		select * from gonggu
+		where GONGGU_WRITER=#{userId}
 	</select>
 	<select id="selectWroteReviewCheck" resultType="_int">
-	select count(*) from review
-	where RECEIVER_ID=#{userId} and REVIEW_WRITER=#{loginMemberId}
+		select count(*) from review
+		where RECEIVER_ID=#{userId} and REVIEW_WRITER=#{loginMemberId}
 	</select>
+	<insert id="insertReview">
+		insert into review values ( REVIEW_SEQ.nextval, #{gongguNo}, #{reviewWriter}, #{reviewContent}, #{receiverId}, #{rate}, sysdate )
+	</insert>
 </mapper>
