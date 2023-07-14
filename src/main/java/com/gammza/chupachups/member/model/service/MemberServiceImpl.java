@@ -3,6 +3,7 @@ package com.gammza.chupachups.member.model.service;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.gammza.chupachups.member.model.dao.MemberDao;
@@ -13,6 +14,9 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	private MemberDao memberDao;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	@Override
 	public int insertMember(Member member) {
@@ -82,6 +86,21 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public String findPwdClick(String userId, String phone) {
 		return memberDao.findPwdClick(userId, phone);
+	}
+
+	@Override
+	public int updatePwd(Member member) {
+		String updatePwd = passwordEncoder.encode(member.getUserPwd());
+		member.setUserPwd(updatePwd);
+		System.out.println("changePass = " + member);
+		
+		
+		return memberDao.updatePwd(member);
+	}
+
+	@Override
+	public Member selectOneMemberByEmail(String email) {
+		return memberDao.selectOneMemberByEmail(email);
 	}
 
 

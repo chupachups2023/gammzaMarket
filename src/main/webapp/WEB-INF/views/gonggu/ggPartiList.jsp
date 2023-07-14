@@ -105,14 +105,14 @@
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2"><pre><textarea name="reviewContent"></textarea></pre><br></td>
+						<td colspan="2"><pre><textarea name="reviewContent" class="reviewContent"></textarea></pre><br></td>
 					</tr>
 				</table>
 					<input type="hidden" name="gongguNo" id="ggNo">
 	      </div>
 	      <div class="modalR-footer">
-		        <button type="button" class="btn-close" onclick="javascrip:reviewSubmit();">작성완료</button>
-		        <button type="button" class="btn-close" onclick="javascrip:mClose();">닫기</button>
+		        <button type="button" class="button" onclick="javascrip:reviewSubmit();">작성완료</button>
+		        <button type="button" class="button" onclick="javascrip:mClose();">닫기</button>
 	      </div>
 	      </form>
 	    </div>
@@ -174,21 +174,7 @@
 		}
 	};
 
-		for (i=0; i<rowList.length; i++) {
-			var row = rowList[i];
-        	var tdNum = 7;     //아래 for문에서 사용하기 위해 row 하위에 존재하는 td의 갯수를 구합니다.
-        var arr="";
-        row.onclick = function() {
-              var row_value2 = this.cells[2].innerHTML;
-             arr2=row_value2.replace('<b>','');
-             arr2=arr2.replace('</b>','');
-              var row_value3 = this.cells[3].innerHTML;
-            arr=row_value3.split('개')[0];
-        	console.log(arr2);
-        };
-        
-      }
-*/
+
  	function reviewDetailModal(){
  		$('.modalR').addClass('show');
  		$('.modalR-dialog').addClass('show');

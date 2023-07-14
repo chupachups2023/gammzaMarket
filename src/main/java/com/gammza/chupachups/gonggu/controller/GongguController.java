@@ -69,7 +69,8 @@ public class GongguController {
 	private RequestService requestService;
 	@Autowired
 	private RequestController requestController;
-
+	
+	//요청하기에서 연동해서 글 쓸 때
 	@GetMapping("/ggWrite.go")
 	public void ggWrite(HttpServletRequest request,Model model) {
 		Map<String, Gonggu> flashMap =(Map<String, Gonggu>) RequestContextUtils.getInputFlashMap(request);
@@ -86,11 +87,8 @@ public class GongguController {
 		Member loginMember=(Member) session.getAttribute("loginMember");
 		ArrayList<Gonggu> ggListView;
 		ModelAndView mav=new ModelAndView();
-<<<<<<< Updated upstream
-=======
 		HashMap<String,String> locationMap=new HashMap<String,String>();
 		
->>>>>>> Stashed changes
 		if(loginMember !=null) {
 			if(loginMember.getLatitude() == null) {
 				System.out.println(loginMember.getLatitude());
@@ -153,7 +151,7 @@ public class GongguController {
 	}
 	
 	 @GetMapping("/ggRead.go") 
-	 public String ggRead(@RequestParam int gongguNo, Model model, HttpSession session) throws ParseException {
+	 public String ggRead(@RequestParam int gongguNo, Model model, HttpSession session, HttpServletRequest request, RedirectAttributes redirectAttributes) throws ParseException {
 		 Member loginMember=(Member)session.getAttribute("loginMember");
 		 if(loginMember!=null) {
 			 Zzim myZzim=likeListController.selectMyZzim(gongguNo,loginMember.getUserId());
@@ -180,6 +178,10 @@ public class GongguController {
 		 
 		 if(gonggu.getEndStatus()==1) {
 			 return "/gonggu/ggRead"; 
+		 }else if(gonggu.getStatus()==0){
+			 redirectAttributes.addFlashAttribute("msg", "삭제된 글입니다.");
+			 String referer = request.getHeader("Referer");
+			 return "redirect:"+ referer;
 		 }else {
 			 return "/gonggu/ggEnd"; 
 		 }
@@ -468,16 +470,16 @@ public class GongguController {
 	 @GetMapping("/deleteGonggu.go")
 	 public String deleteGonggu(@RequestParam int gongguNo, RedirectAttributes redirectAttr) {
 		 
-		 int result=gongguService.updateGongguStatus(gongguNo);
+		 gongguService.updateGongguStatus(gongguNo);
 		 
 		 redirectAttr.addFlashAttribute("msg","삭제가 완료되었습니다.");
 		 
-		 return "redirect:/gonggu/ggListView.go"; 
+		 return "redirect:/"; 
 	 }
 	 @GetMapping("/pullUpGonggu.go")
 	 public String pullUpGonggu(@RequestParam int gongguNo, RedirectAttributes redirectAttr) {
 		 
-		 int result=gongguService.updatepullUpAt(gongguNo);
+		 gongguService.updatepullUpAt(gongguNo);
 		 
 		 redirectAttr.addFlashAttribute("msg","공구 끌올이 완료되었습니다.");
 		 

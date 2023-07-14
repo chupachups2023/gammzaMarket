@@ -5,7 +5,6 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="${loginMember.userId }님의 리뷰" name="title"/>
 </jsp:include>
-
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/reviewList.css?<%=System.currentTimeMillis() %>">
 <style>
 	.emptystar{
@@ -28,48 +27,7 @@
     </div>
 
     <br><br><br>
-<<<<<<< Updated upstream
-                <table class="allGGListTable" id="partiReview">
-                <c:if test="${empty partiReview }">
-                <tr>
-                	<td colspan="5">공구에 참여해서 받은 리뷰가 아직 없습니다.</td>
-                </tr>
-                </c:if>
-    <table class="allGGListTable" id="partiReview">
-        <c:forEach items="${partiReview }" var="plist" varStatus="i">
-            <tr class="allGGt" >
-                <td width="10%">${plist.reviewNo }</td>
-                <td width="20%">
-                <c:if test="${fn:length(plist.gongguName) gt 10}">
-                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${plist.gongguNo }'">${fn:substring(plist.gongguName, 0, 10)}⋯</div>
-                </c:if>
-                <c:if test="${fn:length(plist.gongguName) le 10}">
-                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${plist.gongguNo }'">${fn:substring(plist.gongguName, 0, 10)}</div>
-                </c:if>
-                	${plist.reviewWriter }
-                </td>
-                
-                <td width="35%">
-                	<div class="reviewContent" onclick="reviewDetailModal(${plist.reviewNo});"><pre>${plist.reviewContent }</pre></div>
-                </td>
-                <td width="20%"><div class="reviewRate">점수: 
-                <c:forEach begin="1" end="${plist.rate }">
-					<span class="star">★</span>
-                </c:forEach>
-                <c:forEach begin="${plist.rate+1 }" end="5">
-					<span class="emptystar">★</span>
-                </c:forEach>
-				</div></td>
-                <fmt:parseDate value="${plist.reviewDate }" var="reviewDate" pattern="yyyy-MM-dd"/>
-                <td width="15%"><small><fmt:formatDate value="${reviewDate }" pattern="yyyy년 MM월 dd일"/></small></td>
-            </tr>
-        </c:forEach>
-        </table>
-
     <table class="allGGListTable" id="leaderReview">
-=======
-      <table class="allGGListTable" id="leaderReview">
->>>>>>> Stashed changes
         <c:if test="${empty leaderReview }">
         <tr>
         	<td colspan="5">공구를 열어서 받은 리뷰가 아직 없습니다.</td>
@@ -79,15 +37,6 @@
             <tr class="allGGt" >
                 <td width="10%">${lList.reviewNo }</td>
                 <td width="20%">
-<<<<<<< Updated upstream
-                <c:if test="${fn:length(lList.gongguName) gt 10}">
-                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${list.gongguNo }'">${fn:substring(lList.gongguName, 0, 10)}⋯</div>
-                </c:if>
-                <c:if test="${fn:length(lList.gongguName) le 10}">
-                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${list.gongguNo }'">${fn:substring(lList.gongguName, 0, 10)}</div>
-                </c:if>
-                	${lList.reviewWriter }
-=======
 	                <c:if test="${fn:length(lList.gongguName) gt 10}">
 	                	<a class="gongguName" href="${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${lList.gongguNo }">${fn:substring(lList.gongguName, 0, 10)}⋯</a>
 	                </c:if>
@@ -95,7 +44,6 @@
 	                	<a class="gongguName" href="${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${lList.gongguNo }">${fn:substring(lList.gongguName, 0, 10)}</a>
 	                </c:if>
                 	<br><a href="">${lList.reviewWriter }</a>
->>>>>>> Stashed changes
                 </td>
                 <td width="35%">
                 	<div class="reviewContent" onclick="reviewDetailModal(${lList.reviewNo});"><pre>${lList.reviewContent }</pre></div>
