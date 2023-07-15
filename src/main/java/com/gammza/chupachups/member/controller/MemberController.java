@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gammza.chupachups.common.model.vo.PageInfo;
@@ -175,11 +176,12 @@ public class MemberController {
 			helper.setText(content, true);
 			mailSender.send(msg);
 		} catch(Exception e) {
-        e.printStackTrace();
-    }
+			e.printStackTrace();
+		}
       return Integer.toString(checkNum);		// ajax를 뷰로 반환시 데이터 타입은 String 타입만 가능
 		
 		//return "redirect:/";		// String 타입으로 반환 후 반환
+	}
       
       
 	@PostMapping("/memberUpdate.me")
