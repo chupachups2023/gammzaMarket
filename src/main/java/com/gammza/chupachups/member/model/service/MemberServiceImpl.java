@@ -93,6 +93,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int updatePwd(Member tempMember) {
 		return memberDao.updatePwd(tempMember);
+	}
 
   @Override
 	public int changeStatus(String userId) {
