@@ -28,7 +28,7 @@
 	  )
 	</insert>
 
-<!-- 	<insert id="insertKakaoMember">
+ 	<insert id="insertKakaoMember">
 		insert into member(user_id, user_pwd, name, phone, email, create_at, status, point, temperature, kakao_idkey)
 		values(
 		'kakao',
@@ -42,7 +42,7 @@
 		default,
 		#{kakaoIdkey}
 	)
-	</insert> -->
+	</insert>
 	
 	<insert id="insertNaverMember">
 		insert into member(user_id, user_pwd, name, phone, email, create_at, status, point, temperature, naver_idkey)
