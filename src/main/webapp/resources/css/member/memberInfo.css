@@ -1,46 +1,134 @@
 @charset "UTF-8";
+
+/* memberInfo, memberInfo_Ad */
 #title {
     text-align: center;
 }
 
-#container {
-    text-align: center; 
-    width: 350px; 
+#MemInfoContainer {
+    width: 450px; 
     margin:auto; 
     margin-top: 20px;
     background-color: #F9F9F9; 
     border: 1px solid #E9D296; 
     border-radius: 30px;
-    height: 120px;
+	padding: 20px;
 }    
-#lo {
-    width: 350px; 
-    margin: auto; 
-    margin-top: 20px;
-    box-sizing: border-box; 
-    border: 3px solid #E9D296; 
-    height: 120px;
-}    
-th, td {
-    padding: 7px;
-    width: 500px;
+  
+#memInfoTable th {
+    padding: 7px 7px 7px 30px;
+	text-align: justify;
+	width:35%;
 }
-input {
-    background-color: #F9F9F9; 
-    width: 300px;
+#memInfoTable td {
+    padding: 7px 0;
+	text-align: justify;
+	width:65%;
+}
+.infoInput {
+    background-color: #f9f9f900; 
+    width: 240px;
     border: none;
-    border-bottom: 1px solid;
+    border-bottom: 1px solid;  
+	resize: none;
+	font-size: 17px;
 }
-#table {
+.readonlyCursor {
+	cursor: default;
+}
+#infoBtn {
     text-align: center;
     margin: auto;
     margin-top: 20px;
 }
 .bo {
-    width: 120px; 
+    width: 130px; 
     height: 30px; 
     background: rgba(94, 177, 98, 0.75); 
     color: white; 
     border-radius: 30px;
     border: none;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+/* memberList */
+#MemberManagementBoard{
+	width:1200px;
+	margin: 50px auto;
+}
+
+.mTable {
+	margin: auto;
+	border-collapse: collapse;
+	text-align: center;
+	width: ;
+}
+
+.mTable a {
+	text-decoration: none;
+	color: black;
+	cursor: pointer;
+}
+
+.mTable th, tr, td {
+	text-align: center;
+	height: 30px;
+}
+
+.mTable thead {
+	border-bottom: 3px solid;
+	width: 100%;
+}
+
+.mTable tbody>tr {
+	width: 100%;
+	border-bottom: 1px solid;
+}
+
+.Mtitle thead {
+	font-size:20px;
+}
+
+#memInsertBtn {
+	width: 70px;
+	height: 30px;
+	border: none;
+	background-color: gray;
+	color: white;
+	border-radius: 5px;
+	margin-left: 94%;
+	cursor: pointer;
+}
+
+#chageStatusBtn {
+	width: 70px;
+	height: 25px;
+	background-color: white;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.qnaPaging {
+	list-style-type: none;
+}
+
+.qnaPaging a {
+	text-decoration: none;
+	color: black;
+}
+
+.qnaPaging li {
+	display: inline;
+}
+
+#pagingNav {
+	text-align: center;
+}
+
+#selectedPage{
+	color: red;
+	font-weight: bolder;
 }
