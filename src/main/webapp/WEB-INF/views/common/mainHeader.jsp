@@ -50,7 +50,7 @@
 							<img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login" >
 						</a>
 					<!-- 230627 -->
-		      			<button class="header-logoutBtn type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">
+		      			<button class="header-logoutBtn" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">
 		      				<img src="https://cdn-icons-png.flaticon.com/512/1828/1828427.png" alt="logoutButton">
 		      			</button>
 					</c:otherwise>

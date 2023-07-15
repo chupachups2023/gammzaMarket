@@ -47,13 +47,12 @@
 	<div class="writeRequestBtn" onclick="location.href='${pageContext.request.contextPath }/ggRequest/writeRequest.req'"><img alt="글쓰기" src="https://cdn-icons-png.flaticon.com/512/148/148764.png"><div>글쓰기</div></div>
 
 <script>
+let latitude='';
+let longitude='';
+const currSort=document.getElementById("hiddenSort").value;
 
-function success(position) {
-    const latitude = position.coords.latitude;   // 위도(37.xxxx)
-    const longitude = position.coords.longitude;
-	const currSort=document.getElementById("hiddenSort").value;
 	
-	$(":radio[name='request-sort'][value='" + currSort + "']").attr('checked', true);
+$(":radio[name='request-sort'][value='" + currSort + "']").attr('checked', true);
     
 	$("input:radio[name=request-sort]").on('click', function() {
 		let requestSort=$("input:radio[name=request-sort]:checked").val();
@@ -61,6 +60,20 @@ function success(position) {
 		if ( requestSort == currSort ){
 			return;
 		}else{
+			
+			/* $.ajax({
+				url: "${pageContext.request.contextPath}/ggRequest/requestViewForSort.req",
+				type:"get",
+				data:{"latitude":latitude, "longitude":longitude, "sort": requestSort},
+				success : function(data){
+					$("#container").load(window.location.href + " #container");
+					 $("#container").replaceWith($.parseHTML(data)); 
+				},
+				error: function(){
+					console.log("에러")
+				}
+			}) */
+			
 			if(requestSort == "recent"){
 				location.href="${pageContext.request.contextPath}/ggRequest/requestView.req?latitude="+latitude+"&longitude="+longitude+"&sort=recent"
 			}else if(requestSort =="member"){
@@ -69,8 +82,11 @@ function success(position) {
 				location.href="${pageContext.request.contextPath}/ggRequest/requestView.req?latitude="+latitude+"&longitude="+longitude+"&sort=count"
 			}
 		}
-		
 	});
+	
+function success(position) {
+    latitude = position.coords.latitude;   // 위도(37.xxxx)
+    longitude = position.coords.longitude;
 }
 
 navigator.geolocation.getCurrentPosition(success);

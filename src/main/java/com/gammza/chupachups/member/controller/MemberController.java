@@ -183,7 +183,7 @@ public class MemberController {
 		//return "redirect:/";		// String 타입으로 반환 후 반환
 	}
       
-      
+   /*   
 	@PostMapping("/memberUpdate.me")
 	public String memberUpdate(Member member, Model model, @RequestParam String newPwd, RedirectAttributes redirectAtt) {
 		if(newPwd.length() > 0) {
@@ -203,6 +203,7 @@ public class MemberController {
 		}
 		return "redirect:/member/memberInfo.me";
 	}
+	*/
 	
 	@PostMapping("/memberUpdate_Ad.me")
 	public String memberUpdate_Ad(Member member, Model model, @RequestParam String newPwd, @RequestParam int nowPage, RedirectAttributes redirectAtt) {
@@ -265,11 +266,13 @@ public class MemberController {
 		response.getWriter().print(result);
 	}
 	
+	/*
 	@GetMapping("/memberInfo.me")
 	public String memberInfo(Model model, @ModelAttribute("loginMember") Member member) { 
 		model.addAttribute("member", member);
 		return "/mypage/memberInfo";
 	}	
+	*/
 	@GetMapping("/memberInfo_Ad.me")
 	public String memberInfo_Ad(Model model, @RequestParam String userId, @RequestParam int nowPage) { 
 		Member member = memberService.selectOneMember(userId);

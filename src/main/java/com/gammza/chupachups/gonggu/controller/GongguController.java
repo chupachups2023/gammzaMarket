@@ -77,7 +77,7 @@ public class GongguController {
 	@GetMapping("/ggWrite.go")
 	public void ggWrite(HttpServletRequest request,Model model) {
 		Map<String, Gonggu> flashMap =(Map<String, Gonggu>) RequestContextUtils.getInputFlashMap(request);
-		Gonggu gonggu=null;
+		Gonggu gonggu=new Gonggu();
 		if(flashMap !=null) {
 			gonggu=flashMap.get("gonggu");
 		}

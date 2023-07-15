@@ -27,4 +27,9 @@
 	<insert id="insertReview">
 		insert into review values ( REVIEW_SEQ.nextval, #{gongguNo}, #{reviewWriter}, #{reviewContent}, #{receiverId}, #{rate}, sysdate )
 	</insert>
+	<update id="updateTemperature">
+		update member
+		set temperature=temperature + #{rate}
+		where user_id=#{userId}
+	</update>
 </mapper>
