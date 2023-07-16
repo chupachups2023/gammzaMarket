@@ -280,7 +280,22 @@ public class MemberController {
 		model.addAttribute("nowPage", nowPage);
 		return "/adminpage/memberInfo_Ad";
 	}
+	//관리자 회원추가 페이지 가기
+	@GetMapping("/insertMember_Ad.do") 
+	public void insertMember_Ad() {
+	}
 	
+	
+	// 관리자 회원추가
+	@PostMapping("/insertMember_Ad.do") 
+	public void insertMember_Ad(Member member, RedirectAttributes redirectAtt, HttpServletResponse response) throws Exception {
+		// 비밀번호 암호화
+		String rawPassword = member.getUserPwd();
+		String encodedPassword = passwordEncoder.encode(rawPassword);
+		member.setUserPwd(encodedPassword);
+		int result = memberService.insertMember(member);
+		response.getWriter().print(result);
+	}
 	
 	// 아이디 찾기 
 	@GetMapping("/findId.me")
