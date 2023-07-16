@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<!-- <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/memberEnroll.css?<%=System.currentTimeMillis() %>">
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
@@ -14,185 +13,226 @@
     <h1>회원가입</h1>
 </div>
 <div class="enroll-container">
-			<form action="${pageContext.request.contextPath}/member/memberEnroll.me" method="post" name="enrollfrm">
-					<div class="container1">
-						<div class="container2">
-								<table class="enroll-section">
-										<tr>
-												<td scope="col" class="add">
-													 <input name="userId" id="userId" placeholder="아이디 입력">
-												</td>
-												<!-- <td>
-														<input type="button" class="bo-small" id="checkId" onclick="checkIdFunc();" value="중복확인">
-														<input type="hidden" name="idDuplication" value="idUnCheck"> 중복확인 버튼을 눌렀을 때 값이 바뀌도록
-												</td> -->
-									 </tr>
-									 <tr>
-											 <td scope="col" class="add" colspan="2">
-													 <input type="password" name="userPwd" id="userPwd" placeholder="비밀번호 입력">
-													 <!-- 영문, 숫자, 특수문자 포함 8~20자리 -->
-											 </td>
-									 </tr>
-									 <tr>
-											 <td scope="col" class="add" colspan="2">
-													 <input type="password" name="userPwdChk" id="userPwdChk" placeholder="비밀번호 다시 입력">
-											 </td>
-									 </tr>
-									 <tr>
-											<td>
-												<span style="font-size: 12px;"><em>*아이디는 4~12자의 영문 소문자와 숫자만 사용 가능</em></span><br>
-												<span style="font-size: 12px;"><em>*비밀번호는 영문, 숫자, 특수문자 포함 8~20자리로 입력</em></span><br>
-											</td>
-										</tr>
-											
-										<tr>
-										<td scope="col" class="add" colspan="2">
-												<span class="guide ok">멋진 아이디네요!</span>
-												<span class="guide error">사용할 수 없는 아이디입니다.</span>
-										</td>
-										</tr>
-									 
+	<form action="${pageContext.request.contextPath}/member/memberEnroll.me" method="post" name="enrollfrm">
+		<div class="container1">
+			<div class="container2">
+				<table class="enroll-section">
+					<tr>
+						<td scope="col" class="add">
+							<input name="userId" id="userId" placeholder="아이디 입력">
+						</td>
+					</tr>
+					<tr>
+						<td scope="col" class="add" colspan="2">
+							<input type="password" name="userPwd" id="userPwd" placeholder="비밀번호 입력">
+						</td>
+					</tr>
+					<tr>
+						<td scope="col" class="add" colspan="2">
+							<input type="password" name="userPwdChk" id="userPwdChk" placeholder="비밀번호 다시 입력">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span style="font-size: 12px;"><em>*아이디는 4~12자의 영문 소문자와 숫자만 사용 가능</em></span><br>
+							<span style="font-size: 12px;"><em>*비밀번호는 영문, 숫자, 특수문자 포함 8~20자리로 입력</em></span><br>
+						</td>
+					</tr>
+					<tr>
+						<td scope="col" class="add" colspan="2">
+							<span class="guide ok">멋진 아이디네요!</span>
+							<span class="guide error">사용할 수 없는 아이디입니다.</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="container3">
+				<table class="enroll-section">
+					<tr>
+						<td scope="col" class="add">
+							<input name="name" id="name" placeholder="이름 입력">
+						</td>
+					</tr>
+					<tr>
+						<td scope="col" class="add">
+							<input name="phone" id="phone" placeholder="휴대폰번호 입력 (ex. 010-1234-5678)">
+						</td>
+					</tr>
+					<tr>
+						<td scope="col" class="add">
+							<input name="email" id="email" placeholder="이메일 입력 (ex. example@example.com)">
+						</td>
+					</tr>
+					<tr>
+						<td class="btn-cont">
+							<button type="button" class="bo-small" id="emlChk" >이메일 인증하기</button>
+						</td>
+					</tr>
+					<tr>
+						<td scope="col" class="add">
+							<input type="email" name="emailAuth" id="emailAuth" placeholder="인증번호 6자리를 입력해주세요" required>
+						</td>
+					</tr>
+					<tr>
+						<td class="btn-cont">
+							<button type="button" class="bo-small" id="emlChk2" >인증</button>
+							<input type="hidden" id="emailAuthKey" name="emailAuthKey">
+						</td>
+					</tr>
+					<tr>
+						<td scope="col" class="add">
+							<input name="birthday" id="birthday" placeholder="생년월일 8자리 입력 (ex. 2023-01-01)">
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="table1">
+				<button type="button" class="bo" onclick="validation();">회원가입</button>&emsp;
+				<button type="reset" class="bo">초기화</button>
+			</div>
+		</div>
+	</form>
+</div>
 
-							 </table>
-										 </div>
-										 <div class="container3">
-							 <table class="enroll-section">
-								<tr>
-										<td scope="col" class="add">
-												<input name="name" id="name" placeholder="이름 입력">
-										</td>
-								</tr>
-								<tr>
-										<td scope="col" class="add">
-												<input name="phone" id="phone" placeholder="휴대폰번호 입력 (ex. 010-1234-5678)">
-										</td>
-								</tr>
-								<tr>
-										<td scope="col" class="add">
-												<input name="email" id="email" placeholder="이메일 입력 (ex. example@example.com)">
-										</td>
-								</tr>
-										<tr>
-											<td class="btn-cont">
-												<button type="button" class="bo-small" id="emlChk" >이메일 인증하기</button>
-												
-											</td>
-										</tr>
-								<tr>
-										<td scope="col" class="add">
-												<input type="email" name="emailAuth" id="emailAuth" placeholder="인증번호 6자리를 입력해주세요" required>
-										</td>
-								</tr>
-										<tr>
-											<td class="btn-cont">
-												<button type="button" class="bo-small" id="emlChk2" >인증</button>
-												<input type="hidden" id="emailAuthKey" name="emailAuthKey">
-											</td>
-										</tr>
-									 <tr>
-											 <td scope="col" class="add">
-													 <input name="birthday" id="birthday" placeholder="생년월일 8자리 입력 (ex. 2023-01-01)">
-											 </td>
-									 </tr>
-							 </table>
-										 </div>
-										 <div class="lo">
-							 <table>
-									 <input type="checkbox" class="checkbox-square" /><span>이용약관에 동의하시겠습니까?</span>
-							 </table>
-										 </div>
-										 <div class="table1">
-							 <button type="button" class="bo" onclick="validation();">회원가입</button>&emsp;
-							 <button type="reset" class="bo">초기화</button>
-										 </div>
+<!-- 이용 약관 모달창 -->
+<div class="modal2" tabindex="-1" id="modal2">
+	<div class="modal-dialog">
+		<form action="${pageContext.request.contextPath}/member/ex" method="post" id="exFrm" name="exFrm">
+			<div class="modal-login">
+				<div class="modal-bg" onclick="agreeModalClose();"></div>
+				<div class="agree-container1">
+					<div class="agree-content">
+						<div class="align-both">
+							<h3>서비스 이용약관</h3>
+							<div><input type="checkbox" id="chk2_1" name="chk"><label for="chk2_1">동의합니다.</label></div>
+						</div>
+						<div class="agree-container2">
+							<div class="agree">
+								<h4>제1조 (목적)</h4>
+								이 약관은 감자마켓이 제공하는 서비스를 이용함에 있어 감자마켓과 이용자의 권리 및 의무와 이용에 관한 제반사항을 규정하는 것을 목적으로 합니다. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem error aliquid facilis facere aliquam, tempora incidunt harum maxime, itaque repellat expedita exercitationem. Et sapiente doloremque enim modi rem in corporis excepturi quae quas laboriosam!
+								<br>
+								<h4>제2조 (목적)</h4>
+								이 약관에서 사용하는 용어의 정의는 다음과 같습니다. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem error aliquid facilis facere aliquam, tempora incidunt harum maxime, itaque repellat expedita exercitationem. Iusto molestias illo ipsa, quam dolore quaerat magni. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo facere velit quaerat fugit earum harum quam qui illum! Et sapiente doloremque enim modi rem in corporis excepturi quae quas laboriosam!
+							</div>
+						</div>
+					
+						<div class="align-both">
+							<h3>개인정보 수집 및 이용에 관한 안내</h3>
+							<div><input type="checkbox" id="chk2_2" name="chk"><label for="chk2_2">동의합니다.</label></div>
+						</div>
+						<div class="agree-container2">
+							<div class="agree">
+								<h4>제1조 (목적)</h4>
+								이 약관은 감자마켓이 제공하는 서비스를 이용함에 있어 감자마켓과 이용자의 권리 및 의무와 이용에 관한 제반사항을 규정하는 것을 목적으로 합니다. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem error aliquid facilis facere aliquam, tempora incidunt harum maxime, itaque repellat expedita exercitationem. Iusto molestias illo ipsa, quam dolore quaerat magni. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo facere velit quaerat fugit earum harum quam qui illum! Et sapiente doloremque enim modi rem in corporis excepturi quae quas laboriosam!
+							</div>
+						</div>
+						<div class="agree-total">
+							<div class="chk3"><input type="checkbox" id="chk-all" name="chk" onclick="selectAll(this)"><label for="chk-all">전체 동의합니다.</label></div>
+							<button type="button" class="bo login-btn" onclick="agreeModal();" id="agree-modal">정보 입력하기</button>
+						</div>
+						<a id="close-modal2" class="modal-closeBtn" onclick="agreeModalClose();">닫기</a>
 					</div>
-				 </form>
-		
+				</div>
+			</div>
+		</form>
+	</div>
 </div>
 
 
-	<!-- 우편번호, 주소 삭제 -->
-       <!-- <div class="container2">
-           <table class="enroll-section2"> -->
-               <!-- <tr>
-                   <td scope="col" class="add">
-                       <input type="detailAddress" name="address" placeholder="우편번호 입력">
-                   </td>
-               </tr> -->
-            <!-- <tr>
-                <td scope="col" class="add">
-                    <input name="zipcode" id="postcode" class="" placeholder="우편번호" readonly>
-                </td>
-                <td>
-                    <button class="bo-small" onclick="findAddr();" type="button" style="background-color: rgba(94, 177, 98, 0.75);">우편번호 찾기</button>
-                </td>
-            </tr>
-            <tr>
-                <td scope="col" class="add">
-                    <input name="address" id="address" class="" placeholder="주소" readonly><br> 우편번호 찾고 주소 클릭 시 자동 입력됨
-                </td>
-            </tr>
-            <tr>
-                <td scope="col" class="add">
-                    <input name="detailAddress" id="addressdetail" class="" placeholder="상세주소 입력">
-                </td>
-            </tr> -->
-               <!-- <tr>
-                <td scope="col" class="add">
-                    <input name="" type="detailAddress" placeholder="주소 입력" id="">
-                </td>
-            </tr> -->
-           <!-- </table>
-       </div> -->
-
-
 <script type="text/javascript">
-		document.querySelector("#userId").addEventListener("keyup", (e) => {
-			const ok = document.querySelector(".ok");
-			const error = document.querySelector(".error");
-			const userId = e.target;
-			
-			if (userId.value.length < 4) {
-				ok.style.display = "none";
-				error.style.display = "none";
-				return;
-			}
-			
-			$.ajax({
-				url: "${pageContext.request.contextPath}/member/checkId.me",
-				data: {userId: userId.value},
-				method: "get",
-				dataType: "json",
-				success(result) {
-					console.log(result);
-					const {userId, available} = result; // unpacking 
-					
-					if (available) {
-						ok.style.display = "inline";
-						error.style.display = "none";
-					} else {
-						ok.style.display = "none";
-						error.style.display = "inline";
-					}
-				},
-				error: console.log
-			});
-		});
+	$("#modal2").ready(function() {
+		$("#modal2").show();
+	});
+
+	function agreeModalClose() {
+		$('.modal2').hide();
+	};
 	
-	</script>
-
-<script type="text/javascript">
-
-	/* function inputIdChk() {
-		enrollfrm.idDuplication.value = "idUnCheck";
-		console.log(enrollfrm.idDuplication.value);
+	function agreeModal() {
+		if (!$("input:checked[id='chk2_1']").is(":checked")) {
+			alert("약관 동의가 필요합니다.");
+			return false;
+		}
+		if (!$("input:checked[id='chk2_2']").is(":checked")) {
+			alert("약관 동의가 필요합니다.");
+			return false;
+		}
 		
+		$('.modal2').hide();
+		
+	};
+
+	// 약관 체크박스 전체 선택 or 전체 해제 
+	function selectAll(selectAll) {
+		var checkboxes = document.getElementsByName('chk');
+		checkboxes.forEach((checkbox) => {
+			checkbox.checked = selectAll.checked;
+		})
 	}
+
+	// 개별 체크박스 모두 선택하면, 전체 선택도 체크되게   
+	$(".agree-content").on('click', 'input:not(#chk-all)', function () {
+		var isChecked = true;
+		$(".agree-content input:not(#chk-all)").each(function() {
+			isChecked =  isChecked && $(this).is(":checked");
+		})
+		$("#chk-all").prop("checked", isChecked)
+	});
+
 	
-	function inputIdChk(id) {
-		enrollfrm.idDuplication.value = "idCheck";
-		console.log(enrollfrm.idDuplication.value);
-	}  */
+	const modal2 = document.getElementById("modal2");
+	const openModalBtn2 = document.getElementById("open-modal2");
+	const closeModalBtn2 = document.getElementById("close-modal2");
+	const agreeModalBtn = document.getElementById("agree-modal");
+
+	openModalBtn2.addEventListener("click", () => {
+		modal2.style.display = "block";
+		document.body.style.overflow = "hidden"; 
+	});
+	
+	function agreeModalClose(){
+		modal2.style.display = "none";
+		document.body.style.overflow = "auto"; 
+	}
+		agreeModalBtn.addEventListener("click", () => {
+			agreeModalClose();
+		});
+
+document.querySelector("#userId").addEventListener("keyup", (e) => {
+	const ok = document.querySelector(".ok");
+	const error = document.querySelector(".error");
+	const userId = e.target;
+	
+	if (userId.value.length < 4) {
+		ok.style.display = "none";
+		error.style.display = "none";
+		return;
+		}
+	
+	$.ajax({
+		url: "${pageContext.request.contextPath}/member/checkId.me",
+		data: {userId: userId.value},
+		method: "get",
+		dataType: "json",
+		success(result) {
+			console.log(result);
+			const {userId, available} = result; // unpacking 
+			
+			if (available) {
+				ok.style.display = "inline";
+				error.style.display = "none";
+			} else {
+				ok.style.display = "none";
+				error.style.display = "inline";
+			}
+		},
+		error: console.log
+		});
+	});
+	
+</script>
+
+<script type="text/javascript">
 
 	function validation() {
 		var uid = document.getElementById("userId");
@@ -200,10 +240,6 @@
 		var pwc = document.getElementById("userPwdChk");
 		var uname = document.getElementById("name");
 		var phone = document.getElementById("phone");
-		
-		// 자동으로 하이픈 넣기 
-		// phone = phone.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
-		
 		var email = document.getElementById("email");
 		var authKey = document.getElementById("emailAuthKey");
 		var birthday = document.getElementById("birthday");
@@ -230,7 +266,6 @@
 		// 생년월일
 		var birthdayCfm = /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
 
-		
 		// 아이디 확인
 		if (uid.value == "") {
 			alert("아이디를 입력하세요");
@@ -244,7 +279,6 @@
 			uid.focus();
 			return false;
 		}
-		
 		
 		// 비밀번호 확인 
 		if (pw.value == "") {
@@ -367,47 +401,5 @@
 		}
 	});
 </script>
-
-
-
-
-<!-- <script>
-		<script type="text/javascript">
-		document.querySelector("#userId").addEventListener("keyup", (e) => {
-			const ok = document.querySelector(".ok");
-			const error = document.querySelector(".error");
-			const userId = e.target;
-			
-			if (userId.value.length < 4) {
-				ok.style.display = "none";
-				error.style.display = "none";
-				return;
-			}
-			
-			
-			$.ajax({
-				url: "/member/checkId.do",
-				data: {userId: userId},
-				method: "post",
-				dataType: "json",
-				success(result) {
-					console.log(result);
-					const {userId, available} = result; // unpacking 
-					
-					if (available) {
-						ok.style.display = "inline";
-						error.style.display = "none";
-					} else {
-						ok.style.display = "none";
-						error.style.display = "inline";
-					}
-				},
-				error: console.log
-			});
-		});
-	
-	</script> -->
-
-
    
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
