@@ -158,17 +158,17 @@
 			modal.style.display = "block";
 			document.body.style.overflow = "hidden"; // 스크롤바 제거
 		});
+
 		// 모달창 닫기
-	// 모달창 닫기
-	function loginModalClose(){
-		modal.style.display = "none";
-		document.body.style.overflow = "auto"; // 스크롤바 보이기
-	}
-		// 모달창 닫기
-		loginModalBtn.addEventListener("click", () => {
-			loginModalClose();
-			loginFrm.submit();
-		});
+		function loginModalClose(){
+			modal.style.display = "none";
+			document.body.style.overflow = "auto"; // 스크롤바 보이기
+		}
+			// 모달창 닫기
+			loginModalBtn.addEventListener("click", () => {
+				loginModalClose();
+				loginFrm.submit();
+			});
 		
 		function fn_click(category) {
 			function success(position) {
