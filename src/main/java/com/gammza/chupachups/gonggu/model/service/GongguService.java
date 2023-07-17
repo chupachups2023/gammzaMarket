@@ -33,12 +33,12 @@ public interface GongguService {
 
 	int updateGonggu(Gonggu gonggu);
 
+	ArrayList<Gonggu> selectAllGongguList();
+
 	int updateGongguCount(int gongguNo);
 
 	int updateGongguStatus(int gongguNo);
 
 	int updatepullUpAt(int gongguNo);
-
-
 
 }

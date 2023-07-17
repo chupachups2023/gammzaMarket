@@ -40,5 +40,6 @@ public interface GongguDao {
 
 	int updatepullUpAt(int gongguNo);
 
+	ArrayList<Gonggu> selectAllGongguList();
 
 }
