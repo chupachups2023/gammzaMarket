@@ -132,6 +132,7 @@
 		}
 		const pg = $(':radio:checked').val();
 		const merchant_uid = orderNum();
+		
 		const name = $('#orderName').val()+"oint";
 		const pointPrice = $('#pointPrice').val();
 	    IMP.request_pay({
@@ -189,6 +190,30 @@
 		
 		let orderNum = "p" + $('#pointPrice').val() + "_" + year + month + day;
 		orderNum += String(Math.floor(Math.random() * 10000 +1)).padStart(4, "0");
+
+		let orderNum2;
+		for(var i=0; ;i++){
+			if(orderNum == orderNum2){
+				break;
+			}
+			(function(i){
+				$.ajax({
+					url: 'checkUid.do',
+					type: 'post',
+					data: {pointOrderNum : orderNum},
+					async: false,
+					success : function(result) {
+									if(result > 0){
+										orderNum = "p" + $('#pointPrice').val() + "_" + year + month + day;
+										orderNum += String(Math.floor(Math.random() * 10000 +1)).padStart(4, "0");
+									}else{
+										orderNum2 = orderNum;
+									}
+					},
+					error:function(){console.log("오류");}
+				});
+			})(i);
+		}
 		return orderNum;
 	}
 	

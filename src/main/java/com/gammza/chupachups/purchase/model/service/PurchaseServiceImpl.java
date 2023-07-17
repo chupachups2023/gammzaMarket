@@ -22,4 +22,9 @@ public class PurchaseServiceImpl implements PurchaseService {
 		return purchaseDao.insertPointPurRec(pointPR);
 	}
 
+	@Override
+	public int selectPointOrderNum(String pointOrderNum) {
+		return purchaseDao.selectPointOrderNum(pointOrderNum);
+	}
+
 }
