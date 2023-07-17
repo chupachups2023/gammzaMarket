@@ -60,20 +60,6 @@ $(":radio[name='request-sort'][value='" + currSort + "']").attr('checked', true)
 		if ( requestSort == currSort ){
 			return;
 		}else{
-			
-			/* $.ajax({
-				url: "${pageContext.request.contextPath}/ggRequest/requestViewForSort.req",
-				type:"get",
-				data:{"latitude":latitude, "longitude":longitude, "sort": requestSort},
-				success : function(data){
-					$("#container").load(window.location.href + " #container");
-					 $("#container").replaceWith($.parseHTML(data)); 
-				},
-				error: function(){
-					console.log("에러")
-				}
-			}) */
-			
 			if(requestSort == "recent"){
 				location.href="${pageContext.request.contextPath}/ggRequest/requestView.req?latitude="+latitude+"&longitude="+longitude+"&sort=recent"
 			}else if(requestSort =="member"){

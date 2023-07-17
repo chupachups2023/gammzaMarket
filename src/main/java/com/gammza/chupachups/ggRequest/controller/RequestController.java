@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,31 +63,6 @@ public class RequestController {
 		
 		return "/others/requestView";
 	}
-	@GetMapping("/requestViewForSort.req")
-	public String requestViewForSort(@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude, 
-			Model model,HttpSession session , @RequestParam(defaultValue="recent") String sort) throws ServletException, IOException {
-		model.addAttribute("hiddenSort", sort);
-		Member member=(Member)session.getAttribute("loginMember");
-		HashMap<String,String> map=new HashMap<String,String>();
-		if(member != null) {
-			map.put("latitude", member.getLatitude());
-			map.put("longitude", member.getLongitude());
-		}else {
-			map.put("latitude", latitude);
-			map.put("longitude", longitude);
-		}
-		map.put("sort", sort);
-		ArrayList<Request> requestList=requestService.selectAllRequestList(map);
-		
-		for(int i=0;i<requestList.size();i++) {
-			Request reQuest=requestList.get(i);
-			String regAt=requestService.selectRequestMember(reQuest.getRequestNo()).get(0).getRegAt();
-			reQuest.setRecentDate(regAt);
-		}
-		model.addAttribute("requestList", requestList);
-		
-		return "jsonView";
-	}
 	
 	@GetMapping("/requestRead.req")
 	public String requestRead(@RequestParam int requestNo, Model model) {
@@ -112,9 +86,6 @@ public class RequestController {
 	public String writeRequest() {
 		return "/others/writeRequest";
 	}
-	
-	
-	
 
 	 //요청 글 작성
 	 @PostMapping("/ggRequestFrm.req")
