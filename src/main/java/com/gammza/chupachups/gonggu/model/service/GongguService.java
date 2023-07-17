@@ -23,11 +23,11 @@ public interface GongguService {
 	
 	int insertGonggu(Gonggu gonggu);
 	
-	int selectGongguTotalRecored();
+	int selectGongguTotalRecord();
 	
 	int selectLastNum();
 	
-	int selectTotalRecored();
+	int selectTotalRecord();
 
 	int updateEndStatus(int gongguNo);
 

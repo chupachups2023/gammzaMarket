@@ -46,7 +46,7 @@
     	order by pullup_at desc
     </select>
 
-	<select id="selectTotalRecored" resultType="_int">
+	<select id="selectTotalRecord" resultType="_int">
 		select count(*)
 		from gonggu
 		where status=1
@@ -119,7 +119,7 @@
 		 	${search}
 	</select>
 	
-	<select id="selectGongguTotalRecored" resultType="_int">
+	<select id="selectGongguTotalRecord" resultType="_int">
 		select count(*)
 			from gonggu
 		  where status=1

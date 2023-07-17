@@ -20,7 +20,7 @@ public interface GongguDao {
 
 	Gonggu selectOneGonggu(int gongguNo);
 
-	int selectTotalRecored();
+	int selectTotalRecord();
 
 	int updateGongguCount(int gongguNo);
 
@@ -32,7 +32,7 @@ public interface GongguDao {
 
 	ArrayList<Gonggu> searchGonggu(HashMap<String, String> map);
 	
-	int selectGongguTotalRecored();
+	int selectGongguTotalRecord();
 
 	ArrayList<Gonggu> selectOneCategory(HashMap<String, String> map);
 
