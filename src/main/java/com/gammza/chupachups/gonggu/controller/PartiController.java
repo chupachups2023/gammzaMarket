@@ -95,12 +95,14 @@ public class PartiController {
 		
 		HashMap<String,String> listMap=new HashMap<String,String>();
 		listMap.put("sort", sort);
+		System.out.println("정렬: "+sort);
+		
 		listMap.put("userId", loginMember.getUserId());
 		String endStatus="AND g.END_STATUS = 1";
 		if(end == 0) {	endStatus=" ";	}
 		listMap.put("endStatus", endStatus);
 		
-		model.addAttribute("endStatus", endStatus);
+		model.addAttribute("endStatus", end);
 		model.addAttribute("sort", sort);
 		
 		ArrayList<Gonggu> partiGongguList=new ArrayList<>();
