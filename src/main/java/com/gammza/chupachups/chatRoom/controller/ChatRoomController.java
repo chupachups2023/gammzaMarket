@@ -76,7 +76,6 @@ public class ChatRoomController {
 		model.addAttribute("leader", leader);
 		model.addAttribute("mainList", mainList);
 		model.addAttribute("parti", parti);
-		System.out.println(mainList);
 		
 		return "mypage/chatting";
 	}

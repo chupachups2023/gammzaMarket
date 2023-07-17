@@ -61,7 +61,7 @@
 									<span class="preview-nickname" id="roomOwner">${chatRoom.roomOwner}</span>
 										<div class="gongguName">${list.gongguName}</div>	
 									<div class="sub-text">
-										<span id="gongguNo">${chatRoom.gongguNo}, ${parti}</span>
+										<span id="gongguNo">${chatRoom.gongguNo}</span>
 										<span id="lastChat">${chatRoom.lastChat}</span>
 									</div>
 								</div>									
