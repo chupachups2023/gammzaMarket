@@ -2,6 +2,8 @@ package com.gammza.chupachups.chatRoom.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,8 +26,9 @@ public class ChatRoomController {
 	private ChatRoomService chatRoomService;	
 	
 	@GetMapping("/chatRoom/myChatList.bo")
-	public String chatRoomList(@RequestParam(defaultValue="1") int nowPage, @RequestParam(required = false) String roomOwner, Model model) {
+	public String chatRoomList(@RequestParam(defaultValue="1") int nowPage, @RequestParam(required = false) String roomOwner, HttpSession hs, Model model) {
 		int totalRecord = chatRoomService.selectTotalRecord();
+		String leader = (String) hs.getAttribute("loginmember");
 		System.out.println("total : " + totalRecord);
 		int limit = 50000;
 		int offset = (nowPage -1 ) * limit;
@@ -44,6 +47,7 @@ public class ChatRoomController {
 */
 		model.addAttribute("chatRoomList", chatRoomList);
 		model.addAttribute("pi", pi);
+		model.addAttribute("leader", leader);
 		
 		return "mypage/chatting";
 	}
