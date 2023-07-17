@@ -214,7 +214,7 @@ public class MemberController {
 		} else {
 			redirectAtt.addFlashAttribute("msg", "회원정보 수정 실패");
 		}
-		return "redirect:/member/memberList.do?nowPage="+nowPage;
+		return "redirect:/member/memberInfo_Ad.me?nowPage="+nowPage+"&userId="+ member.getNewUserId();
 	}
 	
 	@GetMapping("/changeStatus.do")
