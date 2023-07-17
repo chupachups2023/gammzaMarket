@@ -52,22 +52,20 @@
 					<c:forEach items="${chatRoomList}" var="chatRoom">
 						<%-- <c:if test="${parti.status eq 1 or chatRoom.roomOwner eq loginMember.userId}"> </c:if>--%>
 						<li class="css-v2yhcd">
-							<div class="selected css-y6c1l4 chatRoomItem"
-								id="${chatRoom.roomNo}" data-room-no="${chatRoom.roomNo}"
-								data-user-id="${loginMember.userId}">
-								<input type="hidden" class="${chatRoom.roomNo}_roomNo"
-									id="roomNo" value="${chatRoom.roomNo}"> <input
-									type="hidden" id="userId" value="${loginMember.userId}">
-								<div class="preview-title-wrap">
-									<span class="preview-nickname" id="roomOwner">${chatRoom.roomOwner}</span>
-									<div class="sub-text">
-										<span id="gongguNo">${chatRoom.gongguNo}</span> 
-										<span id="lastChat">${chatRoom.lastChat}</span>
-									</div>
-								</div>
+							<div class="selected css-y6c1l4 chatRoomItem" id="${chatRoom.roomNo}" data-room-no="${chatRoom.roomNo}" data-user-id="${loginMember.userId}">
 								<c:forEach items="${mainList}" var="list" varStatus="i">
 									<c:if test="${chatRoom.gongguNo eq list.gongguNo }">
-										<img
+								<input type="hidden" class="${chatRoom.roomNo}_roomNo" id="roomNo" value="${chatRoom.roomNo}"> 
+								<input type="hidden" id="userId" value="${loginMember.userId}">
+								<div class="preview-title-wrap">
+									<span class="preview-nickname" id="roomOwner">${chatRoom.roomOwner}</span>
+										<div class="gongguName">${list.gongguName}</div>	
+									<div class="sub-text">
+										<span id="gongguNo">${chatRoom.gongguNo}, ${parti}</span>
+										<span id="lastChat">${chatRoom.lastChat}</span>
+									</div>
+								</div>									
+										&emsp;&emsp;&emsp;<img
 											src="${pageContext.request.contextPath}/resources/upload/${list.photo1}"
 											alt="이미지 없음" width="50px">
 									</c:if>
@@ -107,7 +105,7 @@
 						value="${chatRoom.roomNo}">
 					<%-- <jsp:include page="/WEB-INF/views/mypage/chatDetail.jsp" /> --%>
 				</div>
-				<div>
+				<div>				 
 					<textarea placeholder="메시지를 입력해주세요" id="chatContent"
 						class="css-10fmtiz"></textarea>
 					<button class="disable css-1useanf" onclick="insertMsg();"
