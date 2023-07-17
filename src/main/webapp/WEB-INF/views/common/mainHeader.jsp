@@ -36,22 +36,31 @@
 					<c:when test="${empty loginMember}">
 						<button class="header-loginBtn btn" id="open-modal">
 							<!-- <i class="fa-solid fa-arrow-right-to-bracket" style="color: #5eb162;"></i> -->
-							<img src="https://cdn-icons-png.flaticon.com/512/1828/1828395.png" alt="loginButton">
+							<!-- <img src="https://cdn-icons-png.flaticon.com/512/1828/1828395.png" alt="loginButton"> -->
+							<i class="fa-solid fa-right-to-bracket fa-3x" style="color: #5eb162;"></i>
 						</button>
 					</c:when>
 					<c:when test="${loginMember.userId eq 'admin'}">
 						<a href="${pageContext.request.contextPath}/admin/adminMain.ad">
-							<img src="https://cdn-icons-png.flaticon.com/512/5909/5909015.png" alt="adminlogo" class="header-login" >
+							<img src="https://cdn-icons-png.flaticon.com/512/5909/5909015.png" alt="adminlogo" class="header-adminLogin" >
 						</a>
-		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
+		      			<button type="button" class="header-logoutBtn" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">
+		      				<i class="fa-solid fa-right-from-bracket fa-3x" style="color: #f9e8d0;"></i>
+		      			</button>
 					</c:when>
 					<c:otherwise>
 						<a href="${pageContext.request.contextPath}/mypage/mypageMain.me">
 							<img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login" >
 						</a>
+<<<<<<< Updated upstream
 					<!-- 230627 -->
 		      			<button class="header-logoutBtn type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">
 		      				<img src="https://cdn-icons-png.flaticon.com/512/1828/1828427.png" alt="logoutButton">
+=======
+		      			<button class="header-logoutBtn" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">
+		      				<!-- <img src="https://cdn-icons-png.flaticon.com/512/1828/1828427.png" alt="logoutButton"> -->
+		      				<i class="fa-solid fa-right-from-bracket fa-3x" style="color: #f9e8d0;"></i>
+>>>>>>> Stashed changes
 		      			</button>
 					</c:otherwise>
 				</c:choose>
