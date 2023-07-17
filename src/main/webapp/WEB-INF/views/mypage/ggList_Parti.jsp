@@ -15,13 +15,15 @@
 		<tr>
 			<td colspan="3"  class="sort-type" >
 			<small>
-				<input type="checkbox" name="onlyOn" id="onlyOn"><label for="onlyOn"> 마감 공구 제외하고 보기</label>
+				<input type="radio" name="sort" id="recent" value="recent" <c:if test="${hiddenSort eq 'recent' }">checked</c:if> ><label for="recent"> 신청 순으로 정렬</label>
+				<input type="radio" name="sort" id="endTime" value="endTime" <c:if test="${hiddenSort eq 'endTime' }">checked</c:if> ><label for="endTime" > 마감 순으로 정렬</label>
+				<input type="hidden" name="hiddenSort" value="${sort }" id="hiddenSort">
 			</small>
 			</td>
 			<td colspan="3"  class="sort-type align-right">
 			<small>
-				<input type="radio" name="parti-sort" id="regAt" value="2" checked="checked"><label for="regAt"> 신청 순으로 정렬</label>
-				<input type="radio" name="parti-sort" id="endTime" value="0"><label for="endTime"> 마감 순으로 정렬</label> 
+				<input type="checkbox" name="end" id="end" <c:if test="${endStatus eq 0 }">checked</c:if> ><label for="end"> 마감 공구 제외하고 보기</label>
+				<input type="hidden" name="hiddenEnd" value="${end }" id="hiddenEnd">
 			</small>
 			</td>
 		</tr>
@@ -186,6 +188,26 @@
  			})
  		}
  	}
-	
+	function sortByWhat(what){
+		let sortby=what;
+		console.log(sortby);
+		if($("#withEnd").prop('checked')){
+			location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortby+"&end=0";
+		}else{
+			location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortby;
+		}
+	}
+	$(function(){
+		sortbyy=document.getElementById("sortByHidden").value;
+		console.log(sortbyy)
+		
+		$("#withEnd").on('click', function() {
+			if ( $(this).prop('checked') ) {
+				location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortbyy+"&end=0"
+			} else {
+				location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortbyy
+			}
+		});
+	})
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
