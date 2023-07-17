@@ -25,7 +25,13 @@ textarea{
     width: 65px;
     opacity: 0.35;
     margin-right: -7px;
-    }
+}
+    
+.header-memberLogin {
+	width: 65px;
+    opacity: 0.35;
+    margin-right: -7px;
+}
 
 
 .header-loginBtn img {
