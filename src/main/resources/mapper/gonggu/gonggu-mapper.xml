@@ -110,8 +110,16 @@
 		 where gonggu_no=#{gongguNo} 
 	</update>
 	<select id="selectLeadGongguList" resultMap="gongguMap">
-		select * from gonggu where GONGGU_WRITER=#{userId} and status=1
-		order by pullup_at desc
+		<choose>
+			<when test="sort.equals('endTime')">
+				select * from gonggu where GONGGU_WRITER=#{userId} and status=1 ${endStatus}
+				order by end_time
+			</when>
+			<otherwise>
+				select * from gonggu where GONGGU_WRITER=#{userId} and status=1 ${endStatus}
+				order by pullup_at desc
+			</otherwise>
+		</choose>
 	</select>
 	<select id="searchGonggu" resultMap="gongguMap">
 		select * 

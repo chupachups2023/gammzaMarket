@@ -12,15 +12,17 @@
 <div id="container">
 	<table class="table" align="center" >
 		<tr>
-			<td colspan="2"  class="sort-type" >
+			<td colspan="3"  class="sort-type" >
 			<small>
-				<input type="checkbox" name="onlyOn" id="onlyOn" ><label for="onlyOn"> 마감 공구 제외하고 보기</label>
+				<input type="radio" name="sort" id="recent" value="recent" <c:if test="${sort eq 'recent' }">checked</c:if> ><label for="recent"> 신청 순으로 정렬</label>
+				<input type="radio" name="sort" id="endTime" value="endTime" <c:if test="${sort eq 'endTime' }">checked</c:if> ><label for="endTime" > 마감 순으로 정렬</label>
+				<input type="hidden" name="hiddenSort" value="${sort }" id="hiddenSort">
 			</small>
 			</td>
-			<td colspan="4"  class="sort-type align-right">
+			<td colspan="3"  class="sort-type align-right">
 			<small>
-				<input type="radio" name="parti-sort" id="regAt" value="2" checked="checked"><label for="regAt"> 최근 오픈 순으로 정렬</label>&emsp;
-				<input type="radio" name="parti-sort" id="endTime" value="0"><label for="endTime"> 마감 임박 순으로 정렬</label> 
+				<input type="checkbox" name="end" id="end" <c:if test="${endStatus eq 0 }">checked</c:if> ><label for="end"> 마감 공구 제외하고 보기</label>
+				<input type="hidden" name="hiddenEnd" value="${endStatus }" id="hiddenEnd">
 			</small>
 			</td>
 		</tr>
@@ -61,5 +63,39 @@
 		</table>
 	</div>
 
+<script>
+	$(function(){
+		let hiddenSort=document.getElementById("hiddenSort").value;
+		let hiddenEnd=document.getElementById("hiddenEnd").value;
+		console.log(hiddenSort);
+		
+		$("#recent").on('click', function() {
+			if(hiddenSort == "recent"){
+				return;
+			}else{
+				location.href="${pageContext.request.contextPath}/gonggu/ggLeadList.pa?sort=recent&end="+hiddenEnd;
+			}
+		})
+		
+		$("#endTime").on('click', function() {
+			if(hiddenSort == "endTime"){
+				return;
+			}else{
+				location.href="${pageContext.request.contextPath}/gonggu/ggLeadList.pa?sort=endTime&end="+hiddenEnd;
+			}
+		})
+	})
+	$(function(){
+		
+		$("#end").on('click', function() {
+			let hiddenSort=document.getElementById("hiddenSort").value;
+			if ( $(this).prop('checked') ) {
+				location.href="${pageContext.request.contextPath}/gonggu/ggLeadList.pa?sort="+hiddenSort+"&end=0"
+			} else {
+				location.href="${pageContext.request.contextPath}/gonggu/ggLeadList.pa?sort="+hiddenSort
+			}
+		});
+	})
+</script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

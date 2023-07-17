@@ -3,6 +3,8 @@ package com.gammza.chupachups.gonggu.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -89,17 +91,15 @@ public class PartiController {
 	}
 	
 	@GetMapping("/ggPartiList.pa")
-	public String partiList(Model model,@RequestParam(defaultValue="recent") String sort,@RequestParam(defaultValue="1") int end) {
-		//최신신청 순서로 가져오기
+	public String partiList(Model model,@RequestParam(defaultValue="recent") String sort,@RequestParam(defaultValue="0") int end) {
 		Member loginMember=(Member)model.getAttribute("loginMember");
 		
 		HashMap<String,String> listMap=new HashMap<String,String>();
 		listMap.put("sort", sort);
-		System.out.println("정렬: "+sort);
 		
 		listMap.put("userId", loginMember.getUserId());
-		String endStatus="AND g.END_STATUS = 1";
-		if(end == 0) {	endStatus=" ";	}
+		String endStatus=" ";
+		if(end == 1) {	endStatus="AND g.END_STATUS = 1";	}
 		listMap.put("endStatus", endStatus);
 		
 		model.addAttribute("endStatus", end);
@@ -208,9 +208,20 @@ public class PartiController {
 	
 	//총대가 오픈한 공구 리스트
 	@GetMapping("/ggLeadList.pa")
-	public String getLeadList(Model model) {
+	public String getLeadList(Model model, @RequestParam(defaultValue="recent") String sort, @RequestParam(defaultValue="0") int end, HttpSession session) {
+		HashMap<String,String> listMap=new HashMap<String,String>();
+		listMap.put("sort", sort);
+		
+		String endStatus=" ";
+		if(end == 1) {	endStatus="AND END_STATUS = 1";	}
+		listMap.put("endStatus", endStatus);
+		
+		model.addAttribute("endStatus", end);
+		model.addAttribute("sort", sort);
+		
 		Member member=(Member)model.getAttribute("loginMember");
-		ArrayList<Gonggu> leadList=gongguService.selectLeadGongguList(member.getUserId());
+		listMap.put("userId", member.getUserId());
+		ArrayList<Gonggu> leadList=gongguService.selectLeadGongguList(listMap);
 		model.addAttribute("leadList", leadList);
 		
 		return "/mypage/ggList_Leader";

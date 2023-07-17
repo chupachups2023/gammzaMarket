@@ -236,7 +236,9 @@ public class GongguController {
 				e.printStackTrace();
 			}
 		}else {
-			gonggu.setPhoto1(request.getPhoto1());
+			if(request !=null) {
+				gonggu.setPhoto1(request.getPhoto1());
+			}
 		}
 		if(upPhoto2.getSize()>0) {
 			String changeFilename=SpringUtils.changeMultipartFile(upPhoto2);
@@ -250,7 +252,9 @@ public class GongguController {
 				e.printStackTrace();
 			}
 		}else {
-			gonggu.setPhoto2(request.getPhoto2());
+			if(request != null) {
+				gonggu.setPhoto2(request.getPhoto2());
+			}
 		}
 		if(upPhoto3.getSize()>0) {
 			String changeFilename=SpringUtils.changeMultipartFile(upPhoto3);
@@ -264,7 +268,9 @@ public class GongguController {
 				e.printStackTrace();
 			}
 		}else {
-			gonggu.setPhoto3(request.getPhoto3());
+			if(request !=null) {
+				gonggu.setPhoto3(request.getPhoto3());
+			}
 		}
 		if (!photo.isEmpty()) {
 			Collections.sort(photo);

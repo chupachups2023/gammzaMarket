@@ -15,7 +15,7 @@ public interface GongguService {
 	
 	ArrayList<Gonggu> selectMainList();
 	
-	ArrayList<Gonggu> selectLeadGongguList(String userId);
+	ArrayList<Gonggu> selectLeadGongguList(HashMap<String, String> listMap);
 	
 	ArrayList<Gonggu> selectOneCategory(HashMap<String, String> map);
 	

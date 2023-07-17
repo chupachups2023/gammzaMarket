@@ -76,8 +76,8 @@ public class GongguServiceImpl implements GongguService {
 	}
   
   @Override
-	public ArrayList<Gonggu> selectLeadGongguList(String userId) {
-		return gongguDao.selectLeadGongguList(userId);
+	public ArrayList<Gonggu> selectLeadGongguList(HashMap<String, String> listMap) {
+		return gongguDao.selectLeadGongguList(listMap);
 	}
 
 	@Override
