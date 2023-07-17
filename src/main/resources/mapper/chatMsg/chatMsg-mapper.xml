@@ -8,13 +8,13 @@
 		select *
 		  from chat_msg
 		 where room_no = #{roomNo}
-		 order by send_date desc
+		 order by msg_no
 	</select>
 	<insert id="insertMsg">
 		insert into chat_msg
 		values (chat_msg_seq.nextval,
 				#{roomNo},
-				#{userId},
+				#{chatWriter},
 				#{chatContent},
 				default		
 		)

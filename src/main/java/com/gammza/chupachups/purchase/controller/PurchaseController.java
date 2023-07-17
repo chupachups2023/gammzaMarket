@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,24 +39,20 @@ public class PurchaseController {
 	private PurchaseService purchaseService;
 
 	@GetMapping("/pointPurchase.do")
-	public void pointPurchase(HttpSession session, Model model) {
-		Member loginMember = (Member) session.getAttribute("loginMember");
-		String userId = loginMember.getUserId();
-
-		Member member = memberService.selectOneMember(userId);
+	public void pointPurchase(@ModelAttribute("loginMember") Member member, Model model) {
+		member = memberService.selectOneMember(member.getUserId());
 		model.addAttribute("loginMember", member);
 	}
 
 	@PostMapping("/updatePoint.do")
-	public void updatePoint(PointPurRec pointPR, Model model, HttpSession session) {
-		Member loginMember = (Member) session.getAttribute("loginMember");
-		String userId = loginMember.getUserId();
+	public void updatePoint(PointPurRec pointPR, Model model, @ModelAttribute("loginMember") Member member) {
+		String userId = member.getUserId();
 		pointPR.setUserId(userId);
 		
 		int result1 = purchaseService.updatePoint(pointPR);
 		int result2 = purchaseService.insertPointPurRec(pointPR);
 		
-		Member member = memberService.selectOneMember(userId);
+		member = memberService.selectOneMember(userId);
 		model.addAttribute("loginMember", member);
 		model.addAttribute(pointPR);
 	}
@@ -64,7 +61,7 @@ public class PurchaseController {
 	public void pointPurChk(@RequestParam String pointOrderNum, Model model) {
 		model.addAttribute(pointOrderNum);
 	}
-	
+//	비공개 깃헙이라 넣었지만 restKey는 공개되면 문제가 생길 수 있으니 포폴 사용시 삭제해주세요.
 	private IamportClient client = new IamportClient("0801753876651112","hdMMqurzCCIPb4MfLwsghA1aKzvKJoSmXrpR4jd68bDiZCvciaqVu1lR7HHjrXYzWNuyDHzSWotRohBi");
 	
 	@ResponseBody

@@ -29,16 +29,16 @@ public interface GongguService {
 	
 	int selectTotalRecored();
 
-	int updateGongguCount(int gongguNo);
-
 	int updateEndStatus(int gongguNo);
 
 	int updateGonggu(Gonggu gonggu);
-	
+
+	ArrayList<Gonggu> selectAllGongguList();
+
+	int updateGongguCount(int gongguNo);
+
 	int updateGongguStatus(int gongguNo);
 
 	int updatepullUpAt(int gongguNo);
-
-	ArrayList<Gonggu> selectAllGongguList();
 
 }

@@ -13,7 +13,7 @@
     <div class="write-container">
         <form action="${pageContext.request.contextPath}/gonggu/ggEnrollFrm.go?roomOwner=${loginMember.userId}" method="post" enctype="multipart/form-data" name="ggEnrollFrm">
             <div class="write-category">
-                <input class="write-stuff" type="text" placeholder="공구할 물건" name="gongguName">
+                <input class="write-stuff" type="text" placeholder="공구할 물건" name="gongguName" value="${gonggu.gongguName }">
                 <select name="category">
                     <option value="0">카테고리</option>
                     <option value="1">의류</option>
@@ -46,7 +46,7 @@
 					    <div class="ggWirte_upload_icon" onclick="openFileUpload('1');">
 					        <img src="https://cdn-icons-png.flaticon.com/512/1237/1237946.png" class="ggWrite_plus">
 					        <div class="ggWrite_file">
-					            <img src="" alt="" id="preview-image1" class="preview-image">
+					            <img src="${pageContext.request.contextPath}/resources/upload/${gonggu.photo1 }" alt="" id="preview-image1" class="preview-image">
 					            <input type="file" accept=".jpg, .png, jpeg" class="hidden" id="hiddenFile1" name="upPhoto1">
 					        </div>
 					    </div>
@@ -54,7 +54,14 @@
 					    <div class="ggWirte_upload_icon" onclick="openFileUpload('2');">
 					        <img src="https://cdn-icons-png.flaticon.com/512/1237/1237946.png" class="ggWrite_plus">
 					        <div class="ggWrite_file">
+					        <c:choose>
+					        	<c:when test="${not empty gonggu.photo2 }">
+					            <img src="${pageContext.request.contextPath}/resources/upload/${gonggu.photo2 }" alt="" id="preview-image2" class="preview-image">
+					        	</c:when>
+					        	<c:otherwise>
 					            <img src="" alt="" id="preview-image2" class="preview-image">
+					        	</c:otherwise>
+					        </c:choose>
 					            <input type="file" accept=".jpg, .png, jpeg" class="hidden" id="hiddenFile2" name="upPhoto2">
 					        </div>
 					    </div>
@@ -62,7 +69,14 @@
 					    <div class="ggWirte_upload_icon" onclick="openFileUpload('3');">
 					        <img src="https://cdn-icons-png.flaticon.com/512/1237/1237946.png" class="ggWrite_plus">
 					        <div class="ggWrite_file">
+					        <c:choose>
+					        	<c:when test="${not empty gonggu.photo3 }">
+					            <img src="${pageContext.request.contextPath}/resources/upload/${gonggu.photo3 }" alt="" id="preview-image3" class="preview-image">
+					        	</c:when>
+					        	<c:otherwise>
 					            <img src="" alt="" id="preview-image3" class="preview-image">
+					        	</c:otherwise>
+					        </c:choose>
 					            <input type="file" accept=".jpg, .png, jpeg" class="hidden" id="hiddenFile3" name="upPhoto3">
 					        </div>
 					    </div>
@@ -73,7 +87,7 @@
 						<pre><textarea name="content" placeholder="공구 예정자들에게 전달할 내용이 있나요?" class="ggWrite-textarea"></textarea></pre>
 					</div>
 					<div class="ggWrite-link">
-						구매 예정 링크: <input name="link">
+						구매 예정 링크: <input name="link" value="${gonggu.link }">
 					</div>
 				</div>
 			</div>
@@ -103,6 +117,7 @@
                     <div id="map" class="ggWrite_map"></div>
                 </div>
             </div>
+            <input type="hidden" name="gongguNo" value="${gonggu.gongguNo }">
             <input type="hidden" name="latitude" id="lat">
             <input type="hidden" name="longitude" id="lon">
             <input type="hidden" name="sidoNm" id="sidoNm">

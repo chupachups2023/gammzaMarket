@@ -94,7 +94,6 @@
 </div>
 
 
-<input type="hidden" id="selectedPg">
 <input type="hidden" id="pointPrice">
 <input type="hidden" id="orderName">
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
@@ -116,7 +115,6 @@
 	/* 결제방식 선택 */
 	$(':radio').click(function() {
 		$('#viewPg').val($(':radio:checked').next().text());
-		$('#selectedPg').val(pg);
 	}); 
 
 	/* 결제 */
@@ -136,7 +134,6 @@
 		const merchant_uid = orderNum();
 		const name = $('#orderName').val()+"oint";
 		const pointPrice = $('#pointPrice').val();
-		console.log(pg);
 	    IMP.request_pay({
 	        pg : pg,		//결제하는 pg종류
 	        pay_method : 'card',
@@ -155,23 +152,22 @@
 	    		}).done(function(data) {  
 		    		if(pointPrice == data.response.amount){
 		    			const paymentMethod = $('#viewPg').val();
-		    			data = JSON.stringify({
-							pointOrderNum : rsp.merchant_uid,
-							pointName : rsp.name,
-							pointPrice : rsp.amount,
-							paymentMethod : paymentMethod,
-							purchasedTime : new Date()
-		    			});
-		    			jQuery.ajax({
+		    			
+		    			$.ajax({
 							url:'updatePoint.do',
 							type:'post',
-							dataType: 'json',
-                            contentType: 'application/json',
-                            data : data,
+                            data : {
+    							pointOrderNum : rsp.merchant_uid,
+    							pointName : rsp.name,
+    							pointPrice : pointPrice,
+    							paymentMethod : paymentMethod,
+    							purchasedTime : new Date()
+    		    			},
                             error: function(){
                             	alert("실패2");
                             }
 						}); 
+		    			
 				    	alert(name + " 충전되셨습니다");
 				    	document.location.href="${pageContext.request.contextPath}/mypage/mypageMain.me";
 		    		}else {

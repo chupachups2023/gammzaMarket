@@ -53,11 +53,20 @@
 	</select>
 
 	<select id="selectggListView" resultMap="gongguMap">
-		SELECT  *
-		   FROM   GONGGU
-		 WHERE STATUS = 1 AND END_STATUS = 1
-		 	and  0.0359*0.0359>power(( to_number(longitude)-to_number(#{longitude })),2)+power(( to_number(latitude)-to_number(#{latitude })),2)
-		 order by pullup_at desc
+		<if test="sortby.equals('PULLUP_AT')">
+			SELECT  *
+			   FROM   GONGGU
+			 WHERE STATUS = 1 ${endStatus}
+			 	and  0.0359*0.0359>power(( to_number(longitude)-to_number(#{longitude })),2)+power(( to_number(latitude)-to_number(#{latitude })),2)
+			 order by pullup_at desc
+		</if>
+		<if test="sortby.equals('END_TIME')">
+			SELECT  *
+			   FROM   GONGGU
+			 WHERE STATUS = 1 ${endStatus}
+			 	and  0.0359*0.0359>power(( to_number(longitude)-to_number(#{longitude })),2)+power(( to_number(latitude)-to_number(#{latitude })),2)
+			 order by END_TIME
+		</if>
 	</select>
 	<select id="selectggListViewWithEnd" resultMap="gongguMap">
 		SELECT  GONG.GONGGU_NO
@@ -99,7 +108,7 @@
 		 where gonggu_no=#{gongguNo} 
 	</update>
 	<select id="selectLeadGongguList" resultMap="gongguMap">
-		select * from gonggu where GONGGU_WRITER=#{userId}
+		select * from gonggu where GONGGU_WRITER=#{userId} and status=1
 		order by pullup_at desc
 	</select>
 	<select id="searchGonggu" resultMap="gongguMap">
@@ -117,12 +126,22 @@
 		   and gonggu_name = '%' ||  #{gongguName} || '%'
 	</select>
 	<select id="selectOneCategory" resultMap="gongguMap">
-  			select *
-  			  from gonggu
-  			where category = #{category} and  0.0359*0.0359>power(( to_number(longitude)-to_number(#{longitude })),2)+power(( to_number(latitude)-to_number(#{latitude })),2)
-  				and STATUS = 1 AND END_STATUS = 1
-  			order by pullup_at desc
-  		</select>
+		select *
+		from gonggu
+		where category = #{category} and  0.0359*0.0359>power(( to_number(longitude)-to_number(#{longitude })),2)+power(( to_number(latitude)-to_number(#{latitude })),2)
+			and STATUS = 1 AND END_STATUS = 1
+		order by pullup_at desc
+	</select>
+	<update id="updateGongguStatus">
+		update gonggu
+		set status=0
+		where gonggu_no=#{gongguNo}
+	</update>
+	<update id="updatepullUpAt">
+		update gonggu
+		set pullup_at=sysdate
+		where gonggu_no=#{gongguNo}
+	</update>
 	
 	<select id="selectAllGongguList" resultMap="gongguMap">
 		select * 

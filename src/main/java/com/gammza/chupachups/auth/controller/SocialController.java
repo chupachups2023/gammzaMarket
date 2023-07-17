@@ -1,20 +1,5 @@
 package com.gammza.chupachups.auth.controller;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -29,9 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -43,18 +27,6 @@ import com.gammza.chupachups.auth.model.vo.KakaoProfile;
 import com.gammza.chupachups.auth.model.vo.NaverProfile;
 import com.gammza.chupachups.member.model.service.MemberService;
 import com.gammza.chupachups.member.model.vo.Member;
-import com.github.scribejava.core.builder.ServiceBuilder;
-import com.github.scribejava.core.model.OAuth2AccessToken;
-import com.github.scribejava.core.model.OAuthRequest;
-import com.github.scribejava.core.model.Response;
-import com.github.scribejava.core.model.Verb;
-import com.github.scribejava.core.oauth.OAuth20Service;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
-
-import java.io.BufferedReader;
 
 @Controller
 @SessionAttributes({"loginMember"})
@@ -66,7 +38,7 @@ public class SocialController {
 			// KAKAO
 			@GetMapping(value = "/auth/kakao/callback", produces = "text/json; charset=UTF-8")
 			//@ResponseBody
-			public String kakaoCallback(String code, Member member, Model model, RedirectAttributes redirectAtt, HttpSession session) {
+			public String kakaoCallback(String code, Member member, Model model, RedirectAttributes redirectAtt, HttpSession session, SessionStatus status) {
 				
 				// POST 방식으로 데이터를 요청(토큰 관련) 
 				/* 
@@ -111,7 +83,7 @@ public class SocialController {
 					e.printStackTrace();
 				}
 
-				System.out.println("KAKAO ACCESS TOKEN: " + oauthToken.getAccess_token());
+				// System.out.println("KAKAO ACCESS TOKEN: " + oauthToken.getAccess_token());
 				
 				
 				RestTemplate rt2 = new RestTemplate();
@@ -138,25 +110,14 @@ public class SocialController {
 				} catch (JsonProcessingException e) {
 					e.printStackTrace();
 				}
-				
 				System.out.println("KAKAO_IDKEY: " + kakaoProfile.getId());
 				System.out.println("KAKAO_NICKNAME: " + kakaoProfile.getKakao_account().getProfile().getNickname());
-				// System.out.println("KAKAO_EMAIL: " + kakaoProfile.getKakao_account().getHas_email());
 				
 				
 				// Member
-				System.out.println("GAMMZA_USERNAME: " + kakaoProfile.getKakao_account().getProfile().getNickname() + "_" + kakaoProfile.getId());
+				// System.out.println("GAMMZA_USERNAME: " + kakaoProfile.getKakao_account().getProfile().getNickname() + "_" + kakaoProfile.getId());
 				UUID garbagePassword = UUID.randomUUID();
-				System.out.println("GAMMZA_PASSWORD: " + garbagePassword);
-				
-				
-				/*
-				 * member를 조회했을 때, kakao_idkey == null 이면 그대로 진행
-				 * kakao_idkey != null 이면 강제 로그인 처리 
-				 */
-				
-//				if (member.getKakaoIdkey() == 0) { // DB kakao_idkey default 0 ? 
-//				}
+				// System.out.println("GAMMZA_PASSWORD: " + garbagePassword);
 					
 				member.setKakaoIdkey(kakaoProfile.getId());
 				member.setName(kakaoProfile.getKakao_account().getProfile().getNickname());
@@ -167,31 +128,43 @@ public class SocialController {
 				
 				Member loginMember=memberService.selectMemberByKakao(kakaoProfile.getId());
 				
-				if(loginMember == null) {
-					model.addAttribute("kakaoIdkey", kakaoProfile.getId());
+				if (loginMember == null) { // 카카오 연동을 최초로 하는 신규/기존 회원  (KAKAO_IDKEY == NULL)
+					session.setAttribute("kakaoIdkey", kakaoProfile.getId());
 					redirectAtt.addFlashAttribute("msg", "카카오 간편로그인 최초 1회 연결이 필요합니다.");
-					return "/member/socialLogin";
-				}else {
+					return "redirect:/socialLogin.me";
+				} else { // 카카오 연동 완료한 회원 
 					model.addAttribute("loginMember", loginMember);
+					redirectAtt.addFlashAttribute("msg", member.getName()+ "님 환영합니다💚");
 					return "redirect:/";
 				}
-			
-				// int result = memberService.insertKakaoMember(member);
-				
-				
-				// kakaoProfile.setId(kakaoProfile.getId());
-				
-				// model.addAttribute("kakaoProfile", kakaoProfile);
-				
-				//session.setAttribute("id", kakaoProfile.getId());
 				
 			}
 			
+			 @GetMapping("/socialLogin.me") 
+			 public String socialLogin() {
+				 return "/member/socialLogin"; 
+			 }
+			 
 			
-			@RequestMapping("/member/loginSuccess.do")
-			public String loginSuccess() {
+			/*
+			@GetMapping("/member/insertKakaoMember")
+			public String insertKakaoMember(Member member, KakaoProfile kakaoProfile) {
+				Member memberCheck = memberService.selectMemberByKakao(kakaoProfile.getId());
+				if (memberCheck == null) {
+					int result = memberService.insertKakaoMember(member);
+				}
 				return "redirect:/";
 			}
+			
+			
+			/*
+			 * @GetMapping("/member/insertKakaoMember") public String
+			 * insertKakaoMember(Member member, KakaoProfile kakaoProfile, Model model) {
+			 * Member memberCheck = memberService.selectMemberByKakao(kakaoProfile.getId());
+			 * if (memberCheck == null) { int result =
+			 * memberService.insertKakaoMember(member); // model.addAttribute("kakaoIdkey",
+			 * kakaoProfile.getId()); } return "redirect:/"; }
+			 */
 			
 			
 
@@ -289,16 +262,25 @@ public class SocialController {
 				member.setName(naverProfile.getResponse().getName());
 				member.setBirthday(naverProfile.getResponse().getBirthday());
 				member.setEmail(naverProfile.getResponse().getEmail());
+				System.out.println("네이버 member: " + member); 
+				// 신규 회원 (naver_idkey, name, email 빼고 비어있음) -> 회원가입/로그인 페이지로 이동 
+				// -> 이동하면... 아예 신규 회원으로 시작 
+				
+				
+				// 기존 회원이면 로그인 처리 후 메인으로 이동 
+				
+				
 				System.out.println(member);
 				
-				Member loginMember = memberService.selectMemberByNaver(naverProfile.getResponse().getId());
+				Member loginMember=memberService.selectMemberByNaver(naverProfile.getResponse().getId());
 				
-				if (loginMember == null) {
-					model.addAttribute("naverIdkey", naverProfile.getResponse().getId());
+				if (loginMember == null) { // 네이버 연동을 최초로 하는 신규/기존 회원  (NAVER_IDKEY == NULL) 
+					session.setAttribute("naverIdkey", naverProfile.getResponse().getId());
 					redirectAtt.addFlashAttribute("msg", "네이버 간편로그인 최초 1회 연결이 필요합니다.");
-					return "/member/socialLogin";
-				} else {
+					return "redirect:/socialLogin.me";
+				} else { // 네이버 연동 완료한 회원 
 					model.addAttribute("loginMember", loginMember);
+					redirectAtt.addFlashAttribute("msg", member.getName()+ "님 환영합니다💚");
 					return "redirect:/";
 				}
 				
@@ -306,11 +288,54 @@ public class SocialController {
 				
 				
 				
+				
+				
+				
+				/*
+				 * if (loginMember == null) { // 네이버 연동을 최초로 하는 신규/기존 회원 (NAVER_IDKEY == NULL)
+				 * model.addAttribute("naverIdkey", naverProfile.getResponse().getId());
+				 * redirectAtt.addFlashAttribute("msg", "네이버 간편로그인 최초 1회 연결이 필요합니다."); return
+				 * "/member/socialLogin"; } else { // 네이버 연동 완료한 회원
+				 * model.addAttribute("loginMember", loginMember); return "redirect:/"; }
+				 */
+				
+			}
+			
+			/*
+			 * @GetMapping("/member/insertNaverMember") public String
+			 * insertNaverMember(Member member, NaverProfile naverProfile) { Member
+			 * memberCheck =
+			 * memberService.selectMemberByNaver(naverProfile.getResponse().getId()); if
+			 * (memberCheck == null) { int result = memberService.insertNaverMember(member);
+			 * } return "redirect:/"; }
+			 */
+				
+				
+				
+				
+				
+				
+				
+				
+				// Model loginMember = model.addAttribute("naverIdkey", naverProfile.getResponse().getId());
+				// System.out.println("loginMember22: " + loginMember);
+				
+				
+//				Member loginMember = memberService.selectMemberByNaver(member.getNaverIdkey());
+//				System.out.println("loginMember: " + loginMember);
+				
+				// Member loginMember = memberService.selectMemberByNaver(naverProfile.getResponse().getId());
+				
+				
+				
+				
+				
+				
 				// return response2.getBody();
 				// return "토큰 요청에 대한 응답: " + responseN2.getBody();
+				// return "redirect:/";
 			}
 	
 
-}
 
 

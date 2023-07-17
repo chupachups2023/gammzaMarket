@@ -93,6 +93,6 @@ public class GongguServiceImpl implements GongguService {
 	@Override
 	public ArrayList<Gonggu> selectAllGongguList() {
 		return gongguDao.selectAllGongguList();
-}
+  }
 
 }

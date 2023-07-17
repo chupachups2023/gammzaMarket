@@ -6,7 +6,7 @@
  <mapper namespace="com.gammza.chupachups.member.model.dao.MemberDao">
  	<resultMap type="member" id="memberMap"></resultMap>
  	
- 	<insert id="insertMember">
+ 	<!-- <insert id="insertMember">
 	  insert into member(user_id, user_pwd, name, phone, location, email, create_at, update_at, status, point, temperature, kakao_idkey, naver_idkey, birthday, latitude, longitude) 
 	  values ( 
 	    #{userId},
@@ -28,7 +28,7 @@
 	  )
 	</insert>
 
-	<insert id="insertKakaoMember">
+ 	<insert id="insertKakaoMember">
 		insert into member(user_id, user_pwd, name, phone, email, create_at, status, point, temperature, kakao_idkey)
 		values(
 		'kakao',
@@ -43,8 +43,72 @@
 		#{kakaoIdkey}
 	)
 	</insert>
+	
+	<insert id="insertNaverMember">
+		insert into member(user_id, user_pwd, name, phone, email, create_at, status, point, temperature, naver_idkey)
+		values(
+		'naver',
+		'naver',
+		#{name},
+		'naver',
+		'naver',
+		default,
+		default,
+		default,
+		default,
+		#{naverIdkey}
+	)
+	</insert> -->
+	
+<!-- 	<insert id="insertNaverIdkey">
+		insert into member(naver_idkey) values(#{naverIdkey})
+	</insert> -->
 
-
+	<update id="updateKakaoIdkey">
+		update member
+		set kakao_idkey=#{kakaoIdkey}
+		where user_id=#{userId}
+	</update>
+	<update id="updateNaverIdkey">
+		update member
+		set naver_idkey=#{naverIdkey}
+		where user_id=#{userId}
+	</update>
+	
+	<update id="updateMember">
+		update member
+		set user_pwd = #{userPwd},
+			email = #{email},
+			phone = #{phone},
+			birthday = #{birthday},
+			update_at = SYSDATE
+		where user_id = #{userId}
+	</update>
+	<update id="updateMember_Ad">
+		update member
+		set user_id = #{newUserId},
+			user_pwd = #{userPwd},
+			name = #{name},
+			email = #{email},
+			phone = #{phone},
+			point = #{point},
+			temperature = #{temperature},
+			kakao_idkey = #{kakaoIdkey},
+			naver_idkey = #{naverIdkey},
+			birthday = #{birthday},
+			update_at = SYSDATE
+		where user_id = #{userId}
+	</update>
+	<!-- 탈퇴상태로 돌리기 -->	 	
+ 	<update id="changeStatus">
+		update member
+		set status = 0,
+			update_at = SYSDATE,
+			kakao_idkey = null,
+			naver_idkey = null
+		where user_id = #{userId}
+	</update>
+	
  
  	<!-- 카카오 아이디키 검색 -->
  	<select id="selectMemberByKakao" resultMap ="memberMap">
@@ -55,8 +119,6 @@
  	<select id="selectMemberByNaver" resultMap ="memberMap">
  		select * from member where NAVER_IDKEY=#{id}
  	</select>
-
- 	
  	
  	<!-- 아이디 중복체크 -->
 	<select id="checkIdFunc" resultMap ="memberMap">
@@ -64,19 +126,53 @@
 		where user_id = #{userId}
 	</select>
 
-	<!-- <select id="selectOneMember" resultMap="memberMap">
- 		select * from member
- 		where user_id = #{userId}
- 	</select> --> 	
- 	
- 	<select id="selectMemberByPhone" resultMap ="memberMap">
- 		select * from member
- 		where phone = #{phone}
- 	</select>
-
  	<select id="selectOneMember" resultMap="memberMap">
  		SELECT * FROM MEMBER
  		join location on(location = location_no)
  		 where user_id = #{userId}
  	</select>
+ 	
+ 	<select id="findIdClick" resultType="String">
+ 		select * from member
+ 		where phone = #{phone}
+ 	</select>
+ 	
+ 	<select id="findPwdClick" resultType="String">
+ 		select * from member
+ 		where phone = #{phone} and user_Id = #{userId}
+ 	</select>
+ 	
+ 	<!-- 회원정보조회 -->
+ 	<select id="selectOneMemberByEmail" resultType="Member">
+ 		select * from member
+ 		where email = #{email}
+ 	</select>
+ 	
+ 	<!-- 탈퇴전 진행중인 공구확인 -->
+ 	<select id="selectProceedingGonggu" resultType="_int">
+		select count(*) from gonggu
+		where gonggu_writer = #{userId} and end_status = 1
+	</select>
+	
+	<select id="selectTotalRecord" resultType="_int">
+		select count(*)
+		from member
+	</select>
+	
+	<!-- 관리자 회원관리 리스트 -->
+	<select id="selectMemberList" resultMap="memberMap">
+		select user_id, temperature, substr(create_at, 0, 10) "create_at2", replace(replace(status,0,'탈퇴'),1,'활동') "status2"
+		from member
+		order by create_at desc
+	</select>
+	
+	
+ 	
+ 	<!-- 비밀번호 변경 -->
+ 	<update id="updatePwd">
+ 		update member
+ 		set user_pwd = #{userPwd}
+ 		where email = #{email}
+ 	</update>
+ 	
  </mapper>

@@ -1,0 +1,256 @@
+@charset "UTF-8";
+.ggRead-title{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+.ggRead-title>h1{
+    min-width: 200px;
+    margin: 0;
+}
+.ggRead-date{
+    text-align: right;
+    font-size: 14px;
+}
+.ggRead-hr{
+    margin: 20px auto 10px;
+    width: 1100px;
+    border: 0;
+    background-color: rgba(24, 24, 24, 0.547);
+    height: 1px;
+}
+.ggRead-title-right img{
+    height: 20px;
+    margin-left: 10px;
+}
+.ggRead-title-right img:hover{
+    cursor: pointer;
+}
+.ggRead-title-right{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items:normal;
+    justify-content: flex-end;
+}
+.ggRead-name{
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0 15px;
+    max-width:600px;
+}
+.ggRead-head{
+    display: flex;
+    flex-direction: row;
+    align-items:flex-end;
+    padding: 0 100px;
+    width: 800px;
+    margin: 0 auto;
+    margin-top: 50px;
+    justify-content: center;
+}
+.ggRead-writer-none{
+    visibility: hidden;
+}
+/* 이미지 슬라이드 */
+.ggRead-slider-wrap {
+    width: 500px;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: normal;
+    flex-direction: column;
+}
+/* 이미지 보이는 부분 */
+.ggRead-img-slider img{
+    min-width: 500px;
+}
+.ggRead-slider-img {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    overflow: hidden;
+}
+/* 이미지 감싸고 있는 부모 : 움직이는 부분 */
+.ggRead-slider-inner {
+    display: flex;
+    flex-wrap: wrap;
+    /* 총 이미지 3개 */
+    width: 1500px;
+    height: 500px;
+}
+/* 개별적인 이미지 */
+.ggRead-img-slider {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    display: flex;
+    align-items: center
+}
+.ggRead-img-slider img{
+    width: 100%;
+}
+.ggRead-slider-dot {
+    height: 20px;
+    margin-top: -45px;
+    z-index: 1;
+}
+.ggRead-slider-dot .ggRead-dot {
+    width: 15px;
+    height: 15px;
+    background: rgba(0,0,0,0.4);
+    display: inline-block;
+    border-radius: 50%;
+    text-indent: -9999px;
+    transition: all 0.3s;
+    margin: 5px;
+}
+.ggRead-slider-dot .ggRead-dot:hover {
+    cursor: pointer;
+}
+.ggRead-slider-dot .active {
+    background: rgba(255,255,255,0.9);
+}
+.ggRead-content{
+    width: 450px;
+    height: 50px;
+    background-color: rgba(133, 133, 133, 0.104);
+    padding: 15px 25px;
+    overflow: auto;
+    border-radius: 20px;
+}
+.ggRead-content-empty{
+	width: 450px;
+    height: 50px;
+    padding: 15px 25px;
+    overflow: auto;
+    border-radius: 20px;
+}
+.ggRead-body{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.ggRead-body>div{
+    margin: 0 5px;
+}
+.ggRead-detail{
+    padding: 30px 0 0 10px;
+    width: 490px;
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.ggRead-writer{
+    font-size: 20px;
+}
+.ggRead-writer:hover{
+    text-decoration: underline;
+    text-underline-position : under;
+    cursor: pointer;
+}
+.ggRead-detail>*{
+    text-align: right;
+}
+.ggRead-num{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    font-size: 15px;
+    margin-bottom: 40px;
+}
+.ggRead-num>div>span{
+    margin: 0 5px;
+}
+.ggRead-on{
+    font-size: 15px;
+    font-weight: bold;
+}
+.ggRead-on>span{
+    text-decoration: underline;
+    text-underline-position : under;
+}
+.ggRead-endtime{
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+.ggRead-lefttime{
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+.ggRead-map{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+}
+.ggRead-map>div{
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.ggRead-mapp{
+    width: 490px;
+    height: 270px;
+    border-radius: 20px;
+}
+.ggRead-button{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 20px;
+}
+.ggRead-button *{
+    margin: 10px;
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+}
+.ggRead-bottom>div{
+    text-align: right;
+    width: 800px;
+
+}
+.ggRead-report,.ggRead-report>a, .ggRead-info{
+    font-size: 13px;
+    text-decoration: none;
+    text-align: right;
+    color: rgb(114, 114, 114);
+}
+.ggRead-report>*:hover{
+    text-decoration: underline;
+    text-underline-position : under;
+    cursor:pointer;
+}
+.ggRead-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.ggRead-btn{
+    width:1000px;
+    margin: 0 auto;
+}
+.ggRead-price{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+.ggRead-link{
+    text-decoration: none;
+    color: black;
+    font-size: 15px;
+    text-align: right
+}
+.ggRead-link-empty:hover {
+    cursor:default;
+}
+.ggRead-link:hover{
+    text-decoration: underline;
+    text-underline-position : under;
+}
+.ggRead-section{
+    margin: 0 auto;
+}

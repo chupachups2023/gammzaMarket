@@ -14,6 +14,7 @@
 	href="${pageContext.request.contextPath}/resources/img/header/shorcuticon.png">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/header.css?<%=System.currentTimeMillis() %>">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/login.css?<%=System.currentTimeMillis() %>">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <!-- DB에 저장이 잘 되었다면 alert창 띄우기 -->
 <c:if test="${not empty msg}">
@@ -33,16 +34,25 @@
 				<div>
 				<c:choose>
 					<c:when test="${empty loginMember}">
-						<button class="header-login btn" id="open-modal">로그인</button>
+						<button class="header-loginBtn btn" id="open-modal">
+							<!-- <i class="fa-solid fa-arrow-right-to-bracket" style="color: #5eb162;"></i> -->
+							<img src="https://cdn-icons-png.flaticon.com/512/1828/1828395.png" alt="loginButton">
+						</button>
 					</c:when>
 					<c:when test="${loginMember.userId eq 'admin'}">
-						<a href="${pageContext.request.contextPath}/admin/adminMain.ad"><img src="https://cdn-icons-png.flaticon.com/512/5909/5909015.png" alt="adminlogo" class="header-login" ></a>
+						<a href="${pageContext.request.contextPath}/admin/adminMain.ad">
+							<img src="https://cdn-icons-png.flaticon.com/512/5909/5909015.png" alt="adminlogo" class="header-login" >
+						</a>
 		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
 					</c:when>
 					<c:otherwise>
-						<a href="${pageContext.request.contextPath}/mypage/mypageMain.me"><img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login" ></a>
+						<a href="${pageContext.request.contextPath}/mypage/mypageMain.me">
+							<img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login" >
+						</a>
 					<!-- 230627 -->
-		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
+		      			<button class="header-logoutBtn" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">
+		      				<img src="https://cdn-icons-png.flaticon.com/512/1828/1828427.png" alt="logoutButton">
+		      			</button>
 					</c:otherwise>
 				</c:choose>
 				</div>
@@ -79,21 +89,17 @@
 		<!--로그인 모달창 수정본 -->
 		<div class="modal" tabindex="-1" id="modal">
 			<div class="modal-dialog">
-
-				<!-- <div class="modal-header">
-					<h5 class="modal-title">로그인</h5>
-				</div> -->
-				<form action="${pageContext.request.contextPath}/member/memberLogin.me" method="post" id="loginFrm">
+				<form action="${pageContext.request.contextPath}/member/memberLogin.me" method="post" id="loginFrm" name="loginFrm">
 					<div class="modal-login">
-						<div class="modal-bg"></div>
+						<div class="modal-bg" onclick="loginModalClose();"></div>
 						<div class="modal-content">
 							<h2>로그인</h2>
 							<ul class="login-top">
 								<li class="login-info">
-									<input type="text" placeholder="아이디 입력" name="userId">
+									<input type="text" placeholder="아이디 입력" name="userId" onkeyup="loginEnterEvent(event);">
 								</li>
 								<li class="login-info">
-									<input type="password" placeholder="비밀번호 입력" name="userPwd">
+									<input type="password" placeholder="비밀번호 입력" name="userPwd" onkeyup="loginEnterEvent(event);">
 								</li>
 								<li class="login-chkbox">
 									<input type="checkbox" id="chk1">
@@ -119,12 +125,11 @@
 										</li>
 										<li class="login-naver">
 											<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&state=test&client_id=GQGBjwaCzYQZZ_5XkE2o&state=STATE_STRING&redirect_uri=http://localhost:8095/chupachups/auth/naver/callback">
-												<img src="${pageContext.request.contextPath}/resources/img/header/icon_naver_long_resize4.png" alt="네이버로그인버튼">
+												<img src="${pageContext.request.contextPath}/resources/img/header/icon_naver_long_resize2.png" alt="네이버로그인버튼">
 											</a> 
 									</ul>
 									<br>
-									<a id="close-modal" class="modal-closeBtn">닫기</a>
-									<!-- <button type="button" id="close-modal">임시닫기버튼</button> -->
+									<a id="close-modal" class="modal-closeBtn"  onclick="loginModalClose();">닫기</a>
 								</div>
 							</div>
 						</div>
@@ -153,17 +158,17 @@
 			modal.style.display = "block";
 			document.body.style.overflow = "hidden"; // 스크롤바 제거
 		});
+
 		// 모달창 닫기
-		closeModalBtn.addEventListener("click", () => {
+		function loginModalClose(){
 			modal.style.display = "none";
 			document.body.style.overflow = "auto"; // 스크롤바 보이기
-		});
-		// 모달창 닫기
-		loginModalBtn.addEventListener("click", () => {
-			modal.style.display = "none";
-			document.body.style.overflow = "auto"; // 스크롤바 보이기
-			loginFrm.submit();
-		});
+		}
+			// 모달창 닫기
+			loginModalBtn.addEventListener("click", () => {
+				loginModalClose();
+				loginFrm.submit();
+			});
 		
 		function fn_click(category) {
 			function success(position) {
@@ -198,10 +203,15 @@
 			function success(position) {
 			    const latitude = position.coords.latitude;   // 위도(37.xxxx)
 			    const longitude = position.coords.longitude;
-				location.href="${pageContext.request.contextPath}/request/requestView.req?longitude="+longitude+"&latitude="+latitude;
+				location.href="${pageContext.request.contextPath}/ggRequest/requestView.req?longitude="+longitude+"&latitude="+latitude;
 			}
 			navigator.geolocation.getCurrentPosition(success);
 		}
+		function loginEnterEvent(e){
+			if(e.keyCode==13){
+				loginFrm.submit();
+			}
+		}
 	    </script>
 	</header>
-	<section>
+	<section id="wrapper-whole-section">

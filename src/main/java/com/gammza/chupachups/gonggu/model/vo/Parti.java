@@ -19,5 +19,6 @@ public class Parti {
 	//----DB에는 없는데 필요에 의해 추가
 	private String userId;
 	private double temperature;
+	private String gongguName;
 	
 }

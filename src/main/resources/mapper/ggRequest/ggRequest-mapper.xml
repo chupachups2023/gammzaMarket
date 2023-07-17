@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.gammza.chupachups.ggRequest.model.dao.RequestDao">
+	<resultMap type="request" id="requestMap"></resultMap>
+	<resultMap type="requestmember" id="requestMemberMap"></resultMap>
+	<select id="selectAllRequestList" resultMap="requestMap">
+		<if test="sort.equals('recent')">
+			select *
+			  from request
+			  where 0.0359*0.0359>power(( to_number(longitude)-to_number(#{longitude })),2)+power(( to_number(latitude)-to_number(#{latitude })),2)
+			  and STATUS = 1 AND REQ_STATUS = 0
+			  order by request_no desc
+		</if>
+		<if test="sort.equals('member')">
+			select *
+			  from request
+			  where 0.0359*0.0359>power(( to_number(longitude)-to_number(#{longitude })),2)+power(( to_number(latitude)-to_number(#{latitude })),2)
+			  and STATUS = 1 AND REQ_STATUS = 0
+			  order by num desc
+		</if>
+		<if test="sort.equals('count')">
+			select *
+			  from request
+			  where 0.0359*0.0359>power(( to_number(longitude)-to_number(#{longitude })),2)+power(( to_number(latitude)-to_number(#{latitude })),2)
+			  and STATUS = 1 AND REQ_STATUS = 0
+			  order by count desc
+		</if>
+	</select>
+	<update id="updateRequestCount">
+		update request
+		set count= count+1
+		where request_no=#{requestNo}
+	</update>
+	<select id="selectRequest" resultMap="requestMap">
+		select *
+		from request
+		where request_no=#{requestNo}
+	</select>
+	<select id="selectRequestMember" resultMap="requestMemberMap" >
+		select *
+		from request_member
+		where request_no=#{requestNo}
+		order by reg_at desc
+	</select>
+	<insert id="insertRequest">
+		insert into request values(
+			REQUEST_SEQ.nextval, #{requestWriter},#{requestName},#{price},#{categoryNo},#{photo1},#{photo2},#{photo3},
+			default,default,default,#{latitude},#{longitude},#{link},default
+		)
+	</insert>
+	<select id="selectLastNum" resultType="_int">
+		select REQUEST_SEQ.currval from dual
+	</select>
+	<insert id="insertRequestMember">
+		insert into request_member values(
+			#{requestNo}, #{requestMember},#{localCode},#{latitude},#{longitude},sysdate
+		)
+	</insert>
+	<select id="selectRequestMemberByNo" resultType="_int" >
+		select count(*)
+		from request_member
+		where request_no=#{requestNo} and request_member=#{userId}
+	</select>
+	<update id="updateRequestNum">
+		update request
+		set num= num+1
+		where request_no=#{requestNo}
+	</update>
+	<update id="updateRequestStatus">
+		update request
+		set status=0
+		where request_no=#{requestNo}
+	</update>
+	<update id="updateRequestReqStatus">
+		update request
+		set req_status=1
+		where request_no=#{requestNo}
+	</update>
+</mapper>

@@ -2,7 +2,7 @@
 	/* 공구게시판 */
     .GGlistSec {
         width: 1200px;
-        margin: 50px auto;
+        margin: 30px auto;
        position:relative;
     }
     /* 한 줄에 세 이미지 박스 */
@@ -17,11 +17,12 @@
 	.onelineThreeImg{
 		width: 300px;
 		height:300px;
+		overflow:hidden;
 	}
 	
     .onelineThreeImg>img{
-		width: 100%;
-		height: 100%;
+		max-width: 300px;
+		/* height: 300px; */
 		border-radius:10px;
     }
 	.onelineThreeTitle {
@@ -42,13 +43,38 @@
 		font-size: 15px;
 		font-weight: bold;
 	}
-
-
-	.GGlist-a {
-		text-decoration: none;
-		color: black;
-		font-size: 15px;
-		/* position: relative; */
+.when-ggEnd{
+	display:flex;
+	flex-direction:row;
+    align-items: flex-end;
+}
+.ggEnd-tag{
+	font-size:12px;
+	background-color:#F9E8D0; 
+	border-radius:10px;
+	padding:3px 4px;
+	margin-right:5px;
+}
+.sortByPart{
+	display:flex;
+	justify-content: space-between
+}
+.sortByPart input{
+	width:20px;
+}
+.GGlist-a {
+	text-decoration: none;
+	color: black;
+	font-size: 15px;
+}
+	.GGlist-a:hover{
+		cursor:pointer;
+		text-decoration:underline;
+		text-underline-position:under;
+	}
+	.currAdd{
+		width:1200px;
+		margin: 20px auto;
 	}
 
 .loginWarning img{

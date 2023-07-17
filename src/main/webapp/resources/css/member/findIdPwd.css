@@ -71,16 +71,18 @@ nav {
   line-height: 57px;
   border-color: #5EB162;
   border-bottom: 1px solid #ffffff;
+  font-weight: 600;
 }
 
 .tab-type1 ul li a.tab-on::before { 
   content: ""; 
   position: absolute; 
-  left: 0; 
+  left: -1; 
   top: 0; 
   width: 1px; 
   height: 100%; 
   background: #5EB162;
+  font-weight: 600;
 }
 
 .find-id2 {
@@ -97,12 +99,21 @@ nav {
   border: 1px solid #e9e9e9;
 }
 
-.find-id2 ul li input[type=text] {
+/* .find-id2 ul li input[type=text] {
   text-indent: 10px;
   font-size: 15px;
-  
-  /* width:100%; 
-  height:30px;  */
+  font-size:13px; 
+  color:#373737; 
+  border:1px solid #e9e9e9; 
+  background:#fff; 
+  border-radius: 5px; 
+  transition: all 0.5s; 
+  vertical-align:middle;
+} */
+
+.find-input {
+  text-indent: 10px;
+  font-size: 15px;
   font-size:13px; 
   color:#373737; 
   border:1px solid #e9e9e9; 
@@ -112,15 +123,125 @@ nav {
   vertical-align:middle;
 }
 
-.find-id2 ul li input[type=button] {
+/* .find-id2 ul li input[type=button] {
   background-color: #5EB162;
   border-radius: 5px;
   color: #ffffff;
   font-weight: 500;
   font-size: 14px;
-}
+} */
 
 input:focus { 
 	outline: 1px solid #ddd;
 }
+
+/* 아이디 찾기 모달 */
+.modal1-overlay {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: none;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background: rgba(255, 255, 255, 0.25);
+	z-index: 9;
+	/* 
+	-webkit-backdrop-filter: blur(1.5px);
+	backdrop-filter: blur(1.5px);
+	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+	border-radius: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.18); */
+	
+}
+
+/* 모달창 */       
+.modal1-window {
+   background-color: #ffffff;
+   /*
+   backdrop-filter: blur( 13.5px );
+   box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 ); 
+   -webkit-backdrop-filter: blur( 13.5px );
+   */
+   border-radius: 10px;
+   border: 2px solid #E9D296;
+   width: 350px;
+   height: 150px;
+   position: relative;
+   top: -50px;
+   padding: 50px;
+   /* z-index: 9; */
+}
+
+.title1 {
+    padding: 40px 0;
+    display: inline;
+    /* text-shadow: 1px 1px 2px gray; */
+    color: #5EB162;
+    
+}
+.title1 h2 {
+	text-align: center;
+}
+
+.close-area1 {
+    position: absolute;
+    right: 12px;
+    top: 4px;
+    cursor: pointer;
+    background: url("close-icon.png") no-repeat; /* 경로 수정 예정 */
+    color: transparent;
+    width: 34px;
+    height: 34px;
+}
+
+.content1 {
+    margin-top: 45px;
+    padding: 0px 10px;
+    /* text-shadow: 1px 1px 2px gray; */
+    color: #5EB162;
+    font-size: 22px;
+}
+
+.modal-result {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.find-btn {
+  background-color: #5EB162;
+  border-radius: 5px;
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 14px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
