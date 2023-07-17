@@ -46,8 +46,8 @@ public class PartiServiceImpl implements PartiService {
 	}
 
 	@Override
-	public ArrayList<Parti> selectPartiListForLeader(int gongguNo) {
-		return partiDao.selectPartiListForLeader(gongguNo);
+	public ArrayList<Parti> selectPartiListForLeader(HashMap<String, String> map) {
+		return partiDao.selectPartiListForLeader(map);
 	}
 
 	@Override

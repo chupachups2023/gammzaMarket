@@ -54,10 +54,21 @@
 	</update>
 	
 	<select id="selectPartiListForLeader" resultMap="partiMap">
-		select p.*, m.user_id, m.temperature
-		from member m, parti_tb p
-		where p.parti_member=m.user_id and 
-				gonggu_no=#{gongguNo}
-		order by p.reg_at 
+		<choose>
+			<when test="sort.equals('temperature')">
+				select p.*, m.user_id, m.temperature
+				from member m, parti_tb p
+				where p.parti_member=m.user_id and 
+						gonggu_no=#{gongguNo}
+				order by m.temperature desc
+			</when>
+			<otherwise>
+				select p.*, m.user_id, m.temperature
+				from member m, parti_tb p
+				where p.parti_member=m.user_id and 
+						gonggu_no=#{gongguNo}
+				order by p.REG_AT
+			</otherwise>
+		</choose>
 	</select>
 </mapper>

@@ -38,6 +38,17 @@
 	</h1>
 	<div id="container">
 		<table class="table" align="center" id="partiTable" >
+			<c:if test="${empty partiList }">
+				<tr>
+					<th colspan="7" height="100px">아직 신청자가 없습니다.</th>
+				</tr>
+			</c:if>
+			<tr>
+				<td colspan="7" class="sortByWhat">
+					<a onclick="sortByWhat('regAt');" id="regAt">최신순</a>&emsp;<a onclick="sortByWhat('temperature');" id="temperature">온도순</a>
+		   			<input type="hidden" id="sortByHidden" value="${sortByHidden }">
+				</td>
+			</tr>
 		<c:forEach items="${partiList}" var="list" varStatus="j">
 			<tr>
 			<c:choose>
@@ -108,7 +119,7 @@
 						<td colspan="2"><pre><textarea name="reviewContent" class="reviewContent"></textarea></pre><br></td>
 					</tr>
 				</table>
-					<input type="hidden" name="gongguNo" id="ggNo">
+					<input type="hidden" name="gongguNo" id="ggNo" value="${gonggu.gongguNo}">
 	      </div>
 	      <div class="modalR-footer">
 		        <button type="button" class="button" onclick="javascrip:reviewSubmit();">작성완료</button>
@@ -170,7 +181,7 @@
 			for(let i=0;i<arr.length;i++){
 				strr+="id="+arr[i]+"&";
 			}
-			location.href="${pageContext.request.contextPath }/gonggu/partiMemSelect.pa"+strr;
+			location.href="${pageContext.request.contextPath }/gonggu/partiMemSelect.pa"+strr+"sort=${sort}";
 		}
 	};
 
@@ -215,7 +226,11 @@
  			})
  		}
  	}
- 	
+ 	function sortByWhat(what){
+		let sortby=what;
+		console.log(sortby);
+		location.href="${pageContext.request.contextPath}/gonggu/checkPartis.pa?gongguNo=${gonggu.gongguNo}&sort="+sortby;
+	}
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
