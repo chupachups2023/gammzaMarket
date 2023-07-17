@@ -22,6 +22,10 @@
 	.reviewRate span{
 		margin-right:-5px;
 	}
+	.gongguName:hover{
+		cursor:pointer;
+		text-decoration:underline;
+	}
 </style>
 	<div align="center" class="mainPage-title">	
 		<h1 id="userId" class="userId">💚 ${member.userId}님의 프로필</h1>
@@ -48,13 +52,13 @@
             <tr class="allGGt" >
                 <td width="10%">${plist.reviewNo }</td>
                 <td width="20%">
-                <c:if test="${fn:length(plist.gongguName) gt 10}">
-                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${plist.gongguNo }'">${fn:substring(plist.gongguName, 0, 10)}⋯</div>
-                </c:if>
-                <c:if test="${fn:length(plist.gongguName) le 10}">
-                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${plist.gongguNo }'">${fn:substring(plist.gongguName, 0, 10)}</div>
-                </c:if>
-                	${plist.reviewWriter }
+	                <c:if test="${fn:length(plist.gongguName) gt 10}">
+	                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${plist.gongguNo }'">${fn:substring(plist.gongguName, 0, 10)}⋯</div>
+	                </c:if>
+	                <c:if test="${fn:length(plist.gongguName) le 10}">
+	                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${plist.gongguNo }'">${fn:substring(plist.gongguName, 0, 10)}</div>
+	                </c:if>
+                	<a href="${pageContext.request.contextPath}/member/userPf.bo?userPr=${plist.reviewWriter }">${plist.reviewWriter }</a>
                 </td>
                 
                 <td width="35%">
@@ -90,7 +94,7 @@
                 <c:if test="${fn:length(lList.gongguName) le 10}">
                 	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${lList.gongguNo }'">${fn:substring(lList.gongguName, 0, 10)}</div>
                 </c:if>
-                	${lList.reviewWriter }
+                	<a href="${pageContext.request.contextPath}/member/userPf.bo?userPr=${lList.reviewWriter }">${lList.reviewWriter }</a>
                 </td>
                 <td width="35%">
                 	<div class="reviewContent" onclick="reviewDetailModal(${lList.reviewNo});"><pre>${lList.reviewContent }</pre></div>
@@ -111,7 +115,8 @@
         		<!-- 리뷰보기 모달창 -->
 	
 	<div class="modalR" id="reviewDetailModal">
-	  <div class="modalR-dialog">
+		<div class="modal-bg" onclick="mClose()"></div>
+		<div class="modalR-dialog">
 	    <div class="modalR-content">
 	      <div class="modalR-header" style="text-align:center;">
 	        <h4 class="modalR-title">리뷰보기</h4>
@@ -129,12 +134,12 @@
 		                </td>
 					</tr>
 					<tr>
-						<td colspan="2"><span id="reviewContent"></span><br></td>
+						<td colspan="2"><span id="reviewContent"></span></td>
 					</tr>			
 				</table>
 	      </div>
 	      <div class="modalR-footer">
-	        <br><button type="button" class="btn-close" onclick="javascrip:mClose();">닫기</button><br><br>
+	        <button type="button" class="button" onclick="javascrip:mClose();">닫기</button>
 	      </div>
 	    </div>
 	  </div>
@@ -169,7 +174,7 @@ function showParti(){
  				review=re.review;
  				console.log(review.gongguName)
  				document.getElementById("reviewGongguName").innerHTML=review.gongguName;
- 				document.getElementById("reviewWriter").innerHTML=review.reviewWriter;
+ 				document.getElementById("reviewWriter").innerHTML='<a href="${pageContext.request.contextPath}/member/userPf.bo?userPr='+review.reviewWriter+'">'+review.reviewWriter+'</a>';
  				document.getElementById("reviewContent").innerHTML=review.reviewContent;
  				let star='';
  				for(let i=1;i<=review.rate*1;i++){

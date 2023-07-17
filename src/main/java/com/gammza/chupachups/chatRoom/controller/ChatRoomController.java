@@ -1,5 +1,7 @@
 package com.gammza.chupachups.chatRoom.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,14 +18,28 @@ import com.gammza.chupachups.chatRoom.model.service.ChatRoomService;
 import com.gammza.chupachups.chatRoom.model.vo.ChatRoom;
 import com.gammza.chupachups.common.model.vo.PageInfo;
 import com.gammza.chupachups.common.template.Pagination;
+import com.gammza.chupachups.gonggu.model.service.GongguService;
+import com.gammza.chupachups.gonggu.model.service.PartiService;
+import com.gammza.chupachups.gonggu.model.vo.Gonggu;
+import com.gammza.chupachups.gonggu.model.vo.Parti;
+import com.gammza.chupachups.location.controller.LocationController;
+import com.gammza.chupachups.location.model.service.LocationService;
+import com.gammza.chupachups.location.model.vo.Location;
 
 
 @Controller
 @SessionAttributes({"chatRoomList"})
 public class ChatRoomController {
-
+	@Autowired
+	private GongguService gongguService;
 	@Autowired
 	private ChatRoomService chatRoomService;	
+	@Autowired
+	private LocationService locationService;
+	@Autowired
+	private LocationController locationController;
+	@Autowired
+	private PartiService partiService;
 	
 	@GetMapping("/chatRoom/myChatList.bo")
 	public String chatRoomList(@RequestParam(defaultValue="1") int nowPage, @RequestParam(required = false) String roomOwner, HttpSession hs, Model model) {
@@ -45,9 +61,19 @@ public class ChatRoomController {
 		System.out.println(chatRoomList);
 		}
 */
+		ArrayList<Gonggu> mainList = gongguService.selectMainList();
+		for(int i=0;i<mainList.size();i++) {
+			Location tempLocal=locationService.selectLocationByNo(mainList.get(i).getLocationNo());
+			String locationName=locationController.SelectLocationName(tempLocal);
+			mainList.get(i).setLocationName(locationName);
+		}		
+		
+		
 		model.addAttribute("chatRoomList", chatRoomList);
 		model.addAttribute("pi", pi);
 		model.addAttribute("leader", leader);
+		model.addAttribute("mainList", mainList);
+		model.addAttribute("parti", parti);
 		
 		return "mypage/chatting";
 	}
