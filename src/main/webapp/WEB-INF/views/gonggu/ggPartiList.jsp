@@ -41,7 +41,7 @@
 			<tr>
 				<td colspan="7" class="sortByWhat">
 					<a onclick="sortByWhat('regAt');" id="regAt">최신순</a>&emsp;<a onclick="sortByWhat('temperature');" id="temperature">온도순</a>
-		   			<input type="hidden" id="sortByHidden" value="${sortByHidden }">
+		   			<input type="hidden" id="sortByHidden" value="${sort }">
 				</td>
 			</tr>
 			<c:if test="${empty partiList }">
@@ -141,7 +141,6 @@
 			success:function(result){
 				const parti=result.parti;
 				const check=result.result*1;
-				console.log(check)
 				if(check>0){
 					alert("이미 작성을 완료하였습니다.")
 				}else{
@@ -174,7 +173,6 @@
 			arr.push(id);
 		});
 		const maxNum="${gonggu.num}";
-		console.log(maxNum);
 		if(totalNum>(maxNum*1)){
 			alert("최대 선택 가능 수량 또는 인원은 "+maxNum+"개(명)입니다");
 		}else{
@@ -232,9 +230,16 @@
  			})
  		}
  	}
+ 	$(function(){
+ 		let sort=$("#sortByHidden").val();
+ 		if(sort=="temperature"){
+ 			$("#temperature").css("font-weight","bold");
+ 		}else{
+ 			$("#regAt").css("font-weight","bold");
+ 		}
+ 	})
  	function sortByWhat(what){
 		let sortby=what;
-		console.log(sortby);
 		location.href="${pageContext.request.contextPath}/gonggu/checkPartis.pa?gongguNo=${gonggu.gongguNo}&sort="+sortby;
 	}
 </script>

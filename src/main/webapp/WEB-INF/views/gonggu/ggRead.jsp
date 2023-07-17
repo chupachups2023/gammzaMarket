@@ -46,7 +46,7 @@
             	</c:when>
             	<c:otherwise>
 		            <div class="ggRead-content">
-		                ${gonggu.content }
+		                <pre>${gonggu.content }</pre>
 		            </div>
             	</c:otherwise>
             </c:choose>
@@ -134,7 +134,11 @@
             </c:otherwise>
         </c:choose>
             <div class="ggRead-info">
-                <div>관심 수 <span id="zzimCount">${zzimCount }</span> · </div>
+                <div>관심 수 <span id="zzimCount">
+                <c:choose>
+                	<c:when test="${ empty zzimCount }">0</c:when>
+                	<c:otherwise>${zzimCount }</c:otherwise>
+                </c:choose></span> · </div>
                 <div>조회 수 <span>${gonggu.count }</span></div>
                 <input type="hidden" value="${gonggu.longitude }" id="longitude">
                 <input type="hidden" value="${gonggu.latitude }" id="latitude">
