@@ -141,7 +141,7 @@ public class GongguController {
 			gongguStatusMgr(mainList.get(i).getGongguNo());
 		}
 		model.addAttribute("mainList", mainList);
-		int totalRecord=gongguService.selectTotalRecored();
+		int totalRecord=gongguService.selectTotalRecord();
 		
 		PageInfo pi=Pagination.getPageInfo(totalRecord, 1, 1, 8);
 		model.addAttribute("pi", pi);
@@ -451,7 +451,7 @@ public class GongguController {
 		 ArrayList<Gonggu> ggListView = gongguService.searchGonggu(map);
 		 
 		 model.addAttribute("ggListView", ggListView);
-		 int totalRecord=gongguService.selectGongguTotalRecored();
+		 int totalRecord=gongguService.selectGongguTotalRecord();
 		 
 		 model.addAttribute("keyword", gongguName);
 		

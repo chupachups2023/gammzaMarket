@@ -41,8 +41,8 @@ public class GongguServiceImpl implements GongguService {
 	}
 
 	@Override
-	public int selectTotalRecored() {
-		return gongguDao.selectTotalRecored();
+	public int selectTotalRecord() {
+		return gongguDao.selectTotalRecord();
 	}
 
 	@Override
@@ -66,8 +66,8 @@ public class GongguServiceImpl implements GongguService {
 	}
 
 	@Override
-	public int selectGongguTotalRecored() {
-		return gongguDao.selectGongguTotalRecored();
+	public int selectGongguTotalRecord() {
+		return gongguDao.selectGongguTotalRecord();
 	}
 
 	@Override
