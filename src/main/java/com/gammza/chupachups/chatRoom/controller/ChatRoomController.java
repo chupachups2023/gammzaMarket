@@ -66,17 +66,14 @@ public class ChatRoomController {
 			Location tempLocal=locationService.selectLocationByNo(mainList.get(i).getLocationNo());
 			String locationName=locationController.SelectLocationName(tempLocal);
 			mainList.get(i).setLocationName(locationName);
-		}
-		HashMap<String, String> map=new HashMap<String,String>();
+		}		
 		
-		Parti parti=partiService.selectOneParti(map);
 		
 		model.addAttribute("chatRoomList", chatRoomList);
 		model.addAttribute("pi", pi);
 		model.addAttribute("leader", leader);
 		model.addAttribute("mainList", mainList);
 		model.addAttribute("parti", parti);
-		System.out.println(mainList);
 		
 		return "mypage/chatting";
 	}

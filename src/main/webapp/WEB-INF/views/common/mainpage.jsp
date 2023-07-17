@@ -70,7 +70,6 @@
 		});
 		
 		function moreList(){
-			console.log($(".list-goods:hidden").length);
 			if($(".list-goods:hidden").length >= page){			//보여지지 않은 상품 개수가 보여주고자하는 개수와 같거나 많은지
 				$(".list-goods:hidden").slice(0, page).fadeIn(200); // 클릭시 more 갯수 미정
 				if($(".list-goods:hidden").length == 0){ 		// 컨텐츠 남아있는지 확인
