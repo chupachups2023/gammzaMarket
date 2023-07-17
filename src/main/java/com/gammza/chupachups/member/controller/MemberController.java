@@ -1,6 +1,7 @@
  package com.gammza.chupachups.member.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -448,20 +449,102 @@ public class MemberController {
 	@GetMapping("/userPf.bo")
 	public String userPf(Model model, HttpServletRequest request, HttpSession hs) {
 		Review review = (Review)hs.getAttribute("review");
-		
+
+
 		String userpr = request.getParameter("userPr");
 		String userpp = request.getParameter("userPp");
 		String userpl = request.getParameter("userPl");
 		model.addAttribute("userpr", userpr);
 		model.addAttribute("userpp", userpp);
 		model.addAttribute("userpl", userpl);
-		model.addAttribute("review", review);
-		Member loginmember = memberService.selectOneMember(userpl);
-		model.addAttribute("member", loginmember);
-		System.out.println(userpr +" , " + userpp +" , " + userpl);
+		if(userpl != null) {
+			Member loginmember = memberService.selectOneMember(userpl);
+			ArrayList<Review> recieved=reviewService.selectRecievedReview(loginmember.getUserId());
+			ArrayList<Gonggu> leadedGonggu=reviewService.selectAllMyGonggu(loginmember.getUserId());
+			
+			ArrayList<Review> partiReview=new ArrayList<Review>();
+			ArrayList<Review> leaderReview=new ArrayList<Review>();
+			int count=-1;
+			for(int i=0;i<recieved.size();i++) {
+				for(int j=0;j<leadedGonggu.size();j++) {
+					if(recieved.get(i).getGongguNo()==leadedGonggu.get(j).getGongguNo()) {
+						leaderReview.add(recieved.get(i));
+						count=-1;
+						break;
+					}else {	count=i;}
+				}
+				if(count==i) {
+					partiReview.add(recieved.get(i));
+				}
+			}
+			model.addAttribute("member", loginmember);
+			model.addAttribute("review", review);
+			model.addAttribute("partiReview", partiReview);
+			model.addAttribute("leaderReview", leaderReview);
+			System.out.println(partiReview);
+		} else if(userpr != null) {
+			Member loginmember = memberService.selectOneMember(userpr);
+			ArrayList<Review> recieved=reviewService.selectRecievedReview(loginmember.getUserId());
+			ArrayList<Gonggu> leadedGonggu=reviewService.selectAllMyGonggu(loginmember.getUserId());
+			
+			ArrayList<Review> partiReview=new ArrayList<Review>();
+			ArrayList<Review> leaderReview=new ArrayList<Review>();
+			int count=-1;
+			for(int i=0;i<recieved.size();i++) {
+				for(int j=0;j<leadedGonggu.size();j++) {
+					if(recieved.get(i).getGongguNo()==leadedGonggu.get(j).getGongguNo()) {
+						leaderReview.add(recieved.get(i));
+						count=-1;
+						break;
+					}else {	count=i;}
+				}
+				if(count==i) {
+					partiReview.add(recieved.get(i));
+				}
+			}
+			model.addAttribute("member", loginmember);
+			model.addAttribute("review", review);
+			model.addAttribute("partiReview", partiReview);
+			model.addAttribute("leaderReview", leaderReview);
+			System.out.println(partiReview);
+		} else if(userpp != null) {
+			Member loginmember = memberService.selectOneMember(userpp);
+			ArrayList<Review> recieved=reviewService.selectRecievedReview(loginmember.getUserId());
+			ArrayList<Gonggu> leadedGonggu=reviewService.selectAllMyGonggu(loginmember.getUserId());
+			
+			ArrayList<Review> partiReview=new ArrayList<Review>();
+			ArrayList<Review> leaderReview=new ArrayList<Review>();
+			int count=-1;
+			for(int i=0;i<recieved.size();i++) {
+				for(int j=0;j<leadedGonggu.size();j++) {
+					if(recieved.get(i).getGongguNo()==leadedGonggu.get(j).getGongguNo()) {
+						leaderReview.add(recieved.get(i));
+						count=-1;
+						break;
+					}else {	count=i;}
+				}
+				if(count==i) {
+					partiReview.add(recieved.get(i));
+				}
+			}
+			model.addAttribute("member", loginmember);
+			model.addAttribute("review", review);
+			model.addAttribute("partiReview", partiReview);
+			model.addAttribute("leaderReview", leaderReview);
+			System.out.println(partiReview);
+		}
 		return "/others/userProfile";
 	}
 
+	
+	@GetMapping("/getReview.re")
+	public String getReview(@RequestParam int reviewNo, Model model) {
+		Review review=reviewService.selectOneReview(reviewNo);
+		model.addAttribute("review", review);
+		return "jsonView";
+	}
+	
+	
 	@GetMapping("/memberList.do")
 	public String memberList(@RequestParam(defaultValue="1") int nowPage, Model model) {
 		int totalRecord = memberService.selectTotalRecord();
