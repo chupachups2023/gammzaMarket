@@ -80,4 +80,19 @@ public class GongguServiceImpl implements GongguService {
 		return gongguDao.selectLeadGongguList(userId);
 	}
 
+	@Override
+	public int updateGongguStatus(int gongguNo) {
+		return gongguDao.updateGongguStatus(gongguNo);
+	}
+	
+	@Override
+	public int updatepullUpAt(int gongguNo) {
+		return gongguDao.updatepullUpAt(gongguNo);
+	}
+	
+	@Override
+	public ArrayList<Gonggu> selectAllGongguList() {
+		return gongguDao.selectAllGongguList();
+}
+
 }

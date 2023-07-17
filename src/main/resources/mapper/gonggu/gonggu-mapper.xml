@@ -124,6 +124,13 @@
   			order by pullup_at desc
   		</select>
 	
+	<select id="selectAllGongguList" resultMap="gongguMap">
+		select * 
+		  from gonggu 
+		where status=1
+	 order by pullup_at desc
+	</select>
+	
 </mapper>  
 
 

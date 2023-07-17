@@ -34,12 +34,11 @@ public interface GongguService {
 	int updateEndStatus(int gongguNo);
 
 	int updateGonggu(Gonggu gonggu);
-
-	ArrayList<Gonggu> selectLeadGongguList(String userId);
-
-	ArrayList<Gonggu> searchGonggu(String gongguName);
 	
-	int updateGongguCount(int gongguNo);
+	int updateGongguStatus(int gongguNo);
 
+	int updatepullUpAt(int gongguNo);
+
+	ArrayList<Gonggu> selectAllGongguList();
 
 }
