@@ -60,19 +60,6 @@ public class ReviewController {
 //		System.out.println("총대로 받음"+leaderReview.get(0).getReviewContent());
 		model.addAttribute("partiReview", partiReview);
 		model.addAttribute("leaderReview", leaderReview);
-		
-		int[] partiStar=new int[partiReview.size()];
-		int[] leaderStar=new int[leaderReview.size()];
-		
-		for(int i=0;i<partiStar.length;i++) {
-			partiStar[i]=partiReview.get(i).getRate();
-		}
-		for(int i=0;i<leaderStar.length;i++) {
-			leaderStar[i]=leaderReview.get(i).getRate();
-		}
-		model.addAttribute("partiStar", partiStar.toString());
-		model.addAttribute("leaderStar", leaderStar.toString());
-		
 		return "/mypage/reviewList";
 	}
 	
