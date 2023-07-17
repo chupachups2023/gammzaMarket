@@ -39,11 +39,11 @@
     </div>
     <br><br><br>
     <table class="allGGListTable" id="partiReview">
-                <c:if test="${empty partiReview }">
-                <tr>
-                	<td colspan="5">공구에 참여해서 받은 리뷰가 아직 없습니다.</td>
-                </tr>
-                </c:if>
+		<c:if test="${empty partiReview }">
+			<tr>
+				<td colspan="5">공구에 참여해서 받은 리뷰가 아직 없습니다.</td>
+			</tr>
+		</c:if>
         <c:forEach items="${partiReview }" var="plist" varStatus="i">
             <tr class="allGGt" >
                 <td width="10%">${plist.reviewNo }</td>
@@ -143,7 +143,7 @@
         
 	<script>
 		$(function(){
-			var wid=700/100*${loginMember.temperature}; /* 온도 */
+			var wid=700/100*${member.temperature}; /* 온도 */
 			document.getElementById("bar").style.width=wid;
 		})
 $("#partiReview").css("display", "none");
