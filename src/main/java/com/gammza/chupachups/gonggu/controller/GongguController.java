@@ -103,7 +103,6 @@ public class GongguController {
 		
 		if(loginMember !=null) {
 			if(loginMember.getLatitude() == null) {
-				System.out.println(loginMember.getLatitude());
 				redirectAttr.addFlashAttribute("msg","정확한 주변 공구를 보려면 장소 인증을 먼저 해야 합니다.");
 				mav.setView(new RedirectView("/chupachups/location/location.lo"));
 				return mav;
@@ -178,7 +177,10 @@ public class GongguController {
 		 gongguService.updateGongguCount(gongguNo);
 		 Gonggu gonggu = gongguService.selectOneGonggu(gongguNo);
 		 
-		 ArrayList<Parti> partiList=partiService.selectPartiListForLeader(gongguNo);
+		 HashMap<String,String> map=new HashMap<String,String>();
+		 map.put("gongguNo", String.valueOf(gongguNo));
+		 map.put("sort", "recent");
+		 ArrayList<Parti> partiList=partiService.selectPartiListForLeader(map);
 		 
 		 int partiNum=0;
 		 for(int i=0;i<partiList.size();i++) {

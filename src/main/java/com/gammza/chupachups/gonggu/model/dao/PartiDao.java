@@ -23,7 +23,7 @@ public interface PartiDao {
 
 	int updatePartiStatusSelf(HashMap<String, String> map);
 
-	ArrayList<Parti> selectPartiListForLeader(int gongguNo);
+	ArrayList<Parti> selectPartiListForLeader(HashMap<String, String> map);
 
 	int updatePartiStatusByLeader(HashMap<String, String> map);
 	

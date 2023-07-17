@@ -65,11 +65,8 @@ public class MemberController {
 	
 	@PostMapping("/memberLogin.me")
 	public String memberLogin(String userId, String userPwd, Model model, RedirectAttributes redirectAtt,HttpSession session) {
-		System.out.println("userId = " + userId);
-		System.out.println("userPwd = " + userPwd);
 		
 		Member member = memberService.selectOneMember(userId);
-		System.out.println("member = " + member);
 		
 		// 인증
 		if (member != null && passwordEncoder.matches(userPwd, member.getUserPwd())) {
@@ -135,7 +132,6 @@ public class MemberController {
 	
 	@PostMapping("/memberEnroll.me") 
 	public String memberEnroll(Member member, RedirectAttributes redirectAtt) {
-		System.out.println("userPass = " + member);
 		
 		// 비밀번호 암호화
 		String rawPassword = member.getUserPwd();
@@ -150,13 +146,10 @@ public class MemberController {
 	@RequestMapping(value = "/mailCheck.me", method = RequestMethod.GET)
 	@ResponseBody
 	public String mailCheck(String email, Model model) throws Exception {
-		System.out.println("이메일 데이터 전송 확인");	// 확인용
-		System.out.println("인증 이메일 : " + email);
 		
 		// 인증번호 생성
 		Random random = new Random();
 		int checkNum = random.nextInt(888888) + 111111;
-		System.out.println("인증번호 : " + checkNum);
 		model.addAttribute("emailAuth", checkNum);
 		
 		// 이메일 전송 내용
@@ -309,7 +302,6 @@ public class MemberController {
 	@ResponseBody
 	public String findIdClick(@RequestParam("phone") String phone) {
 		String result = memberService.findIdClick(phone);
-		System.out.println(result);
 		return result;
 	}
 	
@@ -364,7 +356,6 @@ public class MemberController {
 				messageHelper.setText(content);
 				mailSender.send(message);
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
 				e.printStackTrace();
 			}
 			ModelAndView mv = new ModelAndView();
@@ -403,10 +394,8 @@ public class MemberController {
 		int result = memberService.updatePwd(tempMember);
 		
 		if (result > 0) { // 데이터베이스 변경된 행의 수 
-			System.out.println("result: " + result);
 			redirectAtt.addFlashAttribute("msg", "비밀번호 변경이 완료되었습니다.");
 		} else {
-			System.out.println("result: " + result);
 			redirectAtt.addFlashAttribute("msg", "비밀번호 변경 실패");
 			return "member/updatePwd";
 		}
@@ -482,7 +471,6 @@ public class MemberController {
 			model.addAttribute("review", review);
 			model.addAttribute("partiReview", partiReview);
 			model.addAttribute("leaderReview", leaderReview);
-			System.out.println(partiReview);
 		} else if(userpr != null) {
 			Member loginmember = memberService.selectOneMember(userpr);
 			ArrayList<Review> recieved=reviewService.selectRecievedReview(loginmember.getUserId());
@@ -507,7 +495,6 @@ public class MemberController {
 			model.addAttribute("review", review);
 			model.addAttribute("partiReview", partiReview);
 			model.addAttribute("leaderReview", leaderReview);
-			System.out.println(partiReview);
 		} else if(userpp != null) {
 			Member loginmember = memberService.selectOneMember(userpp);
 			ArrayList<Review> recieved=reviewService.selectRecievedReview(loginmember.getUserId());
@@ -532,7 +519,6 @@ public class MemberController {
 			model.addAttribute("review", review);
 			model.addAttribute("partiReview", partiReview);
 			model.addAttribute("leaderReview", leaderReview);
-			System.out.println(partiReview);
 		}
 		return "/others/userProfile";
 	}
@@ -556,7 +542,6 @@ public class MemberController {
 		PageInfo pi = Pagination.getPageInfo(totalRecord, nowPage, limit, 5);
 		
 		List<Member> memberList = memberService.selectMemberList(rowBounds);
-		System.out.println(memberList);
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("pi", pi);
 		

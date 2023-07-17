@@ -151,8 +151,11 @@ public class PartiController {
 	
 	//공구 총대가 보는 참여자 리스트
 	@GetMapping("/checkPartis.pa")
-	public String checkPartis(@RequestParam int gongguNo, Model model) {
-		ArrayList<Parti> partiList=partiService.selectPartiListForLeader(gongguNo);
+	public String checkPartis(@RequestParam int gongguNo, Model model, @RequestParam(defaultValue="recent") String sort) {
+		HashMap<String,String> map=new HashMap<String,String>();
+		map.put("gongguNo", String.valueOf(gongguNo));
+		map.put("sort", sort);
+		ArrayList<Parti> partiList=partiService.selectPartiListForLeader(map);
 		Gonggu gonggu=gongguService.selectOneGonggu(gongguNo);
 		
 		model.addAttribute("gonggu", gonggu);
@@ -162,7 +165,7 @@ public class PartiController {
 	
 	//총대가 참여자 선택
 	@GetMapping("/partiMemSelect.pa")
-	public String partiMemSelect(@RequestParam String[] id, @RequestParam int gongguNo, Model model) {
+	public String partiMemSelect(@RequestParam String[] id, @RequestParam int gongguNo, Model model,@RequestParam(defaultValue="recent")String sort) {
 		Gonggu gonggu=gongguService.selectOneGonggu(gongguNo);
 		for(int i=0;i<id.length;i++) {
 			HashMap<String, String> map=new HashMap<String,String>();
@@ -170,8 +173,10 @@ public class PartiController {
 			map.put("userId", id[i]);
 			int result=partiService.updatePartiStatusByLeader(map);
 		}
-
-		ArrayList<Parti> partiList=partiService.selectPartiListForLeader(gongguNo);
+		HashMap<String, String> map=new HashMap<String,String>();
+		map.put("gongguNo", String.valueOf(gongguNo));
+		map.put("sort", sort);
+		ArrayList<Parti> partiList=partiService.selectPartiListForLeader(map);
 		int selectCount=0;
 		for(int i=0;i<partiList.size();i++) {
 			if(partiList.get(i).getStatus()>0)
@@ -182,7 +187,7 @@ public class PartiController {
 			gongguService.updateEndStatus(gongguNo);
 		}
 		
-		checkPartis(gongguNo,model);
+		checkPartis(gongguNo,model,sort);
 		
 		return "/gonggu/ggPartiList";
 	}
@@ -190,7 +195,10 @@ public class PartiController {
 	//공구가 마감되면 참여 안하는 회원들 포인트 돌려주기
 	public void nonPartiMemPointMgr(int gongguNo) {
 		Gonggu gonggu=gongguService.selectOneGonggu(gongguNo);
-		ArrayList<Parti> partiList=partiService.selectPartiListForLeader(gongguNo);
+		HashMap<String,String> map=new HashMap<String,String>();
+		map.put("gongguNo", String.valueOf(gongguNo));
+		map.put("sort", "recent");
+		ArrayList<Parti> partiList=partiService.selectPartiListForLeader(map);
 		
 		for(int i=0;i<partiList.size();i++) {
 			if(partiList.get(i).getStatus()==0) {
