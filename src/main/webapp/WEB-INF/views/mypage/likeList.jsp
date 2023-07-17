@@ -86,12 +86,14 @@
 	});
 	
 	function delSelZ() {
-		const chkList = document.getElementsByName("delZzim");
-		if(chkList.value != null) {
+		let chkList = $("input[type=checkbox]");
+		if(chkList.is(":checked")){
 			delZFrm.submit();
-		}else {
-			alert("선택된 찜이 없습니다");
+		}else{
+			alert("선택된 공구가 없습니다");
 		}
+		
 	}
+	
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
