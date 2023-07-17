@@ -278,8 +278,17 @@ public class GongguController {
 			int gongguNo=gongguService.selectLastNum();
 			Gonggu newGonggu=gongguService.selectOneGonggu(gongguNo);
 			model.addAttribute("gonggu", newGonggu);
-			chatRoomService.insertChatRoom(newGonggu);
 			
+//			if(memId equals(hostId)) {
+//				System.out.println("자기자신한테 메시지 안돼");
+//				return 원래사이트
+//			} else if(이미 있는 채팅방이면) {
+//				보내주기만 함 생성x
+//				return
+//			} else(관련 채팅방 없으면){
+//				return
+//			}			
+			chatRoomService.insertChatRoom(newGonggu);
 			if(request != null) {
 				requestController.updateRequestReqStatus(request.getRequestNo());
 			}
