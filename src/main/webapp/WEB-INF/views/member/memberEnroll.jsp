@@ -109,10 +109,10 @@
 						<div class="agree-container2">
 							<div class="agree">
 								<h4>제1조 (목적)</h4>
-								이 약관은 감자마켓이 제공하는 서비스를 이용함에 있어 감자마켓과 이용자의 권리 및 의무와 이용에 관한 제반사항을 규정하는 것을 목적으로 합니다. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem error aliquid facilis facere aliquam, tempora incidunt harum maxime, itaque repellat expedita exercitationem. Et sapiente doloremque enim modi rem in corporis excepturi quae quas laboriosam!
-								<br>
-								<h4>제2조 (목적)</h4>
-								이 약관에서 사용하는 용어의 정의는 다음과 같습니다. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem error aliquid facilis facere aliquam, tempora incidunt harum maxime, itaque repellat expedita exercitationem. Iusto molestias illo ipsa, quam dolore quaerat magni. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo facere velit quaerat fugit earum harum quam qui illum! Et sapiente doloremque enim modi rem in corporis excepturi quae quas laboriosam!
+								이 약관은 감자마켓이 제공하는 서비스를 이용함에 있어 감자마켓과 이용자의 권리 및 의무와 이용에 관한 제반사항을 규정하는 것을 목적으로 합니다.<br>
+								<h4>제2조 (용어의 정의)</h4>
+								이 약관에서 사용하는 용어의 정의는 다음과 같습니다.<br>
+								1. "감자마켓 서비스"란 이용자가 회사의 서비스를 이용할 수 있도록 회사가 제공하는 공동구매 및 지역생활 정보 공유를 위한 웹/앱 플랫폼 서비스 일체를 의미합니다.<br>
 							</div>
 						</div>
 					
@@ -122,8 +122,10 @@
 						</div>
 						<div class="agree-container2">
 							<div class="agree">
-								<h4>제1조 (목적)</h4>
-								이 약관은 감자마켓이 제공하는 서비스를 이용함에 있어 감자마켓과 이용자의 권리 및 의무와 이용에 관한 제반사항을 규정하는 것을 목적으로 합니다. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem error aliquid facilis facere aliquam, tempora incidunt harum maxime, itaque repellat expedita exercitationem. Iusto molestias illo ipsa, quam dolore quaerat magni. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo facere velit quaerat fugit earum harum quam qui illum! Et sapiente doloremque enim modi rem in corporis excepturi quae quas laboriosam!
+								<h4>제9조 (취득한 개인정보의 보호)</h4>
+								1. 판매자는 판매 서비스의 이용에 따라 취득한 이용자 등 타인의 개인정보를 상품의 배송 또는 전달을 위한 목적 이외의 용도로 사용하거나 제3자에게 제공하는 등 외부에 유출할 수 없으며, 관련 법령 등에 따라 철저히 보호하여야 합니다.<br>
+								2. 감자마켓은 배송 등의 목적으로 판매자에게 공개되어 있는 이용자의 개인정보를 감자마켓의 정책에 따라 상당 기간이 경과한 후 비공개 조치할 수 있습니다.<br>
+								3. 판매자가 본 조를 위반하여 이용자와 분쟁이 발생하는 경우 자신의 노력과 비용으로 감자마켓을 면책시켜야 하며, 민/형사 상 일체의 법적 책임을 부담하여야 합니다.<br>
 							</div>
 						</div>
 						<div class="agree-total">
@@ -140,6 +142,43 @@
 
 
 <script type="text/javascript">
+	document.querySelector("#userId").addEventListener("keyup", (e) => {
+		const ok = document.querySelector(".ok");
+		const error = document.querySelector(".error");
+		const userId = e.target;
+		
+		if (userId.value.length < 4) {
+			ok.style.display = "none";
+			error.style.display = "none";
+			return;
+			}
+		
+		$.ajax({
+			url: "${pageContext.request.contextPath}/member/checkId.me",
+			data: {userId: userId.value},
+			method: "get",
+			dataType: "json",
+			success(result) {
+				console.log(result);
+				const {userId, available} = result; // unpacking 
+				
+				if (available) {
+					ok.style.display = "inline";
+					error.style.display = "none";
+				} else {
+					ok.style.display = "none";
+					error.style.display = "inline";
+				}
+			},
+			error: console.log
+			});
+		});
+
+
+
+
+
+
 	$("#modal2").ready(function() {
 		$("#modal2").show();
 	});
@@ -197,38 +236,6 @@
 		agreeModalBtn.addEventListener("click", () => {
 			agreeModalClose();
 		});
-
-document.querySelector("#userId").addEventListener("keyup", (e) => {
-	const ok = document.querySelector(".ok");
-	const error = document.querySelector(".error");
-	const userId = e.target;
-	
-	if (userId.value.length < 4) {
-		ok.style.display = "none";
-		error.style.display = "none";
-		return;
-		}
-	
-	$.ajax({
-		url: "${pageContext.request.contextPath}/member/checkId.me",
-		data: {userId: userId.value},
-		method: "get",
-		dataType: "json",
-		success(result) {
-			console.log(result);
-			const {userId, available} = result; // unpacking 
-			
-			if (available) {
-				ok.style.display = "inline";
-				error.style.display = "none";
-			} else {
-				ok.style.display = "none";
-				error.style.display = "inline";
-			}
-		},
-		error: console.log
-		});
-	});
 	
 </script>
 
