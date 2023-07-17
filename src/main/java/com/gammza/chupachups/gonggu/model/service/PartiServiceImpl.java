@@ -31,8 +31,8 @@ public class PartiServiceImpl implements PartiService {
 	}
 
 	@Override
-	public ArrayList<Gonggu> selectAllPartiList(String userId) {
-		return partiDao.selectAllPartiList(userId);
+	public ArrayList<Gonggu> selectAllPartiList(HashMap<String, String> listMap) {
+		return partiDao.selectAllPartiList(listMap);
 	}
 
 	@Override

@@ -17,7 +17,7 @@ public interface PartiDao {
 	
 	int updateMemberPointPlus(HashMap<String, String> updatePoint);
 
-	ArrayList<Gonggu> selectAllPartiList(String userId);
+	ArrayList<Gonggu> selectAllPartiList(HashMap<String, String> listMap);
 
 	Parti selectOneParti(HashMap<String, String> selectParti);
 
