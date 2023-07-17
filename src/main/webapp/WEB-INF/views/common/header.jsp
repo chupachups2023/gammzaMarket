@@ -48,7 +48,7 @@
 					</c:when>
 					<c:otherwise>
 						<a href="${pageContext.request.contextPath}/mypage/mypageMain.me">
-							<img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login" >
+							<img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-memberLogin" >
 						</a>
 		      			<button class="header-logoutBtn" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">
 		      				<!-- <img src="https://cdn-icons-png.flaticon.com/512/1828/1828427.png" alt="logoutButton"> -->
