@@ -162,8 +162,8 @@ input::-webkit-input-placeholder {
 
 .modal-closeBtn {
 	position: absolute;
-	right: 30px;
-	top: 30px;
+	right: 12px;
+	top: 10px;
 	cursor: pointer;
 	/* background: url("../resources/img/header/close-icon.png") no-repeat; */
 	background: url("close-icon.png") no-repeat; /* 경로 수정 예정 */
