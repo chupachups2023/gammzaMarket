@@ -6,8 +6,8 @@
  <mapper namespace="com.gammza.chupachups.member.model.dao.MemberDao">
  	<resultMap type="member" id="memberMap"></resultMap>
  	
- 	<!-- <insert id="insertMember">
-	  insert into member(user_id, user_pwd, name, phone, location, email, create_at, update_at, status, point, temperature, kakao_idkey, naver_idkey, birthday, latitude, longitude) 
+ 	<insert id="insertMember">
+	  insert into member(user_id, user_pwd, name, phone, location, email, create_at, update_at, status, point, temperature, kakao_idkey, naver_idkey, birthday, longitude, latitude) 
 	  values ( 
 	    #{userId},
 	    #{userPwd},
@@ -44,7 +44,7 @@
 	)
 	</insert>
 	
-	<insert id="insertNaverMember">
+	<!-- <insert id="insertNaverMember">
 		insert into member(user_id, user_pwd, name, phone, email, create_at, status, point, temperature, naver_idkey)
 		values(
 		'naver',

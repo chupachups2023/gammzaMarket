@@ -21,43 +21,44 @@ textarea{
 .header-korlogo{
     width: 170px;
     }
-.header-login{
+.header-adminLogin{
     width: 65px;
     opacity: 0.35;
     margin-right: -7px;
     }
+
+
+/* .header-loginBtn img {
+	width: 40px;
+    opacity: 0.35;
+    cursor: pointer;
+} */
+
+.header-login {
+	border: 0;
+	background: transparent;	
+}
+
 
 .header-loginBtn {
 	border: 0;
 	background: transparent;
 }
 
-.header-loginBtn img {
-	width: 40px;
-    opacity: 0.35;
-    cursor: pointer;
-}
-
 .header-loginBtn i {
-	width: 40px;
-    opacity: 0.35;
     cursor: pointer;
 }
 
 .header-logoutBtn {
 	border: 0;
 	background: transparent;
+	padding-left: 6px;
 }
 
-.header-logoutBtn img {
-	width: 40px;
-    opacity: 0.35;
+.header-logoutBtn i {
     cursor: pointer;
 }
-
-
-
-    
+ 
 .header-head{
     display: flex;
     flex-direction: row;
