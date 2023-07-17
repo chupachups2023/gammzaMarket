@@ -39,7 +39,7 @@
 		<div class="css-1plme8k">
 			<nav class="css-dcpzrh">
 				<div class="css-fycla4">
-					<div>${loginMember.userId}</div>
+					<div>${loginMember.userId}</div><div class="css-1c3oejv"><div class="main-title"><span class="temperature">${loginMember.temperature}°C</span></div></div>
 				</div>
 				<div class="css-iyc8t">
 					<label class="unread-label common-bg-hover"> <span
@@ -90,7 +90,7 @@
 				<div class="css-1c3oejv">
 					<div class="chat-header-profile">
 						<div class="main-title">
-							<span>${ chatRoom.roomOwner }</span> <span class="temperature">37.8°C</span>
+							<span>${ chatRoom.roomOwner }</span> <span class="temperature">${leader.temperature}°C</span>
 						</div>
 					</div>
 
