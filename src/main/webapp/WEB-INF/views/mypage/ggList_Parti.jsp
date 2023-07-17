@@ -15,13 +15,15 @@
 		<tr>
 			<td colspan="3"  class="sort-type" >
 			<small>
-				<input type="checkbox" name="onlyOn" id="onlyOn"><label for="onlyOn"> 마감 공구 제외하고 보기</label>
+				<input type="radio" name="sort" id="recent" value="recent" <c:if test="${sort eq 'recent' }">checked</c:if> ><label for="recent"> 신청 순으로 정렬</label>
+				<input type="radio" name="sort" id="endTime" value="endTime" <c:if test="${sort eq 'endTime' }">checked</c:if> ><label for="endTime" > 마감 순으로 정렬</label>
+				<input type="hidden" name="hiddenSort" value="${sort }" id="hiddenSort">
 			</small>
 			</td>
 			<td colspan="3"  class="sort-type align-right">
 			<small>
-				<input type="radio" name="parti-sort" id="regAt" value="2" checked="checked"><label for="regAt"> 신청 순으로 정렬</label>
-				<input type="radio" name="parti-sort" id="endTime" value="0"><label for="endTime"> 마감 순으로 정렬</label> 
+				<input type="checkbox" name="end" id="end" <c:if test="${endStatus eq 1 }">checked</c:if> ><label for="end"> 마감 공구 제외하고 보기</label>
+				<input type="hidden" name="hiddenEnd" value="${endStatus }" id="hiddenEnd">
 			</small>
 			</td>
 		</tr>
@@ -72,6 +74,7 @@
 			<!-- 리뷰보기 모달창 -->
 	
 	<div class="modalR" id="reviewDetailModal">
+	<div class="modal-bg" onclick="mClose()"></div>
 	  <div class="modalR-dialog">
 	    <div class="modalR-content">
 	    <form name="writeReviewFrm">
@@ -97,7 +100,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2" ><pre class="reviewContentPre"><textarea name="reviewContent" class="reviewContent"></textarea></pre><br></td>
+						<td colspan="2" ><pre class="reviewContentPre"><textarea name="reviewContent" class="reviewContent"></textarea></pre></td>
 					</tr>
 				</table>
 					<input type="hidden" name="gongguNo" id="ggNo">
@@ -128,6 +131,7 @@
 			data:{"userId":userId, "gongguNo":gongguNo},
 			success:function(result){
 				const check=result.result*1;
+				console.log(check)
 				const gonggu=result.gonggu;
 				if(check>0){
 					alert("이미 작성을 완료하였습니다.")
@@ -186,6 +190,36 @@
  			})
  		}
  	}
-	
+ 	$(function(){
+		let hiddenSort=document.getElementById("hiddenSort").value;
+		let hiddenEnd=document.getElementById("hiddenEnd").value;
+		
+		$("#recent").on('click', function() {
+			if(hiddenSort == "recent"){
+				return;
+			}else{
+				location.href="${pageContext.request.contextPath}/gonggu/ggPartiList.pa?sort=recent&end="+hiddenEnd;
+			}
+		})
+		
+		$("#endTime").on('click', function() {
+			if(hiddenSort == "endTime"){
+				return;
+			}else{
+				location.href="${pageContext.request.contextPath}/gonggu/ggPartiList.pa?sort=endTime&end="+hiddenEnd;
+			}
+		})
+	})
+	$(function(){
+		
+		$("#end").on('click', function() {
+			let hiddenSort=document.getElementById("hiddenSort").value;
+			if ( $(this).prop('checked') ) {
+				location.href="${pageContext.request.contextPath}/gonggu/ggPartiList.pa?sort="+hiddenSort+"&end=1"
+			} else {
+				location.href="${pageContext.request.contextPath}/gonggu/ggPartiList.pa?sort="+hiddenSort
+			}
+		});
+	})
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

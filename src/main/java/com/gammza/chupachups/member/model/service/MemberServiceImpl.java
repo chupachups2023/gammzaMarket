@@ -50,11 +50,6 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectMemberByKakao(id);
 	}
 
-	/*
-	 * @Override public Member selectMemberByPhone(String phone) { return
-	 * memberDao.selectMemberByPhone(phone); }
-	 */
-
 	@Override
 	public Member selectMemberByNaver(String id) {
 		return memberDao.selectMemberByNaver(id);
@@ -91,21 +86,16 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int updatePwd(Member member) {
-		String updatePwd = passwordEncoder.encode(member.getUserPwd());
-		member.setUserPwd(updatePwd);
-		System.out.println("changePass = " + member);
-		
-		
-		return memberDao.updatePwd(member);
-	}
-
-	@Override
 	public Member selectOneMemberByEmail(String email) {
 		return memberDao.selectOneMemberByEmail(email);
 	}
 
 	@Override
+	public int updatePwd(Member tempMember) {
+		return memberDao.updatePwd(tempMember);
+	}
+
+  @Override
 	public int changeStatus(String userId) {
 		return memberDao.changeStatus(userId);
 	}
@@ -123,6 +113,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public List<Member> selectMemberList(RowBounds rowBounds) {
 		return memberDao.selectMemberList(rowBounds);
+	}
+
+	@Override
+	public int updateMember_Ad(Member member) {
+		return memberDao.updateMember_Ad(member);
 	}
 
 }

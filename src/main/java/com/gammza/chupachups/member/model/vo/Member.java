@@ -39,5 +39,5 @@ public class Member {
 	
 	private String createAt2;
 	private String status2;
-
+	private String newUserId;
 }

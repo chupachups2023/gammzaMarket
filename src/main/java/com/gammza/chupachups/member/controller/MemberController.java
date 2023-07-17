@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gammza.chupachups.common.model.vo.PageInfo;
@@ -48,7 +49,7 @@ public class MemberController {
 	private ReviewService reviewService; 
 	
 	@Autowired
-	private MemberService memberService;
+	private MemberService memberService;	
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -56,7 +57,7 @@ public class MemberController {
 	@Autowired
 	private JavaMailSender mailSender;
 	
-	
+	// 로그인 
 	@GetMapping("/memberLogin.me")
 	public String memberLogin() {
 		return "member/memberLogin";
@@ -64,18 +65,15 @@ public class MemberController {
 	
 	@PostMapping("/memberLogin.me")
 	public String memberLogin(String userId, String userPwd, Model model, RedirectAttributes redirectAtt,HttpSession session) {
-		System.out.println("userId = " + userId);
-		System.out.println("userPwd = " + userPwd);
 		
 		Member member = memberService.selectOneMember(userId);
-		System.out.println("member = " + member);
 		
 		// 인증
 		if (member != null && passwordEncoder.matches(userPwd, member.getUserPwd())) {
 			model.addAttribute("loginMember", member);	// requestScope => sessionScope 바꾸기
 			
 			Long kakaoIdkey = (Long)session.getAttribute("kakaoIdkey");
-			String naverIdkey = (String)model.getAttribute("naverIdkey");
+			String naverIdkey = (String)session.getAttribute("naverIdkey");
 			
 			if(kakaoIdkey != null) {
 				HashMap<String,String> map = new HashMap<String,String>();
@@ -101,42 +99,14 @@ public class MemberController {
 				
 				return "redirect:/";
 			}
-			
 			redirectAtt.addFlashAttribute("msg", member.getName()+ "님 환영합니다💚");
-			
 		} else {
 			redirectAtt.addFlashAttribute("msg", "아이디 또는 비밀번호가 맞지 않습니다.");
 		}
-		
-//		String kakaoIdkey = (String) model.getAttribute("kakaoIdkey");
-//		String naverIdkey = (String) model.getAttribute("naverIdkey");
-//		
-//		System.out.println("naverIdkey: " + naverIdkey);
-//		System.out.println(member);
-//		
-//		if (naverIdkey == null) { // 일반 로그인한 상태 
-//			memberService.insertNaverIdkey(member.getNaverIdkey());
-//			return "redirect:/";
-//			
-//			
-//		} else {
-//			return "redirect:/";
-//		}
-		
-		
-		
-		/*
-		 * Member loginMember=memberService.selectMemberByKakao();
-		 * 
-		 * if (loginMember == null) { // 카카오 연동을 최초로 하는 신규/기존 회원 (KAKAO_IDKEY == NULL)
-		 * model.addAttribute("kakaoIdkey", kakaoProfile.getId()); //
-		 * redirectAtt.addFlashAttribute("msg", "카카오 간편로그인 최초 1회 연결이 필요합니다."); return
-		 * "/member/socialLogin";
-		 */
 		return "redirect:/";
 	}
 	
-	
+	// 아이디 중복 확인 
 	@GetMapping("/checkId.me")
 	public String checkIdFunc(@RequestParam String userId, Model model) {
 		Member member = memberService.checkIdFunc(userId);
@@ -147,13 +117,8 @@ public class MemberController {
 		
 		return "jsonView";
 	}
-		
 	
-	// @SessionAttributes + model 통해 로그인정보를 관리하는 경우
-	/*
-	 * SessionStatus객체를 통해 사용완료 처리해야 한다
-	 * 	- session객체를 폐기하지 않고 재사용
-	 */	
+	// 로그아웃 
 	@GetMapping("/memberLogout.me")
 	public String memberLogout(SessionStatus status) {
 		if (!status.isComplete())
@@ -161,31 +126,59 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-	
+	// 회원가입 
 	@GetMapping("/memberEnroll.me")
 	public void memberEnroll() {} 
 	
 	@PostMapping("/memberEnroll.me") 
 	public String memberEnroll(Member member, RedirectAttributes redirectAtt) {
-		System.out.println("userPass = " + member);
 		
 		// 비밀번호 암호화
 		String rawPassword = member.getUserPwd();
 		String encodedPassword = passwordEncoder.encode(rawPassword);
 		member.setUserPwd(encodedPassword);
-		System.out.println("changePass = " + member);
 		int result = memberService.insertMember(member);
-		
 		redirectAtt.addFlashAttribute("msg", "회원가입이 완료되었습니다. 로그인이 필요합니다.");
-		
 		return "redirect:/";
 	}
+	
+
+	@RequestMapping(value = "/mailCheck.me", method = RequestMethod.GET)
+	@ResponseBody
+	public String mailCheck(String email, Model model) throws Exception {
 		
-	
-	@GetMapping("/memberDetail.me")
-	public void memberDetail() {
+		// 인증번호 생성
+		Random random = new Random();
+		int checkNum = random.nextInt(888888) + 111111;
+		model.addAttribute("emailAuth", checkNum);
+		
+		// 이메일 전송 내용
+		String setFrom = "gammzamarket@gmail.com";		// 발신 이메일
+		String toMail = email;					// 받는 이메일
+		String title = "[본인인증] 감자마켓 인증 이메일 입니다. ";
+		String content = 
+								"<h2>안녕하세요 감자마켓 입니다!</h2><br><br>"
+							+	"인증 번호는 " + checkNum + "입니다.<br><br>"
+							+	"해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+		
+		// 이메일 전송 코드
+		try {
+			MimeMessage msg = mailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(msg, true, "UTF-8");
+			helper.setFrom(setFrom);
+			helper.setTo(toMail);
+			helper.setSubject(title);
+			helper.setText(content, true);
+			mailSender.send(msg);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+      return Integer.toString(checkNum);		// ajax를 뷰로 반환시 데이터 타입은 String 타입만 가능
+		
+		//return "redirect:/";		// String 타입으로 반환 후 반환
 	}
-	
+      
+   /*   
 	@PostMapping("/memberUpdate.me")
 	public String memberUpdate(Member member, Model model, @RequestParam String newPwd, RedirectAttributes redirectAtt) {
 		if(newPwd.length() > 0) {
@@ -201,8 +194,27 @@ public class MemberController {
 			redirectAtt.addFlashAttribute("msg", "회원정보 수정되셨습니다");
 		} else {
 			redirectAtt.addFlashAttribute("msg", "회원정보 수정 실패");
+
 		}
 		return "redirect:/member/memberInfo.me";
+	}
+	*/
+	
+	@PostMapping("/memberUpdate_Ad.me")
+	public String memberUpdate_Ad(Member member, Model model, @RequestParam String newPwd, @RequestParam int nowPage, RedirectAttributes redirectAtt) {
+		if(newPwd.length() > 0) {
+			String encodedPassword = passwordEncoder.encode(newPwd);
+			member.setUserPwd(encodedPassword);
+		}
+		
+		int result = memberService.updateMember_Ad(member);
+		
+		if(result > 0) {
+			redirectAtt.addFlashAttribute("msg", "회원정보가 수정되었습니다");
+		} else {
+			redirectAtt.addFlashAttribute("msg", "회원정보 수정 실패");
+		}
+		return "redirect:/member/memberList.do?nowPage="+nowPage;
 	}
 	
 	@GetMapping("/changeStatus.do")
@@ -249,90 +261,109 @@ public class MemberController {
 		response.getWriter().print(result);
 	}
 	
+	/*
 	@GetMapping("/memberInfo.me")
 	public String memberInfo(Model model, @ModelAttribute("loginMember") Member member) { 
 		model.addAttribute("member", member);
 		return "/mypage/memberInfo";
+	}	
+	*/
+	@GetMapping("/memberInfo_Ad.me")
+	public String memberInfo_Ad(Model model, @RequestParam String userId, @RequestParam int nowPage) { 
+		Member member = memberService.selectOneMember(userId);
+		model.addAttribute("member", member);
+		model.addAttribute("nowPage", nowPage);
+		return "/adminpage/memberInfo_Ad";
+	}
+	//관리자 회원추가 페이지 가기
+	@GetMapping("/insertMember_Ad.do") 
+	public void insertMember_Ad() {
 	}
 	
-	/* 
-		수정중!! 
 	
-	// 아이디/비밀번호 찾기 
+	// 관리자 회원추가
+	@PostMapping("/insertMember_Ad.do") 
+	public void insertMember_Ad(Member member, RedirectAttributes redirectAtt, HttpServletResponse response) throws Exception {
+		// 비밀번호 암호화
+		String rawPassword = member.getUserPwd();
+		String encodedPassword = passwordEncoder.encode(rawPassword);
+		member.setUserPwd(encodedPassword);
+		int result = memberService.insertMember(member);
+		response.getWriter().print(result);
+	}
+	
+	// 아이디 찾기 
 	@GetMapping("/findId.me")
 	public String findId() {
 		return "/member/findId";
 	}
 
+	@PostMapping("/findId.me")
+	@ResponseBody
+	public String findIdClick(@RequestParam("phone") String phone) {
+		String result = memberService.findIdClick(phone);
+		return result;
+	}
+	
+	// 비밀번호 찾기 
 	@GetMapping("/findPwd.me")
 	public String findPwd() {
 		return "/member/findPwd";
 	}
 	
-	@PostMapping("/findId.me")
-	@ResponseBody
-	public String findIdClick(@RequestParam("phone") String phone) {
-		String result = memberService.findIdClick(phone);
-		System.out.println(result);
-	return result;
-	// return "redirect:/";
-	}
-	
-	
 	@PostMapping("/authPwd.me")
-	public ModelAndView authPwd(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public ModelAndView authPwd(HttpSession session, HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
 		
+		// 사용자 입력값 
 		String userId = (String) request.getParameter("userId");
 		String email = (String) request.getParameter("email");
 		
-		System.out.println("테스트1: " + userId);
-		System.out.println("테스트2: " + email);
+		Member member = memberService.selectOneMember(userId);
 		
+		if (member == null) {
+			model.addAttribute("msg", "일치하는 회원이 없습니다.");
+			ModelAndView mv = new ModelAndView();
+			mv.setViewName("member/findPwd");
+			return mv;
+		}
 		
-		Member member = memberService.selectOneMemberByEmail(email);
+		if (member.getEmail().equals(email) == false) {
+			model.addAttribute("msg", "일치하는 회원이 없습니다.");
+			ModelAndView mv = new ModelAndView();
+			mv.setViewName("member/findPwd");
+			return mv;
+		}
 		
-		if (member != null) {
-			Random r = new Random();
-			int num = r.nextInt(999999); // 랜덤난수설정 
+		Random r = new Random();
+		int num = r.nextInt(999999);
+		if (member.getUserId().equals(userId)) {
+			session.setAttribute("member", member);
 			
-			if (member.getUserId().equals(userId)) {
-				session.setAttribute("email", member.getEmail());
-				
-				String setfrom = "javalalax@gmail.com"; // 감자마켓 
-				String tomail = email; // 받는사람 
-				String title = "[감자마켓] 비밀번호 변경 인증 이메일입니다.";
-				String content = System.getProperty("line.separator") 
-									+ "안녕하세요 감자마켓입니다!" 
-									+  System.getProperty("line.separator")
-									+ "회원님의 비밀번호 찾기 인증 번호는 "
-									+ num
-									+ "입니다."
-									+ System.getProperty("line.separator");
-				
-				try {
-					MimeMessage message = mailSender.createMimeMessage();
-					MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "utf-8");
-					
-					messageHelper.setFrom(setfrom);
-					messageHelper.setTo(tomail);
-					messageHelper.setSubject(title);
-					messageHelper.setText(content);
-					
-					mailSender.send(message);
-				} catch (Exception e) {
-					System.out.println(e.getMessage());
-					e.printStackTrace();
-				}
-				
-				ModelAndView mv = new ModelAndView();
-				mv.setViewName("member/authPwd");
-				mv.addObject("num", num);
-				return mv;
-			} else {
-				ModelAndView mv = new ModelAndView();
-				mv.setViewName("member/findPwd");
-				return mv;
+			String setfrom = "gammzamarket@gmail.com"; 
+			String tomail = email;
+			String title = "[감자마켓] 비밀번호 변경 인증 이메일입니다.";
+			String content = System.getProperty("line.separator") 
+							+ "안녕하세요! 감자마켓입니다."
+							+ System.getProperty("line.separator") 
+							+ "회원님의 비밀번호 찾기 인증 번호는 " + num + "입니다."
+							+ System.getProperty("line.separator");
+			try {
+				MimeMessage message = mailSender.createMimeMessage();
+				MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "utf-8");
+				messageHelper.setFrom(setfrom);
+				messageHelper.setTo(tomail);
+				messageHelper.setSubject(title);
+				messageHelper.setText(content);
+				mailSender.send(message);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
+			ModelAndView mv = new ModelAndView();
+			mv.setViewName("member/authPwd");
+			mv.addObject("num", num);
+			mv.addObject("userId", userId);
+			mv.addObject("email", email);
+			return mv;
 		} else {
 			ModelAndView mv = new ModelAndView();
 			mv.setViewName("member/findPwd");
@@ -340,109 +371,70 @@ public class MemberController {
 		}
 	}
 	
+	// 인증번호 입력 
 	@PostMapping("/setPwd.me")
-	public String setPwd(@RequestParam("emailAuth") String emailAuth, @RequestParam("num") String num, RedirectAttributes redirectAtt) throws IOException {
+	public String setPwd(@RequestParam("emailAuth") String emailAuth, @RequestParam("num") String num, Model model) throws IOException {
 		if (emailAuth.equals(num)) {
 			return "member/updatePwd";
 		} else {
-			redirectAtt.addFlashAttribute("msg", "유효하지 않은 인증번호입니다.");
+			model.addAttribute("msg", "유효하지 않은 인증번호입니다.");
 			return "member/findPwd";
 		}
 	}
 	
+	// 새로운 비밀번호 설정 
 	@PostMapping("/updatePwd.me")
-	public String updatePwd(Member member, HttpSession session, RedirectAttributes redirectAtt, Model model) throws IOException {
+	public String updatePwd(@RequestParam("userPwdNew") String userPwdNew, HttpSession session, RedirectAttributes redirectAtt) throws IOException {
+		Member tempMember = (Member) session.getAttribute("member");
 		
+		String rawPassword = userPwdNew;
+		String encodedPassword = passwordEncoder.encode(rawPassword);
+		tempMember.setUserPwd(encodedPassword);
+		
+		int result = memberService.updatePwd(tempMember);
+		
+		if (result > 0) { // 데이터베이스 변경된 행의 수 
+			redirectAtt.addFlashAttribute("msg", "비밀번호 변경이 완료되었습니다.");
+		} else {
+			redirectAtt.addFlashAttribute("msg", "비밀번호 변경 실패");
+			return "member/updatePwd";
+		}
+		session.removeAttribute("tempMember");
+		return "redirect:/";
+	}
+	
+	
+	@GetMapping("/memberDetail.me")
+	public void memberDetail() {
+	}
+	
+	@PostMapping("/memberUpdate.me")
+	public String memberUpdate(Member member, Model model, RedirectAttributes redirectAtt) {
 		String rawPassword = member.getUserPwd();
 		String encodedPassword = passwordEncoder.encode(rawPassword);
 		member.setUserPwd(encodedPassword);
 		
-		int result = memberService.updatePwd(member);
+		int result = memberService.updateMember(member);
 		
-		System.out.println(member);
-		
-		if (result > 0) {
-			System.out.println("result: " + result);
-			// redirectAtt.addFlashAttribute("msg", "비밀번호 변경이 완료되었습니다.");
+		if(result > 0) {
+			redirectAtt.addFlashAttribute("msg", "회원정보 수정 성공");
 		} else {
-			System.out.println("result: " + result);
-			// redirectAtt.addFlashAttribute("msg", "비밀번호 변경 실패");
-			return "member/updatePwd";
+			redirectAtt.addFlashAttribute("msg", "회원정보 수정 실패");
 		}
-		return "redirect:/";
 		
-		
+		return "redirect:/member/memberInfo.me?userId="+member.getUserId();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*
-	@PostMapping("/findPwd.me")
-	@ResponseBody
-	public String findPwdClick(@RequestParam("userId") String userId, @RequestParam("phone") String phone) {
-		System.out.println(userId);
-		System.out.println(phone);
-		String result = memberService.findPwdClick(userId, phone);
-	// return result;
-	return "/member/updatePwd";
-	// return "redirect:/";
-	}
-	*/
-	
-	
-	
-	
 	
 
-	@RequestMapping(value = "/mailCheck.me", method = RequestMethod.GET)
-	@ResponseBody
-	public String mailCheck(String email, Model model) throws Exception {
-		System.out.println("이메일 데이터 전송 확인");	// 확인용
-		System.out.println("인증 이메일 : " + email);
-		
-		// 인증번호 생성
-		Random random = new Random();
-		int checkNum = random.nextInt(888888) + 111111;
-		System.out.println("인증번호 : " + checkNum);
-		model.addAttribute("emailAuth", checkNum);
-		
-		// 이메일 전송 내용
-		String setFrom = "gammzamarket@gmail.com";		// 발신 이메일
-		String toMail = email;					// 받는 이메일
-		String title = "[본인인증] 감자마켓 인증 이메일 입니다. ";
-		String content = 
-								"<h2>안녕하세요 감자마켓 입니다!</h2><br><br>"
-							+	"인증 번호는 " + checkNum + "입니다.<br><br>"
-							+	"해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
-		
-		// 이메일 전송 코드
-		try {
-			MimeMessage msg = mailSender.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(msg, true, "UTF-8");
-			helper.setFrom(setFrom);
-			helper.setTo(toMail);
-			helper.setSubject(title);
-			helper.setText(content, true);
-			mailSender.send(msg);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return Integer.toString(checkNum);		// ajax를 뷰로 반환시 데이터 타입은 String 타입만 가능
-		
-		//return "redirect:/";		// String 타입으로 반환 후 반환
+	@GetMapping("/memberInfo.me")
+	public String memberInfo(Model model, HttpSession session) { 
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		String userId = loginMember.getUserId();
+		Member member = memberService.selectOneMember(userId);
+		model.addAttribute("member", member);
+		return "/mypage/memberInfo";
 	}
-	
+
 
 	@GetMapping("/userPf.bo")
 	public String userPf(Model model, HttpServletRequest request, HttpSession hs) {
@@ -479,7 +471,6 @@ public class MemberController {
 			model.addAttribute("review", review);
 			model.addAttribute("partiReview", partiReview);
 			model.addAttribute("leaderReview", leaderReview);
-			System.out.println(partiReview);
 		} else if(userpr != null) {
 			Member loginmember = memberService.selectOneMember(userpr);
 			ArrayList<Review> recieved=reviewService.selectRecievedReview(loginmember.getUserId());
@@ -504,7 +495,6 @@ public class MemberController {
 			model.addAttribute("review", review);
 			model.addAttribute("partiReview", partiReview);
 			model.addAttribute("leaderReview", leaderReview);
-			System.out.println(partiReview);
 		} else if(userpp != null) {
 			Member loginmember = memberService.selectOneMember(userpp);
 			ArrayList<Review> recieved=reviewService.selectRecievedReview(loginmember.getUserId());
@@ -529,9 +519,9 @@ public class MemberController {
 			model.addAttribute("review", review);
 			model.addAttribute("partiReview", partiReview);
 			model.addAttribute("leaderReview", leaderReview);
-			System.out.println(partiReview);
 		}
 		return "/others/userProfile";
+	}
 
 	
 	@GetMapping("/getReview.re")
@@ -552,10 +542,10 @@ public class MemberController {
 		PageInfo pi = Pagination.getPageInfo(totalRecord, nowPage, limit, 5);
 		
 		List<Member> memberList = memberService.selectMemberList(rowBounds);
-		System.out.println(memberList);
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("pi", pi);
 		
 		return "/adminpage/memberList";
 	}
+
 }

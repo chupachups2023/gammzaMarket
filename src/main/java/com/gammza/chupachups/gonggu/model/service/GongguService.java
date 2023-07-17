@@ -15,7 +15,7 @@ public interface GongguService {
 	
 	ArrayList<Gonggu> selectMainList();
 	
-	ArrayList<Gonggu> selectLeadGongguList(String userId);
+	ArrayList<Gonggu> selectLeadGongguList(HashMap<String, String> listMap);
 	
 	ArrayList<Gonggu> selectOneCategory(HashMap<String, String> map);
 	
@@ -23,22 +23,22 @@ public interface GongguService {
 	
 	int insertGonggu(Gonggu gonggu);
 	
-	int selectGongguTotalRecored();
+	int selectGongguTotalRecord();
 	
 	int selectLastNum();
 	
-	int selectTotalRecored();
+	int selectTotalRecord();
 
 	int updateEndStatus(int gongguNo);
 
 	int updateGonggu(Gonggu gonggu);
+
+	ArrayList<Gonggu> selectAllGongguList();
 
 	int updateGongguCount(int gongguNo);
 
 	int updateGongguStatus(int gongguNo);
 
 	int updatepullUpAt(int gongguNo);
-
-
 
 }

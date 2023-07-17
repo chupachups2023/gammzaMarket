@@ -56,29 +56,40 @@ th{
 	font-weight:normal;
 	font-size:15px;
 }
+a{
+	cursor:pointer;
+}
+.sortByWhat{
+	text-align:left;
+	padding:5px;
+}
 a:hover{
 	text-decoration:underline;
 	text-underline-position : under;
 }
 /* 마이페이지 리뷰상세보기 모달 */
-    .modalR {
-    	position: fixed;
-    	left: 0;top: 0;
-		background: rgba(0, 0, 0, 0.52);
-		width: 100%;height: 100vh;
-		display: none
-		}
-    .modalR-dialog {
-    	position:absolute;
-    	top:50%;
-    	left:50%;
-    	width:500px;
-    	height:450px;
-    	transform: translate(-50%,-50%);
-    	border-radius: 10px;
-    	display:none;
-    	background-color:white;
-    }
+.modalR {
+  	position: fixed;
+  	left: 0;
+  	top: 0;
+	/* background: rgba(0, 0, 0, 0.52); */
+	width: 100%;
+	height: 100vh;
+	display: none
+}
+.modal-bg {
+	background-color: rgba(0, 0, 0, 0.6);
+	width: 100%;
+	height: 100%;
+}
+.modalR-dialog {
+  	width:500px;
+  	height:400px;
+  	transform: translate(100%,40%);
+  	border-radius: 10px;
+  	display:none;
+  	background-color:white;
+}
     .modalR.show{
     	display:block;
     }
@@ -112,6 +123,7 @@ a:hover{
     }
     .modalR-title{
     	margin-top: 40px;
+    	padding-top: 25px;
     }
     .reviewContent:hover{
     	text-decoration:underline;

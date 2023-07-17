@@ -1,0 +1,27 @@
+@charset "UTF-8";
+#title {
+    text-align: center;
+}
+.table{
+    border-collapse: collapse;
+    width:950px;
+    margin:50px auto;
+    font-weight:normal;
+    text-align:center;
+}
+th{
+    border-top: solid 1px black;
+    border-bottom: solid 1px black;
+    font-weight:normal;
+}
+.sort-type{
+	padding-bottom:5px;
+	text-align:left;
+}
+.align-right{
+	text-align:right;
+}
+a:hover{
+	text-decoration:underline;
+	text-underline-position:under;
+}

@@ -15,29 +15,48 @@
 		<div>로그인하지 않고 사용할 경우 정확한 주변의 공구를 가져오지 못할 수 있습니다.</div>
 	</div>
 </c:if>
-
-    <a href="" class="GGlist-a">최신순</a>&emsp;<a href="" class="GGlist-a">마감 임박순</a>
-		<div class="likeList">
-        	<c:forEach items="${ggListView}" var="list" varStatus="j">
-				<div class="onelineThreebox" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${list.gongguNo }'">
-					<div class="onelineThreeImg">
-						<img src="${pageContext.request.contextPath}/resources/upload/${list.photo1}" alt="이미지 없음">
-					</div>
-					<div class="onelineThreeTitle">
-						<c:choose>
-							<c:when test="${fn:length(list.gongguName) gt 17}">
-								<div class="ggTitle">${fn:substring(list.gongguName, 0, 17)}⋯</div>
-							</c:when>
-							<c:otherwise>
-								<div class="ggTitle">${list.gongguName}</div>
-							</c:otherwise>
-						</c:choose>
-						<div style="font-size: 20px;"><b><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" />P</b></div>
-						<div><small>${list.locationName}</small></div>
-					</div>
-				</div>	
-       		 </c:forEach>
-		 </div>
+	<div class="sortByPart">
+		<div>
+		   	<a onclick="sortByWhat('PULLUP_AT');" class="GGlist-a" id="pullup">최신순</a>&emsp;<a onclick="sortByWhat('END_TIME');" class="GGlist-a" id="end">마감 임박순</a>
+		   	<input type="hidden" id="sortByHidden" value="${sortByHidden }">
+	   	</div>
+	   	<div><input type="checkbox" id="withEnd"   <c:if test="${endStatus eq 0 }">checked</c:if>  ><label for="withEnd">마감 공구도 보기</label></div>
+   	</div>
+	<div class="likeList">
+       	<c:forEach items="${ggListView}" var="list" varStatus="j">
+			<div class="onelineThreebox" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${list.gongguNo }'">
+				<div class="onelineThreeImg">
+					<img src="${pageContext.request.contextPath}/resources/upload/${list.photo1}" alt="이미지 없음">
+				</div>
+				<div class="onelineThreeTitle">
+					<c:choose>
+						<c:when test="${fn:length(list.gongguName) gt 17}">
+							<div class="ggTitle">${fn:substring(list.gongguName, 0, 17)}⋯</div>
+						</c:when>
+						<c:otherwise>
+							<div class="ggTitle">${list.gongguName}</div>
+						</c:otherwise>
+					</c:choose>
+					<c:choose>
+						<c:when test="${list.endStatus eq 0 }">
+						<div class="when-ggEnd">
+							<div class="ggEnd-tag"><b>마감공구</b></div>
+							<div  style="font-size: 20px;">
+							    <b><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" /></b>
+							</div>
+						</div>
+						</c:when>
+						<c:otherwise>
+							<div style="font-size: 20px;">
+							    <b><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" /></b>
+							</div>
+						</c:otherwise>
+					</c:choose>
+					<div><small>${list.locationName}</small></div>
+				</div>
+			</div>	
+		</c:forEach>
+	</div>
 </div>
 <script>
 	function closeWarning(){
@@ -60,8 +79,33 @@
         	document.getElementById("address").innerHTML=add;
         	
         }
+	});
+	function sortByWhat(what){
+		let sortby=what;
+		console.log(sortby);
+		if($("#withEnd").prop('checked')){
+			location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortby+"&end=0";
+		}else{
+			location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortby;
+		}
+	}
+	$(function(){
+		sortbyy=document.getElementById("sortByHidden").value;
+		console.log(sortbyy)
+		if(sortbyy=="PULLUP_AT"){
+			$("#pullup").css("font-weight","bold");
+		}else{
+			$("#end").css("font-weight","bold");
+		}
+		
+		$("#withEnd").on('click', function() {
+			if ( $(this).prop('checked') ) {
+				location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortbyy+"&end=0"
+			} else {
+				location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortbyy
+			}
+		});
 	})
-	
 </script>
 
 

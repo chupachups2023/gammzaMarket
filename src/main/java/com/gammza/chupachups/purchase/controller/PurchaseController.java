@@ -3,6 +3,7 @@ package com.gammza.chupachups.purchase.controller;
 import java.io.IOException;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,10 +65,19 @@ public class PurchaseController {
 //	비공개 깃헙이라 넣었지만 restKey는 공개되면 문제가 생길 수 있으니 포폴 사용시 삭제해주세요.
 	private IamportClient client = new IamportClient("0801753876651112","hdMMqurzCCIPb4MfLwsghA1aKzvKJoSmXrpR4jd68bDiZCvciaqVu1lR7HHjrXYzWNuyDHzSWotRohBi");
 	
+	@PostMapping("/checkUid.do")
+	public void selectPointOrderNum(@RequestParam String pointOrderNum, HttpServletResponse response) throws Exception {
+		int result = purchaseService.selectPointOrderNum(pointOrderNum);
+		response.getWriter().print(result);
+	}
+	
+	/*결제검증*/
 	@ResponseBody
 	@RequestMapping(value="/verifyAmount/{imp_uid}", method = RequestMethod.POST)
 	public IamportResponse<Payment> verifyAmountPOST(@PathVariable(value = "imp_uid") String imp_uid) throws IamportResponseException, IOException {
 		return client.paymentByImpUid(imp_uid);
     }
+	
+
 
 }

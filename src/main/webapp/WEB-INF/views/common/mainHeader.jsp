@@ -36,23 +36,26 @@
 					<c:when test="${empty loginMember}">
 						<button class="header-loginBtn btn" id="open-modal">
 							<!-- <i class="fa-solid fa-arrow-right-to-bracket" style="color: #5eb162;"></i> -->
-							<img src="https://cdn-icons-png.flaticon.com/512/1828/1828395.png" alt="loginButton">
+							<!-- <img src="https://cdn-icons-png.flaticon.com/512/1828/1828395.png" alt="loginButton"> -->
+							<i class="fa-solid fa-right-to-bracket fa-3x" style="color: #5eb162;"></i>
 						</button>
 					</c:when>
 					<c:when test="${loginMember.userId eq 'admin'}">
 						<a href="${pageContext.request.contextPath}/admin/adminMain.ad">
-							<img src="https://cdn-icons-png.flaticon.com/512/5909/5909015.png" alt="adminlogo" class="header-login" >
+							<img src="https://cdn-icons-png.flaticon.com/512/5909/5909015.png" alt="adminlogo" class="header-adminLogin" >
 						</a>
-		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
+		      			<button type="button" class="header-logoutBtn" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">
+		      				<i class="fa-solid fa-right-from-bracket fa-3x" style="color: #f9e8d0;"></i>
+		      			</button>
 					</c:when>
 					<c:otherwise>
 						<a href="${pageContext.request.contextPath}/mypage/mypageMain.me">
-							<img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login" >
+							<img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-memberLogin" >
 						</a>
-					<!-- 230627 -->
-		      			<button class="header-logoutBtn type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">
-		      				<img src="https://cdn-icons-png.flaticon.com/512/1828/1828427.png" alt="logoutButton">
-		      			</button>
+						<button class="header-logoutBtn" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">
+							<!-- <img src="https://cdn-icons-png.flaticon.com/512/1828/1828427.png" alt="logoutButton"> -->
+							<i class="fa-solid fa-right-from-bracket fa-3x" style="color: #f9e8d0;"></i>
+	      				</button>
 					</c:otherwise>
 				</c:choose>
 				</div>
@@ -125,7 +128,7 @@
 										</li>
 										<li class="login-naver">
 											<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&state=test&client_id=GQGBjwaCzYQZZ_5XkE2o&state=STATE_STRING&redirect_uri=http://localhost:8095/chupachups/auth/naver/callback">
-												<img src="${pageContext.request.contextPath}/resources/img/header/icon_naver_long_resize4.png" alt="네이버로그인버튼">
+												<img src="${pageContext.request.contextPath}/resources/img/header/icon_naver_long_resize2.png" alt="네이버로그인버튼">
 											</a> 
 									</ul>
 									<br>
@@ -158,17 +161,17 @@
 			modal.style.display = "block";
 			document.body.style.overflow = "hidden"; // 스크롤바 제거
 		});
+
 		// 모달창 닫기
-	// 모달창 닫기
-	function loginModalClose(){
-		modal.style.display = "none";
-		document.body.style.overflow = "auto"; // 스크롤바 보이기
-	}
-		// 모달창 닫기
-		loginModalBtn.addEventListener("click", () => {
-			loginModalClose();
-			loginFrm.submit();
-		});
+		function loginModalClose(){
+			modal.style.display = "none";
+			document.body.style.overflow = "auto"; // 스크롤바 보이기
+		}
+			// 모달창 닫기
+			loginModalBtn.addEventListener("click", () => {
+				loginModalClose();
+				loginFrm.submit();
+			});
 		
 		function fn_click(category) {
 			function success(position) {

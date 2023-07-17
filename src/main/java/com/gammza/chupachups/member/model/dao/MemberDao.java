@@ -39,9 +39,10 @@ public interface MemberDao {
 
 	String findPwdClick(String userId, String phone);
 
-	int updatePwd(Member member);
-
 	Member selectOneMemberByEmail(String email);
+
+
+	int updatePwd(Member tempMember);
 
 	int changeStatus(String userId);
 
@@ -50,5 +51,7 @@ public interface MemberDao {
 	int selectTotalRecord();
 
 	List<Member> selectMemberList(RowBounds rowBounds);
+
+	int updateMember_Ad(Member member);
 
 }

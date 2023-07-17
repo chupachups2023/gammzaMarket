@@ -22,10 +22,20 @@
 		where user_id=#{userId}
 	</update>
 	<select id="selectAllPartiList" resultMap="gongguMap">
-		select g.*
-		from gonggu g , parti_tb p
-		where g.gonggu_no=p.gonggu_no and p.parti_member = #{userId} and g.status=1
-		order by reg_at desc
+	<choose>
+		<when test="sort.equals('endTime')">
+			select g.*
+			from gonggu g , parti_tb p
+			where g.gonggu_no=p.gonggu_no and p.parti_member = #{userId} ${endStatus}
+			order by g.end_time
+		</when>
+		<otherwise>
+			select g.*
+			from gonggu g , parti_tb p
+			where g.gonggu_no=p.gonggu_no and p.parti_member = #{userId} ${endStatus}
+			order by p.reg_at desc
+		</otherwise>
+	</choose>
 	</select>
 	<select id="selectOneParti" resultMap="partiMap">
 		select p.*, g.gonggu_name from parti_tb p, gonggu g
@@ -44,10 +54,21 @@
 	</update>
 	
 	<select id="selectPartiListForLeader" resultMap="partiMap">
-		select p.*, m.user_id, m.temperature
-		from member m, parti_tb p
-		where p.parti_member=m.user_id and 
-				gonggu_no=#{gongguNo}
-		order by p.reg_at 
+		<choose>
+			<when test="sort.equals('temperature')">
+				select p.*, m.user_id, m.temperature
+				from member m, parti_tb p
+				where p.parti_member=m.user_id and 
+						gonggu_no=#{gongguNo}
+				order by m.temperature desc
+			</when>
+			<otherwise>
+				select p.*, m.user_id, m.temperature
+				from member m, parti_tb p
+				where p.parti_member=m.user_id and 
+						gonggu_no=#{gongguNo}
+				order by p.REG_AT
+			</otherwise>
+		</choose>
 	</select>
 </mapper>

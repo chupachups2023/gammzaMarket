@@ -8,4 +8,6 @@ public interface PurchaseService {
 
 	int insertPointPurRec(PointPurRec pointPR);
 
+	int selectPointOrderNum(String pointOrderNum);
+
 }

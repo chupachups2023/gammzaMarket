@@ -81,9 +81,7 @@
 											</div>
 										</div>
 										&emsp;&emsp;&emsp;
-										<img
-											src="${pageContext.request.contextPath}/resources/upload/${list.photo1}"
-											alt="이미지 없음" width="50px">
+										<img src="${pageContext.request.contextPath}/resources/upload/${list.photo1}"	alt="이미지 없음" width="50px">
 									</c:if>
 								</c:forEach>
 							</div>

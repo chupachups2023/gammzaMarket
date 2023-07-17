@@ -9,4 +9,6 @@ public interface PurchaseDao {
 
 	int insertPointPurRec(PointPurRec pointPR);
 
+	int selectPointOrderNum(String pointOrderNum);
+
 }

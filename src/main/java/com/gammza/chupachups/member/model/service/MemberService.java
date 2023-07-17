@@ -21,8 +21,6 @@ public interface MemberService {
 
 	Member selectMemberByKakao(Long id);
 
-	/* Member selectMemberByPhone(String phone); */
-
 	Member selectMemberByNaver(String id);
 
 	String insertNaverIdkey(String setNaverIdkey);
@@ -37,9 +35,10 @@ public interface MemberService {
 
 	String findPwdClick(String userId, String phone);
 
-	int updatePwd(Member member);
-
 	Member selectOneMemberByEmail(String email);
+
+
+	int updatePwd(Member tempMember);
 
 	int selectProceedingGonggu(String userId);
 
@@ -49,6 +48,6 @@ public interface MemberService {
 
 	List<Member> selectMemberList(RowBounds rowBounds);
 
-	
+	int updateMember_Ad(Member member);
 
 }

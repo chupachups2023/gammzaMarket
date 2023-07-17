@@ -20,19 +20,19 @@ public interface GongguDao {
 
 	Gonggu selectOneGonggu(int gongguNo);
 
-	int selectTotalRecored();
+	int selectTotalRecord();
 
 	int updateGongguCount(int gongguNo);
 
 	int updateGonggu(Gonggu gonggu);
 
-	ArrayList<Gonggu> selectLeadGongguList(String userId);
+	ArrayList<Gonggu> selectLeadGongguList(HashMap<String, String> listMap);
 
 	int updateEndStatus(int gongguNo);
 
 	ArrayList<Gonggu> searchGonggu(HashMap<String, String> map);
 	
-	int selectGongguTotalRecored();
+	int selectGongguTotalRecord();
 
 	ArrayList<Gonggu> selectOneCategory(HashMap<String, String> map);
 
@@ -40,5 +40,6 @@ public interface GongguDao {
 
 	int updatepullUpAt(int gongguNo);
 
+	ArrayList<Gonggu> selectAllGongguList();
 
 }

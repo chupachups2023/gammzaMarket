@@ -56,8 +56,6 @@ public class ReviewController {
 				partiReview.add(recieved.get(i));
 			}
 		}
-//		System.out.println("참가자로 받음"+partiReview.get(0).getReviewContent());
-//		System.out.println("총대로 받음"+leaderReview.get(0).getReviewContent());
 		model.addAttribute("partiReview", partiReview);
 		model.addAttribute("leaderReview", leaderReview);
 		return "/mypage/reviewList";
@@ -106,8 +104,23 @@ public class ReviewController {
 		review.setReceiverId(receiverId);
 		review.setReviewWriter(userId);
 		
+		
+		
 		int result=reviewService.insertReview(review);
 		if(result>0) {
+			double tempAdjust=0;
+			switch(rate) {
+				case 5: tempAdjust=0.2; break;
+				case 4: tempAdjust=0.1; break;
+				case 3: tempAdjust=0; break;
+				case 2: tempAdjust=-0.1; break;
+				case 1: tempAdjust=-0.2; break;
+			}
+			HashMap<String,String> updateTemp=new HashMap<String,String>();
+			updateTemp.put("rate", String.valueOf(tempAdjust));
+			updateTemp.put("userId", receiverId);
+			int update=reviewService.updateTemperature(updateTemp);
+			
 			model.addAttribute("result", result);
 		}
 		

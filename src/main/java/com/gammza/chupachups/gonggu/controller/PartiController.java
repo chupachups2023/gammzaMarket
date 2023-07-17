@@ -3,6 +3,8 @@ package com.gammza.chupachups.gonggu.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -80,8 +82,8 @@ public class PartiController {
 				Member member=memberService.selectOneMember(parti.getPartiMember());
 				model.addAttribute("loginMember", member);
 			}
-			String str=partiList(model);
-			return "/mypage/ggList_Parti";
+			String str=partiList(model,"resent",1);
+			return str;
 		}else {
 			redirectAttr.addFlashAttribute("msg","참여가 정상적으로 이루어지지 않았습니다.");
 			return "redirect:/";
@@ -89,12 +91,22 @@ public class PartiController {
 	}
 	
 	@GetMapping("/ggPartiList.pa")
-	public String partiList(Model model) {
-		//최신신청 순서로 가져오기
+	public String partiList(Model model,@RequestParam(defaultValue="recent") String sort,@RequestParam(defaultValue="0") int end) {
 		Member loginMember=(Member)model.getAttribute("loginMember");
 		
+		HashMap<String,String> listMap=new HashMap<String,String>();
+		listMap.put("sort", sort);
+		
+		listMap.put("userId", loginMember.getUserId());
+		String endStatus="";
+		if(end == 1) {	endStatus="AND g.END_STATUS = 1";}
+		listMap.put("endStatus", endStatus);
+		
+		model.addAttribute("endStatus", end);
+		model.addAttribute("sort", sort);
+		
 		ArrayList<Gonggu> partiGongguList=new ArrayList<>();
-		partiGongguList=partiService.selectAllPartiList(loginMember.getUserId());
+		partiGongguList=partiService.selectAllPartiList(listMap);
 		for(int i=0;i<partiGongguList.size();i++) {
 			
 			int gongguNo=partiGongguList.get(i).getGongguNo();
@@ -133,14 +145,17 @@ public class PartiController {
 		
 		int result=partiService.updateMemberPointPlus(updatePoint);
 		
-		partiList(model);
+		partiList(model,"resent",1);
 		return "/mypage/ggList_Parti";
 	}
 	
 	//공구 총대가 보는 참여자 리스트
 	@GetMapping("/checkPartis.pa")
-	public String checkPartis(@RequestParam int gongguNo, Model model) {
-		ArrayList<Parti> partiList=partiService.selectPartiListForLeader(gongguNo);
+	public String checkPartis(@RequestParam int gongguNo, Model model, @RequestParam(defaultValue="recent") String sort) {
+		HashMap<String,String> map=new HashMap<String,String>();
+		map.put("gongguNo", String.valueOf(gongguNo));
+		map.put("sort", sort);
+		ArrayList<Parti> partiList=partiService.selectPartiListForLeader(map);
 		Gonggu gonggu=gongguService.selectOneGonggu(gongguNo);
 		
 		model.addAttribute("gonggu", gonggu);
@@ -150,7 +165,7 @@ public class PartiController {
 	
 	//총대가 참여자 선택
 	@GetMapping("/partiMemSelect.pa")
-	public String partiMemSelect(@RequestParam String[] id, @RequestParam int gongguNo, Model model) {
+	public String partiMemSelect(@RequestParam String[] id, @RequestParam int gongguNo, Model model,@RequestParam(defaultValue="recent")String sort) {
 		Gonggu gonggu=gongguService.selectOneGonggu(gongguNo);
 		for(int i=0;i<id.length;i++) {
 			HashMap<String, String> map=new HashMap<String,String>();
@@ -158,8 +173,10 @@ public class PartiController {
 			map.put("userId", id[i]);
 			int result=partiService.updatePartiStatusByLeader(map);
 		}
-
-		ArrayList<Parti> partiList=partiService.selectPartiListForLeader(gongguNo);
+		HashMap<String, String> map=new HashMap<String,String>();
+		map.put("gongguNo", String.valueOf(gongguNo));
+		map.put("sort", sort);
+		ArrayList<Parti> partiList=partiService.selectPartiListForLeader(map);
 		int selectCount=0;
 		for(int i=0;i<partiList.size();i++) {
 			if(partiList.get(i).getStatus()>0)
@@ -170,7 +187,7 @@ public class PartiController {
 			gongguService.updateEndStatus(gongguNo);
 		}
 		
-		checkPartis(gongguNo,model);
+		checkPartis(gongguNo,model,sort);
 		
 		return "/gonggu/ggPartiList";
 	}
@@ -178,7 +195,10 @@ public class PartiController {
 	//공구가 마감되면 참여 안하는 회원들 포인트 돌려주기
 	public void nonPartiMemPointMgr(int gongguNo) {
 		Gonggu gonggu=gongguService.selectOneGonggu(gongguNo);
-		ArrayList<Parti> partiList=partiService.selectPartiListForLeader(gongguNo);
+		HashMap<String,String> map=new HashMap<String,String>();
+		map.put("gongguNo", String.valueOf(gongguNo));
+		map.put("sort", "recent");
+		ArrayList<Parti> partiList=partiService.selectPartiListForLeader(map);
 		
 		for(int i=0;i<partiList.size();i++) {
 			if(partiList.get(i).getStatus()==0) {
@@ -196,9 +216,20 @@ public class PartiController {
 	
 	//총대가 오픈한 공구 리스트
 	@GetMapping("/ggLeadList.pa")
-	public String getLeadList(Model model) {
+	public String getLeadList(Model model, @RequestParam(defaultValue="recent") String sort, @RequestParam(defaultValue="0") int end, HttpSession session) {
+		HashMap<String,String> listMap=new HashMap<String,String>();
+		listMap.put("sort", sort);
+		
+		String endStatus=" ";
+		if(end == 1) {	endStatus="AND END_STATUS = 1";	}
+		listMap.put("endStatus", endStatus);
+		
+		model.addAttribute("endStatus", end);
+		model.addAttribute("sort", sort);
+		
 		Member member=(Member)model.getAttribute("loginMember");
-		ArrayList<Gonggu> leadList=gongguService.selectLeadGongguList(member.getUserId());
+		listMap.put("userId", member.getUserId());
+		ArrayList<Gonggu> leadList=gongguService.selectLeadGongguList(listMap);
 		model.addAttribute("leadList", leadList);
 		
 		return "/mypage/ggList_Leader";

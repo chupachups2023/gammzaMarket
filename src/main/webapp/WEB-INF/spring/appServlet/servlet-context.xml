@@ -39,17 +39,44 @@
 	
 	
 	
-	<!-- <interceptors>
+	<interceptors>
 		<interceptor>
-			<mapping path="/member/memberDetail.me"/>
+			<mapping path="/member/memberLogout.me"/>
+			<mapping path="/member/memberUpdate_Ad.me"/>
+			<mapping path="/member/changeStatus.do"/>
+			<mapping path="/member/changeStatus_Ad.do"/>
+			<mapping path="/member/memberInfo_Ad.me"/>
+			<mapping path="/member/insertMember_Ad.do"/>
 			<mapping path="/member/memberUpdate.me"/>
-			<mapping path="/board/boardForm.bo"/>
-			한두개만 인터셉터 안거쳐도 되는거면 반대로 할 수 있음
-			<mapping path="/board/**.bo"/>
-			<exclude-mapping path="/board/boardList.bo"/>
+			<mapping path="/member/memberInfo.me"/>
+			<mapping path="/member/userPf.bo"/>
+			<mapping path="/member/memberList.do"/>
+			<mapping path="/member/pointPurchase.do"/>
+			<mapping path="/member/updatePoint.do"/>
+			<mapping path="/member/pointPurChk.do"/>
+			<mapping path="/chatMsg/**.do"/>
+			<mapping path="/chatRoom/**.bo"/>
+			<mapping path="/adminPage/**.do"/>
+			<mapping path="/ggRequest/**.req"/>
+			<mapping path="/gonggu/**.go"/>
+			<mapping path="/gonggu/**.pa"/>
+			<mapping path="/mypage/*"/>
+			<mapping path="/report/*"/>
+			<mapping path="/location/EnrollLocation.lo"/>
+			<mapping path="/adminpage/*"/>
+			<mapping path="/review/*"/>
+			<exclude-mapping path="/ggRequest/requestView.req"/>
+			<exclude-mapping path="/ggRequest/requestRead.req"/>
+			<exclude-mapping path="/ggRequest/requestMember.req"/>
+			<exclude-mapping path="/gonggu/categoryList.go"/>
+			<exclude-mapping path="/gonggu/ggListView.go"/>
+			<exclude-mapping path="/gonggu/ggRead.go"/>
+			<exclude-mapping path="/gonggu/ggSearch.go"/>
+			<exclude-mapping path="/gonggu/mainList.go"/>
+			<!-- <exclude-mapping path="/member/memberboardList.bo"/> -->
 			<beans:bean class="com.gammza.chupachups.common.interceptor.LoginInterceptor"/> 
 		</interceptor>
-	</interceptors> -->
+	</interceptors>
 	
 	
 	<!-- oauth2 login -->

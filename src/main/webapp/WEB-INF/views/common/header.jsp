@@ -14,6 +14,7 @@
 	href="${pageContext.request.contextPath}/resources/img/header/shorcuticon.png">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/header.css?<%=System.currentTimeMillis() %>">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/login.css?<%=System.currentTimeMillis() %>">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <!-- DB에 저장이 잘 되었다면 alert창 띄우기 -->
 <c:if test="${not empty msg}">
@@ -33,16 +34,26 @@
 				<div>
 				<c:choose>
 					<c:when test="${empty loginMember}">
-						<button class="header-login btn" id="open-modal">로그인</button>
+						<button class="header-login btn" id="open-modal">
+							<i class="fa-solid fa-right-to-bracket fa-3x" style="color: #5eb162;"></i>
+						</button>
 					</c:when>
 					<c:when test="${loginMember.userId eq 'admin'}">
-						<a href="${pageContext.request.contextPath}/admin/adminMain.ad"><img src="https://cdn-icons-png.flaticon.com/512/5909/5909015.png" alt="adminlogo" class="header-login" ></a>
-		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
+						<a href="${pageContext.request.contextPath}/admin/adminMain.ad">
+							<img src="https://cdn-icons-png.flaticon.com/512/5909/5909015.png" alt="adminlogo" class="header-adminLogin" >
+						</a>
+		      			<button type="button" class="header-logoutBtn" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">
+		      				<i class="fa-solid fa-right-from-bracket fa-3x" style="color: #f9e8d0;"></i>
+		      			</button>
 					</c:when>
 					<c:otherwise>
-						<a href="${pageContext.request.contextPath}/mypage/mypageMain.me"><img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-login" ></a>
-					<!-- 230627 -->
-		      			<button type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">로그아웃</button>
+						<a href="${pageContext.request.contextPath}/mypage/mypageMain.me">
+							<img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-memberLogin" >
+						</a>
+		      			<button class="header-logoutBtn" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">
+		      				<!-- <img src="https://cdn-icons-png.flaticon.com/512/1828/1828427.png" alt="logoutButton"> -->
+		      				<i class="fa-solid fa-right-from-bracket fa-3x" style="color: #f9e8d0;"></i>
+		      			</button>
 					</c:otherwise>
 				</c:choose>
 				</div>
@@ -120,7 +131,7 @@
 										</li>
 										<li class="login-naver">
 											<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&state=test&client_id=GQGBjwaCzYQZZ_5XkE2o&state=STATE_STRING&redirect_uri=http://localhost:8095/chupachups/auth/naver/callback">
-												<img src="${pageContext.request.contextPath}/resources/img/header/icon_naver_long_resize4.png" alt="네이버로그인버튼">
+												<img src="${pageContext.request.contextPath}/resources/img/header/icon_naver_long_resize2.png" alt="네이버로그인버튼">
 											</a> 
 									</ul>
 									<br>
