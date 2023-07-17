@@ -22,10 +22,18 @@
 		where user_id=#{userId}
 	</update>
 	<select id="selectAllPartiList" resultMap="gongguMap">
-		select g.*
-		from gonggu g , parti_tb p
-		where g.gonggu_no=p.gonggu_no and p.parti_member = #{userId} and g.status=1
-		order by reg_at desc
+		<if test="sort.equals('resent')">
+			select g.*
+			from gonggu g , parti_tb p
+			where g.gonggu_no=p.gonggu_no and p.parti_member = #{userId} ${endStatus}
+			order by p.reg_at desc
+		</if>
+		<if test="sort.equals('endTime')">
+			select g.*
+			from gonggu g , parti_tb p
+			where g.gonggu_no=p.gonggu_no and p.parti_member = #{userId} ${endStatus}
+			order by g.end_time desc
+		</if>
 	</select>
 	<select id="selectOneParti" resultMap="partiMap">
 		select p.*, g.gonggu_name from parti_tb p, gonggu g

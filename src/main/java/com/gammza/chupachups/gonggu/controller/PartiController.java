@@ -80,8 +80,8 @@ public class PartiController {
 				Member member=memberService.selectOneMember(parti.getPartiMember());
 				model.addAttribute("loginMember", member);
 			}
-			String str=partiList(model);
-			return "/mypage/ggList_Parti";
+			String str=partiList(model,"resent",1);
+			return str;
 		}else {
 			redirectAttr.addFlashAttribute("msg","참여가 정상적으로 이루어지지 않았습니다.");
 			return "redirect:/";
@@ -89,12 +89,22 @@ public class PartiController {
 	}
 	
 	@GetMapping("/ggPartiList.pa")
-	public String partiList(Model model) {
+	public String partiList(Model model,@RequestParam(defaultValue="recent") String sort,@RequestParam(defaultValue="1") int end) {
 		//최신신청 순서로 가져오기
 		Member loginMember=(Member)model.getAttribute("loginMember");
 		
+		HashMap<String,String> listMap=new HashMap<String,String>();
+		listMap.put("sort", sort);
+		listMap.put("userId", loginMember.getUserId());
+		String endStatus="AND g.END_STATUS = 1";
+		if(end == 0) {	endStatus=" ";	}
+		listMap.put("endStatus", endStatus);
+		
+		model.addAttribute("endStatus", endStatus);
+		model.addAttribute("sort", sort);
+		
 		ArrayList<Gonggu> partiGongguList=new ArrayList<>();
-		partiGongguList=partiService.selectAllPartiList(loginMember.getUserId());
+		partiGongguList=partiService.selectAllPartiList(listMap);
 		for(int i=0;i<partiGongguList.size();i++) {
 			
 			int gongguNo=partiGongguList.get(i).getGongguNo();
@@ -133,7 +143,7 @@ public class PartiController {
 		
 		int result=partiService.updateMemberPointPlus(updatePoint);
 		
-		partiList(model);
+		partiList(model,"resent",1);
 		return "/mypage/ggList_Parti";
 	}
 	

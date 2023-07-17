@@ -49,7 +49,7 @@ public class MemberController {
 	private ReviewService reviewService; 
 	
 	@Autowired
-	private MemberService memberService;
+	private MemberService memberService;	
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
