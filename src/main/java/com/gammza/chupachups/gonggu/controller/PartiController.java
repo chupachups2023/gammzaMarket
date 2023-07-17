@@ -98,8 +98,8 @@ public class PartiController {
 		listMap.put("sort", sort);
 		
 		listMap.put("userId", loginMember.getUserId());
-		String endStatus=" ";
-		if(end == 1) {	endStatus="AND g.END_STATUS = 1";	}
+		String endStatus="";
+		if(end == 1) {	endStatus="AND g.END_STATUS = 1";}
 		listMap.put("endStatus", endStatus);
 		
 		model.addAttribute("endStatus", end);

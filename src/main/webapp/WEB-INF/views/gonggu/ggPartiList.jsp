@@ -38,17 +38,17 @@
 	</h1>
 	<div id="container">
 		<table class="table" align="center" id="partiTable" >
-			<c:if test="${empty partiList }">
-				<tr>
-					<th colspan="7" height="100px">아직 신청자가 없습니다.</th>
-				</tr>
-			</c:if>
 			<tr>
 				<td colspan="7" class="sortByWhat">
 					<a onclick="sortByWhat('regAt');" id="regAt">최신순</a>&emsp;<a onclick="sortByWhat('temperature');" id="temperature">온도순</a>
 		   			<input type="hidden" id="sortByHidden" value="${sortByHidden }">
 				</td>
 			</tr>
+			<c:if test="${empty partiList }">
+				<tr>
+					<th colspan="7" height="100px">아직 신청자가 없습니다.</th>
+				</tr>
+			</c:if>
 		<c:forEach items="${partiList}" var="list" varStatus="j">
 			<tr>
 			<c:choose>
@@ -60,7 +60,7 @@
 				</c:otherwise>
 			</c:choose>
 				<th>${j.count }</th>
-				<th class="userId_bold">${list.userId }</th>
+				<th class="userId_bold"><a href="${pageContext.request.contextPath}/member/userPf.bo?userPr=${list.userId}">${list.userId }</a></th>
 				<th>${list.num }개(인분)</th>
 				<th>${list.temperature }도</th>
 				<th>
@@ -91,6 +91,7 @@
 		<!-- 리뷰보기 모달창 -->
 	
 	<div class="modalR" id="reviewDetailModal">
+	<div class="modal-bg" onclick="mClose()"></div>
 	  <div class="modalR-dialog">
 	    <div class="modalR-content">
 	    <form name="writeReviewFrm">
@@ -116,7 +117,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2"><pre><textarea name="reviewContent" class="reviewContent"></textarea></pre><br></td>
+						<td colspan="2"><pre><textarea name="reviewContent" class="reviewContent"></textarea></pre></td>
 					</tr>
 				</table>
 					<input type="hidden" name="gongguNo" id="ggNo" value="${gonggu.gongguNo}">
@@ -177,11 +178,16 @@
 		if(totalNum>(maxNum*1)){
 			alert("최대 선택 가능 수량 또는 인원은 "+maxNum+"개(명)입니다");
 		}else{
-			let strr='?gongguNo=${gonggu.gongguNo}&';
-			for(let i=0;i<arr.length;i++){
-				strr+="id="+arr[i]+"&";
+			if(confirm("참여자를 추가하시겠습니까?")){
+				let strr='?gongguNo=${gonggu.gongguNo}&';
+				for(let i=0;i<arr.length;i++){
+					strr+="id="+arr[i]+"&";
+				}
+				location.href="${pageContext.request.contextPath }/gonggu/partiMemSelect.pa"+strr;
+				alert("참여자 선택이 완료되었습니다.")
+			}else{
+				return;
 			}
-			location.href="${pageContext.request.contextPath }/gonggu/partiMemSelect.pa"+strr+"sort=${sort}";
 		}
 	};
 
