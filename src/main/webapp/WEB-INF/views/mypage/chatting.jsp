@@ -167,6 +167,7 @@
 						result += "<div id='msgList'>"
 								+ "<div class='chat-msg' id='chat-msg'>"
 								+ "<div align='right' id='chatWriter'>"
+								+ "<div class=''sendDate'>" + mList.sendDate + "</div>"
 								+ "<table class='msgBox'>" + "<tr>"
 								+ "<td align='right' width='90%' height='10%'>"
 								+ mList.chatContent + "</td>" + "</tr>"
@@ -174,7 +175,7 @@
 					} else {
 						result += "<div id='msgList'>"
 								+ "<div class='chat-msg' id='chat-msg'>"
-								+ "<div>" + mList.chatWriter + "</div>"
+								+ "<div>" + mList.chatWriter + "<p class='sendDate'>" + mList.sendDate + "</p>" + "</div>"
 								+ "<table class='msgBox'>" + "<tr>" + "<td>"
 								+ "<div width='80%'>" + mList.chatContent
 								+ "</div>" + "</td>" + "</tr>" + "</table>"
@@ -194,7 +195,7 @@
 		});
 	});
 
-	function insertMsg() {
+	function insertMsg(roomNo) {
 		var chatContent = $("#chatContent").val();
 		var chatWriter = $("#userId").val();
 		var roomNo = $("#roomNo").val();
@@ -208,11 +209,11 @@
 			},
 			success : function(result) {
 				if (result > 0) {
-					console.log("메시지 전송 성공!");
+					console.log("메시지 전송 성공1!");
 					$("#chatContent").val("");
 					msgList(roomNo);
 				} else {
-					console.log("메시지 전송 성공!");
+					console.log("메시지 전송 성공2!");
 					$("#chatContent").val("");
 					msgList(roomNo);
 				}
