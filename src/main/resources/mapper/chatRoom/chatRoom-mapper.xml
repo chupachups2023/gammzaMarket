@@ -18,7 +18,7 @@
    							 where gonggu_no IN (
    											     select gonggu_no
     										    from parti_tb
-    										    where parti_member = #{userId} and status=1)
+    										    where parti_member = #{userId} and status>0)
 												) or room_owner = #{userId}
 		order by last_chat desc
 	</select>

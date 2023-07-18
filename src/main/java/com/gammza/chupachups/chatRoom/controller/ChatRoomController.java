@@ -28,7 +28,7 @@ import com.gammza.chupachups.location.model.vo.Location;
 
 
 @Controller
-@SessionAttributes({"chatRoomList"})
+
 public class ChatRoomController {
 	@Autowired
 	private GongguService gongguService;

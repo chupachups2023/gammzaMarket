@@ -31,7 +31,7 @@ public class ChatMsgController {
 		Object userId = request.getAttribute("userId");
 		
 		List<ChatMsg> MsgList = chatMsgService.selectChatMsg(roomNo);
-		System.out.println("msgList : " + roomNo);
+		/* System.out.println("msgList : " + roomNo); */
 		model.addAttribute("MsgList", MsgList);
 		model.addAttribute("userId", userId);
 		return "jsonView";
