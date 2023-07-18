@@ -31,4 +31,9 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 		return chatRoomDao.insertChatRoom(newGonggu);
 	}
 
+	@Override
+	public int updateSendDate(int gongguNo) {
+		return chatRoomDao.updateSendDate(gongguNo);
+	}
+
 }

@@ -78,27 +78,28 @@
 					class="css-8lfz6g">
 					<c:forEach items="${chatRoomList}" var="chatRoom">
 						<li class="css-v2yhcd">
-							<div class="selected css-y6c1l4 chatRoomItem" id="${chatRoom.roomNo}" data-room-no="${chatRoom.roomNo}"	data-user-id="${loginMember.userId}">
-								<input type="hidden" class="${chatRoom.roomNo}_roomNo"
-									id="roomNo" value="${chatRoom.roomNo}">
-								<input type="hidden" id="userId" value="${loginMember.userId}">
-								<div class="preview-title-wrap">
-									<span class="preview-nickname" id="roomOwner">${chatRoom.roomOwner}</span>
-									<c:choose>
-										<c:when test="${fn:length(chatRoom.gongguName) gt 10}">
-											<div class="ggTitle gghover">${fn:substring(chatRoom.gongguName, 0, 8)}...</div>
-										</c:when>
-										<c:otherwise>
-											<div class="ggTitle gghover">${chatRoom.gongguName}</div>
-										</c:otherwise>
-									</c:choose>
-									<div class="sub-text">
-										<span id="gongguNo">${chatRoom.gongguNo}</span> 
-										<span id="lastChat"><small>${chatRoom.lastChat}</small></span>
-									</div>
-								</div>
-								&emsp;&emsp;&emsp;
-								<img src="${pageContext.request.contextPath}/resources/upload/${chatRoom.photo1}"	alt="이미지 없음" width="50px">
+							<div class="selected css-y6c1l4 chatRoomItem"
+								id="${chatRoom.roomNo}" data-room-no="${chatRoom.roomNo}"
+								data-user-id="${loginMember.userId}">
+										<input type="hidden" class="${chatRoom.roomNo}_roomNo"
+											id="roomNo" value="${chatRoom.roomNo}">
+										<input type="hidden" id="userId" value="${loginMember.userId}">
+										<div class="preview-title-wrap">
+											<span class="preview-nickname" id="roomOwner">${chatRoom.roomOwner}</span>
+											<c:choose>
+												<c:when test="${fn:length(chatRoom.gongguName) gt 10}">
+													<div class="ggTitle gghover">${fn:substring(chatRoom.gongguName, 0, 8)}...</div>
+												</c:when>
+												<c:otherwise>
+													<div class="ggTitle gghover">${chatRoom.gongguName}</div>
+												</c:otherwise>
+											</c:choose>
+											<div class="sub-text">
+											<span id="lastChat_${chatRoom.roomNo}">${chatRoom.lastChat}</span>
+											</div>
+										</div>
+										&emsp;&emsp;&emsp;
+										<img src="${pageContext.request.contextPath}/resources/upload/${chatRoom.photo1}"	alt="이미지 없음" width="50px">
 							</div>
 
 							<div class="common-bg-hover only-hover css-q6qzi5">
@@ -219,12 +220,14 @@
 				chatContent : chatContent,
 				chatWriter : chatWriter,
 				roomNo : currentRoomNo
+				
 			},
 			success : function(result) {
 				console.log("메시지 전송 성공!");
 				$("#chatContent").val("");
 				msgList(currentRoomNo);
-				scrollToBottom();
+				console.log(currentRoomNo);
+				scrollToBottom();		 
 			},
 			error : function() {
 				console.log("메시지 전송 실패" + currentRoomNo);
