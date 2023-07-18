@@ -13,9 +13,10 @@
 		<thead>
 			<tr>
 				<td width="20%">충전결제번호</td>
+				<td width="15%">아이디</td>
 				<td width="20%">충전한 포인트</td>
-				<td width="20%">충전가격</td>
-				<td width="20%">충전수단</td>
+				<td width="15%">충전가격</td>
+				<td width="15%">충전수단</td>
 				<td width="20%">충전날짜</td>
 			</tr>
 		</thead>
@@ -23,6 +24,7 @@
 			<c:forEach items="${paymentList}" var="payment" varStatus="j">
 				<tr>
 					<th>${payment.pointOrderNum}</th>
+					<th>${payment.userId}</th>
 					<th>${payment.pointName}</th>
 					<th>${payment.pointPrice }원</th>
 					<th>${payment.paymentMethod }</th>
@@ -59,9 +61,7 @@
 		</ul>
 	</nav>
 </div>
-
-
-
+<button id="PurBackBtn" onclick="location.href='${pageContext.request.contextPath}/member/memberList.do'">뒤로가기</button>
 <script>
 	
 </script>

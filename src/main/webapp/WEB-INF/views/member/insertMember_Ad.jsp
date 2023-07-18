@@ -73,6 +73,8 @@
 				<button type="button" class="bo" onclick="validation_Ad();">회원추가</button>
 				&emsp;
 				<button type="reset" class="bo">초기화</button>
+				&emsp;
+				<button type="button" class="bo" onclick="location.href='${pageContext.request.contextPath}/member/memberList.do'">뒤로가기</button>
 			</div>
 		</div>
 	</form>
@@ -109,10 +111,6 @@
 			error: console.log
 		});
 	}); 
-	 
-</script>
-
-<script type="text/javascript">
 
 	function validation_Ad() {
 		var uid = document.getElementById("userId");

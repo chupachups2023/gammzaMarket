@@ -100,7 +100,7 @@
 /* checkPayment */
 #paymentRecordSec{
 	width:1200px;
-	margin: 0 auto;
+	margin: 20px auto;
 }
 .pTable{
     border-collapse: collapse;
@@ -136,4 +136,16 @@ list-style-type: none;
 #selectedPage{
 	color: red;
 	font-weight: bolder;
+}
+
+#PurBackBtn{
+	margin-left:75%;
+	width: 70px;
+	height: 30px;
+	border: none;
+	background-color: gray;
+	color: white;
+	border-radius: 5px;
+	cursor: pointer;
+	
 }
