@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -194,13 +193,22 @@ public class GongguController {
 		 ArrayList<Parti> partiList=partiService.selectPartiListForLeader(map);
 		 
 		 int partiNum=0;
+		 int onPartiNum=0;
 		 for(int i=0;i<partiList.size();i++) {
 			 if(partiList.get(i).getStatus()>0) {
 				 partiNum+=partiList.get(i).getNum();
 			 }
+			 if(partiList.get(i).getStatus()==1) {
+				 onPartiNum++;
+			 }
+			 
 		 }
 		 model.addAttribute("partiNum", partiNum);
+		 model.addAttribute("onPartiNum", onPartiNum);
 		 model.addAttribute("gonggu", gonggu);
+		 
+		 //공구 진행 중인 회원 수
+		 
 		 
 		 if(gonggu.getEndStatus()==1) {
 			 return "/gonggu/ggRead"; 
@@ -286,7 +294,6 @@ public class GongguController {
 			}
 		}
 		if (!photo.isEmpty()) {
-			Collections.sort(photo);
 
 			photo.remove(null);
 
@@ -414,7 +421,6 @@ public class GongguController {
 		}
 		//사진 정렬
 		if (!photo.isEmpty()) {
-			Collections.sort(photo);
 
 			photo.remove(null);
 			
@@ -423,7 +429,6 @@ public class GongguController {
 			} else if (photo.size() == 2) {
 				newGonggu.setPhoto1(photo.get(0));
 				newGonggu.setPhoto2(photo.get(1));
-			} else {
 				newGonggu.setPhoto1(photo.get(0));
 				newGonggu.setPhoto2(photo.get(1));
 				newGonggu.setPhoto3(photo.get(2));

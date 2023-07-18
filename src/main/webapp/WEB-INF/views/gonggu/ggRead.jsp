@@ -242,7 +242,13 @@ pzlogin.addEventListener("click", () => {
 
 function deleteGonggu(){
 	if(confirm("정말로 ${gonggu.gongguName} 공구를 삭제하시겠습니까?")){
-		location.href="${pageContext.request.contextPath}/gonggu/deleteGonggu.go?gongguNo=${gonggu.gongguNo}";
+		let onPartiNum="${onPartiNum}"*1;
+		if(onPartiNum>0){
+			alert("공구에 참여중인 회원이 있습니다.")
+			return
+		}else{
+			location.href="${pageContext.request.contextPath}/gonggu/deleteGonggu.go?gongguNo=${gonggu.gongguNo}";
+		}
 	}else{
 		return
 	}
