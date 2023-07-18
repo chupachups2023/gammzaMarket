@@ -9,15 +9,11 @@
 </jsp:include>
 <script type="text/javascript"
 	src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-<style>
-
-</style>
-
 
 <div class="pointPurchaseSec">
 	<h1>포인트 결제</h1>
-	<hr>
 	<br> <br>
+	<button id="CheckPaymentBtn" onclick="location.href='${pageContext.request.contextPath}/member/checkPayment.do'">결제내역보기</button>
 	<form>
 		<div id="pointPurchaseBox">
 			<table class="pointPurchaseTable">
