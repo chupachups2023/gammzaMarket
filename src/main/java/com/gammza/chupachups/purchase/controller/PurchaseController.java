@@ -1,7 +1,7 @@
 package com.gammza.chupachups.purchase.controller;
 
 import java.io.IOException;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -93,6 +93,13 @@ public class PurchaseController {
 		PageInfo pi = Pagination.getPageInfo(totalRecord, nowPage, limit, 5);
 		
 		List<PointPurRec> paymentList = purchaseService.selectPaymentRecord(userId, rowBounds);
+		
+		for(int i=0;i<paymentList.size();i++) {
+			Date date = paymentList.get(i).getPurchasedTime();
+			long timeInMilliSeconds = date.getTime();
+	        java.sql.Date purchasedTime = new java.sql.Date(timeInMilliSeconds);
+	        paymentList.get(i).setPurchasedTime(purchasedTime);
+		}
 		model.addAttribute("paymentList", paymentList);
 		model.addAttribute("pi", pi);
 	}
@@ -106,6 +113,14 @@ public class PurchaseController {
 		PageInfo pi = Pagination.getPageInfo(totalRecord, nowPage, limit, 5);
 		
 		List<PointPurRec> paymentList = purchaseService.selectPaymentRecord_Ad(rowBounds);
+		
+		for(int i=0;i<paymentList.size();i++) {
+			Date date = paymentList.get(i).getPurchasedTime();
+			long timeInMilliSeconds = date.getTime();
+	        java.sql.Date purchasedTime = new java.sql.Date(timeInMilliSeconds);
+	        paymentList.get(i).setPurchasedTime(purchasedTime);
+		}
+		
 		model.addAttribute("paymentList", paymentList);
 		model.addAttribute("pi", pi);
 		return "/adminpage/checkPayment_Ad";
