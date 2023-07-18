@@ -73,7 +73,6 @@ public class ChatRoomController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("leader", leader);
 		model.addAttribute("mainList", mainList);
-		model.addAttribute("parti", parti);
 		
 		return "mypage/chatting";
 	}
