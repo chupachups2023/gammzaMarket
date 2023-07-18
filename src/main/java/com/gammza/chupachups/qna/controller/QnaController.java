@@ -56,7 +56,6 @@ public class QnaController {
 	@PostMapping("/QAnswerInsert.do")
 	public String QAnswerInsert(Qna qna, @RequestParam int nowPage, @RequestParam String qAnswer,  RedirectAttributes redirectAttr, HttpSession session) {
 		qna = qnaService.selectOneQna(qna.getQnaNo());
-		System.out.println(qna);
 		Qna qnaOrigin = new Qna();
 		qnaOrigin.setQnaTitle(qna.getQnaTitle() + " (답변완료)");
 		qnaOrigin.setQnaNo(qna.getQnaNo());

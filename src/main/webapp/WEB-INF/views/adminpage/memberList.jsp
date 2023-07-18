@@ -67,7 +67,10 @@ href="${pageContext.request.contextPath}/resources/css/member/memberInfo.css?<%=
 			</c:if>
 		</ul>
 	</nav>
-	<button id="memInsertBtn" onclick="location.href='${pageContext.request.contextPath}/member/insertMember_Ad.do'">회원추가</button>
+	<div align="right">
+		<button id="pointRecordBtn" onclick="location.href='${pageContext.request.contextPath}/member/checkPayment_Ad.do'">충전목록</button>
+		<button id="memInsertBtn" onclick="location.href='${pageContext.request.contextPath}/member/insertMember_Ad.do'">회원추가</button>
+	</div>
 </div>	
 
 

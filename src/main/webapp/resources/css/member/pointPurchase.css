@@ -32,6 +32,7 @@
 
 .pointSel {
 	padding: 50px 20px;
+	cursor:pointer;
 }
 
 .pointSel:hover {
@@ -48,6 +49,10 @@
 	font-size: 25px;
 	color: #fce38c;
 	text-align: left;
+}
+
+.pg {
+	cursor:pointer;
 }
 
 /* 약관박스 */
@@ -78,4 +83,57 @@
 	font-size: 20px;
 	text-align: right;
 	width: 145px;
+}
+#CheckPaymentBtn {
+	margin: 0 0 10px 90%;
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    border-radius: 10px;
+    background: #60b565b7;
+    border:solid 1px #60b565b7;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* checkPayment */
+#paymentRecordSec{
+	width:1200px;
+	margin: 0 auto;
+}
+.pTable{
+    border-collapse: collapse;
+    width:1000px;
+	margin: 0 auto;
+	text-align:center;
+}
+.pTable>thead>tr {
+	border-bottom: solid 3px #808080;
+	font-weight:bold;
+	font-size: 20px;
+}
+.pTable>tbody tr{
+    border-bottom: solid 1px #808080;
+    height:30px;
+}
+.qnaPaging {
+list-style-type: none;
+}
+.qnaPaging a {
+	text-decoration: none;
+	color: black;
+}
+
+.qnaPaging li {
+	display: inline;
+}
+
+#pagingNav {
+	text-align: center;
+}
+
+#selectedPage{
+	color: red;
+	font-weight: bolder;
 }
