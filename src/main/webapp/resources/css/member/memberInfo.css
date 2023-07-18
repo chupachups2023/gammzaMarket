@@ -99,10 +99,17 @@
 	background-color: gray;
 	color: white;
 	border-radius: 5px;
-	margin-left: 94%;
 	cursor: pointer;
 }
-
+#pointRecordBtn{
+	width: 70px;
+	height: 30px;
+	border: none;
+	background-color: gray;
+	color: white;
+	border-radius: 5px;
+	cursor: pointer;
+}
 #chageStatusBtn {
 	width: 70px;
 	height: 25px;

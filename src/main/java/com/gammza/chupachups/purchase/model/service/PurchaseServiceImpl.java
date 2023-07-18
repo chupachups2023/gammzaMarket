@@ -2,6 +2,7 @@ package com.gammza.chupachups.purchase.model.service;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,9 +31,23 @@ public class PurchaseServiceImpl implements PurchaseService {
 	}
 
 	@Override
-	public List<PointPurRec> selectPaymentRecord(String userId) {
-		return purchaseDao.selectPaymentRecord(userId);
+	public List<PointPurRec> selectPaymentRecord(String userId, RowBounds rowBounds) {
+		return purchaseDao.selectPaymentRecord(userId, rowBounds);
 	}
 
+	@Override
+	public List<PointPurRec> selectPaymentRecord_Ad(RowBounds rowBounds) {
+		return purchaseDao.selectPaymentRecord_Ad(rowBounds);
+	}
+
+	@Override
+	public int selectTotalRecord() {
+		return purchaseDao.selectTotalRecord();
+	}
+
+	@Override
+	public int selectTotalRecord_M(String userId) {
+		return purchaseDao.selectTotalRecord_M(userId);
+	}
 
 }

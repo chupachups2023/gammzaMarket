@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.gammza.chupachups.common.model.vo.PageInfo;
+import com.gammza.chupachups.common.template.Pagination;
 import com.gammza.chupachups.member.model.service.MemberService;
 import com.gammza.chupachups.member.model.vo.Member;
 import com.gammza.chupachups.purchase.model.service.PurchaseService;
@@ -77,14 +80,35 @@ public class PurchaseController {
 	public IamportResponse<Payment> verifyAmountPOST(@PathVariable(value = "imp_uid") String imp_uid) throws IamportResponseException, IOException {
 		return client.paymentByImpUid(imp_uid);
     }
-	/* 결제내역 확인 */
+	
+	/* 결제내역 목록 */
 	@GetMapping("/checkPayment.do")
-	public void checkPayment(@ModelAttribute("loginMember") Member member, PointPurRec point, Model model) {
+	public void checkPayment(@ModelAttribute("loginMember") Member member, @RequestParam(defaultValue="1") int nowPage, PointPurRec point, Model model) {
 		String userId = member.getUserId();
-		int nowPoint = member.getPoint();
-		List<PointPurRec> paymentList = purchaseService.selectPaymentRecord(userId);
+		
+		int totalRecord = purchaseService.selectTotalRecord_M(userId);
+		int limit = 10;
+		int offset = (nowPage -1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		PageInfo pi = Pagination.getPageInfo(totalRecord, nowPage, limit, 5);
+		
+		List<PointPurRec> paymentList = purchaseService.selectPaymentRecord(userId, rowBounds);
 		model.addAttribute("paymentList", paymentList);
-		model.addAttribute(nowPoint);
+		model.addAttribute("pi", pi);
+	}
+	
+	@GetMapping("/checkPayment_Ad.do")
+	public String checkPayment_Ad(@RequestParam(defaultValue="1") int nowPage, PointPurRec point, Model model) {
+		int totalRecord = purchaseService.selectTotalRecord();
+		int limit = 10;
+		int offset = (nowPage -1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		PageInfo pi = Pagination.getPageInfo(totalRecord, nowPage, limit, 5);
+		
+		List<PointPurRec> paymentList = purchaseService.selectPaymentRecord_Ad(rowBounds);
+		model.addAttribute("paymentList", paymentList);
+		model.addAttribute("pi", pi);
+		return "/adminpage/checkPayment_Ad";
 	}
 	
 

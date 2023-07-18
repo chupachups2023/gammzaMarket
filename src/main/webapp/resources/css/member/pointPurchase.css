@@ -96,3 +96,44 @@
     font-weight:bold;
     cursor:pointer;
 }
+
+/* checkPayment */
+#paymentRecordSec{
+	width:1200px;
+	margin: 0 auto;
+}
+.pTable{
+    border-collapse: collapse;
+    width:1000px;
+	margin: 0 auto;
+	text-align:center;
+}
+.pTable>thead>tr {
+	border-bottom: solid 3px #808080;
+	font-weight:bold;
+	font-size: 20px;
+}
+.pTable>tbody tr{
+    border-bottom: solid 1px #808080;
+    height:30px;
+}
+.qnaPaging {
+list-style-type: none;
+}
+.qnaPaging a {
+	text-decoration: none;
+	color: black;
+}
+
+.qnaPaging li {
+	display: inline;
+}
+
+#pagingNav {
+	text-align: center;
+}
+
+#selectedPage{
+	color: red;
+	font-weight: bolder;
+}
