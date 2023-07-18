@@ -89,16 +89,6 @@ public class GongguController {
 				@RequestParam(defaultValue="PULLUP_AT") String sort,@RequestParam(defaultValue="1") int end) {
 		Member loginMember=(Member) session.getAttribute("loginMember");
 		
-		//소셜 로그인 하려다 취소한 사람 세션에서 지워주기
-		Long kakaoIdkey = (Long)session.getAttribute("kakaoIdkey");
-		String naverIdkey = (String)session.getAttribute("naverIdkey");
-		if(kakaoIdkey != null) {
-			session.removeAttribute("kakaoIdkey");
-		}
-		if(naverIdkey != null) {
-			session.removeAttribute("naverIdkey");
-		}
-		
 		ArrayList<Gonggu> ggListView;
 		ModelAndView mav=new ModelAndView();
 		HashMap<String,String> locationMap=new HashMap<String,String>();
@@ -140,7 +130,17 @@ public class GongguController {
 	}
 	
 	@GetMapping("/mainList.go")
-	public String mainList(Model model) {
+	public String mainList(Model model, HttpSession session) {
+		//소셜 로그인 하려다 취소한 사람 세션에서 지워주기
+		Long kakaoIdkey = (Long)session.getAttribute("kakaoIdkey");
+		String naverIdkey = (String)session.getAttribute("naverIdkey");
+		if(kakaoIdkey != null) {
+			session.removeAttribute("kakaoIdkey");
+		}
+		if(naverIdkey != null) {
+			session.removeAttribute("naverIdkey");
+		}
+		
 		ArrayList<Gonggu> mainList = gongguService.selectMainList();
 		for(int i=0;i<mainList.size();i++) {
 			Location tempLocal=locationService.selectLocationByNo(mainList.get(i).getLocationNo());

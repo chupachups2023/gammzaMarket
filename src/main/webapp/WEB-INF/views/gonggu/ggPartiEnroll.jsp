@@ -23,7 +23,7 @@
     </div>
     <div class="partic-container">
 
-        <form action="${pageContext.request.contextPath}/gonggu/partiEnroll.pa" method="post">
+        <form action="${pageContext.request.contextPath}/gonggu/partiEnroll.pa" method="post" name="partiEnrollFrm">
             <table>
                 <tbody>
                     <tr>
@@ -63,7 +63,7 @@
                         <td>소모 포인트</td>
                         <td colspan="2">
                             <input type="text" class="Parti-td" readonly id="needPoint" value="<fmt:formatNumber type="number" maxFractionDigits="3" value="${gonggu.price}" />"> 포인트
-                            <input type="hidden" id="hidden-price" >
+                            <input type="hidden" id="hidden-price" value="${gonggu.price}">
                         </td>
                         
                     </tr>
@@ -104,7 +104,7 @@
             <input type="hidden" name="gongguNo" value="${gonggu.gongguNo }">
             <input type="hidden" name="locationCode" value="${gonggu.locationNo }">
             <input type="hidden" name="partiMember" value="${loginMember.userId }">
-            <div class="partic-btn"><input type="submit" value="참여하기" class="button"></div>
+            <div class="partic-btn"><input type="button" value="참여하기" class="button" onclick="partiEnrollSubmit()"></div>
             <!-- 모달창: 유의사항 동의 - 참여하기 -->
         </form>
     </div>
@@ -112,6 +112,23 @@
 	<input type="hidden" value="${gonggu.num }" id="amount">
 	<input type="hidden" value="${loginMember.point }" id="memberPoint">
 <script>
+function partiEnrollSubmit(){
+	let spendPoint=$("#hidden-price").attr("value");
+	let currPoint="${loginMember.point}"*1;
+	console.log("소모: "+ spendPoint)
+	console.log("현재: "+ currPoint)
+	if(currPoint<spendPoint){
+		alert("포인트가 부족합니다.");
+		return;
+	}else{
+		if(confirm("공구에 참여하시겠습니까?")){
+			partiEnrollFrm.submit();
+		}else{
+			return;
+		}
+	}
+}
+
 $(function(){
 	let memberPoint=document.getElementById("memberPoint").value;
 	let price=document.getElementById("price").value;
