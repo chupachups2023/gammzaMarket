@@ -22,10 +22,10 @@ import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 import com.gammza.chupachups.location.controller.LocationController;
 import com.gammza.chupachups.location.model.service.LocationService;
 import com.gammza.chupachups.location.model.vo.Location;
+import com.gammza.chupachups.member.model.vo.Member;
 
 
 @Controller
-
 public class ChatRoomController {
 	@Autowired
 	private GongguService gongguService;
@@ -40,6 +40,7 @@ public class ChatRoomController {
 	
 	@GetMapping("/chatRoom/myChatList.bo")
 	public String chatRoomList(@RequestParam(defaultValue="1") int nowPage, @RequestParam(required = false) String roomOwner, HttpSession hs, Model model) {
+		String id=((Member)hs.getAttribute("loginMember")).getUserId();
 		int totalRecord = chatRoomService.selectTotalRecord();
 		String leader = (String) hs.getAttribute("loginmember");
 		System.out.println("total : " + totalRecord);
@@ -47,7 +48,7 @@ public class ChatRoomController {
 		int offset = (nowPage -1 ) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		PageInfo pi = Pagination.getPageInfo(totalRecord, nowPage, limit, 3);
-		List<ChatRoom> chatRoomList = chatRoomService.chatRoomList(rowBounds, roomOwner);
+		List<ChatRoom> chatRoomList = chatRoomService.chatRoomList(rowBounds, id);
 		for(int i=0;i<chatRoomList.size();i++) {
 			int gongguNo=chatRoomList.get(i).getGongguNo();
 			chatRoomList.get(i).setGongguName(gongguService.selectOneGonggu(gongguNo).getGongguName());

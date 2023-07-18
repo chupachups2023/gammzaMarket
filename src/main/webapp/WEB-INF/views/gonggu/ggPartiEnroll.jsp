@@ -84,7 +84,7 @@
                         <td>
                             <input type="text" class="Parti-td" readonly id="lackPoint" > 포인트
                         </td>
-                        <td><a href="" class="button btn">충전하러 가기</a>
+                        <td><a href="${pageContext.request.contextPath}/member/pointPurchase.do" class="button btn">충전하러 가기</a>
                         </td>
                     </tr>
                     <tr>
