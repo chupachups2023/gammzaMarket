@@ -68,6 +68,11 @@ tbody {
 	text-align: center;
 }
 
+#selectedPage{
+	color: red;
+	font-weight: bolder;
+}
+
 /* questAnswer */
 #qnaAns {
 	width: 1100px;
