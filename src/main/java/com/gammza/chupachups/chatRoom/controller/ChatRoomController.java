@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.gammza.chupachups.chatMsg.model.service.ChatMsgService;
 import com.gammza.chupachups.chatRoom.model.service.ChatRoomService;
 import com.gammza.chupachups.chatRoom.model.vo.ChatRoom;
 import com.gammza.chupachups.common.model.vo.PageInfo;
@@ -35,8 +36,6 @@ public class ChatRoomController {
 	private LocationService locationService;
 	@Autowired
 	private LocationController locationController;
-	@Autowired
-	private PartiService partiService;
 	
 	@GetMapping("/chatRoom/myChatList.bo")
 	public String chatRoomList(@RequestParam(defaultValue="1") int nowPage, @RequestParam(required = false) String roomOwner, HttpSession hs, Model model) {
@@ -69,7 +68,7 @@ public class ChatRoomController {
 			Location tempLocal=locationService.selectLocationByNo(mainList.get(i).getLocationNo());
 			String locationName=locationController.SelectLocationName(tempLocal);
 			mainList.get(i).setLocationName(locationName);
-		}		
+		}
 		
 		
 		model.addAttribute("chatRoomList", chatRoomList);

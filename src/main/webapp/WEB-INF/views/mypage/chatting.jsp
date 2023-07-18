@@ -131,8 +131,7 @@
 												</c:otherwise>
 											</c:choose>
 											<div class="sub-text">
-												<span id="gongguNo">${chatRoom.gongguNo}</span> <span
-													id="lastChat">${chatRoom.lastChat}</span>
+											<span id="lastChat_${chatRoom.roomNo}">${chatRoom.lastChat}</span>
 											</div>
 										</div>
 										&emsp;&emsp;&emsp;
@@ -262,12 +261,14 @@
 				chatContent : chatContent,
 				chatWriter : chatWriter,
 				roomNo : currentRoomNo
+				
 			},
 			success : function(result) {
 				console.log("메시지 전송 성공!");
 				$("#chatContent").val("");
 				msgList(currentRoomNo);
-				scrollToBottom();
+				console.log(currentRoomNo);
+				scrollToBottom();		 
 			},
 			error : function() {
 				console.log("메시지 전송 실패" + currentRoomNo);
