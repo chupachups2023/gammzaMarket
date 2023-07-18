@@ -31,7 +31,7 @@
 					<img src="${pageContext.request.contextPath}/resources/img/header/감자마켓.png" alt="logo" class="header-gamza"> 
 					<img src="${pageContext.request.contextPath}/resources/img/header/한글로고2.png" alt="korlogo" class="header-korlogo">
 				</a>
-				<div>
+				<div class="upperIconBox">
 				<c:choose>
 					<c:when test="${empty loginMember}">
 						<button class="header-loginBtn btn" id="open-modal">
@@ -49,6 +49,10 @@
 		      			</button>
 					</c:when>
 					<c:otherwise>
+						<div class="notiBox">
+							<img alt="알람" src="https://cdn-icons-png.flaticon.com/512/3247/3247251.png"  class="header-notify" onclick="alarmOpen()">
+							<img alt="" src="https://cdn-icons-png.flaticon.com/512/8804/8804772.png" class="notiRedDot" id="notiRedDot" onclick="alarmOpen()">
+						</div>
 						<a href="${pageContext.request.contextPath}/mypage/mypageMain.me">
 							<img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-memberLogin" >
 						</a>
@@ -140,81 +144,143 @@
 				</form>
 			</div>
 		</div>
-
-		<script>
-	        $(function(){
-	            $(".header-category").click(function(){
-	                const p1 = $(".category-drop");
-	                if(p1.css("display")=="none"){
-	                    p1.slideDown();
-	                }else{
-	                    p1.slideUp();
-	                }
-	            })
-	        })
-		const modal = document.getElementById("modal");
-		const openModalBtn = document.getElementById("open-modal");
-		const closeModalBtn = document.getElementById("close-modal");
-		const loginModalBtn = document.getElementById("login-modal");
-		// 모달창 열기
-		openModalBtn.addEventListener("click", () => {
-			modal.style.display = "block";
-			document.body.style.overflow = "hidden"; // 스크롤바 제거
-		});
-
-		// 모달창 닫기
-		function loginModalClose(){
-			modal.style.display = "none";
-			document.body.style.overflow = "auto"; // 스크롤바 보이기
-		}
-			// 모달창 닫기
-			loginModalBtn.addEventListener("click", () => {
-				loginModalClose();
-				loginFrm.submit();
-			});
 		
-		function fn_click(category) {
-			function success(position) {
-			    const latitude = position.coords.latitude;   // 위도(37.xxxx)
-			    const longitude = position.coords.longitude;
-			    const memLong="${loginMember.longitude}";	//로그인 했니?
-			    
-			    if(memLong != ""){	//했다
-			    	location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category;
-			    }else{		//안했다
-			   		location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category+"&longitude="+longitude+"&latitude="+latitude;
-			    }
+		<div class="notiModal" tabindex="-1" id="notiModal">
+			<div class="notiModal-dialog">
+				<div class="notiModal">
+					<div class="notiModal-bg" onclick="alarmOpen();"></div>
+					<div class="notiModal-content" id="notiModal-content">
+					</div>
+				</div>
+			</div>
+		</div>
+
+<script>
+     $(function(){
+         $(".header-category").click(function(){
+             const p1 = $(".category-drop");
+             if(p1.css("display")=="none"){
+                 p1.slideDown();
+             }else{
+                 p1.slideUp();
+             }
+         })
+     })
+
+
+function fn_click(category) {
+	function success(position) {
+	    const latitude = position.coords.latitude;   // 위도(37.xxxx)
+	    const longitude = position.coords.longitude;
+	    const memLong="${loginMember.longitude}";	//로그인 했니?
+	    
+	    if(memLong != ""){	//했다
+	    	location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category;
+	    }else{		//안했다
+	   		location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category+"&longitude="+longitude+"&latitude="+latitude;
+	    }
+	}
+    navigator.geolocation.getCurrentPosition(success);
+}
+
+function viewAllGonggu(){
+	function success(position) {
+	    const latitude = position.coords.latitude;   // 위도(37.xxxx)
+	    const longitude = position.coords.longitude;
+	    const memLong="${loginMember.longitude}";
+	    
+	    if(memLong != ""){
+	    	location.href="${pageContext.request.contextPath}/gonggu/ggListView.go";
+	    }else{
+	   		location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?longitude="+longitude+"&latitude="+latitude;
+	    }
+	}
+    navigator.geolocation.getCurrentPosition(success);
+}
+function viewRequest(){
+	function success(position) {
+	    const latitude = position.coords.latitude;   // 위도(37.xxxx)
+	    const longitude = position.coords.longitude;
+		location.href="${pageContext.request.contextPath}/ggRequest/requestView.req?longitude="+longitude+"&latitude="+latitude;
+	}
+	navigator.geolocation.getCurrentPosition(success);
+}
+function loginEnterEvent(e){
+	if(e.keyCode==13){
+		loginFrm.submit();
+	}
+}
+function alarmOpen(){
+	$.ajax({
+		url:"${pageContext.request.contextPath}/notify/selectNotifyList.no",
+		success:function(result){
+			let notifyList=result.notifyList;
+			let str="";
+			for(let i=0;i<notifyList.length;i++){
+				if(notifyList[i].status==0){
+					str+='<div class="notiDiv">'
+							+ '<div class="notiContent"><b>'+notifyList[i].notiContent+'</b></div>'
+							+	'<div class="notiTime"><small>'+notifyList[i].createAt +'</small></div></div><hr>';
+				}else{
+					str+='<div class="notiDiv">'
+							+ '<div class="notiContent">'+notifyList[i].notiContent+'</div>'
+							+	'<div class="notiTime"><small>'+notifyList[i].createAt +'</small></div></div><hr>';
+				}
 			}
-		    navigator.geolocation.getCurrentPosition(success);
+			document.getElementById("notiModal-content").innerHTML=str;
 		}
-		
-		function viewAllGonggu(){
-			function success(position) {
-			    const latitude = position.coords.latitude;   // 위도(37.xxxx)
-			    const longitude = position.coords.longitude;
-			    const memLong="${loginMember.longitude}";
-			    
-			    if(memLong != ""){
-			    	location.href="${pageContext.request.contextPath}/gonggu/ggListView.go";
-			    }else{
-			   		location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?longitude="+longitude+"&latitude="+latitude;
-			    }
+	})
+	let display=$("#notiModal").css("display");
+	if(display=="block"){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/notify/updateNotifyStatus.no"
+		})
+		$("#notiModal").css("display","none");
+		$("#notiRedDot").css("display","none");
+	}else{
+		$("#notiModal").css("display","block");
+	}
+}
+
+$(function(){
+	if("${loginMember.userId}" != ""){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/notify/selectNewNotify.no",
+			success:function(result){
+				let newNoti=result.newNoti*1;
+				console.log("결과는?"+newNoti)
+				if(newNoti>0){
+					$("#notiRedDot").css("display","block");
+				}else{
+					$("#notiRedDot").css("display","none");
+				}
+			},
+			error: function(){
+				console.log("에러")
 			}
-		    navigator.geolocation.getCurrentPosition(success);
-		}
-		function viewRequest(){
-			function success(position) {
-			    const latitude = position.coords.latitude;   // 위도(37.xxxx)
-			    const longitude = position.coords.longitude;
-				location.href="${pageContext.request.contextPath}/ggRequest/requestView.req?longitude="+longitude+"&latitude="+latitude;
-			}
-			navigator.geolocation.getCurrentPosition(success);
-		}
-		function loginEnterEvent(e){
-			if(e.keyCode==13){
-				loginFrm.submit();
-			}
-		}
-	    </script>
+		})
+	}
+})
+const modal = document.getElementById("modal");
+const openModalBtn = document.getElementById("open-modal");
+const closeModalBtn = document.getElementById("close-modal");
+const loginModalBtn = document.getElementById("login-modal");
+// 모달창 열기
+openModalBtn.addEventListener("click", () => {
+	modal.style.display = "block";
+	document.body.style.overflow = "hidden"; // 스크롤바 제거
+});
+
+// 모달창 닫기
+function loginModalClose(){
+	modal.style.display = "none";
+	document.body.style.overflow = "auto"; // 스크롤바 보이기
+}
+	// 모달창 닫기
+	loginModalBtn.addEventListener("click", () => {
+		loginModalClose();
+		loginFrm.submit();
+	});
+</script>
 	</header>
 	<section id="wrapper-whole-section">

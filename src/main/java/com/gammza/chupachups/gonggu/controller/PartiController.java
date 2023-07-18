@@ -1,5 +1,6 @@
 package com.gammza.chupachups.gonggu.controller;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -25,6 +26,8 @@ import com.gammza.chupachups.location.model.service.LocationService;
 import com.gammza.chupachups.location.model.vo.Location;
 import com.gammza.chupachups.member.model.service.MemberService;
 import com.gammza.chupachups.member.model.vo.Member;
+import com.gammza.chupachups.notify.model.service.NotifyService;
+import com.gammza.chupachups.notify.model.vo.Notify;
 
 
 @Controller
@@ -39,6 +42,8 @@ public class PartiController {
 	private LocationService locationService;
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private NotifyService notifyService;
 	
 	@GetMapping("/partiEnroll.pa")
 	public ModelAndView partiEnroll(@RequestParam int gongguNo, Model model,RedirectAttributes redirectAttr) {
@@ -83,6 +88,17 @@ public class PartiController {
 				model.addAttribute("loginMember", member);
 			}
 			String str=partiList(model,"resent",1);
+			
+			Gonggu gonggu=gongguService.selectOneGonggu(parti.getGongguNo());
+			Notify notify=new Notify();
+			notify.setNotifyMember(gonggu.getGongguWriter());
+			String gongguName=gonggu.getGongguName();
+			if(gongguName.length()>7) {
+				gongguName=gongguName.substring(0, 7)+"⋯";
+			}
+			notify.setNotiContent(gongguName+"공구에 새로운 참여자가 있습니다.");
+			notifyService.insertNotify(notify);
+			
 			return str;
 		}else {
 			redirectAttr.addFlashAttribute("msg","참여가 정상적으로 이루어지지 않았습니다.");
@@ -145,6 +161,17 @@ public class PartiController {
 		
 		int result=partiService.updateMemberPointPlus(updatePoint);
 		
+		Notify notify=new Notify();
+		String gongguName=gonggu.getGongguName();
+		if(gongguName.length()>7) {
+			gongguName=gongguName.substring(0, 7)+"⋯";
+		}
+		notify.setNotifyMember(gonggu.getGongguWriter());
+		
+		DecimalFormat df=new DecimalFormat("###,###");
+		notify.setNotiContent(gongguName+" 공구 참여자가 물건을 수령하여 "+df.format(totalPrice)+"포인트가 들어왔습니다.");
+		notifyService.insertNotify(notify);
+		
 		partiList(model,"resent",1);
 		return "/mypage/ggList_Parti";
 	}
@@ -173,6 +200,16 @@ public class PartiController {
 			map.put("gongguNo", String.valueOf(gongguNo));
 			map.put("userId", id[i]);
 			int result=partiService.updatePartiStatusByLeader(map);
+			
+			Notify notify=new Notify();
+			String gongguName=gonggu.getGongguName();
+			if(gongguName.length()>7) {
+				gongguName=gongguName.substring(0, 7)+"⋯";
+			}
+			notify.setNotifyMember(id[i]);
+			notify.setNotiContent(gongguName+"공구 참여가 확정되었습니다.");
+			notifyService.insertNotify(notify);
+			
 		}
 		HashMap<String, String> map=new HashMap<String,String>();
 		map.put("gongguNo", String.valueOf(gongguNo));
@@ -210,6 +247,17 @@ public class PartiController {
 				updatePoint.put("userId", partiList.get(i).getPartiMember());
 				
 				partiService.updateMemberPointPlus(updatePoint);
+				
+				Notify notify=new Notify();
+				notify.setNotifyMember(partiList.get(i).getPartiMember());
+				
+				String gongguName=gonggu.getGongguName();
+				if(gongguName.length()>7) {
+					gongguName=gongguName.substring(0, 7)+"⋯";
+				}
+				DecimalFormat df=new DecimalFormat("###,###");
+				notify.setNotiContent(gongguName+"공구가 마감되어 사용되지 않은 "+df.format(totalPrice)+"포인트가 돌아왔습니다");
+				notifyService.insertNotify(notify);
 			}
 		}
 			

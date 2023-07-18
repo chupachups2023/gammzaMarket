@@ -54,6 +54,7 @@
 			<mapping path="/member/pointPurchase.do"/>
 			<mapping path="/member/updatePoint.do"/>
 			<mapping path="/member/pointPurChk.do"/>
+			<mapping path="/member/userPf.bo"/>
 			<mapping path="/chatMsg/**.do"/>
 			<mapping path="/chatRoom/**.bo"/>
 			<mapping path="/adminPage/**.do"/>

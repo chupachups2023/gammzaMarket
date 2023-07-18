@@ -56,7 +56,7 @@
 	                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${plist.gongguNo }'">${fn:substring(plist.gongguName, 0, 10)}⋯</div>
 	                </c:if>
 	                <c:if test="${fn:length(plist.gongguName) le 10}">
-	                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${plist.gongguNo }'">${fn:substring(plist.gongguName, 0, 10)}</div>
+	                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${plist.gongguNo }'">${plist.gongguName}</div>
 	                </c:if>
                 	<a href="${pageContext.request.contextPath}/member/userPf.bo?userPr=${plist.reviewWriter }">${plist.reviewWriter }</a>
                 </td>
@@ -101,7 +101,7 @@
                 	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${lList.gongguNo }'">${fn:substring(lList.gongguName, 0, 10)}⋯</div>
                 </c:if>
                 <c:if test="${fn:length(lList.gongguName) le 10}">
-                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${lList.gongguNo }'">${fn:substring(lList.gongguName, 0, 10)}</div>
+                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${lList.gongguNo }'">${lList.gongguName}</div>
                 </c:if>
                 	<a href="${pageContext.request.contextPath}/member/userPf.bo?userPr=${lList.reviewWriter }">${lList.reviewWriter }</a>
                 </td>
