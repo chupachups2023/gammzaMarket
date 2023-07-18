@@ -1,5 +1,7 @@
 package com.gammza.chupachups.purchase.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +28,11 @@ public class PurchaseServiceImpl implements PurchaseService {
 	public int selectPointOrderNum(String pointOrderNum) {
 		return purchaseDao.selectPointOrderNum(pointOrderNum);
 	}
+
+	@Override
+	public List<PointPurRec> selectPaymentRecord(String userId) {
+		return purchaseDao.selectPaymentRecord(userId);
+	}
+
 
 }

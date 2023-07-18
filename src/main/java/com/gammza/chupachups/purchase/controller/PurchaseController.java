@@ -1,10 +1,10 @@
 package com.gammza.chupachups.purchase.controller;
 
 import java.io.IOException;
-import java.util.Locale;
+import java.sql.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -77,6 +77,15 @@ public class PurchaseController {
 	public IamportResponse<Payment> verifyAmountPOST(@PathVariable(value = "imp_uid") String imp_uid) throws IamportResponseException, IOException {
 		return client.paymentByImpUid(imp_uid);
     }
+	/* 결제내역 확인 */
+	@GetMapping("/checkPayment.do")
+	public void checkPayment(@ModelAttribute("loginMember") Member member, PointPurRec point, Model model) {
+		String userId = member.getUserId();
+		int nowPoint = member.getPoint();
+		List<PointPurRec> paymentList = purchaseService.selectPaymentRecord(userId);
+		model.addAttribute("paymentList", paymentList);
+		model.addAttribute(nowPoint);
+	}
 	
 
 
