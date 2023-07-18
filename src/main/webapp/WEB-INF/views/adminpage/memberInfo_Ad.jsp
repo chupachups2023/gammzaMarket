@@ -69,7 +69,7 @@
 	<div id="infoBtn">
 		<button type="submit" class="bo">회원정보 수정</button>&emsp;
 		<button type="button" class="bo" onclick="location.href='${pageContext.request.contextPath}/member/memberList.do?nowPage=${nowPage}'">뒤로가기</button>&emsp;
-		<button type="button" class="bo" onclick="${pageContext.request.contextPath}/member/changeStatus_Ad.do?userId=${member.userId}&nowPage=${nowPage}">탈퇴시키기</button>
+		<button type="button" class="bo" onclick="location.href='${pageContext.request.contextPath}/member/changeStatus_Ad.do?userId=${member.userId}&nowPage=${nowPage}'">탈퇴시키기</button>
 	</div>
 	<input type="hidden" name="userId" value="${member.userId}">
 	<input type="hidden" name="userPwd" value="${member.userPwd}">

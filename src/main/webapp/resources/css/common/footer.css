@@ -12,5 +12,7 @@ footer{
 }
 .footer-hr{
 	margin-top:50px;
-	opacity:0.2;
+	background:#c0c0c0;
+    height:1px;
+    border:0;
 }

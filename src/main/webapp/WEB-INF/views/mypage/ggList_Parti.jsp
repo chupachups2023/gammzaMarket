@@ -11,6 +11,7 @@
 
 
 <div id="container">
+<h1 align="center" class="ggList_title">내가 참여한 공구</h1>
 		<table class="table" align="center" >
 		<tr>
 			<td colspan="3"  class="sort-type" >
@@ -34,7 +35,7 @@
         </c:if>
 		<c:forEach items="${partiList}" var="list" varStatus="j">
 			<tr>
-				<th><img src="${pageContext.request.contextPath }/resources/upload/${list.photo1}" width="100px"></img></th>
+				<th><div class="ggList_img"><img src="${pageContext.request.contextPath }/resources/upload/${list.photo1}"/></div></th>
 				<th>
 					<c:choose>
 						<c:when test="${fn:length(list.gongguName) gt 25}">
@@ -126,6 +127,7 @@
 	function reviewWriteCheck(id,ggNo){
 		let userId=id;
 		let gongguNo=ggNo;
+		console.log(userId+" / "+gongguNo)
 		$.ajax({
 			url:"${pageContext.request.contextPath }/review/reviewWriteCheck.re",
 			data:{"userId":userId, "gongguNo":gongguNo},

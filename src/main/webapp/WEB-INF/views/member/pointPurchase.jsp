@@ -3,21 +3,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/pointPurchase.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/pointPurchase.css?<%=System.currentTimeMillis() %>">
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="포인트결제" name="title" />
 </jsp:include>
 <script type="text/javascript"
 	src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-<style>
-
-</style>
-
 
 <div class="pointPurchaseSec">
 	<h1>포인트 결제</h1>
-	<hr>
 	<br> <br>
+	<button id="CheckPaymentBtn" onclick="location.href='${pageContext.request.contextPath}/member/checkPayment.do'">결제내역보기</button>
 	<form>
 		<div id="pointPurchaseBox">
 			<table class="pointPurchaseTable">

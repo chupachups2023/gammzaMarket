@@ -4,26 +4,28 @@ package com.gammza.chupachups.chatMsg.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.gammza.chupachups.chatMsg.model.service.ChatMsgService;
 import com.gammza.chupachups.chatMsg.model.vo.ChatMsg;
+import com.gammza.chupachups.member.model.service.MemberService;
+import com.gammza.chupachups.member.model.vo.Member;
 
 @Controller
-@SessionAttributes({"MsgList"})
+//@SessionAttributes({"MsgList"})
 public class ChatMsgController {
 
 	@Autowired
 	private ChatMsgService chatMsgService;
+	@Autowired
+	private MemberService memberService;
+	
 
 	@GetMapping("/chatRoom/msgList.do")
 	public String selectChatMsg(HttpServletRequest request, @RequestParam(required = false) String roomNo, ChatMsg chatMsg, Model model) {
@@ -31,7 +33,15 @@ public class ChatMsgController {
 		Object userId = request.getAttribute("userId");
 		
 		List<ChatMsg> MsgList = chatMsgService.selectChatMsg(roomNo);
-		System.out.println("msgList : " + roomNo);
+		
+		for(int i=0;i<MsgList.size();i++) {
+			Member member=memberService.selectOneMember(MsgList.get(i).getChatWriter());
+			if(member.getStatus()==0) {
+				MsgList.get(i).setChatWriter("탈퇴한 회원입니다.");
+			}
+		}
+		
+		/* System.out.println("msgList : " + roomNo); */
 		model.addAttribute("MsgList", MsgList);
 		model.addAttribute("userId", userId);
 		return "jsonView";

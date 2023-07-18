@@ -158,6 +158,7 @@ public class PartiController {
 		ArrayList<Parti> partiList=partiService.selectPartiListForLeader(map);
 		Gonggu gonggu=gongguService.selectOneGonggu(gongguNo);
 		
+		model.addAttribute("sort", sort);
 		model.addAttribute("gonggu", gonggu);
 		model.addAttribute("partiList", partiList);
 		return "/gonggu/ggPartiList";

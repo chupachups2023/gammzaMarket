@@ -46,7 +46,7 @@
             	</c:when>
             	<c:otherwise>
 		            <div class="ggRead-content">
-		                ${gonggu.content }
+		                <pre>${gonggu.content }</pre>
 		            </div>
             	</c:otherwise>
             </c:choose>
@@ -134,7 +134,11 @@
             </c:otherwise>
         </c:choose>
             <div class="ggRead-info">
-                <div>관심 수 <span id="zzimCount">${zzimCount }</span> · </div>
+                <div>관심 수 <span id="zzimCount">
+                <c:choose>
+                	<c:when test="${ empty zzimCount }">0</c:when>
+                	<c:otherwise>${zzimCount }</c:otherwise>
+                </c:choose></span> · </div>
                 <div>조회 수 <span>${gonggu.count }</span></div>
                 <input type="hidden" value="${gonggu.longitude }" id="longitude">
                 <input type="hidden" value="${gonggu.latitude }" id="latitude">
@@ -238,7 +242,13 @@ pzlogin.addEventListener("click", () => {
 
 function deleteGonggu(){
 	if(confirm("정말로 ${gonggu.gongguName} 공구를 삭제하시겠습니까?")){
-		location.href="${pageContext.request.contextPath}/gonggu/deleteGonggu.go?gongguNo=${gonggu.gongguNo}";
+		let onPartiNum="${onPartiNum}"*1;
+		if(onPartiNum>0){
+			alert("공구에 참여중인 회원이 있습니다.")
+			return
+		}else{
+			location.href="${pageContext.request.contextPath}/gonggu/deleteGonggu.go?gongguNo=${gonggu.gongguNo}";
+		}
 	}else{
 		return
 	}

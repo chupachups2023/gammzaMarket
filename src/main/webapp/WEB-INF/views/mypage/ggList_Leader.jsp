@@ -10,6 +10,7 @@
 </jsp:include>
 
 <div id="container">
+<h1 align="center" class="ggList_title">내가 연 공구</h1>
 	<table class="table" align="center" >
 		<tr>
 			<td colspan="3"  class="sort-type" >

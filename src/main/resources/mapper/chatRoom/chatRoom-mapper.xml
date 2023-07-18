@@ -10,16 +10,13 @@
 		  from chat_room
 	</select>
 	<select id="chatRoomList" resultMap="chatRoomMap">
-    select *
+	select *
 	  from chat_room
-	 where room_owner IN (
-  						  select gonggu_writer
-   							 from gonggu
-   							 where gonggu_no IN (
-   											     select gonggu_no
-    										    from parti_tb
-    										    where parti_member = #{userId} and status=1)
-												) or room_owner = #{userId}
+	 where gonggu_no  IN ( select gonggu_no
+    					 from parti_tb
+    					 where parti_member =  #{userId} and status>0
+						) 
+                or room_owner =  #{userId}
 		order by last_chat desc
 	</select>
 	<insert id="insertChatRoom">

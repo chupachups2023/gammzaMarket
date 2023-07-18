@@ -14,5 +14,7 @@ public class ChatRoom {
 	private int gongguNo;
 	private String roomOwner;
 	private String createAt;
-	private String lastChat;	
+	private String lastChat;
+	private String gongguName;
+	private String photo1;
 }

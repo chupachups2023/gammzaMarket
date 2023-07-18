@@ -147,7 +147,8 @@
 	function openFileUpload(num) {
         
 	    document.getElementById("hiddenFile"+num).click();
-
+	    document.getElementById("preview-image"+num).setAttribute("src","");
+	    
 	    function readImage(input) {
 	        // 인풋 태그에 파일이 있는 경우
 	        if (input.files && input.files[0]) {
