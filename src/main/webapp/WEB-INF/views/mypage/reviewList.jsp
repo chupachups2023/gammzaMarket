@@ -47,7 +47,7 @@
                 </td>
                 <td width="35%">
                 	<div class="reviewContent" onclick="reviewDetailModal(${lList.reviewNo});">
-                	<c:choose>
+                		<c:choose>
                 			<c:when test="${fn:length(lList.reviewContent) gt 25}">
                 				${fn:substring(lList.reviewContent, 0, 25)}⋯
                 			</c:when>
