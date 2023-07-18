@@ -58,12 +58,12 @@
 				<c:choose>
 					<c:when test="${p eq pi.nowPage }">
 						<li>
-							<a id="selectedPage" href="${pageContext.request.contextPath}/mypage/likeList.do?nowPage=${p}">${p}</a>
+							<a id="selectedPage" href="${pageContext.request.contextPath}/mypage/likeList.do?nowPage=${p}">[${p}]</a>
 						</li>
 					</c:when>
 					<c:otherwise>
 						<li>
-							<a href="${pageContext.request.contextPath}/mypage/likeList.do?nowPage=${p}">${p}</a>
+							<a href="${pageContext.request.contextPath}/mypage/likeList.do?nowPage=${p}">[${p}]</a>
 						</li>
 					</c:otherwise>
 				</c:choose>
@@ -86,13 +86,12 @@
 	});
 	
 	function delSelZ() {
-		let chkList = $("input[type=checkbox]");
+		let chkList = $("input[name=delZzim]");
 		if(chkList.is(":checked")){
 			delZFrm.submit();
 		}else{
 			alert("선택된 공구가 없습니다");
 		}
-		
 	}
 	
 </script>

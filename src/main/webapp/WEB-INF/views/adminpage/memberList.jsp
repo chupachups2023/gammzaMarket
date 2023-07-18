@@ -20,7 +20,7 @@ href="${pageContext.request.contextPath}/resources/css/member/memberInfo.css?<%=
 			<tr>
 				<th width="50px">NO</th>
 				<th width="200px">회원아이디</th>
-				<th width="200px">평점</th>
+				<th width="100px">평점</th>
 				<th width="150px">가입날짜</th>
 				<th width="150px">가입상태</th>
 				<th width="150px">탈퇴</th>
@@ -67,7 +67,7 @@ href="${pageContext.request.contextPath}/resources/css/member/memberInfo.css?<%=
 			</c:if>
 		</ul>
 	</nav>
-	<div align="right">
+	<div id="memListBtnBox" align="right">
 		<button id="pointRecordBtn" onclick="location.href='${pageContext.request.contextPath}/member/checkPayment_Ad.do'">충전목록</button>
 		<button id="memInsertBtn" onclick="location.href='${pageContext.request.contextPath}/member/insertMember_Ad.do'">회원추가</button>
 	</div>
