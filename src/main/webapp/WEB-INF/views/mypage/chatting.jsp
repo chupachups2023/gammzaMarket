@@ -20,14 +20,32 @@
 
 .msgBox {
 	border: 0px solid;
-	height: 5%;
+	height: 7%;
 	width: auto;
 	background-color: bisque;
 	border-radius: 7px;
 }
+.textbox {
+	padding: 5px;
+}
 
 .body {
 	height: 700px;
+}
+.css-10fmtiz {
+	position: absolute;
+	width: 89%;
+	height: 90px;
+	background-color: whitesmoke;
+	border-radius: 7px 7px 7px 7px;
+	padding : 10px;
+}
+.css-1useanf.disable {
+	margin: 12px 4px 0px;
+	height: 90px;
+}
+.sendDate {
+	color: lightgray;
 }
 </style>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
@@ -120,10 +138,13 @@
 					<%-- <jsp:include page="/WEB-INF/views/mypage/chatDetail.jsp" /> --%>
 				</div>
 				<div>
+				
 					<textarea placeholder="메시지를 입력해주세요" id="chatContent"
 						class="css-10fmtiz"></textarea>
-					<button class="disable css-1useanf" onclick="insertMsg();"
+						<div align="right">
+					<button class="disable css-1useanf" onclick="insertMsg(roomNo);"
 						aria-disabled="true">전송</button>
+						</div>
 				</div>
 			</div>
 		</section>
@@ -167,16 +188,17 @@
 						result += "<div id='msgList'>"
 								+ "<div class='chat-msg' id='chat-msg'>"
 								+ "<div align='right' id='chatWriter'>"
+								+ "<div class='sendDate'>" + mList.sendDate + "</div>"
 								+ "<table class='msgBox'>" + "<tr>"
-								+ "<td align='right' width='90%' height='10%'>"
-								+ mList.chatContent + "</td>" + "</tr>"
+								+ "<td align='right'>" + "<div class='textbox'>"
+								+ mList.chatContent + "</div>" + "</td>" + "</tr>"
 								+ "</table>" + "</div>" + "</div>" + "</div>";
 					} else {
 						result += "<div id='msgList'>"
 								+ "<div class='chat-msg' id='chat-msg'>"
-								+ "<div>" + mList.chatWriter + "</div>"
+								+ "<div>" + mList.chatWriter + "<div class='sendDate'>" + mList.sendDate + "</div>" + "</div>"
 								+ "<table class='msgBox'>" + "<tr>" + "<td>"
-								+ "<div width='80%'>" + mList.chatContent
+								+ "<div class='textbox'>" + mList.chatContent 
 								+ "</div>" + "</td>" + "</tr>" + "</table>"
 								+ "</div>" + "</div>";
 					}
@@ -204,23 +226,16 @@
 			data : {
 				chatContent : chatContent,
 				chatWriter : chatWriter,
-				roomNo : roomNo
+				roomNo : currentRoomNo
 			},
 			success : function(result) {
-				if (result > 0) {
-					console.log("메시지 전송 성공!");
-					$("#chatContent").val("");
-					msgList(roomNo);
-				} else {
-					console.log("메시지 전송 성공!");
-					$("#chatContent").val("");
-					msgList(roomNo);
-				}
+				console.log("메시지 전송 성공!");
+				$("#chatContent").val("");
+				msgList(currentRoomNo);
 				scrollToBottom();
 			},
 			error : function() {
-				console.log("메시지 전송 실패");
-				console.log(roomNo);
+				console.log("메시지 전송 실패" + currentRoomNo);
 			}
 		});
 	}

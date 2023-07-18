@@ -32,4 +32,10 @@
 			 		SYSDATE		 
 			 )				
 	</insert>
+	<update id="sendDate">
+		update chat_room
+		   set last_chat = (select send_date
+		   					  from chat_msg
+		   					 where room_no = #{roomNo} and rownum = 1)
+	</update>
 </mapper>

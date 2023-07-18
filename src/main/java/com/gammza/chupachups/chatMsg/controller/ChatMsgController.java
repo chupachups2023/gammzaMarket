@@ -53,6 +53,7 @@ public class ChatMsgController {
 	    model.addAttribute("chatContent", chatContent);
 	    model.addAttribute("chatMsg", chatMsg);
 	    model.addAttribute("roomNo", roomNo);
+	    
 	    System.out.println("chatMsg" + roomNo + "   :     chatContent" + chatContent + "         : chatWriter" + chatWriter);
 	    return "redirect:/";
 	}
