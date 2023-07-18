@@ -89,6 +89,17 @@ public class GongguController {
 				@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude,
 				@RequestParam(defaultValue="PULLUP_AT") String sort,@RequestParam(defaultValue="1") int end) {
 		Member loginMember=(Member) session.getAttribute("loginMember");
+		
+		//소셜 로그인 하려다 취소한 사람 세션에서 지워주기
+		Long kakaoIdkey = (Long)session.getAttribute("kakaoIdkey");
+		String naverIdkey = (String)session.getAttribute("naverIdkey");
+		if(kakaoIdkey != null) {
+			session.removeAttribute("kakaoIdkey");
+		}
+		if(naverIdkey != null) {
+			session.removeAttribute("naverIdkey");
+		}
+		
 		ArrayList<Gonggu> ggListView;
 		ModelAndView mav=new ModelAndView();
 		HashMap<String,String> locationMap=new HashMap<String,String>();
