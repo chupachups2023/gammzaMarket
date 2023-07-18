@@ -62,7 +62,16 @@
                 </td>
                 
                 <td width="35%">
-                	<div class="reviewContent" onclick="reviewDetailModal(${plist.reviewNo});"><pre>${plist.reviewContent }</pre></div>
+                	<div class="reviewContent" onclick="reviewDetailModal(${plist.reviewNo});">
+                		<c:choose>
+                			<c:when test="${fn:length(plist.reviewContent) gt 25}">
+                				${fn:substring(plist.reviewContent, 0, 25)}⋯
+                			</c:when>
+                			<c:otherwise>
+			                	${plist.reviewContent }
+                			</c:otherwise>
+                		</c:choose>
+                	</div>
                 </td>
                 <td width="20%"><div class="reviewRate">점수: 
                 <c:forEach begin="1" end="${plist.rate }">
@@ -97,7 +106,16 @@
                 	<a href="${pageContext.request.contextPath}/member/userPf.bo?userPr=${lList.reviewWriter }">${lList.reviewWriter }</a>
                 </td>
                 <td width="35%">
-                	<div class="reviewContent" onclick="reviewDetailModal(${lList.reviewNo});"><pre>${lList.reviewContent }</pre></div>
+                	<div class="reviewContent" onclick="reviewDetailModal(${lList.reviewNo});">
+                		<c:choose>
+                			<c:when test="${fn:length(lList.reviewContent) gt 25}">
+                				${fn:substring(lList.reviewContent, 0, 25)}⋯
+                			</c:when>
+                			<c:otherwise>
+			                	${lList.reviewContent }
+                			</c:otherwise>
+                		</c:choose>
+                	</div>
                 </td>
                 <td width="20%"><div class="reviewRate">점수:
                 <c:forEach begin="1" end="${lList.rate }">

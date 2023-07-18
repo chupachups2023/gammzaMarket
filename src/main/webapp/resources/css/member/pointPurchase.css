@@ -28,8 +28,16 @@
 	text-align: right;
 	font-weight: bold;
 	width: 25%;
+	/* padding:10px; */
 }
-
+.pointPurchaseTable tfoot td, .pointPurchaseTable thead td {
+	padding:10px;
+}
+.form-bottom{
+	display:flex;
+	align-items: flex-end;
+    justify-content: space-between;
+}
 .pointSel {
 	padding: 50px 20px;
 	cursor:pointer;
@@ -61,6 +69,7 @@
 	width: 500px;
 	padding: 15px;
 	display: inline-block;
+	padding:20px;
 }
 
 /* 결제버튼 */
@@ -70,7 +79,6 @@
 	width: 80px;
 	font-size: 25px;
 	background-color: white;
-	margin-left: 90%;
 	cursor: pointer;
 }
 
@@ -100,7 +108,7 @@
 /* checkPayment */
 #paymentRecordSec{
 	width:1200px;
-	margin: 0 auto;
+	margin: 20px auto;
 }
 .pTable{
     border-collapse: collapse;
@@ -136,4 +144,32 @@ list-style-type: none;
 #selectedPage{
 	color: red;
 	font-weight: bolder;
+}
+
+#PurBackBtn{
+	margin-left:75%;
+	width: 70px;
+	height: 30px;
+	border: none;
+	background-color: gray;
+	color: white;
+	border-radius: 5px;
+	cursor: pointer;
+	
+}
+.purchaseMethod{
+	display:flex;
+	flex-direction:row;
+	justify-content: space-evenly;
+}
+#clauseContent{
+	width:510px;
+	height:130px;
+	overflow-y: scroll;
+}
+#clauseContent *{
+	font-size:13px;
+}
+.clauseCkh-box{
+	margin-top:20px;
 }

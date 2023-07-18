@@ -26,7 +26,8 @@
 	border-radius: 7px;
 }
 .textbox {
-	padding: 5px;
+	padding: 10px;
+	max-width:320px;
 }
 
 .body {
@@ -46,6 +47,9 @@
 }
 .sendDate {
 	color: lightgray;
+}
+.css-v2yhcd{
+	cursor:pointer;
 }
 </style>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
@@ -72,46 +76,6 @@
 				</div>
 				<ul tabindex="0" role="list" aria-label="내 채널 리스트"
 					class="css-8lfz6g">
-					<%-- <c:forEach items="${chatRoomList}" var="chatRoom">
-						<c:if test="${parti.status eq 1 or chatRoom.roomOwner eq loginMember.userId}"> </c:if>
-						<li class="css-v2yhcd">
-							<div class="selected css-y6c1l4 chatRoomItem"
-								id="${chatRoom.roomNo}" data-room-no="${chatRoom.roomNo}"
-								data-user-id="${loginMember.userId}">
-								<c:forEach items="${mainList}" var="list" varStatus="i">
-									<c:if test="${chatRoom.gongguNo eq list.gongguNo }">
-										<input type="hidden" class="${chatRoom.roomNo}_roomNo"
-											id="roomNo" value="${chatRoom.roomNo}">
-										<input type="hidden" id="userId" value="${loginMember.userId}">
-										<div class="preview-title-wrap">
-											<span class="preview-nickname" id="roomOwner">${chatRoom.roomOwner}</span>
-											<c:choose>
-												<c:when test="${fn:length(list.gongguName) gt 10}">
-													<div class="ggTitle gghover">${fn:substring(list.gongguName, 0, 8)}...</div>
-												</c:when>
-												<c:otherwise>
-													<div class="ggTitle gghover">${list.gongguName}</div>
-												</c:otherwise>
-											</c:choose>
-											<div class="sub-text">
-												<span id="gongguNo">${chatRoom.gongguNo}</span> <span
-													id="lastChat">${chatRoom.lastChat}</span>
-											</div>
-										</div>
-										&emsp;&emsp;&emsp;
-										<img src="${pageContext.request.contextPath}/resources/upload/${list.photo1}"	alt="이미지 없음" width="50px">
-									</c:if>
-								</c:forEach>
-							</div>
-
-							<div class="common-bg-hover only-hover css-q6qzi5">
-								<span class="option-controller"> <svg width="36"
-										height="36" viewBox="0 0 1024 1024" version="1.1"
-										xmlns="http://www.w3.org/2000/svg"></svg>
-								</span>
-							</div>
-						</li>
-					</c:forEach> --%>
 					<c:forEach items="${chatRoomList}" var="chatRoom">
 						<li class="css-v2yhcd">
 							<div class="selected css-y6c1l4 chatRoomItem"
@@ -139,9 +103,7 @@
 							</div>
 
 							<div class="common-bg-hover only-hover css-q6qzi5">
-								<span class="option-controller"> <svg width="36"
-										height="36" viewBox="0 0 1024 1024" version="1.1"
-										xmlns="http://www.w3.org/2000/svg"></svg>
+								<span class="option-controller"> <svg width="36" height="36" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"></svg>
 								</span>
 							</div>
 						</li>
@@ -169,16 +131,13 @@
 					<input type="hidden" id="chatWriter" value="${loginMember.userId}">
 					<input type="hidden" class="${chatRoom.roomNo}_roomNo" id="roomNo"
 						value="${chatRoom.roomNo}">
-					<%-- <jsp:include page="/WEB-INF/views/mypage/chatDetail.jsp" /> --%>
 				</div>
 				<div>
 				
-					<textarea placeholder="메시지를 입력해주세요" id="chatContent"
-						class="css-10fmtiz"></textarea>
-						<div align="right">
-					<button class="disable css-1useanf" onclick="insertMsg(roomNo);"
-						aria-disabled="true">전송</button>
-						</div>
+					<textarea placeholder="메시지를 입력해주세요" id="chatContent"	class="css-10fmtiz" onkeyup="if(window.event.keyCode==13){insertMsg(roomNo);}"></textarea>
+					<div align="right">
+						<button class="disable css-1useanf" onclick="insertMsg(roomNo);" aria-disabled="true">전송</button>
+					</div>
 				</div>
 			</div>
 		</section>
@@ -222,7 +181,7 @@
 						result += "<div id='msgList'>"
 								+ "<div class='chat-msg' id='chat-msg'>"
 								+ "<div align='right' id='chatWriter'>"
-								+ "<div class='sendDate'>" + mList.sendDate + "</div>"
+								+ "<div class='sendDate'><small>" + mList.sendDate + "</small></div>"
 								+ "<table class='msgBox'>" + "<tr>"
 								+ "<td align='right'>" + "<div class='textbox'>"
 								+ mList.chatContent + "</div>" + "</td>" + "</tr>"
@@ -230,7 +189,7 @@
 					} else {
 						result += "<div id='msgList'>"
 								+ "<div class='chat-msg' id='chat-msg'>"
-								+ "<div>" + mList.chatWriter + "<div class='sendDate'>" + mList.sendDate + "</div>" + "</div>"
+								+ "<div>" + mList.chatWriter + "<div class='sendDate'><small>" + mList.sendDate + "</small></div>" + "</div>"
 								+ "<table class='msgBox'>" + "<tr>" + "<td>"
 								+ "<div class='textbox'>" + mList.chatContent 
 								+ "</div>" + "</td>" + "</tr>" + "</table>"

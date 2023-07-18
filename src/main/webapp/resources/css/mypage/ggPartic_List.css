@@ -128,11 +128,7 @@ a:hover{
     color: aliceblue;
     font-weight: bold;
 }
-.reviewContent:hover{
-	text-decoration:underline;
-	text-underline-position : under;
-	cursor:pointer;
-}
+
 .gongguName:hover{
 	text-decoration:underline;
 	text-underline-position : under;

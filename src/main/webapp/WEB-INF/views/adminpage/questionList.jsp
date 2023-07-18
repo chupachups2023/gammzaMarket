@@ -47,12 +47,12 @@
 				<c:choose>
 					<c:when test="${p eq pi.nowPage }">
 						<li>
-							<a href="${pageContext.request.contextPath}/adminpage/questionList.do?nowPage=${p}">${p}</a>
+							<a id="selectedPage" href="${pageContext.request.contextPath}/adminpage/questionList.do?nowPage=${p}">[${p}]</a>
 						</li>
 					</c:when>
 					<c:otherwise>
 						<li>
-							<a href="${pageContext.request.contextPath}/adminpage/questionList.do?nowPage=${p}">${p}</a>
+							<a href="${pageContext.request.contextPath}/adminpage/questionList.do?nowPage=${p}">[${p}]</a>
 						</li>
 					</c:otherwise>
 				</c:choose>

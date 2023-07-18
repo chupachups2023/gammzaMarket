@@ -70,36 +70,42 @@ public class MemberController {
 		
 		// 인증
 		if (member != null && passwordEncoder.matches(userPwd, member.getUserPwd())) {
-			model.addAttribute("loginMember", member);	// requestScope => sessionScope 바꾸기
-			
-			Long kakaoIdkey = (Long)session.getAttribute("kakaoIdkey");
-			String naverIdkey = (String)session.getAttribute("naverIdkey");
-			
-			if(kakaoIdkey != null) {
-				HashMap<String,String> map = new HashMap<String,String>();
-				map.put("userId", userId);
-				map.put("kakaoIdkey", String.valueOf(kakaoIdkey));
-				int result=memberService.updateKakaoIdkey(map);
-				member = memberService.selectOneMember(userId);
-				model.addAttribute("loginMember", member);
-				redirectAtt.addFlashAttribute("msg", "카카오 간편로그인 연결이 완료되었습니다.");
-				session.removeAttribute("kakaoIdkey");
+			if(member.getStatus()==0) {
+				redirectAtt.addFlashAttribute("msg", "탈퇴한 회원입니다.");
 				
 				return "redirect:/";
-			}
-			if(naverIdkey != null) {
-				HashMap<String,String> map = new HashMap<String,String>();
-				map.put("userId", userId);
-				map.put("naverIdkey", naverIdkey);
-				int result=memberService.updateNaverIdkey(map);
-				member = memberService.selectOneMember(userId);
-				model.addAttribute("loginMember", member);
-				redirectAtt.addFlashAttribute("msg", "네이버 간편로그인 연결이 완료되었습니다.");
-				session.removeAttribute("naverIdkey");
+			}else {
+				model.addAttribute("loginMember", member);	// requestScope => sessionScope 바꾸기
 				
-				return "redirect:/";
+				Long kakaoIdkey = (Long)session.getAttribute("kakaoIdkey");
+				String naverIdkey = (String)session.getAttribute("naverIdkey");
+				
+				if(kakaoIdkey != null) {
+					HashMap<String,String> map = new HashMap<String,String>();
+					map.put("userId", userId);
+					map.put("kakaoIdkey", String.valueOf(kakaoIdkey));
+					int result=memberService.updateKakaoIdkey(map);
+					member = memberService.selectOneMember(userId);
+					model.addAttribute("loginMember", member);
+					redirectAtt.addFlashAttribute("msg", "카카오 간편로그인 연결이 완료되었습니다.");
+					session.removeAttribute("kakaoIdkey");
+					
+					return "redirect:/";
+				}
+				if(naverIdkey != null) {
+					HashMap<String,String> map = new HashMap<String,String>();
+					map.put("userId", userId);
+					map.put("naverIdkey", naverIdkey);
+					int result=memberService.updateNaverIdkey(map);
+					member = memberService.selectOneMember(userId);
+					model.addAttribute("loginMember", member);
+					redirectAtt.addFlashAttribute("msg", "네이버 간편로그인 연결이 완료되었습니다.");
+					session.removeAttribute("naverIdkey");
+					
+					return "redirect:/";
+				}
+				redirectAtt.addFlashAttribute("msg", member.getName()+ "님 환영합니다💚");
 			}
-			redirectAtt.addFlashAttribute("msg", member.getName()+ "님 환영합니다💚");
 		} else {
 			redirectAtt.addFlashAttribute("msg", "아이디 또는 비밀번호가 맞지 않습니다.");
 		}

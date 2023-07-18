@@ -89,16 +89,6 @@ public class GongguController {
 				@RequestParam(defaultValue="PULLUP_AT") String sort,@RequestParam(defaultValue="1") int end) {
 		Member loginMember=(Member) session.getAttribute("loginMember");
 		
-		//소셜 로그인 하려다 취소한 사람 세션에서 지워주기
-		Long kakaoIdkey = (Long)session.getAttribute("kakaoIdkey");
-		String naverIdkey = (String)session.getAttribute("naverIdkey");
-		if(kakaoIdkey != null) {
-			session.removeAttribute("kakaoIdkey");
-		}
-		if(naverIdkey != null) {
-			session.removeAttribute("naverIdkey");
-		}
-		
 		ArrayList<Gonggu> ggListView;
 		ModelAndView mav=new ModelAndView();
 		HashMap<String,String> locationMap=new HashMap<String,String>();
@@ -140,7 +130,17 @@ public class GongguController {
 	}
 	
 	@GetMapping("/mainList.go")
-	public String mainList(Model model) {
+	public String mainList(Model model, HttpSession session) {
+		//소셜 로그인 하려다 취소한 사람 세션에서 지워주기
+		Long kakaoIdkey = (Long)session.getAttribute("kakaoIdkey");
+		String naverIdkey = (String)session.getAttribute("naverIdkey");
+		if(kakaoIdkey != null) {
+			session.removeAttribute("kakaoIdkey");
+		}
+		if(naverIdkey != null) {
+			session.removeAttribute("naverIdkey");
+		}
+		
 		ArrayList<Gonggu> mainList = gongguService.selectMainList();
 		for(int i=0;i<mainList.size();i++) {
 			Location tempLocal=locationService.selectLocationByNo(mainList.get(i).getLocationNo());
@@ -364,7 +364,8 @@ public class GongguController {
 		String saveDirectory = application.getRealPath("/resources/upload");
 
 		ArrayList<String> photo = new ArrayList<String>();
-
+		
+		System.out.println("upPhoto1 크기: "+upPhoto1.getSize());
 		if (upPhoto1.getSize() > 0) {
 			if(Ogonggu.getPhoto1() != null) {
 				File file=new File(saveDirectory, Ogonggu.getPhoto1());
@@ -381,7 +382,9 @@ public class GongguController {
 				e.printStackTrace();
 			}
 		}else {
-			newGonggu.setPhoto1(Ogonggu.getPhoto1());
+			if(Ogonggu.getPhoto1() != null) {
+				photo.add(Ogonggu.getPhoto1());
+			}
 		}
 		if(upPhoto2.getSize()>0) {
 			String changeFilename=SpringUtils.changeMultipartFile(upPhoto2);
@@ -399,7 +402,9 @@ public class GongguController {
 				e.printStackTrace();
 			}
 		}else {
-			newGonggu.setPhoto2(Ogonggu.getPhoto2());
+			if(Ogonggu.getPhoto2() != null) {
+				photo.add(Ogonggu.getPhoto2());
+			}
 		}
 		if(upPhoto3.getSize()>0) {
 			String changeFilename=SpringUtils.changeMultipartFile(upPhoto3);
@@ -417,7 +422,9 @@ public class GongguController {
 				e.printStackTrace();
 			}
 		}else {
-			newGonggu.setPhoto3(Ogonggu.getPhoto3());
+			if(Ogonggu.getPhoto3() != null) {
+				photo.add(Ogonggu.getPhoto3());
+			}
 		}
 		//사진 정렬
 		if (!photo.isEmpty()) {
@@ -429,6 +436,7 @@ public class GongguController {
 			} else if (photo.size() == 2) {
 				newGonggu.setPhoto1(photo.get(0));
 				newGonggu.setPhoto2(photo.get(1));
+			} else {
 				newGonggu.setPhoto1(photo.get(0));
 				newGonggu.setPhoto2(photo.get(1));
 				newGonggu.setPhoto3(photo.get(2));
