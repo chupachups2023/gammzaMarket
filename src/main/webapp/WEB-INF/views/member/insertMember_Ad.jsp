@@ -250,6 +250,7 @@
 				 console.log(result);
 				if(result > 0){ 
 					alert("회원이 추가되었습니다.");
+					enrollfrm.reset();
 				 }else {
 					alert("회원추가 실패");
 				} 
