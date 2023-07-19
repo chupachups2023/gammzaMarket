@@ -208,7 +208,7 @@ public class PartiController {
 			}
 			notify.setNotifyMember(id[i]);
 			
-			notify.setNotiContent("/gonggu/gonggu/ggPartiList.pa'>"+gongguName+"공구 참여가 확정되었습니다.</a>");
+			notify.setNotiContent("/gonggu/ggPartiList.pa'>"+gongguName+"공구 참여가 확정되었습니다.</a>");
 			notifyService.insertNotify(notify);
 			
 		}
