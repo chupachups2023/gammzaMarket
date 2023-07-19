@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.gammza.chupachups.notify.model.dao.NotifyDao">
+ 	<resultMap type="notify" id="notifyMap"/>
+	<insert id="insertNotify">
+		insert into notify values (notify_seq.nextval,#{notifyMember}, #{notiContent}, default, sysdate)
+	</insert>
+	<select id="selectNotifyList" resultMap="notifyMap">
+		select * from notify where NOTIFY_MEMBER=#{userId}
+		order by CREATE_AT desc
+	</select>
+	<update id="updateNotifyStatus">
+		update notify set status=1 where NOTIFY_MEMBER=#{userId}
+	</update>
+	<select id="selectNewNotify" resultType="_int">
+		select count(*) from notify where NOTIFY_MEMBER=#{userId} and status=0
+	</select>
+</mapper>

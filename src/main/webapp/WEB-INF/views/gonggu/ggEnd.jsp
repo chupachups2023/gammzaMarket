@@ -51,10 +51,20 @@
         </div>
         <div class="ggRead-detail">
             <div class="ggRead-price">개당 <fmt:formatNumber type="number" maxFractionDigits="3" value="${gonggu.price}" /> 포인트</div>
-            <div class="ggRead-num">
-                <div>${gonggu.num}개 나눠요<span>/</span></div>
-                <div class="ggRead-on"> 지금 <span>${gonggu.num - partiNum}개</span> 남았어요</div>
-            </div>
+            <c:choose>
+                	<c:when test="${gonggu.type eq 0 }">
+			            <div class="ggRead-num">
+			                <div>${gonggu.num}개 나눠요<span>/</span></div>
+					        <div class="ggRead-on"> 지금 <span>${gonggu.num - partiNum}개</span> 남았어요</div>
+			            </div>
+                	</c:when>
+                	<c:otherwise>
+			            <div class="ggRead-num">
+			                <div>${gonggu.num}명과 나눠요<span>/</span></div>
+					        <div class="ggRead-on"> 지금 <span>${gonggu.num - partiNum}명</span> 남았어요</div>
+			            </div>
+                	</c:otherwise>
+                </c:choose>
             <fmt:parseDate value="${gonggu.endTime }" var="endTime" pattern="yyyy-MM-dd HH:mm"/>
             <div class="ggRead-endtime"><fmt:formatDate value="${endTime }" pattern="yyyy년 MM월 dd일 HH시 mm분"/>까지 기다려요</div>
             <div class="ggRead-lefttime">00일 00시간 00분 남았어요</div>

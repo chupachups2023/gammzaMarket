@@ -96,4 +96,11 @@
     transform: translate(-50%, -200%);
     box-shadow: 3px 3px 3px #d4d4d4;
 }
-
+.emptyggList{
+	height:300px;
+	text-align:center;
+	display:flex;
+	justify-content: center;
+    align-items: center;
+}	
+}
