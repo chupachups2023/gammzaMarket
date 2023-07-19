@@ -22,13 +22,13 @@
 				<div class="find-content2">
 						<div class="find-id2">
 								<ul>
-										<li><input type="password" name="userPwdNew"  id="userPwdNew" placeholder="새로운 비밀번호 입력"></li>
+										<li><input type="password" name="userPwdNew"  id="userPwdNew" class="find-input" placeholder="새로운 비밀번호 입력"></li>
 								</ul>
 								<ul>
-										<li><input type="password" id="userPwdNewChk" placeholder="새로운 비밀번호 확인"></li>
+										<li><input type="password" id="userPwdNewChk" class="find-input" placeholder="새로운 비밀번호 확인"></li>
 								</ul>
 								<ul>
-										<li><input type="submit" id="pwdCheck" value="변경"></li>
+										<li><input type="submit" id="pwdCheck" class="find-btn" value="변경"></li>
 								</ul>
 						</div>
 				</div>
