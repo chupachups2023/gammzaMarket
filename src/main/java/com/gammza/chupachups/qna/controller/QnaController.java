@@ -2,18 +2,16 @@ package com.gammza.chupachups.qna.controller;
 
 import java.util.List;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
-
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gammza.chupachups.common.model.vo.PageInfo;
@@ -24,6 +22,7 @@ import com.gammza.chupachups.qna.model.vo.Qna;
 
 @Controller
 @RequestMapping("/adminpage")
+@SessionAttributes({"loginMember"})
 public class QnaController {
 	@Autowired
 	private QnaService qnaService;
@@ -54,14 +53,13 @@ public class QnaController {
 	
 	
 	@PostMapping("/QAnswerInsert.do")
-	public String QAnswerInsert(Qna qna, @RequestParam int nowPage, @RequestParam String qAnswer,  RedirectAttributes redirectAttr, HttpSession session) {
+	public String QAnswerInsert(Qna qna, @RequestParam int nowPage, @RequestParam String qAnswer,  RedirectAttributes redirectAttr, @ModelAttribute("loginMember") Member member) {
 		qna = qnaService.selectOneQna(qna.getQnaNo());
 		Qna qnaOrigin = new Qna();
 		qnaOrigin.setQnaTitle(qna.getQnaTitle() + " (답변완료)");
 		qnaOrigin.setQnaNo(qna.getQnaNo());
 		
-		Member loginMember = (Member) session.getAttribute("loginMember");
-		String userId = loginMember.getUserId();
+		String userId = member.getUserId();
 		
 		qna.setQnaWriter(userId);
 		qna.setQnaContent(qAnswer);
