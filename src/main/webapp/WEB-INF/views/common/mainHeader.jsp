@@ -170,8 +170,10 @@
 
 function fn_click(category) {
 	function success(position) {
-	    const latitude = position.coords.latitude;   // 위도(37.xxxx)
-	    const longitude = position.coords.longitude;
+	    const latitude = position.latitude; 
+	    const longitude = position.longitude;
+/* 	    const latitude = position.coords.latitude;   // 위도(37.xxxx)
+	    const longitude = position.coords.longitude; */
 	    const memLong="${loginMember.longitude}";	//로그인 했니?
 	    
 	    if(memLong != ""){	//했다
@@ -180,13 +182,18 @@ function fn_click(category) {
 	   		location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category+"&longitude="+longitude+"&latitude="+latitude;
 	    }
 	}
-    navigator.geolocation.getCurrentPosition(success);
+   /*  navigator.geolocation.getCurrentPosition(success); */
+	position={"latitude":37.533921602961506, "longitude":126.89677032759451 }
+    success(position);
+   
 }
 
 function viewAllGonggu(){
 	function success(position) {
-	    const latitude = position.coords.latitude;   // 위도(37.xxxx)
-	    const longitude = position.coords.longitude;
+		const latitude = position.latitude; 
+	    const longitude = position.longitude;
+	    /* const latitude = position.coords.latitude;   // 위도(37.xxxx)
+	    const longitude = position.coords.longitude; */
 	    const memLong="${loginMember.longitude}";
 	    
 	    if(memLong != ""){
@@ -195,15 +202,21 @@ function viewAllGonggu(){
 	   		location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?longitude="+longitude+"&latitude="+latitude;
 	    }
 	}
-    navigator.geolocation.getCurrentPosition(success);
+    /* navigator.geolocation.getCurrentPosition(success); */
+	position={"latitude":37.533921602961506, "longitude":126.89677032759451 }
+    success(position);
 }
 function viewRequest(){
 	function success(position) {
-	    const latitude = position.coords.latitude;   // 위도(37.xxxx)
-	    const longitude = position.coords.longitude;
+		const latitude = position.latitude; 
+	    const longitude = position.longitude;
+	    /* const latitude = position.coords.latitude;   // 위도(37.xxxx)
+	    const longitude = position.coords.longitude; */
 		location.href="${pageContext.request.contextPath}/ggRequest/requestView.req?longitude="+longitude+"&latitude="+latitude;
 	}
-	navigator.geolocation.getCurrentPosition(success);
+	/* navigator.geolocation.getCurrentPosition(success); */
+	position={"latitude":37.533921602961506, "longitude":126.89677032759451 }
+    success(position);
 }
 function loginEnterEvent(e){
 	if(e.keyCode==13){
@@ -216,20 +229,26 @@ function alarmOpen(){
 		success:function(result){
 			let notifyList=result.notifyList;
 			let str="";
-			for(let i=0;i<notifyList.length;i++){
-				if(notifyList[i].status==0){
-					str+="<div class='notiDiv'>"
-							+ "<div class='notiContent'><b><a href='${pageContext.request.contextPath}"+notifyList[i].notiContent+"</b></div>"
+			if(notifyList.length==0){
+				str="<div class='notiDiv emptyNotify'>아직 알림이 없습니다.</div>";
+			}else{
+				for(let i=0;i<notifyList.length;i++){
+					if(notifyList[i].status==0){
+						str+="<div class='notiDiv'>"
+								+ "<div class='notiContent'><b><a href='${pageContext.request.contextPath}"+notifyList[i].notiContent+"</b></div>"
+								+	'<div class="notiTime">'+notifyList[i].createAt +'</div></div><hr>';
+					}else{
+						str+="<div class='notiDiv'>"
+							+ "<div class='notiContent'><a href='${pageContext.request.contextPath}"+notifyList[i].notiContent+"</div>"
 							+	'<div class="notiTime">'+notifyList[i].createAt +'</div></div><hr>';
-				}else{
-					str+="<div class='notiDiv'>"
-						+ "<div class='notiContent'><a href='${pageContext.request.contextPath}"+notifyList[i].notiContent+"</div>"
-						+	'<div class="notiTime">'+notifyList[i].createAt +'</div></div><hr>';
+					}
 				}
 			}
 			document.getElementById("notiModal-content").innerHTML=str;
 			$.ajax({
-				url:"${pageContext.request.contextPath}/notify/updateNotifyStatus.no"
+				url:"${pageContext.request.contextPath}/notify/updateNotifyStatus.no",
+				success:function(){},
+				error:function(){}
 			})
 		}
 	})

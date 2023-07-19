@@ -545,9 +545,11 @@ public class GongguController {
 		ArrayList<Gonggu> categoryList = gongguService.selectOneCategory(map);
 		
 		model.addAttribute("ggListView", categoryList);
+		model.addAttribute("location", map);
 		
 		return "/gonggu/ggListView";
 	}
+	 
 	 @GetMapping("/deleteGonggu.go")
 	 public String deleteGonggu(@RequestParam int gongguNo, RedirectAttributes redirectAttr) {
 		 
