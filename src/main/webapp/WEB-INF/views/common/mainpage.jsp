@@ -32,7 +32,7 @@
 					</c:choose>
 					<div class="gghover">
 					    <b>
-						<fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" />
+						<fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" />P
 					    </b>
 					</div>
 					<div class="gghover">
