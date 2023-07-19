@@ -75,14 +75,14 @@
 				<th scope="col">${ notice.noticeCreate }</th>
 			</tr>
 			<tr>
-				<td colspan="2">${ notice.noticeContent }</td>
+				<td colspan="2">${ notice.noticeContent }${pi.nowPage }</td>
 			</tr>
 		</tbody>
 	</table>
 
 	<div class="button-container">
 		<input type="button"
-			onclick="location.href='${pageContext.request.contextPath}/adminpage/noticeList.bo?nowPage=${nowPage}'"
+			onclick="location.href='${pageContext.request.contextPath}/adminpage/noticeList.bo?nowPage=${pi.nowPage}'"
 			value="목록">
 		<c:if test="${loginMember.userId eq 'admin'}">
 			<input type="button" onclick='updateNotice(${notice.noticeNo});'
