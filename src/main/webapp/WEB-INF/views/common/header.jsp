@@ -267,15 +267,19 @@
 			success:function(result){
 				let notifyList=result.notifyList;
 				let str="";
-				for(let i=0;i<notifyList.length;i++){
-					if(notifyList[i].status==0){
-						str+="<div class='notiDiv'>"
-								+ "<div class='notiContent'><b><a href='${pageContext.request.contextPath}"+notifyList[i].notiContent+"</b></div>"
+				if(notifyList.length==0){
+					str="<div class='notiDiv emptyNotify'>아직 알림이 없습니다.</div>";
+				}else{
+					for(let i=0;i<notifyList.length;i++){
+						if(notifyList[i].status==0){
+							str+="<div class='notiDiv'>"
+									+ "<div class='notiContent'><b><a href='${pageContext.request.contextPath}"+notifyList[i].notiContent+"</b></div>"
+									+	'<div class="notiTime">'+notifyList[i].createAt +'</div></div><hr>';
+						}else{
+							str+="<div class='notiDiv'>"
+								+ "<div class='notiContent'><a href='${pageContext.request.contextPath}"+notifyList[i].notiContent+"</div>"
 								+	'<div class="notiTime">'+notifyList[i].createAt +'</div></div><hr>';
-					}else{
-						str+="<div class='notiDiv'>"
-							+ "<div class='notiContent'><a href='${pageContext.request.contextPath}"+notifyList[i].notiContent+"</div>"
-							+	'<div class="notiTime">'+notifyList[i].createAt +'</div></div><hr>';
+						}
 					}
 				}
 				document.getElementById("notiModal-content").innerHTML=str;

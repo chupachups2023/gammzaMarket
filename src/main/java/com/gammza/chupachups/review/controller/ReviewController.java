@@ -41,22 +41,17 @@ public class ReviewController {
 		ArrayList<Review> recieved=reviewService.selectRecievedReview(member.getUserId());
 		ArrayList<Gonggu> leadedGonggu=reviewService.selectAllMyGonggu(member.getUserId());
 		
-		ArrayList<Review> partiReview=new ArrayList<Review>();
 		ArrayList<Review> leaderReview=new ArrayList<Review>();
-		int count=-1;
 		for(int i=0;i<recieved.size();i++) {
 			for(int j=0;j<leadedGonggu.size();j++) {
 				if(recieved.get(i).getGongguNo()==leadedGonggu.get(j).getGongguNo()) {
 					leaderReview.add(recieved.get(i));
-					count=-1;
-					break;
-				}else {	count=i;}
-			}
-			if(count==i) {
-				partiReview.add(recieved.get(i));
+					recieved.remove(i);
+					i--;
+				}
 			}
 		}
-		model.addAttribute("partiReview", partiReview);
+		model.addAttribute("partiReview", recieved);
 		model.addAttribute("leaderReview", leaderReview);
 		return "/mypage/reviewList";
 	}

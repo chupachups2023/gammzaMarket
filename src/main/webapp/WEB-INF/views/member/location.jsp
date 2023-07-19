@@ -65,6 +65,10 @@ function success(position) {
     const longitude = position.longitude; // 경도
 /*     const latitude = position.coords.latitude;   // 위도(37.xxxx)
     const longitude = position.coords.longitude; // 경도 */
+    
+    document.getElementById('lon').value=longitude;
+	document.getElementById('lat').value=latitude;
+    
     $.ajax({
     	type:"get",
     	url:"https://dapi.kakao.com/v2/local/geo/coord2address.json?x="+longitude+"&y="+latitude+"&input_coord=WGS84",

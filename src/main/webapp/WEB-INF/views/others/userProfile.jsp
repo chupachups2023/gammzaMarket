@@ -58,7 +58,7 @@
 	                <c:if test="${fn:length(plist.gongguName) le 10}">
 	                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${plist.gongguNo }'">${plist.gongguName}</div>
 	                </c:if>
-                	<a href="${pageContext.request.contextPath}/member/userPf.bo?userPr=${plist.reviewWriter }">${plist.reviewWriter }</a>
+                	작성자: <a href="${pageContext.request.contextPath}/member/userPf.bo?userPr=${plist.reviewWriter }">${plist.reviewWriter }</a>
                 </td>
                 
                 <td width="35%">
@@ -103,7 +103,7 @@
                 <c:if test="${fn:length(lList.gongguName) le 10}">
                 	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${lList.gongguNo }'">${lList.gongguName}</div>
                 </c:if>
-                	<a href="${pageContext.request.contextPath}/member/userPf.bo?userPr=${lList.reviewWriter }">${lList.reviewWriter }</a>
+                	작성자: <a href="${pageContext.request.contextPath}/member/userPf.bo?userPr=${lList.reviewWriter }">${lList.reviewWriter }</a>
                 </td>
                 <td width="35%">
                 	<div class="reviewContent" onclick="reviewDetailModal(${lList.reviewNo});">

@@ -50,7 +50,7 @@
 					</c:when>
 					<c:otherwise>
 						<div class="notiBox">
-							<img alt="알람" src="https://cdn-icons-png.flaticon.com/512/3247/3247251.png"  class="header-notify" onclick="alarmOpen()">
+							<img alt="알림" src="https://cdn-icons-png.flaticon.com/512/3247/3247251.png"  class="header-notify" onclick="alarmOpen()">
 							<img alt="" src="https://cdn-icons-png.flaticon.com/512/8804/8804772.png" class="notiRedDot" id="notiRedDot" onclick="alarmOpen()">
 						</div>
 						<a href="${pageContext.request.contextPath}/mypage/mypageMain.me">

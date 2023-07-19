@@ -64,6 +64,9 @@ body{
     width:38px;
     position:reletive;
 }
+.header-notify:hover{
+	cursor:pointer;
+}
 .notiRedDot{
 	width: 28px;
     position: absolute;
