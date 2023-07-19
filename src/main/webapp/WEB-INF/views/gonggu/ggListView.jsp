@@ -47,13 +47,13 @@
 							<div class="when-ggEnd">
 								<div class="ggEnd-tag"><b>마감공구</b></div>
 								<div  style="font-size: 20px;">
-								    <b><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" /></b>
+								    <b><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" /> P</b>
 								</div>
 							</div>
 							</c:when>
 							<c:otherwise>
 								<div style="font-size: 20px;">
-								    <b><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" /></b>
+								    <b><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" /> P</b>
 								</div>
 							</c:otherwise>
 						</c:choose>
