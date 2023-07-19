@@ -91,13 +91,13 @@
 		let sortby=what;
 		let keywordd="${keyword}";
 		if($("#withEnd").prop('checked')){
-			if(keyword =! ""){
+			if(keywordd != ""){
 				location.href="${pageContext.request.contextPath}/gonggu/ggSearch.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortby+"&end=0&gongguName="+keywordd;
 			}else{
 				location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortby+"&end=0";
 			}
 		}else{
-			if(keyword =! ""){
+			if(keywordd != ""){
 				location.href="${pageContext.request.contextPath}/gonggu/ggSearch.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortby+"&gongguName="+keywordd;
 			}else{
 				location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortby;
@@ -115,13 +115,13 @@
 		
 		$("#withEnd").on('click', function() {
 			if ( $(this).prop('checked') ) {
-				if(keyword =! ""){
+				if(keywordd != ""){
 					location.href="${pageContext.request.contextPath}/gonggu/ggSearch.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortbyy+"&end=0&gongguName="+keywordd
 				}else{
 					location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortbyy+"&end=0"
 				}
 			} else {
-				if(keyword =! ""){
+				if(keywordd != ""){
 					location.href="${pageContext.request.contextPath}/gonggu/ggSearch.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortbyy+"&gongguName="+keywordd
 				}else{
 					location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortbyy
