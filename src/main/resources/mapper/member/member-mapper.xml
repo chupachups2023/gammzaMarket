@@ -13,7 +13,7 @@
 	    #{userPwd},
 	    #{name},
 	    #{phone},
-	    1,
+	    null,
 	    #{email},
 	    default,
 	    #{updateAt},
@@ -128,7 +128,6 @@
 
  	<select id="selectOneMember" resultMap="memberMap">
  		SELECT * FROM MEMBER
- 		join location on(location = location_no)
  		 where user_id = #{userId}
  	</select>
  	

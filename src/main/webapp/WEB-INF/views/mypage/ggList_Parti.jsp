@@ -119,7 +119,11 @@
 <script>
 	function receive(gongguName,gongguNo){
 		if(	confirm(gongguName+"을(를) 수령하셨나요?") ){
-			location.href="${pageContext.request.contextPath }/gonggu/partiStatusUpdate.pa?gongguNo="+gongguNo;
+			
+			let hiddenSort=document.getElementById("hiddenSort").value;
+			let hiddenEnd=document.getElementById("hiddenEnd").value;
+			
+			location.href="${pageContext.request.contextPath }/gonggu/partiStatusUpdate.pa?sort="+hiddenSort+"&end="+hiddenEnd+"&gongguNo="+gongguNo;
 		}else{
 			return
 		}

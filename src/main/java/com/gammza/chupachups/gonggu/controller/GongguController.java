@@ -506,12 +506,14 @@ public class GongguController {
          map.put("endStatus", endStatus);
          model.addAttribute("endStatus", end);
 		 
-		 
 		 map.put("search", searchSql);
 		 
-		 
-		 
 		 ArrayList<Gonggu> ggListView = gongguService.searchGonggu(map);
+		 for(int i=0;i<ggListView.size();i++) {
+				Location tempLocal=locationService.selectLocationByNo(ggListView.get(i).getLocationNo());
+				String locationName=locationController.SelectLocationName(tempLocal);
+				ggListView.get(i).setLocationName(locationName);
+		 }
 		 
 		 model.addAttribute("ggListView", ggListView);
 		 int totalRecord=gongguService.selectGongguTotalRecord();

@@ -45,12 +45,12 @@
 	<update id="updatePartiStatusByLeader">
 		update parti_tb
 		set status=1
-		where gonggu_no=#{gongguNo} and parti_member=#{userId}
+		where gonggu_no=#{gongguNo} and parti_member=#{userId} and status=0
 	</update>
 	<update id="updatePartiStatusSelf">
 		update parti_tb
 		set status=2
-		where gonggu_no=#{gongguNo} and parti_member=#{userId}
+		where gonggu_no=#{gongguNo} and parti_member=#{userId} and status=1
 	</update>
 	
 	<select id="selectPartiListForLeader" resultMap="partiMap">
