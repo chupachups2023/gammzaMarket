@@ -283,7 +283,6 @@
 				url:"${pageContext.request.contextPath}/notify/selectNewNotify.no",
 				success:function(result){
 					let newNoti=result.newNoti*1;
-					console.log("결과는?"+newNoti)
 					if(newNoti>0){
 						$("#notiRedDot").css("display","block");
 					}else{

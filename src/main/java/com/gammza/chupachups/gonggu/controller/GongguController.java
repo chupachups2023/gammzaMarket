@@ -365,7 +365,6 @@ public class GongguController {
 
 		ArrayList<String> photo = new ArrayList<String>();
 		
-		System.out.println("upPhoto1 크기: "+upPhoto1.getSize());
 		if (upPhoto1.getSize() > 0) {
 			if(Ogonggu.getPhoto1() != null) {
 				File file=new File(saveDirectory, Ogonggu.getPhoto1());
@@ -465,16 +464,23 @@ public class GongguController {
 	
 	 @GetMapping("/ggSearch.go")
 	 public String searchGonggu(@RequestParam("gongguName") String gongguName, Model model,HttpSession session,
-			 @RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude) {
+			 @RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude,
+			 @RequestParam(defaultValue="PULLUP_AT") String sort,@RequestParam(defaultValue="1") int end, RedirectAttributes redirectAttr) {
 	 	Member mem=(Member)session.getAttribute("loginMember");
 	 	HashMap<String,String> map=new HashMap<String,String>();
-	 	if(mem==null) {
+	 	if(mem !=null) {
+	 		if(mem.getLatitude() == null) {
+	 			redirectAttr.addFlashAttribute("msg","정확한 주변 공구를 보려면 장소 인증을 먼저 해야 합니다.");
+	 			return "redirect:/chupachups/location/location.lo\"";
+	 		}else {
+	 			map.put("longitude", mem.getLongitude());
+	 			map.put("latitude", mem.getLatitude());
+	 		}
+	 	}else {
 	 		map.put("longitude", longitude);
 	 		map.put("latitude", latitude);
-	 	}else {
-	 		map.put("longitude", mem.getLongitude());
-	 		map.put("latitude", mem.getLatitude());
 	 	}
+	 	
 		 StringTokenizer st=new StringTokenizer(gongguName);
 		 String searchSql="INTERSECT ";
 		 searchSql+=" SELECT * "
@@ -486,8 +492,24 @@ public class GongguController {
 			 		+ " FROM gonggu "
 			 		+ " where gonggu_name LIKE '%"+st.nextToken()+"%' "; 
 		 }
-		 searchSql+=" order by 22 desc";
+		 if(sort.equals("PULLUP_AT")) {
+			 searchSql+=" order by 22 desc";
+		 }else {
+			 searchSql+=" order by 24";
+		 }
+         
+         model.addAttribute("sortByHidden", sort);
+         String endStatus="AND END_STATUS = 1";
+         if(end == 0) {
+        	 endStatus=" ";
+         }
+         map.put("endStatus", endStatus);
+         model.addAttribute("endStatus", end);
+		 
+		 
 		 map.put("search", searchSql);
+		 
+		 
 		 
 		 ArrayList<Gonggu> ggListView = gongguService.searchGonggu(map);
 		 
@@ -495,9 +517,12 @@ public class GongguController {
 		 int totalRecord=gongguService.selectGongguTotalRecord();
 		 
 		 model.addAttribute("keyword", gongguName);
+		 model.addAttribute("location", map);
 		
 		 PageInfo pi=Pagination.getPageInfo(totalRecord, 1, 1, 8);
          model.addAttribute("pi", pi);
+         
+         
          
 		 return "/gonggu/ggListView";
 	 }

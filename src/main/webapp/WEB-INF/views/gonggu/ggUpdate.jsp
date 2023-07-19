@@ -13,15 +13,15 @@
             <div class="write-category">
                 <input class="write-stuff" type="text" placeholder="공구할 물건" name="gongguName" value="${gonggu.gongguName }">
                 <select name="category">
-                    <option value="0">카테고리</option>
-                    <option value="1">의류</option>
-                    <option value="2">화장품/미용</option>
-                    <option value="3">식품/농산물</option>
-                    <option value="4">가구/인테리어</option>
-                    <option value="5">배달음식</option>
-                    <option value="6">유아동</option>
-                    <option value="7">생활용품</option>
-                    <option value="8">반려동물용품</option>
+                    <option value="0" id="cate0">카테고리</option>
+                    <option value="1" id="cate1">의류</option>
+                    <option value="2" id="cate2">화장품/미용</option>
+                    <option value="3" id="cate3">식품/농산물</option>
+                    <option value="4" id="cate4">가구/인테리어</option>
+                    <option value="5" id="cate5">배달음식</option>
+                    <option value="6" id="cate6">유아동</option>
+                    <option value="7" id="cate7">생활용품</option>
+                    <option value="8" id="cate8">반려동물용품</option>
                 </select>
             </div>
                 <div class="write-price">
@@ -32,8 +32,8 @@
 	                <div class="write-count-out">
 		                <div class="write-count">
 		                    공구 수량 <select name="type" >
-		                        <option value="0">수량 기준</option>
-		                        <option value="1">인원 기준</option>
+		                        <option value="0" id="type0">수량 기준</option>
+		                        <option value="1" id="type1">인원 기준</option>
 		                    </select>
 		                    <input type="number" name="num" value="${gonggu.num }">명/개
 		                </div>
@@ -134,6 +134,14 @@
     </div>
 	<script src="${pageContext.request.contextPath}/resources/js/gonggu/ggUpdateMap.js?<%=System.currentTimeMillis() %>"></script>
 	<script>
+	let gongguCate="${gonggu.category}";
+	let gongguType="${gonggu.type}";
+	console.log("타입은? "+gongguType);
+	if(gongguCate != ""){
+		document.getElementById("cate"+gongguCate).setAttribute("selected","true");
+		document.getElementById("type"+gongguType).setAttribute("selected","true");
+	}
+	
 	var now_utc = Date.now();
 	var timeOff = new Date().getTimezoneOffset()*60000;
 	var today = new Date(now_utc-timeOff).toISOString().substring(0, 16);
