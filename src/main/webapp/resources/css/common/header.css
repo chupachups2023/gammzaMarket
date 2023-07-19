@@ -250,6 +250,17 @@ body{
 }
 .notiContent{
 	width:320px;
+	font-size:14px;
+}
+.notiContent:hover{
+	cursor:pointer;
+	text-decoration:underline;
+	text-underline-position:under;
+}
+.notiTime{
+	margin-top:10px;
+	font-size:12px;
+	color:#c0c0c0;
 }
 .notiTime{
 	text-align:right;

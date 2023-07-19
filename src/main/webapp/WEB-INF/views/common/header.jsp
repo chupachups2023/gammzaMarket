@@ -253,23 +253,25 @@
 				let str="";
 				for(let i=0;i<notifyList.length;i++){
 					if(notifyList[i].status==0){
-						str+='<div class="notiDiv">'
-								+ '<div class="notiContent"><b>'+notifyList[i].notiContent+'</b></div>'
-								+	'<div class="notiTime"><small>'+notifyList[i].createAt +'</small></div></div><hr>';
+						str+="<div class='notiDiv'>"
+								+ "<div class='notiContent'><b><a href='${pageContext.request.contextPath}"+notifyList[i].notiContent+"</b></div>"
+								+	'<div class="notiTime">'+notifyList[i].createAt +'</div></div><hr>';
 					}else{
-						str+='<div class="notiDiv">'
-								+ '<div class="notiContent">'+notifyList[i].notiContent+'</div>'
-								+	'<div class="notiTime"><small>'+notifyList[i].createAt +'</small></div></div><hr>';
+						str+="<div class='notiDiv'>"
+							+ "<div class='notiContent'><a href='${pageContext.request.contextPath}"+notifyList[i].notiContent+"</div>"
+							+	'<div class="notiTime">'+notifyList[i].createAt +'</div></div><hr>';
 					}
 				}
 				document.getElementById("notiModal-content").innerHTML=str;
+				
+				$.ajax({
+					url:"${pageContext.request.contextPath}/notify/updateNotifyStatus.no"
+				})
+				
 			}
 		})
 		let display=$("#notiModal").css("display");
 		if(display=="block"){
-			$.ajax({
-				url:"${pageContext.request.contextPath}/notify/updateNotifyStatus.no"
-			})
 			$("#notiModal").css("display","none");
 			$("#notiRedDot").css("display","none");
 		}else{
@@ -283,7 +285,6 @@
 				url:"${pageContext.request.contextPath}/notify/selectNewNotify.no",
 				success:function(result){
 					let newNoti=result.newNoti*1;
-					console.log("결과는?"+newNoti)
 					if(newNoti>0){
 						$("#notiRedDot").css("display","block");
 					}else{

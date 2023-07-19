@@ -96,7 +96,7 @@ public class PartiController {
 			if(gongguName.length()>7) {
 				gongguName=gongguName.substring(0, 7)+"⋯";
 			}
-			notify.setNotiContent(gongguName+"공구에 새로운 참여자가 있습니다.");
+			notify.setNotiContent("/gonggu/checkPartis.pa?gongguNo="+gonggu.getGongguNo()+"'>"+gongguName+"공구에 새로운 참여자가 있습니다.</a>");
 			notifyService.insertNotify(notify);
 			
 			return str;
@@ -169,7 +169,7 @@ public class PartiController {
 		notify.setNotifyMember(gonggu.getGongguWriter());
 		
 		DecimalFormat df=new DecimalFormat("###,###");
-		notify.setNotiContent(gongguName+" 공구 참여자가 물건을 수령하여 "+df.format(totalPrice)+"포인트가 들어왔습니다.");
+		notify.setNotiContent("/gonggu/checkPartis.pa?gongguNo="+gonggu.getGongguNo()+"'>"+gongguName+" 공구 참여자가 물건을 수령하여 "+df.format(totalPrice)+"포인트가 들어왔습니다.</a>");
 		notifyService.insertNotify(notify);
 		
 		partiList(model,"resent",1);
@@ -207,7 +207,8 @@ public class PartiController {
 				gongguName=gongguName.substring(0, 7)+"⋯";
 			}
 			notify.setNotifyMember(id[i]);
-			notify.setNotiContent(gongguName+"공구 참여가 확정되었습니다.");
+			
+			notify.setNotiContent("/gonggu/gonggu/ggPartiList.pa'>"+gongguName+"공구 참여가 확정되었습니다.</a>");
 			notifyService.insertNotify(notify);
 			
 		}
@@ -256,7 +257,7 @@ public class PartiController {
 					gongguName=gongguName.substring(0, 7)+"⋯";
 				}
 				DecimalFormat df=new DecimalFormat("###,###");
-				notify.setNotiContent(gongguName+"공구가 마감되어 사용되지 않은 "+df.format(totalPrice)+"포인트가 돌아왔습니다");
+				notify.setNotiContent("/mypage/mypageMain.me'>"+gongguName+"공구가 마감되어 사용되지 않은 "+df.format(totalPrice)+"포인트가 돌아왔습니다");
 				notifyService.insertNotify(notify);
 			}
 		}
