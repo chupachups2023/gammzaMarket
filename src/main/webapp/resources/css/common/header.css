@@ -10,6 +10,9 @@ body, pre{
 textarea{
 	 font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
 }
+body{
+	min-width:650px;
+}
 .header-logos{
     display: flex;
     flex-direction: row;
@@ -28,7 +31,7 @@ textarea{
 }
     
 .header-memberLogin {
-	width: 65px;
+	width: 50px;
     opacity: 0.35;
     margin-right: -7px;
 }
@@ -58,13 +61,14 @@ textarea{
 .header-notify{
 	opacity: 0.35;
     margin-right: -7px;
-    width:50px;
+    width:40px;
     position:reletive;
 }
 .notiRedDot{
 	width: 28px;
     position: absolute;
-    right: 222px;
+    right: 220px;
+    top: 30px;
     display:none;
 }
 .header-loginBtn i {
@@ -73,7 +77,12 @@ textarea{
 .upperIconBox{
 	display:flex;
 	flex-direction:row;
-	align-items: center
+	align-items: center;
+	width: 150px;
+    justify-content: flex-end;
+}
+.upperIconBox>*{
+	margin:0 5px;
 }
 .header-logoutBtn {
 	border: 0;
