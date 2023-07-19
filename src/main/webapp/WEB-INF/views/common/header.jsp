@@ -250,7 +250,6 @@
 			url:"${pageContext.request.contextPath}/notify/selectNotifyList.no",
 			success:function(result){
 				let notifyList=result.notifyList;
-				console.log(notifyList);
 				let str="";
 				for(let i=0;i<notifyList.length;i++){
 					if(notifyList[i].status==0){
@@ -268,21 +267,23 @@
 		})
 		let display=$("#notiModal").css("display");
 		if(display=="block"){
-			$("#notiModal").css("display","block");
 			$.ajax({
 				url:"${pageContext.request.contextPath}/notify/updateNotifyStatus.no"
 			})
+			$("#notiModal").css("display","none");
 			$("#notiRedDot").css("display","none");
 		}else{
-			$("#notiModal").css("display","none");
+			$("#notiModal").css("display","block");
 		}
 	}
+
 	$(function(){
 		if("${loginMember.userId}" != ""){
 			$.ajax({
 				url:"${pageContext.request.contextPath}/notify/selectNewNotify.no",
 				success:function(result){
 					let newNoti=result.newNoti*1;
+					console.log("결과는?"+newNoti)
 					if(newNoti>0){
 						$("#notiRedDot").css("display","block");
 					}else{
