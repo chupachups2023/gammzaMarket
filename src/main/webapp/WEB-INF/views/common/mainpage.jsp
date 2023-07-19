@@ -46,21 +46,6 @@
 		</div>
 	</div>
 	
-<!-- 	<script>
-무한스크롤
-		$(function(){
-			$(".main-listSec  .list-goods").hide();
-			$(".main-listSec  .list-goods").slice(0, 8).css({display:inline-block;}); 
-			$("#load").click(function(e){
-				e.preventDefault();
-				$(".main-listSec .list-goods:hidden").slice(0, 8).fadeIn(200).css({display:inline-block;}); // 클릭시 more 갯수 지저정
-				if($(".main-listSec .list-goods:hidden").length == 0){ // 컨텐츠 남아있는지 확인
-					$('#load').fadeOut(100); // 컨텐츠 없을 시 버튼 사라짐
-				}
-			});
-		});
-	</script> -->
-	
 	<script>
 		/* 무한스크롤 */
 		let page = 8;	//한번에 보여줄 상품 개수

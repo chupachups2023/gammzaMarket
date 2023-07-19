@@ -61,9 +61,9 @@
 						<td style="text-align: right;">결제가능 수단&emsp;&emsp;</td>
 						<td colspan="3">
 							<div class="purchaseMethod">
-								<div><input type="radio" name="purchaseSelect" class="pg" value="kakaopay" id="kakaopay"><label for="kakaopay"> <span>카카오페이</span></label></div>
-								<div><input type="radio" name="purchaseSelect" class="pg" value="danal" id="danal"><label for="danal"> <span>핸드폰 소액결제</span></label></div> 
-								<div><input type="radio" name="purchaseSelect" class="pg" value="html5_inicis" id="html5_inicis"><label for="html5_inicis"> <span>신용/체크 카드</span></label></div>
+								<div><input type="radio" name="purchaseSelect" class="pg" value="kakaopay" id="kakaopay"><label for="kakaopay"><span>카카오페이</span></label></div>
+								<div><input type="radio" name="purchaseSelect" class="pg" value="danal" id="danal"><label for="danal"><span>핸드폰 소액결제</span></label></div> 
+								<div><input type="radio" name="purchaseSelect" class="pg" value="html5_inicis" id="html5_inicis"><label for="html5_inicis"><span>신용/체크 카드</span></label></div>
 							</div>
 						</td>
 					</tr>
