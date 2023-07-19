@@ -348,6 +348,13 @@
 			return false;
 		}
 		
+		// 인증번호 입력 
+		if (emailAuth.value == "") {
+			alert("이메일 인증 후 인증번호 6자리를 입력해 주세요");
+			emailAuth.focus();
+			return false;
+		}
+		
 		// 인증번호 확인
 		if($('#emailAuth').val() != authKey.value) {
 			alert("인증번호가 일치하지 않습니다.");
