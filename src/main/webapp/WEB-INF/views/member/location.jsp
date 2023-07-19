@@ -61,9 +61,14 @@ function locationSubmit(){
 
 
 function success(position) {
-    const latitude = position.coords.latitude;   // 위도(37.xxxx)
-    const longitude = position.coords.longitude; // 경도
-	
+    const latitude = position.latitude;   // 위도(37.xxxx)
+    const longitude = position.longitude; // 경도
+/*     const latitude = position.coords.latitude;   // 위도(37.xxxx)
+    const longitude = position.coords.longitude; // 경도 */
+    
+    document.getElementById('lon').value=longitude;
+	document.getElementById('lat').value=latitude;
+    
     $.ajax({
     	type:"get",
     	url:"https://dapi.kakao.com/v2/local/geo/coord2address.json?x="+longitude+"&y="+latitude+"&input_coord=WGS84",
@@ -170,13 +175,13 @@ function getNearDong(lat, lon){
 }
 
 
-function getUserLocation() {
+/* function getUserLocation() {
     if (!navigator.geolocation) {
         alert("위치 정보가 지원되지 않습니다.");
     }else{
 	    navigator.geolocation.getCurrentPosition(success);
     }
-}
+} */
 
 
 //지도 토큰 받아오기
@@ -194,8 +199,9 @@ function getAccessToken(){
 		success:function(data){
 			errCnt = 0;																									
 			accessToken = data.result.accessToken;
-			getUserLocation();
-			
+			/* getUserLocation(); */
+			position={"latitude":37.533921602961506, "longitude":126.89677032759451 }
+			success(position);
 		},
 		error:function(data) {
 		}

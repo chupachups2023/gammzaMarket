@@ -508,7 +508,7 @@ public class GongguController {
 	 	if(mem !=null) {
 	 		if(mem.getLatitude() == null) {
 	 			redirectAttr.addFlashAttribute("msg","정확한 주변 공구를 보려면 장소 인증을 먼저 해야 합니다.");
-	 			return "redirect:/chupachups/location/location.lo\"";
+	 			return "redirect:/location/location.lo";
 	 		}else {
 	 			map.put("longitude", mem.getLongitude());
 	 			map.put("latitude", mem.getLatitude());
@@ -567,24 +567,50 @@ public class GongguController {
 	 }
 	 
 	 @GetMapping("/categoryList.go")
-	public String categoryList(@RequestParam("category") int category, Model model, HttpSession session,
-			@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude) {
+	public String categoryList(@RequestParam("category") int category, Model model, HttpSession session,RedirectAttributes redirectAttr,
+			@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude,
+			@RequestParam(defaultValue="PULLUP_AT") String sort,@RequestParam(defaultValue="1") int end) {
 	 	Member mem=(Member)session.getAttribute("loginMember");
 	 	HashMap<String,String> map=new HashMap<String,String>();
 	 	if(mem==null) {
 	 		map.put("longitude", longitude);
 	 		map.put("latitude", latitude);
 	 	}else {
-	 		map.put("longitude", mem.getLongitude());
-	 		map.put("latitude", mem.getLatitude());
+	 		if(mem.getLatitude() == null) {
+	 			redirectAttr.addFlashAttribute("msg","정확한 주변 공구를 보려면 장소 인증을 먼저 해야 합니다.");
+	 			return "redirect:/location/location.lo";
+	 		}else {
+	 			map.put("longitude", mem.getLongitude());
+	 			map.put("latitude", mem.getLatitude());
+	 		}
 	 	}
 	 	map.put("category", String.valueOf(category));
+	 	
+	 	map.put("sort", sort);
+        model.addAttribute("sortByHidden", sort);
+        
+        String endStatus="AND END_STATUS = 1";
+        if(end == 0) {
+       	 endStatus=" ";
+        }
+        map.put("endStatus", endStatus);
+        model.addAttribute("endStatus", end);
+		 
+		 
+		 ArrayList<Gonggu> ggListView = gongguService.searchGonggu(map);
+		 for(int i=0;i<ggListView.size();i++) {
+				Location tempLocal=locationService.selectLocationByNo(ggListView.get(i).getLocationNo());
+				String locationName=locationController.SelectLocationName(tempLocal);
+				ggListView.get(i).setLocationName(locationName);
+		 }
 		ArrayList<Gonggu> categoryList = gongguService.selectOneCategory(map);
 		
 		model.addAttribute("ggListView", categoryList);
+		model.addAttribute("location", map);
 		
 		return "/gonggu/ggListView";
 	}
+	 
 	 @GetMapping("/deleteGonggu.go")
 	 public String deleteGonggu(@RequestParam int gongguNo, RedirectAttributes redirectAttr) {
 		 

@@ -70,15 +70,6 @@
 			</otherwise>
 		</choose>
 	</select>
-<!-- 	<select id="selectggListViewWithEnd" resultMap="gongguMap">
-		SELECT  GONG.GONGGU_NO
-		            ,GONG.GONGGU_NAME
-		            ,GONG.PRICE
-		            ,GONG.PHOTO1, GONG.LOCATION_NO
-		   FROM   GONGGU   GONG
-		 WHERE GONG.STATUS = 1
-		 order by pullup_at desc
-	</select> -->
 	<update id="updateGongguCount">
 		update gonggu
 		set count=count+1
@@ -136,12 +127,24 @@
 		   and gonggu_name = '%' ||  #{gongguName} || '%'
 	</select>
 	<select id="selectOneCategory" resultMap="gongguMap">
-		select *
-		from gonggu
-		where category = #{category} and  0.0359*0.0359>power(( to_number(longitude)-to_number(#{longitude })),2)+power(( to_number(latitude)-to_number(#{latitude })),2)
-			and STATUS = 1 AND END_STATUS = 1
-		order by pullup_at desc
+		<choose>
+			<when test="sort.equals('END_TIME')">
+				select *
+				from gonggu
+				where category = #{category} and  0.0359*0.0359>power(( to_number(longitude)-to_number(#{longitude })),2)+power(( to_number(latitude)-to_number(#{latitude })),2)
+					and STATUS = 1 ${endStatus}
+				order by END_TIME, gonggu_No
+			</when>
+			<otherwise>
+				select *
+				from gonggu
+				where category = #{category} and  0.0359*0.0359>power(( to_number(longitude)-to_number(#{longitude })),2)+power(( to_number(latitude)-to_number(#{latitude })),2)
+					and STATUS = 1 ${endStatus}
+				order by pullup_at desc, gonggu_No desc
+			</otherwise>
+		</choose>
 	</select>
+	
 	<update id="updateGongguStatus">
 		update gonggu
 		set status=0

@@ -8,7 +8,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="회원가입" name="title"/>
 </jsp:include>
-<%@ include file="findPwdModal.jsp" %>
+
 
 	<!-- 아이디/비밀번호 찾기 -->
     <div class="find-container">
