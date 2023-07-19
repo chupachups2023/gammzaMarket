@@ -17,7 +17,7 @@
         <div class="ggRead-title">
             <div class="ggRead-writer ggRead-writer-none">${request.requestWriter }</div>
             <div class="ggRead-name">${request.requestName }</div>
-            <div class="ggRead-writer" onclick="">${request.requestWriter }</div>
+            <div class="ggRead-writer"><a href="${pageContext.request.contextPath}/member/userPf.bo?userPl=${request.requestWriter}">${request.requestWriter }</a></div>
         </div>
     </div>
     <hr class="ggRead-hr">
