@@ -12,7 +12,7 @@
     <h1>관리자 페이지</h1>
     <hr>
     <div class="bigbox">
-        <div class="adminpageBox green" onclick="location.href='${pageContext.request.contextPath}/adminpage/noticeList.bo'">
+        <div class="adminpageBox green" onclick="location.href='${pageContext.request.contextPath}/adminpage/noticeList.bo?nowPage=${nowPage}'">
             <div>공지사항</div>
         </div>
         <div class="adminpageBox orange" onclick="location.href='${pageContext.request.contextPath}/adminpage/allGGList.do'">

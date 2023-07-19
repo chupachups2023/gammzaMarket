@@ -197,18 +197,38 @@
 					}
 				}
 				$("#result").html(result);
+				console.log(msgList[0]);
 			},
 			error : function() {
 				console.log("리스트 조회 실패");
 			}
 		});
 	}
+	function loadFirstChatRoom() {
+		var firstChatRoom = $(".chatRoomItem").first();
+		if (firstChatRoom.length > 0) {
+			var roomNo = firstChatRoom.data("room-no");
+			var userId = firstChatRoom.data("user-id");
+			currentRoomNo = roomNo;
+			$("#chatRoomOwner").text(userId);
+			loadChatRoom(roomNo);
+		}
+	}
+
+	loadFirstChatRoom();
+
+	$(".chatRoomItem").click(function() {
+		var roomNo = $(this).data("room-no");
+		var userId = $(this).data("user-id");
+		currentRoomNo = roomNo;
+		$("#chatRoomOwner").text(userId);
+		loadChatRoom(roomNo);
+	});
 	$(function() {
 		$(".selected").click(function() {
 			scrollToBottom();
 		});
 	});
-
 	function insertMsg(roomNo) {
 		var chatContent = $("#chatContent").val();
 		var chatWriter = $("#userId").val();
