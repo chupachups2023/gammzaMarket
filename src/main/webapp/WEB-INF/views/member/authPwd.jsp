@@ -24,10 +24,10 @@
 				<div class="find-content2">
 						<div class="find-id2">
 								<ul>
-										<li><input type="text" name="emailAuth" placeholder="인증번호를 입력해 주세요"></li>
+										<li><input type="text" name="emailAuth" class="find-input" placeholder="인증번호를 입력해 주세요"></li>
 								</ul>
 								<ul>
-										<li><input type="submit" id="pwdCheck" value="확인"></li>
+										<li><input type="submit" id="pwdCheck" class="find-btn" value="확인"></li>
 								</ul>
 						</div>
 				</div>
