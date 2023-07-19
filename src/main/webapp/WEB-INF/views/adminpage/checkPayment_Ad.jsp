@@ -62,7 +62,4 @@
 	</nav>
 </div>
 <button id="PurBackBtn" onclick="location.href='${pageContext.request.contextPath}/member/memberList.do'">뒤로가기</button>
-<script>
-	
-</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

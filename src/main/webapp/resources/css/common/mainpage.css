@@ -4,6 +4,8 @@
 	background-color: #F9E8D0; 
 	height: 150px;
 	padding: 50px 150px;
+	vertical-align: middle;
+	line-height: 70px;
 }
 .mainHeader-search{
     border-radius: 10px;
