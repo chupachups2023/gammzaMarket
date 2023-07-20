@@ -127,7 +127,7 @@
 					</div>
 				</div>
 
-				<div id="result" style="height: 500px" width="900px" class="c-List">
+				<div id="result" style="height: 500px; padding-bottom: 70px;" class="c-List">
 					<input type="hidden" id="chatWriter" value="${loginMember.userId}">
 					<input type="hidden" class="${chatRoom.roomNo}_roomNo" id="roomNo"
 						value="${chatRoom.roomNo}">
@@ -149,7 +149,9 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
 	var currentRoomNo = null;
-
+	window.addEventListener("load", function() {
+		scrollToBottom();
+	});
 	$(document).ready(function() {
 		$(".chatRoomItem").click(function() {
 			var roomNo = $(this).data("room-no");
@@ -259,7 +261,5 @@
 		element.scrollTop = element.scrollHeight;
 	}
 
-	window.addEventListener("load", function() {
-		scrollToBottom();
-	});
+
 </script>
