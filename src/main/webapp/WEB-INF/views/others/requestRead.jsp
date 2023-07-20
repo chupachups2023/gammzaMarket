@@ -99,7 +99,6 @@ $.ajax({
 	data:{"requestNo" : "${request.requestNo}"},
 	success:function(result){
 		const reqMember=result.reqMember;
-		console.log(reqMember[0].longitude)
 		
 		 $.ajax({
 			type:"get",

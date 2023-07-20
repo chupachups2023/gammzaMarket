@@ -127,7 +127,7 @@
 					</div>
 				</div>
 
-				<div id="result" style="height: 500px" width="900px" class="c-List">
+				<div id="result" style="height: 500px; padding-bottom: 70px;" class="c-List">
 					<input type="hidden" id="chatWriter" value="${loginMember.userId}">
 					<input type="hidden" class="${chatRoom.roomNo}_roomNo" id="roomNo"
 						value="${chatRoom.roomNo}">
@@ -149,7 +149,9 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
 	var currentRoomNo = null;
-
+	window.addEventListener("load", function() {
+		scrollToBottom();
+	});
 	$(document).ready(function() {
 		$(".chatRoomItem").click(function() {
 			var roomNo = $(this).data("room-no");
@@ -197,7 +199,6 @@
 					}
 				}
 				$("#result").html(result);
-				console.log(msgList[0]);
 			},
 			error : function() {
 				console.log("리스트 조회 실패");
@@ -243,14 +244,12 @@
 				
 			},
 			success : function(result) {
-				console.log("메시지 전송 성공!");
 				$("#chatContent").val("");
 				msgList(currentRoomNo);
-				console.log(currentRoomNo);
 				scrollToBottom();		 
 			},
 			error : function() {
-				console.log("메시지 전송 실패" + currentRoomNo);
+				console.log("접속실패");
 			}
 		});
 	}
@@ -259,7 +258,5 @@
 		element.scrollTop = element.scrollHeight;
 	}
 
-	window.addEventListener("load", function() {
-		scrollToBottom();
-	});
+
 </script>

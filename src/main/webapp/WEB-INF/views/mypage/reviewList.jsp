@@ -83,10 +83,10 @@
                 <td width="10%">${plist.reviewNo }</td>
                 <td width="20%">
 	                <c:if test="${fn:length(plist.gongguName) gt 10}">
-	                	<a class="gongguName" href="${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${lList.gongguNo }">${fn:substring(plist.gongguName, 0, 10)}⋯</a>
+	                	<a class="gongguName" href="${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${plist.gongguNo }">${fn:substring(plist.gongguName, 0, 10)}⋯</a>
 	                </c:if>
 	                <c:if test="${fn:length(plist.gongguName) le 10}">
-	                	<a class="gongguName" href="${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${lList.gongguNo }">${fn:substring(plist.gongguName, 0, 10)}</a>
+	                	<a class="gongguName" href="${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${plist.gongguNo }">${fn:substring(plist.gongguName, 0, 10)}</a>
 	                </c:if>
                 	<br>작성자: <a href="${pageContext.request.contextPath}/member/userPf.bo?userPp=${plist.reviewWriter}">
                 	${plist.reviewWriter }</a>
@@ -175,7 +175,6 @@ function showParti(){
  			data:{"reviewNo" : reviewNo},
  			success:function(re){
  				review=re.review;
- 				console.log(review.gongguName)
  				document.getElementById("reviewGongguName").innerHTML=review.gongguName;
  				document.getElementById("reviewWriter").innerHTML=review.reviewWriter;
  				document.getElementById("reviewContent").innerHTML=review.reviewContent;

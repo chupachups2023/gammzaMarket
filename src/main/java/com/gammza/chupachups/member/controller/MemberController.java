@@ -65,9 +65,7 @@ public class MemberController {
 	
 	@PostMapping("/memberLogin.me")
 	public String memberLogin(String userId, String userPwd, Model model, RedirectAttributes redirectAtt,HttpSession session) {
-		System.out.println(userId);
 		Member member = memberService.selectOneMember(userId);
-		System.out.println(member);
 		// 인증
 		if (member != null && passwordEncoder.matches(userPwd, member.getUserPwd())) {
 			if(member.getStatus()==0) {

@@ -56,7 +56,6 @@ $(":radio[name='request-sort'][value='" + currSort + "']").attr('checked', true)
     
 	$("input:radio[name=request-sort]").on('click', function() {
 		let requestSort=$("input:radio[name=request-sort]:checked").val();
-		console.log(requestSort);
 		if ( requestSort == currSort ){
 			return;
 		}else{

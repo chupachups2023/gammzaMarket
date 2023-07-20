@@ -56,7 +56,7 @@ public class SocialController {
 				MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
 				params.add("grant_type", "authorization_code");
 				params.add("client_id", "db32886cc653e7c143ebd36f56525b61");
-				params.add("redirect_uri", "http://localhost:8095/chupachups/auth/kakao/callback");
+				params.add("redirect_uri", "http://192.168.20.19:8095/chupachups/auth/kakao/callback");
 				params.add("code", code);
 
 				// HttpHeader와 HttpBody를 하나의 object에 담음
@@ -110,8 +110,8 @@ public class SocialController {
 				} catch (JsonProcessingException e) {
 					e.printStackTrace();
 				}
-				System.out.println("KAKAO_IDKEY: " + kakaoProfile.getId());
-				System.out.println("KAKAO_NICKNAME: " + kakaoProfile.getKakao_account().getProfile().getNickname());
+				//System.out.println("KAKAO_IDKEY: " + kakaoProfile.getId());
+				//System.out.println("KAKAO_NICKNAME: " + kakaoProfile.getKakao_account().getProfile().getNickname());
 				
 				
 				// Member
@@ -124,7 +124,7 @@ public class SocialController {
 				member.setBirthday(kakaoProfile.getKakao_account().getBirthday());
 				member.setName(kakaoProfile.getProperties().getNickname()); // 카카오는 이름 대신 닉네임 
 				member.setEmail(kakaoProfile.getKakao_account().getEmail());
-				System.out.println(member);
+				//System.out.println(member);
 				
 				Member loginMember=memberService.selectMemberByKakao(kakaoProfile.getId());
 				
@@ -173,7 +173,7 @@ public class SocialController {
 			@GetMapping(value = "/auth/naver/callback", produces = "text/json; charset=UTF-8")
 			// @ResponseBody
 			public String naverCallback(String code, Member member, Model model, RedirectAttributes redirectAtt, HttpSession session) {
-				System.out.println("NAVER code: " + code);
+				//System.out.println("NAVER code: " + code);
 				
 				
 				// POST 방식으로 key=value 데이터를 요청 (네이버쪽으로) 
@@ -190,7 +190,7 @@ public class SocialController {
 				paramsN1.add("grant_type", "authorization_code");
 				paramsN1.add("client_id", "GQGBjwaCzYQZZ_5XkE2o");
 				paramsN1.add("client_secret", "y3TAUEyfZu");
-				paramsN1.add("redirect_uri", "http://localhost:8095/chupachups/auth/naver/callback");
+				paramsN1.add("redirect_uri", "http://192.168.20.19:8095/chupachups/auth/naver/callback");
 				paramsN1.add("code", code);
 				
 				// HttpHeader와 HttpBody를 하나의 object에 담음  
@@ -217,7 +217,7 @@ public class SocialController {
 					e.printStackTrace();
 				}
 				
-				System.out.println("NAVER ACCESS TOKEN: " + oauthToken2.getAccess_token());
+				//System.out.println("NAVER ACCESS TOKEN: " + oauthToken2.getAccess_token());
 				
 				
 				RestTemplate rt2 = new RestTemplate();
@@ -253,16 +253,16 @@ public class SocialController {
 					e.printStackTrace();
 				}
 				
-				System.out.println("NAVER_IDKEY: " + naverProfile.getResponse().getId());
-				System.out.println("NAVER_NAME: " + naverProfile.getResponse().getName());
-				System.out.println("NAVER_BIRTHDAY: " + naverProfile.getResponse().getBirthday());
-				System.out.println("NAVER_EMAIL: " + naverProfile.getResponse().getEmail());
+//				System.out.println("NAVER_IDKEY: " + naverProfile.getResponse().getId());
+//				System.out.println("NAVER_NAME: " + naverProfile.getResponse().getName());
+//				System.out.println("NAVER_BIRTHDAY: " + naverProfile.getResponse().getBirthday());
+//				System.out.println("NAVER_EMAIL: " + naverProfile.getResponse().getEmail());
 				
 				member.setNaverIdkey(naverProfile.getResponse().getId());
 				member.setName(naverProfile.getResponse().getName());
 				member.setBirthday(naverProfile.getResponse().getBirthday());
 				member.setEmail(naverProfile.getResponse().getEmail());
-				System.out.println("네이버 member: " + member); 
+//				System.out.println("네이버 member: " + member); 
 				// 신규 회원 (naver_idkey, name, email 빼고 비어있음) -> 회원가입/로그인 페이지로 이동 
 				// -> 이동하면... 아예 신규 회원으로 시작 
 				
@@ -270,7 +270,7 @@ public class SocialController {
 				// 기존 회원이면 로그인 처리 후 메인으로 이동 
 				
 				
-				System.out.println(member);
+//				System.out.println(member);
 				
 				Member loginMember=memberService.selectMemberByNaver(naverProfile.getResponse().getId());
 				

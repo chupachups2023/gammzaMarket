@@ -131,13 +131,11 @@
 	function reviewWriteCheck(id,ggNo){
 		let userId=id;
 		let gongguNo=ggNo;
-		console.log(userId+" / "+gongguNo)
 		$.ajax({
 			url:"${pageContext.request.contextPath }/review/reviewWriteCheck.re",
 			data:{"userId":userId, "gongguNo":gongguNo},
 			success:function(result){
 				const check=result.result*1;
-				console.log(check)
 				const gonggu=result.gonggu;
 				if(check>0){
 					alert("이미 작성을 완료하였습니다.")
@@ -150,7 +148,7 @@
 				}
 			},
 			error:function(){
-				console.log("에러!!!!")
+				console.log("통신에러!!!!")
 			}
 			
 		})
@@ -189,9 +187,8 @@
  					   "gongguNo":gongguNo
  					  },
  				success:function(result0){
- 					const result=result0.result
- 					
  					mClose();
+ 					alert("리뷰 작성이 완료되었습니다.")
  				}
  			})
  		}

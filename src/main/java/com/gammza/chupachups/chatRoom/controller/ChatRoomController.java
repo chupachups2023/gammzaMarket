@@ -12,13 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.gammza.chupachups.chatMsg.model.service.ChatMsgService;
 import com.gammza.chupachups.chatRoom.model.service.ChatRoomService;
 import com.gammza.chupachups.chatRoom.model.vo.ChatRoom;
 import com.gammza.chupachups.common.model.vo.PageInfo;
 import com.gammza.chupachups.common.template.Pagination;
 import com.gammza.chupachups.gonggu.model.service.GongguService;
-import com.gammza.chupachups.gonggu.model.service.PartiService;
 import com.gammza.chupachups.gonggu.model.vo.Gonggu;
 import com.gammza.chupachups.location.controller.LocationController;
 import com.gammza.chupachups.location.model.service.LocationService;
@@ -42,7 +40,7 @@ public class ChatRoomController {
 		String id=((Member)hs.getAttribute("loginMember")).getUserId();
 		int totalRecord = chatRoomService.selectTotalRecord();
 		String leader = (String) hs.getAttribute("loginmember");
-		System.out.println("total : " + totalRecord);
+//		System.out.println("total : " + totalRecord);
 		int limit = 50000;
 		int offset = (nowPage -1 ) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
