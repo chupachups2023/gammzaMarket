@@ -26,7 +26,6 @@ public class ReportController {
 	@PostMapping("/report/insertReport.do")
 	public String insertReport(Report report, Model model, RedirectAttributes rd) {
 		int result = reportService.insertReport(report);
-		model.addAttribute("report", reportService.insertReport(report));
 		
 //		System.out.println(report);
 		

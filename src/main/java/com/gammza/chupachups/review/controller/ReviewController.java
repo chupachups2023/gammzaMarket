@@ -48,6 +48,7 @@ public class ReviewController {
 					leaderReview.add(recieved.get(i));
 					recieved.remove(i);
 					i--;
+					break;
 				}
 			}
 		}

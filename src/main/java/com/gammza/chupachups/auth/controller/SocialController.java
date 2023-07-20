@@ -56,7 +56,7 @@ public class SocialController {
 				MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
 				params.add("grant_type", "authorization_code");
 				params.add("client_id", "db32886cc653e7c143ebd36f56525b61");
-				params.add("redirect_uri", "http://localhost:8095/chupachups/auth/kakao/callback");
+				params.add("redirect_uri", "http://192.168.20.19:8095/chupachups/auth/kakao/callback");
 				params.add("code", code);
 
 				// HttpHeader와 HttpBody를 하나의 object에 담음
@@ -190,7 +190,7 @@ public class SocialController {
 				paramsN1.add("grant_type", "authorization_code");
 				paramsN1.add("client_id", "GQGBjwaCzYQZZ_5XkE2o");
 				paramsN1.add("client_secret", "y3TAUEyfZu");
-				paramsN1.add("redirect_uri", "http://localhost:8095/chupachups/auth/naver/callback");
+				paramsN1.add("redirect_uri", "http://192.168.20.19:8095/chupachups/auth/naver/callback");
 				paramsN1.add("code", code);
 				
 				// HttpHeader와 HttpBody를 하나의 object에 담음  
