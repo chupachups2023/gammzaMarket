@@ -47,6 +47,9 @@ import com.gammza.chupachups.location.model.service.LocationService;
 import com.gammza.chupachups.location.model.vo.Location;
 import com.gammza.chupachups.member.model.vo.Member;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 @Controller
 @RequestMapping("/gonggu")
 @SessionAttributes({"gonggu"})
@@ -135,7 +138,7 @@ public class GongguController {
 	}
 	
 	@GetMapping("/mainList.go")
-	public String mainList(Model model, HttpSession session) {
+	public String mainList(Model model, HttpSession session, @RequestParam(defaultValue="1") int page) {
 		//소셜 로그인 하려다 취소한 사람 세션에서 지워주기
 		Long kakaoIdkey = (Long)session.getAttribute("kakaoIdkey");
 		String naverIdkey = (String)session.getAttribute("naverIdkey");
@@ -155,13 +158,47 @@ public class GongguController {
 			//홈 띄워질 때마다 공구 상태 관리
 			gongguStatusMgr(mainList.get(i).getGongguNo());
 		}
-		model.addAttribute("mainList", mainList);
-		int totalRecord=gongguService.selectTotalRecord();
 		
-		PageInfo pi=Pagination.getPageInfo(totalRecord, 1, 1, 8);
-		model.addAttribute("pi", pi);
+		int i = page-1;
+		ArrayList<Gonggu> ggListView2 = new ArrayList<Gonggu>();
+		for(int j=0; i<(8*page); i++,j++) {
+			ggListView2.add(j, mainList.get(i));
+		}
+		model.addAttribute("mainList", ggListView2);
+		model.addAttribute("page", page);
 		
 		return "/common/mainpage";
+	}
+	
+	@PostMapping("/mainList.go")
+	public String mainList(Model model, @RequestParam int page) {
+		JSONArray jarr = new JSONArray();
+		String returnVal = "jsonView";
+		
+		ArrayList<Gonggu> mainList = gongguService.selectMainList();
+		for(int i=0;i<mainList.size();i++) {
+			Location tempLocal=locationService.selectLocationByNo(mainList.get(i).getLocationNo());
+			String locationName=locationController.SelectLocationName(tempLocal);
+			mainList.get(i).setLocationName(locationName);
+			//홈 띄워질 때마다 공구 상태 관리
+			gongguStatusMgr(mainList.get(i).getGongguNo());
+		}
+		int i = 8*(page-1);
+		
+		ArrayList<Gonggu> ggListView2 = new ArrayList<Gonggu>();
+		if(mainList.size()>=i+8) {
+			for(int j=0; i<(8*page); i++,j++) {
+				ggListView2.add(j, mainList.get(i));
+			}
+		}else {
+			for(int j=0; i<mainList.size(); i++,j++) {
+				ggListView2.add(j, mainList.get(i));
+			}
+		}
+		jarr.addAll(ggListView2);
+		model.addAttribute("result", jarr);
+		
+		return "jsonView";
 	}
 	
 	//공구 상태 관리

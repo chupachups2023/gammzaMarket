@@ -73,8 +73,9 @@
 		<div>
 			<br>
 			<div id="payBox">
-				결제수단 : <input id="viewPg"><br> 
-				결제가격 : <input id="viewPrice"><br> <br>
+				결제수단 : <input id="viewPg" readonly><br> 
+				결제가격 : <input id="viewPrice" readonly><br> <br>
+				&emsp;&emsp;&emsp;▶기타 포인트 결정: <input id="viewPriceEtc"><button type="button" id="priceBtn">결정</button><br><br>
 				이대로 진행하시려면 결제를 눌러주세요.<br>
 			</div>
 
@@ -168,6 +169,17 @@
   		afterP = Number(${loginMember.point})+Number(price1)+" p";
   		$('#afterP').text(afterP);
 	});
+	
+ 	$('#priceBtn').click(function(){
+  		$('.pointSel').removeClass('clicking');
+  		var price1 = $('#viewPriceEtc').val();
+  		$('#pointPrice').val(price1);
+  		const price2 = price1.replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원";
+  		$('#viewPrice').val(price2);
+  		var afterP = 0;
+  		afterP = Number(${loginMember.point})+Number(price1)+" p";
+  		$('#afterP').text(afterP);
+ 	});
 
 	/* 결제방식 선택 */
 	$(':radio').click(function() {
