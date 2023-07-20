@@ -40,15 +40,16 @@
 					</div>
 				</div>
 			</c:forEach>
+			
 		</div>
+		<div class="moreList-row"></div>
 		<div class="moreBtnBox">
 			<button type="button" class="moreBtn button" onclick="moreList();">더보기</button>
 		</div>
 	</div>
-	
 	<script>
-		/* 무한스크롤 */
-		let page = 8;	//한번에 보여줄 상품 개수
+		/* 더보기 버튼 방법1 */
+/* 		let page = 8;	//한번에 보여줄 상품 개수
 		$(function(){
 			$(".list-goods").hide();
 			$(".list-goods").slice(0, page).show();
@@ -64,7 +65,49 @@
 				$(".list-goods:hidden").slice(0, $(".list-goods:hidden").length).fadeIn();
 				$('.moreBtn').fadeOut(100);
 			}
-		}
+		} */
+		
+		/* 더보기 버튼 방법2 */
+		let page =1;
+ 		function moreList(){
+ 			console.log(page);
+ 			page++;
+ 			console.log(page);
+			$.ajax({
+				url:'${pageContext.request.contextPath}/gonggu/mainList.go',
+				type:'post',
+				dataType:'json',
+				data:{page:page},
+				success:function(data){
+					console.log(data.result);
+					const itemArr = data.result;
+					let value = "";
+					console.log(data.result[0]);
+					for(let i in itemArr){
+						value += `<div class="list-goods" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=`
+							+ itemArr[i].gongguNo +`'">`
+							+ '<div class="ggImg gghover">'
+							+ '<img src="${pageContext.request.contextPath}/resources/upload/' +itemArr[i].photo1+'" alt="이미지 없음">' 
+							+ '</div>' + '<div class="ggTitle gghover">';
+						if(itemArr[i].gongguName.length > 10){ 
+							value += itemArr[i].gongguName.substring(0, 10)+'...</div>';
+						}else {
+							value += itemArr[i].gongguName+'</div>';
+						}
+						value += '<div class="gghover"><b>'+Number(itemArr[i].price).toLocaleString()+' P</b></div>'
+				 		+'<div class="gghover"><small>' + itemArr[i].locationName +'</small></div></div>';
+					}
+					const moreList = document.querySelector(".moreList-row");
+					moreList.innerHTML += value;
+					if(itemArr.length<8){
+						$(".moreBtnBox").remove();
+					}
+				},
+				error:function(){
+					console.log("실패");
+				}
+			});
+		} 
 		
 		
 		function fn_srchGgLst() {

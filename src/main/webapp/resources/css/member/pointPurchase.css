@@ -63,6 +63,15 @@
 	cursor:pointer;
 }
 
+#priceBtn {
+	border: 2px solid rgba(48, 175, 86, 0.753);
+	border-radius: 5px;
+	width: 40px;
+	font-size: 15px;
+	background-color: white;
+	cursor: pointer;
+}
+
 /* 약관박스 */
 #clause {
 	border: 1px solid;
@@ -86,8 +95,15 @@
 	margin-left: 50px;
 }
 
-#viewPg, #viewPrice {
+#viewPg, #viewPrice, #viewPriceEtc {
 	border: none;
+	font-size: 20px;
+	text-align: right;
+	width: 145px;
+}
+#viewPriceEtc {
+	border: none;
+	border-bottom: 1px solid;
 	font-size: 20px;
 	text-align: right;
 	width: 145px;
