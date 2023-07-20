@@ -90,23 +90,33 @@
 	function sortByWhat(what){
 		let sortby=what;
 		let keywordd="${keyword}";
+		let category="${category}";
 		if($("#withEnd").prop('checked')){
 			if(keywordd != ""){
 				location.href="${pageContext.request.contextPath}/gonggu/ggSearch.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortby+"&end=0&gongguName="+keywordd;
 			}else{
-				location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortby+"&end=0";
+				if(category != ""){
+					location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category+"&latitude="+latitude+"&longitude="+longitude+"&sort="+sortby+"&end=0";
+				}else{
+					location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortby+"&end=0";
+				}
 			}
 		}else{
 			if(keywordd != ""){
 				location.href="${pageContext.request.contextPath}/gonggu/ggSearch.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortby+"&gongguName="+keywordd;
 			}else{
-				location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortby;
+				if(category != ""){
+					location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category+"&latitude="+latitude+"&longitude="+longitude+"&sort="+sortby;
+				}else{
+					location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortby;
+				}
 			}
 		}
 	}
 	$(function(){
 		sortbyy=document.getElementById("sortByHidden").value;
 		let keywordd="${keyword}";
+		let category="${category}";
 		if(sortbyy=="PULLUP_AT"){
 			$("#pullup").css("font-weight","bold");
 		}else{
@@ -118,13 +128,21 @@
 				if(keywordd != ""){
 					location.href="${pageContext.request.contextPath}/gonggu/ggSearch.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortbyy+"&end=0&gongguName="+keywordd
 				}else{
-					location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortbyy+"&end=0"
+					if(category != ""){
+						location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category+"&latitude="+latitude+"&longitude="+longitude+"&sort="+sortbyy+"&end=0"
+					}else{
+						location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortbyy+"&end=0"
+					}
 				}
 			} else {
 				if(keywordd != ""){
 					location.href="${pageContext.request.contextPath}/gonggu/ggSearch.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortbyy+"&gongguName="+keywordd
 				}else{
-					location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortbyy
+					if(category != ""){
+						location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category+"&latitude="+latitude+"&longitude="+longitude+"&sort="+sortbyy
+					}else{
+						location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortbyy
+					}
 				}
 			}
 		});

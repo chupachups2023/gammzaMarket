@@ -68,7 +68,7 @@ public class LocationController {
 	@PostMapping("/location/EnrollLocation.lo")
 	public ModelAndView enrollLocation(Location location, HttpSession session,Model model, RedirectAttributes redirectAttr,
 			@RequestParam String longitude,@RequestParam String latitude) {
-		System.out.println(location);
+//		System.out.println(location);
 		Location fullLocation=selectLocation(location);
 		
 		Member mem=(Member)session.getAttribute("loginMember");

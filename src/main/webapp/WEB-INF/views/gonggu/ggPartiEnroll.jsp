@@ -115,8 +115,6 @@
 function partiEnrollSubmit(){
 	let spendPoint=$("#hidden-price").attr("value");
 	let currPoint="${loginMember.point}"*1;
-	console.log("소모: "+ spendPoint)
-	console.log("현재: "+ currPoint)
 	if(currPoint<spendPoint){
 		alert("포인트가 부족합니다.");
 		return;

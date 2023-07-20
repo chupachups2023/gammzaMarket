@@ -190,7 +190,6 @@ function showParti(){
  			data:{"reviewNo" : reviewNo},
  			success:function(re){
  				review=re.review;
- 				console.log(review.gongguName)
  				document.getElementById("reviewGongguName").innerHTML=review.gongguName;
  				document.getElementById("reviewWriter").innerHTML='<a href="${pageContext.request.contextPath}/member/userPf.bo?userPr='+review.reviewWriter+'">'+review.reviewWriter+'</a>';
  				document.getElementById("reviewContent").innerHTML=review.reviewContent;

@@ -68,7 +68,6 @@
 	$(function(){
 		let hiddenSort=document.getElementById("hiddenSort").value;
 		let hiddenEnd=document.getElementById("hiddenEnd").value;
-		console.log(hiddenSort);
 		
 		$("#recent").on('click', function() {
 			if(hiddenSort == "recent"){

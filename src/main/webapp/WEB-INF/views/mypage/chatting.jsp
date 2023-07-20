@@ -197,7 +197,6 @@
 					}
 				}
 				$("#result").html(result);
-				console.log(msgList[0]);
 			},
 			error : function() {
 				console.log("리스트 조회 실패");
@@ -243,14 +242,12 @@
 				
 			},
 			success : function(result) {
-				console.log("메시지 전송 성공!");
 				$("#chatContent").val("");
 				msgList(currentRoomNo);
-				console.log(currentRoomNo);
 				scrollToBottom();		 
 			},
 			error : function() {
-				console.log("메시지 전송 실패" + currentRoomNo);
+				console.log("접속실패");
 			}
 		});
 	}

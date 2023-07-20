@@ -45,6 +45,7 @@ public class PartiController {
 	@Autowired
 	private NotifyService notifyService;
 	
+	//이미 참여한 공구인지 체크
 	@GetMapping("/partiEnroll.pa")
 	public ModelAndView partiEnroll(@RequestParam int gongguNo, Model model,RedirectAttributes redirectAttr) {
 		Member loginMember=(Member)model.getAttribute("loginMember");
@@ -87,7 +88,7 @@ public class PartiController {
 				Member member=memberService.selectOneMember(parti.getPartiMember());
 				model.addAttribute("loginMember", member);
 			}
-			String str=partiList(model,"resent",1);
+			String str=partiList(model,"resent",0);
 			
 			Gonggu gonggu=gongguService.selectOneGonggu(parti.getGongguNo());
 			Notify notify=new Notify();
@@ -105,7 +106,7 @@ public class PartiController {
 			return "redirect:/";
 		}
 	}
-	
+	//참여자 참여리스트
 	@GetMapping("/ggPartiList.pa")
 	public String partiList(Model model,@RequestParam(defaultValue="recent") String sort,@RequestParam(defaultValue="0") int end) {
 		Member loginMember=(Member)model.getAttribute("loginMember");
@@ -145,7 +146,7 @@ public class PartiController {
 	
 	//물건 수령 했다고 버튼 눌렀을 때
 	@GetMapping("/partiStatusUpdate.pa")
-	public String partiStatusUpdate(@RequestParam int gongguNo, Model model) {
+	public String partiStatusUpdate(@RequestParam int gongguNo, Model model, @RequestParam(defaultValue="recent") String sort, @RequestParam(defaultValue="0") int end) {
 		String userId=((Member)model.getAttribute("loginMember")).getUserId();
 		HashMap<String, String> map=new HashMap<String,String>();
 		map.put("gongguNo", String.valueOf(gongguNo));
@@ -172,7 +173,7 @@ public class PartiController {
 		notify.setNotiContent("/gonggu/checkPartis.pa?gongguNo="+gonggu.getGongguNo()+"'>"+gongguName+" 공구 참여자가 물건을 수령하여 "+df.format(totalPrice)+"포인트가 들어왔습니다.</a>");
 		notifyService.insertNotify(notify);
 		
-		partiList(model,"resent",1);
+		partiList(model,sort,end);
 		return "/mypage/ggList_Parti";
 	}
 	
@@ -193,7 +194,8 @@ public class PartiController {
 	
 	//총대가 참여자 선택
 	@GetMapping("/partiMemSelect.pa")
-	public String partiMemSelect(@RequestParam String[] id, @RequestParam int gongguNo, Model model,@RequestParam(defaultValue="recent")String sort) {
+	public String partiMemSelect(@RequestParam String[] id, @RequestParam int gongguNo, Model model,
+			@RequestParam(defaultValue="recent")String sort) {
 		Gonggu gonggu=gongguService.selectOneGonggu(gongguNo);
 		for(int i=0;i<id.length;i++) {
 			HashMap<String, String> map=new HashMap<String,String>();
@@ -215,6 +217,7 @@ public class PartiController {
 		HashMap<String, String> map=new HashMap<String,String>();
 		map.put("gongguNo", String.valueOf(gongguNo));
 		map.put("sort", sort);
+		
 		ArrayList<Parti> partiList=partiService.selectPartiListForLeader(map);
 		int selectCount=0;
 		for(int i=0;i<partiList.size();i++) {

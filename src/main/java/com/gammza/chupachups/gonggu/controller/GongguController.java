@@ -71,6 +71,8 @@ public class GongguController {
 	private RequestService requestService;
 	@Autowired
 	private RequestController requestController;
+	@Autowired
+	private PartiController partiController;
 	
 	//요청하기에서 연동해서 글 쓸 때
 	@GetMapping("/ggWrite.go")
@@ -88,6 +90,9 @@ public class GongguController {
 				@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude,
 				@RequestParam(defaultValue="PULLUP_AT") String sort,@RequestParam(defaultValue="1") int end) {
 		Member loginMember=(Member) session.getAttribute("loginMember");
+		
+		model.addAttribute("category", "");
+		model.addAttribute("gongguName", "");
 		
 		ArrayList<Gonggu> ggListView;
 		ModelAndView mav=new ModelAndView();
@@ -142,6 +147,7 @@ public class GongguController {
 		}
 		
 		ArrayList<Gonggu> mainList = gongguService.selectMainList();
+		
 		for(int i=0;i<mainList.size();i++) {
 			Location tempLocal=locationService.selectLocationByNo(mainList.get(i).getLocationNo());
 			String locationName=locationController.SelectLocationName(tempLocal);
@@ -167,7 +173,7 @@ public class GongguController {
 		//공구 날짜가 지났는데 상태가 1(진행 중)이면 
 		if(today.isAfter(endTime) && gonggu.getEndStatus()==1) {
 			gongguService.updateEndStatus(gongguNo);
-			new PartiController().nonPartiMemPointMgr(gongguNo);
+			partiController.nonPartiMemPointMgr(gongguNo);
 		}
 	}
 	
@@ -466,6 +472,7 @@ public class GongguController {
 	 public String searchGonggu(@RequestParam("gongguName") String gongguName, Model model,HttpSession session,
 			 @RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude,
 			 @RequestParam(defaultValue="PULLUP_AT") String sort,@RequestParam(defaultValue="1") int end, RedirectAttributes redirectAttr) {
+		 model.addAttribute("category", "");
 	 	Member mem=(Member)session.getAttribute("loginMember");
 	 	HashMap<String,String> map=new HashMap<String,String>();
 	 	if(mem !=null) {
@@ -533,6 +540,7 @@ public class GongguController {
 	public String categoryList(@RequestParam("category") int category, Model model, HttpSession session,RedirectAttributes redirectAttr,
 			@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude,
 			@RequestParam(defaultValue="PULLUP_AT") String sort,@RequestParam(defaultValue="1") int end) {
+		 model.addAttribute("gongguName", "");
 	 	Member mem=(Member)session.getAttribute("loginMember");
 	 	HashMap<String,String> map=new HashMap<String,String>();
 	 	if(mem==null) {

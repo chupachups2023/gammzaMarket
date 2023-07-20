@@ -136,7 +136,6 @@
 	<script>
 	let gongguCate="${gonggu.category}";
 	let gongguType="${gonggu.type}";
-	console.log("타입은? "+gongguType);
 	if(gongguCate != ""){
 		document.getElementById("cate"+gongguCate).setAttribute("selected","true");
 		document.getElementById("type"+gongguType).setAttribute("selected","true");

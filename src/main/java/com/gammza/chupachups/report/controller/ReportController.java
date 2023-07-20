@@ -28,7 +28,7 @@ public class ReportController {
 		int result = reportService.insertReport(report);
 		model.addAttribute("report", reportService.insertReport(report));
 		
-		System.out.println(report);
+//		System.out.println(report);
 		
 		rd.addFlashAttribute("msg", "신고가 완료되었습니다.");
 		return "redirect:/";
