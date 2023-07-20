@@ -174,8 +174,9 @@
   		$('.pointSel').removeClass('clicking');
   		var price1 = $('#viewPriceEtc').val();
   		$('#pointPrice').val(price1);
-  		const price2 = price1.replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원";
-  		$('#viewPrice').val(price2);
+  		const price2 = price1.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  		$('#viewPrice').val(price2 + " 원");
+  		$('#orderName').val(price2+"p");
   		var afterP = 0;
   		afterP = Number(${loginMember.point})+Number(price1)+" p";
   		$('#afterP').text(afterP);
@@ -203,6 +204,7 @@
 		const merchant_uid = orderNum();
 		
 		const name = $('#orderName').val()+"oint";
+		
 		const pointPrice = $('#pointPrice').val();
 	    IMP.request_pay({
 	        pg : pg,		//결제하는 pg종류
