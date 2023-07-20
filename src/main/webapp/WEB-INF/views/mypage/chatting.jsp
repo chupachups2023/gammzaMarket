@@ -149,7 +149,11 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
 	var currentRoomNo = null;
+	var window = document.getElementById('result');
 	window.addEventListener("load", function() {
+		scrollToBottom();
+	});
+	window.addEventListener("scroll", function() {
 		scrollToBottom();
 	});
 	$(document).ready(function() {
