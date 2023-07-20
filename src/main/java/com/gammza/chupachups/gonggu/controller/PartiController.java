@@ -67,6 +67,19 @@ public class PartiController {
 			
 			return mav;
 		}else {
+			HashMap<String,String> partiMap=new HashMap<String,String>();
+			partiMap.put("gongguNo", String.valueOf(gongguNo));
+			partiMap.put("sort", "recent");
+			ArrayList<Parti> partiList=partiService.selectPartiListForLeader(partiMap);
+			
+			int count=0;
+			
+			for(int i=0; i<partiList.size();i++) {
+				if(partiList.get(i).getStatus() == 2) {
+					count++;
+				}
+			}
+			model.addAttribute("partiCount", count);
 			return new ModelAndView("/gonggu/ggPartiEnroll");
 			
 		}

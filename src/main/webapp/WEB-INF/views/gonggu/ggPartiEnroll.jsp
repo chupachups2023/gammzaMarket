@@ -141,8 +141,11 @@ function plus(){
 	let amount=document.getElementById("amount").value;
 	let atprice=document.getElementById("price").value;
 	let qttnum=$("#qttnum").attr("value")*1;
-	if($("#qttnum").attr("value")*1+1>amount){
-		alert("최대 구매 가능 수량은 "+amount+"개입니다.");
+	let partiCount="${partiCount}";
+	console.log(partiCount)
+	let available=amount-partiCount;
+	if($("#qttnum").attr("value")*1+1>available){
+		alert("최대 구매 가능 수량은 "+available+"개입니다.");
 	}else{
 		$("#qttnum").attr("value",qttnum+1);
 		$("#hidden-price").attr("value", $("#qttnum").attr("value")*atprice);

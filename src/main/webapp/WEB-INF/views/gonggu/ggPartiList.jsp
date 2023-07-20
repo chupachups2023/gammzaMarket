@@ -53,7 +53,7 @@
 			<tr>
 			<c:choose>
 				<c:when test="${list.status > 0 }">
-					<th height="50px"> <input type="checkbox" value="${j.index}" disabled checked> </th>
+					<th height="50px"> <input name="gongguMem" type="checkbox" value="${j.index}" disabled checked> </th>
 				</c:when>
 				<c:otherwise>
 					<th height="50px"> <input type="checkbox" value="${j.index}" name="gongguMem"> </th>

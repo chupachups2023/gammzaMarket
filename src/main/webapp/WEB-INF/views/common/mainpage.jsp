@@ -13,6 +13,7 @@
 			<img src="${pageContext.request.contextPath}/resources/img/header/search.png" alt="" class="header-searchicon" onclick="fn_srchGgLst()">
 			<input type="text" class="mainHeader-search" name="gongguName" id="gongguName" value="${keyword}" onkeyup="if(window.event.keyCode==13){fn_srchGgLst()}"> 
 		</div>
+		<div>파는 사이트 아니고 같이 사는 사이트입니다^^</div>
 	</div>
 	
  	<div class="main-listSec">
