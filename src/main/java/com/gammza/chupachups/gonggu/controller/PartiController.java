@@ -194,7 +194,7 @@ public class PartiController {
 	
 	//총대가 참여자 선택
 	@GetMapping("/partiMemSelect.pa")
-	public String partiMemSelect(@RequestParam String[] id, @RequestParam int gongguNo, Model model,
+	public String partiMemSelect(@RequestParam(defaultValue="") String[] id, @RequestParam int gongguNo, Model model,
 			@RequestParam(defaultValue="recent")String sort) {
 		Gonggu gonggu=gongguService.selectOneGonggu(gongguNo);
 		for(int i=0;i<id.length;i++) {
