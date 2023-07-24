@@ -1,10 +1,10 @@
 
 	function success(position) {
-	    const latitude = position.latitude;   // 위도(37.xxxx)
-	    const longitude = position.longitude; // 경도
-/*	    const latitude = position.coords.latitude;   // 위도(37.xxxx)
+	    /*const latitude = position.latitude;   // 위도(37.xxxx)
+	    const longitude = position.longitude; // 경도*/
+	    const latitude = position.coords.latitude;   // 위도(37.xxxx)
 	    const longitude = position.coords.longitude; // 경도
-	*/	
+		
 	  	//kakao REST API에 get 요청을 보낸다.
         //파라미터 x,y에 lon,lat을 넣어주고 API_KEY를 Authorization헤더에 넣어준다.
         
@@ -12,7 +12,7 @@
         	type:"get",
         	url:"https://dapi.kakao.com/v2/local/geo/coord2address.json?x="+longitude+"&y="+latitude+"&input_coord=WGS84",
         	beforeSend: function (header) {
-        		header.setRequestHeader("Authorization","KakaoAK 840539f3651afe19f12cc19a1dc9e0ab");
+        		header.setRequestHeader("Authorization","KakaoAK ");
             },
             success:function(result){
             	var address=result.documents[0].address.address_name;
@@ -48,7 +48,7 @@
 			        	type:"get",
 			        	url:"https://dapi.kakao.com/v2/local/geo/coord2address.json?x="+latlng.La+"&y="+latlng.Ma+"&input_coord=WGS84",
 			        	beforeSend: function (header) {
-			        		header.setRequestHeader("Authorization","KakaoAK 840539f3651afe19f12cc19a1dc9e0ab");
+			        		header.setRequestHeader("Authorization","KakaoAK ");
 			            },
 			            success:function(clickresult){
 			            	var clickaddress=clickresult.documents[0].address.address_name;
@@ -68,15 +68,13 @@
         })
 	}
 
-/*	function getUserLocation() {
+	function getUserLocation() {
 	    if (!navigator.geolocation) {
 	        alert("위치 정보가 지원되지 않습니다.");
 	    }else{
 		    navigator.geolocation.getCurrentPosition(success);
 	    }
 	}
-	*/
-	
 	
 	//지도 토큰 받아오기
 	var accessToken = 'none';
@@ -93,8 +91,8 @@
 			success:function(data){
 				errCnt = 0;																									
 				accessToken = data.result.accessToken;
-				/* getUserLocation(); */
-				position={"latitude":37.533921602961506, "longitude":126.89677032759451 }
+				getUserLocation(); 
+				/*position={"latitude":37.533921602961506, "longitude":126.89677032759451 }*/
          		success(position);
 				
 			},

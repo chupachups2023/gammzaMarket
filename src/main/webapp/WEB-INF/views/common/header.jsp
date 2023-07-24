@@ -128,12 +128,12 @@
 								<div class="social-icon">
 									<ul>
 										<li class="login-kakao">
-											<a href="https://kauth.kakao.com/oauth/authorize?client_id=db32886cc653e7c143ebd36f56525b61&redirect_uri=http://localhost:8095/chupachups/auth/kakao/callback&response_type=code">
+											<a href="https://kauth.kakao.com/oauth/authorize?client_id=&redirect_uri=http://localhost:8095/chupachups/auth/kakao/callback&response_type=code">
 												<img src="${pageContext.request.contextPath}/resources/img/header/icon_kakao_long.png" alt="카카오로그인버튼">
 											</a> 
 										</li>
 										<li class="login-naver">
-											<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&state=test&client_id=GQGBjwaCzYQZZ_5XkE2o&state=STATE_STRING&redirect_uri=http://localhost:8095/chupachups/auth/naver/callback">
+											<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&state=test&client_id=&state=STATE_STRING&redirect_uri=http://localhost:8095/chupachups/auth/naver/callback">
 												<img src="${pageContext.request.contextPath}/resources/img/header/icon_naver_long_resize2.png" alt="네이버로그인버튼">
 											</a> 
 									</ul>
@@ -173,10 +173,10 @@
        
 	function viewAllGonggu(){
 		function success(position) {
-			const latitude = position.latitude; 
-		    const longitude = position.longitude;
-/* 		    const latitude = position.coords.latitude;   // 위도(37.xxxx)
-		    const longitude = position.coords.longitude; */
+/* 			const latitude = position.latitude; 
+		    const longitude = position.longitude; */
+ 		    const latitude = position.coords.latitude;   // 위도(37.xxxx)
+		    const longitude = position.coords.longitude; 
 		    const memLong="${loginMember.longitude}";
 		    
 		    if(memLong != ""){
@@ -185,8 +185,8 @@
 		   		location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?longitude="+longitude+"&latitude="+latitude;
 		    }
 		}
-	    /* navigator.geolocation.getCurrentPosition(success); */
-		position={"latitude":37.533921602961506, "longitude":126.89677032759451 }
+	    navigator.geolocation.getCurrentPosition(success); 
+		/* position={"latitude":37.533921602961506, "longitude":126.89677032759451 } */
         success(position);
 	};
 	
@@ -215,10 +215,10 @@
 		const memLong="${loginMember.longitude}";
 	    
 		function success(position) {
-			const latitude = position.latitude; 
-		    const longitude = position.longitude;/* 
+			/* const latitude = position.latitude; 
+		    const longitude = position.longitude; */
 		    const latitude = position.coords.latitude;   
-		    const longitude = position.coords.longitude; */
+		    const longitude = position.coords.longitude;
 		    
 		    if(memLong != ""){
 		    	location.href=url;
@@ -226,16 +226,16 @@
 			    location.href=url+"&longitude="+longitude+"&latitude="+latitude;
 		    }
 		};
-    	/* navigator.geolocation.getCurrentPosition(success); */
-		position={"latitude":37.533921602961506, "longitude":126.89677032759451 }
+    	navigator.geolocation.getCurrentPosition(success);
+		/* position={"latitude":37.533921602961506, "longitude":126.89677032759451 } */
         success(position);
 	}
 	function fn_click(category) {
 		function success(position) {
-			const latitude = position.latitude; 
-		    const longitude = position.longitude;/* 
+			/* const latitude = position.latitude; 
+		    const longitude = position.longitude; */
 		    const latitude = position.coords.latitude;   // 위도(37.xxxx)
-		    const longitude = position.coords.longitude; */
+		    const longitude = position.coords.longitude;
 		    const memLong="${loginMember.longitude}";	//로그인 했니?
 		    
 		    if(memLong != ""){	//했다
@@ -244,20 +244,20 @@
 		   		location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category+"&longitude="+longitude+"&latitude="+latitude;
 		    }
 		}
-	    /* navigator.geolocation.getCurrentPosition(success); */
-		position={"latitude":37.533921602961506, "longitude":126.89677032759451 }
+	    navigator.geolocation.getCurrentPosition(success);
+		/* position={"latitude":37.533921602961506, "longitude":126.89677032759451 } */
         success(position);
 	}
 	function viewRequest(){
 		function success(position) {
-			const latitude = position.latitude; 
-		    const longitude = position.longitude;/* 
+			/* const latitude = position.latitude; 
+		    const longitude = position.longitude; */
 		    const latitude = position.coords.latitude;   // 위도(37.xxxx)
-		    const longitude = position.coords.longitude; */
+		    const longitude = position.coords.longitude;
 			location.href="${pageContext.request.contextPath}/ggRequest/requestView.req?longitude="+longitude+"&latitude="+latitude;
 		}
-		/* navigator.geolocation.getCurrentPosition(success); */
-		position={"latitude":37.533921602961506, "longitude":126.89677032759451 }
+		navigator.geolocation.getCurrentPosition(success);
+		/* position={"latitude":37.533921602961506, "longitude":126.89677032759451 } */
         success(position);
 	}
 	

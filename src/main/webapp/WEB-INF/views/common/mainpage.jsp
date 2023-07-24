@@ -13,6 +13,7 @@
 			<img src="${pageContext.request.contextPath}/resources/img/header/search.png" alt="" class="header-searchicon" onclick="fn_srchGgLst()">
 			<input type="text" class="mainHeader-search" name="gongguName" id="gongguName" value="${keyword}" onkeyup="if(window.event.keyCode==13){fn_srchGgLst()}"> 
 		</div>
+		<div>파는 사이트 아니고 같이 사는 사이트입니다^^</div>
 	</div>
 	
  	<div class="main-listSec">
@@ -119,15 +120,15 @@
 		        alert("위치 정보가 지원되지 않습니다.");
 		    }else{
 				function success(position) {
-				    const latitude = position.latitude;   
-				    const longitude = position.longitude;
-/* 				    const latitude = position.coords.latitude;   
-				    const longitude = position.coords.longitude; */
+				    /* const latitude = position.latitude;   
+				    const longitude = position.longitude; */
+ 				    const latitude = position.coords.latitude;   
+				    const longitude = position.coords.longitude;
 				    
 				    location.href=url+"&longitude="+longitude+"&latitude="+latitude;
 				};
-		    	/* navigator.geolocation.getCurrentPosition(success); */
-				position={"latitude":37.533921602961506, "longitude":126.89677032759451 }
+		    	navigator.geolocation.getCurrentPosition(success);
+				/* position={"latitude":37.533921602961506, "longitude":126.89677032759451 } */
 		        success(position);
 		    }
 		}
