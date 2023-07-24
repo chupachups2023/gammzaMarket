@@ -5,7 +5,7 @@
 .table{
     border-collapse: collapse;
     width:950px;
-    margin:50px auto;
+    margin:20px auto 50px;
     font-weight:normal;
     text-align:center;
 }
@@ -56,121 +56,145 @@ th{
 	font-weight:normal;
 	font-size:15px;
 }
+a{
+	cursor:pointer;
+}
+.sortByWhat{
+	text-align:left;
+	padding:5px;
+}
 a:hover{
 	text-decoration:underline;
 	text-underline-position : under;
 }
 /* 마이페이지 리뷰상세보기 모달 */
-    .modalR {
-    	position: fixed;
-    	left: 0;top: 0;
-		background: rgba(0, 0, 0, 0.52);
-		width: 100%;height: 100vh;
-		display: none
-		}
-    .modalR-dialog {
-    	position:absolute;
-    	top:50%;
-    	left:50%;
-    	width:500px;
-    	height:450px;
-    	transform: translate(-50%,-50%);
-    	border-radius: 10px;
-    	display:none;
-    	background-color:white;
-    }
-    .modalR.show{
-    	display:block;
-    }
-    .modalR-dialog.show{
-    	display:block;
-    }
-    .modalR-body{
-    	margin:auto;
-    }
-    .reviewModal{
-        border: 1px solid;
-        border-collapse: collapse;
-        width: 400px;
-        height: 250px;
-        margin:auto;
-    }
-    .reviewModal td {
-    	border:1px solid;
-    }
-    .btn-close {
-        display: inline-block;
-        width: 50px;
-        height: 20px;
-        margin-left:225px;
-
-        background: rgba(94, 177, 98, 0.75);
-        border: none;
-        border-radius: 5px;
-        color: aliceblue;
-        font-weight: bold;
-    }
-    .modalR-title{
-    	margin-top: 40px;
-    }
-    .reviewContent:hover{
-    	text-decoration:underline;
-    	text-underline-position : under;
-    	cursor:pointer;
-    }
-    .gongguName:hover{
-    	text-decoration:underline;
-    	text-underline-position : under;
-    	cursor:pointer;
-    }
-    #reviewDetailModal td{
-    	padding:7px;
-    }
-    #receiver{
-    	border:none;
-    	width:64px;
-    	font-size:16px;
-    }
-	.starRate{
-		padding-bottom:10px;
-	}
-  .star {
-    position: relative;
-    font-size: 1.5rem;
-    color: #dddddd9c;
-    height:35px;
-  }
-  .star input {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    opacity: 0;
-    cursor: pointer;
-  }
-  .star span {
-  	width: 100%;
-  	height:29.6px;
-    position: absolute; 
-    left: 0;
-    color: #f4e41c;
-    overflow: hidden;
-    pointer-events: none;
-    overflow:hidden;
-  }
-  
-  .reviewContent{
-  	resize:none;
-  	width:399.2px;
-  	height:170.2px;
-  	border:none;
-  	padding:7px
-  }
-  .reviewContentPre{
-  	margin:0;
-  	padding:0;
-  }
-  .modalR-footer{
-  	display: flex;
+.modalR {
+  	position: fixed;
+  	left: 0;
+  	top: 0;
+	/* background: rgba(0, 0, 0, 0.52); */
+	width: 100%;
+	height: 100vh;
+	display: none
+}
+.modal-bg {
+	background-color: rgba(0, 0, 0, 0.6);
+	width: 100%;
+	height: 100%;
+}
+.modalR-dialog {
+  	width:500px;
+  	height:450px;
+  	transform: translate(100%,40%);
+  	border-radius: 10px;
+  	display:none;
+  	background-color:white;
+}
+.modalR-content{
+	display:flex;
+	width:500px;
+  	height:450px;
+  	align-items: center;
     justify-content: center;
-  }
+}
+.modalR.show{
+	display:block;
+}
+.modalR-dialog.show{
+	display:block;
+}
+.modalR-body{
+	margin:auto;
+}
+.reviewModal{
+    border: 1px solid;
+    border-collapse: collapse;
+    width: 400px;
+    height: 250px;
+    margin:auto;
+}
+.reviewModal td {
+	border:1px solid;
+}
+.btn-close {
+    display: inline-block;
+    width: 50px;
+    height: 20px;
+    margin-left:225px;
+
+    background: rgba(94, 177, 98, 0.75);
+    border: none;
+    border-radius: 5px;
+    color: aliceblue;
+    font-weight: bold;
+}
+
+.gongguName:hover{
+	text-decoration:underline;
+	text-underline-position : under;
+	cursor:pointer;
+}
+#reviewDetailModal td{
+	padding:7px;
+}
+#receiver{
+	border:none;
+	width:64px;
+	font-size:16px;
+}
+.starRate{
+	padding-bottom:10px;
+}
+.star {
+  position: relative;
+  font-size: 1.5rem;
+  color: #dddddd9c;
+  height:35px;
+}
+.star input {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.star span {
+	width: 100%;
+	height:29.6px;
+  position: absolute; 
+  left: 0;
+  color: #f4e41c;
+  overflow: hidden;
+  pointer-events: none;
+  overflow:hidden;
+}
+ 
+.reviewContent{
+	resize:none;
+	width:399.2px;
+	height:170.2px;
+	border:none;
+	padding:7px
+}
+.reviewContentPre{
+	margin:0;
+	padding:0;
+}
+
+.modalR-footer{
+	display: flex;
+  justify-content: center;
+}
+.ggList_img{
+	width:100px;
+	height:100px;
+	overflow:hidden;
+}
+.ggList_img>img{
+	width:100px;
+	min-height:100px;
+}
+.ggList_title{
+	margin-top:30px;
+}

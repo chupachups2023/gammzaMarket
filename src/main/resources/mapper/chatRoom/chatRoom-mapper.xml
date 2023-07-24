@@ -10,26 +10,28 @@
 		  from chat_room
 	</select>
 	<select id="chatRoomList" resultMap="chatRoomMap">
-    select *
+	select *
 	  from chat_room
-	 where room_owner IN (
-  						  select gonggu_writer
-   							 from gonggu
-   							 where gonggu_no IN (
-   											     select gonggu_no
-    										    from parti_tb
-    										    where parti_member = #{userId})
-												) or room_owner = #{userId}
+	 where gonggu_no  IN ( select gonggu_no
+    					 from parti_tb
+    					 where parti_member =  #{userId} and status>0
+						) 
+                or room_owner =  #{userId}
 		order by last_chat desc
 	</select>
 	<insert id="insertChatRoom">
 		insert into chat_room
 			 values (
-			 		chatroom_seq.nextval,
+			 		#{gongguNo},
 			 		#{gongguNo},
 			 		#{gongguWriter},
 			 		default,
 			 		SYSDATE		 
 			 )				
 	</insert>
+	<update id="updateSendDate">
+        update chat_room
+		   set last_chat = sysdate
+		 where room_no = #{roomNo}
+	</update>
 </mapper>

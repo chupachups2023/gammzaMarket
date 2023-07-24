@@ -13,6 +13,7 @@
 			<img src="${pageContext.request.contextPath}/resources/img/header/search.png" alt="" class="header-searchicon" onclick="fn_srchGgLst()">
 			<input type="text" class="mainHeader-search" name="gongguName" id="gongguName" value="${keyword}" onkeyup="if(window.event.keyCode==13){fn_srchGgLst()}"> 
 		</div>
+		<div>파는 사이트 아니고 같이 사는 사이트입니다^^</div>
 	</div>
 	
  	<div class="main-listSec">
@@ -32,7 +33,7 @@
 					</c:choose>
 					<div class="gghover">
 					    <b>
-						<fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" />
+						<fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" /> P
 					    </b>
 					</div>
 					<div class="gghover">
@@ -40,37 +41,22 @@
 					</div>
 				</div>
 			</c:forEach>
+			
 		</div>
+		<div class="moreList-row"></div>
 		<div class="moreBtnBox">
 			<button type="button" class="moreBtn button" onclick="moreList();">더보기</button>
 		</div>
 	</div>
-	
-<!-- 	<script>
-무한스크롤
-		$(function(){
-			$(".main-listSec  .list-goods").hide();
-			$(".main-listSec  .list-goods").slice(0, 8).css({display:inline-block;}); 
-			$("#load").click(function(e){
-				e.preventDefault();
-				$(".main-listSec .list-goods:hidden").slice(0, 8).fadeIn(200).css({display:inline-block;}); // 클릭시 more 갯수 지저정
-				if($(".main-listSec .list-goods:hidden").length == 0){ // 컨텐츠 남아있는지 확인
-					$('#load').fadeOut(100); // 컨텐츠 없을 시 버튼 사라짐
-				}
-			});
-		});
-	</script> -->
-	
 	<script>
-		/* 무한스크롤 */
-		let page = 8;	//한번에 보여줄 상품 개수
+		/* 더보기 버튼 방법1 */
+/* 		let page = 8;	//한번에 보여줄 상품 개수
 		$(function(){
 			$(".list-goods").hide();
 			$(".list-goods").slice(0, page).show();
 		});
 		
 		function moreList(){
-			console.log($(".list-goods:hidden").length);
 			if($(".list-goods:hidden").length >= page){			//보여지지 않은 상품 개수가 보여주고자하는 개수와 같거나 많은지
 				$(".list-goods:hidden").slice(0, page).fadeIn(200); // 클릭시 more 갯수 미정
 				if($(".list-goods:hidden").length == 0){ 		// 컨텐츠 남아있는지 확인
@@ -80,7 +66,49 @@
 				$(".list-goods:hidden").slice(0, $(".list-goods:hidden").length).fadeIn();
 				$('.moreBtn').fadeOut(100);
 			}
-		}
+		} */
+		
+		/* 더보기 버튼 방법2 */
+		let page =1;
+ 		function moreList(){
+ 			console.log(page);
+ 			page++;
+ 			console.log(page);
+			$.ajax({
+				url:'${pageContext.request.contextPath}/gonggu/mainList.go',
+				type:'post',
+				dataType:'json',
+				data:{page:page},
+				success:function(data){
+					console.log(data.result);
+					const itemArr = data.result;
+					let value = "";
+					console.log(data.result[0]);
+					for(let i in itemArr){
+						value += `<div class="list-goods" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=`
+							+ itemArr[i].gongguNo +`'">`
+							+ '<div class="ggImg gghover">'
+							+ '<img src="${pageContext.request.contextPath}/resources/upload/' +itemArr[i].photo1+'" alt="이미지 없음">' 
+							+ '</div>' + '<div class="ggTitle gghover">';
+						if(itemArr[i].gongguName.length > 10){ 
+							value += itemArr[i].gongguName.substring(0, 10)+'...</div>';
+						}else {
+							value += itemArr[i].gongguName+'</div>';
+						}
+						value += '<div class="gghover"><b>'+Number(itemArr[i].price).toLocaleString()+' P</b></div>'
+				 		+'<div class="gghover"><small>' + itemArr[i].locationName +'</small></div></div>';
+					}
+					const moreList = document.querySelector(".moreList-row");
+					moreList.innerHTML += value;
+					if(itemArr.length<8){
+						$(".moreBtnBox").remove();
+					}
+				},
+				error:function(){
+					console.log("실패");
+				}
+			});
+		} 
 		
 		
 		function fn_srchGgLst() {
@@ -92,12 +120,16 @@
 		        alert("위치 정보가 지원되지 않습니다.");
 		    }else{
 				function success(position) {
-				    const latitude = position.coords.latitude;   
+				    /* const latitude = position.latitude;   
+				    const longitude = position.longitude; */
+ 				    const latitude = position.coords.latitude;   
 				    const longitude = position.coords.longitude;
 				    
 				    location.href=url+"&longitude="+longitude+"&latitude="+latitude;
 				};
 		    	navigator.geolocation.getCurrentPosition(success);
+				/* position={"latitude":37.533921602961506, "longitude":126.89677032759451 } */
+		        success(position);
 		    }
 		}
     </script>

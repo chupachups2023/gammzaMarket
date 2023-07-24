@@ -6,6 +6,31 @@
 <mapper namespace="com.gammza.chupachups.purchase.model.dao.PurchaseDao">
  	<resultMap type="pointPurRec" id="pointMap"/>
  	
+ 	<select id="selectPointOrderNum" resultType="_int">
+ 		select count(*)
+ 		from point_pur_rec
+ 		where point_order_num = #{pointOrderNum}
+ 	</select>
+ 	<select id="selectPaymentRecord" resultMap="pointMap">
+ 		select *
+ 		from point_pur_rec
+ 		where user_id = #{userId}
+ 		order by point_no desc
+ 	</select>
+ 	<select id="selectPaymentRecord_Ad" resultMap="pointMap">
+ 		select *
+ 		from point_pur_rec
+ 		order by point_no desc
+ 	</select>
+ 	<select id="selectTotalRecord" resultType="_int">
+		select count(*)
+		from point_pur_rec
+	</select>
+ 	<select id="selectTotalRecord_M" resultType="_int">
+		select count(*)
+		from point_pur_rec
+		where user_id = #{userId}
+	</select>
  	<!-- 포인트 충전 반영 -->
  	<update id="updatePoint">
  		update member

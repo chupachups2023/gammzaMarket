@@ -20,8 +20,8 @@
 		</div>
 	</div>
 	<div align="center">
-		<span class="point">매너온도</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-		<span class="point2">${loginMember.temperature }도 <img src="${pageContext.request.contextPath}/resources/img/mypage/빈감자 1.png" width="35px"></span>
+		<span class="point"><img src="${pageContext.request.contextPath}/resources/img/mypage/빈감자 1.png" width="35px">매너온도</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+		<span class="point2">${loginMember.temperature }°C </span>
 		<div class="bar">	
 			<div class="bar2" id="bar"></div>
 		</div>

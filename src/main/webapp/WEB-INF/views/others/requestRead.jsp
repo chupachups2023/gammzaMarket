@@ -17,7 +17,7 @@
         <div class="ggRead-title">
             <div class="ggRead-writer ggRead-writer-none">${request.requestWriter }</div>
             <div class="ggRead-name">${request.requestName }</div>
-            <div class="ggRead-writer" onclick="">${request.requestWriter }</div>
+            <div class="ggRead-writer"><a href="${pageContext.request.contextPath}/member/userPf.bo?userPl=${request.requestWriter}">${request.requestWriter }</a></div>
         </div>
     </div>
     <hr class="ggRead-hr">
@@ -99,13 +99,12 @@ $.ajax({
 	data:{"requestNo" : "${request.requestNo}"},
 	success:function(result){
 		const reqMember=result.reqMember;
-		console.log(reqMember[0].longitude)
 		
 		 $.ajax({
 			type:"get",
 			url:"https://dapi.kakao.com/v2/local/geo/coord2address.json?x="+longitude+"&y="+latitude+"&input_coord=WGS84",
 			beforeSend: function (header) {
-				header.setRequestHeader("Authorization","KakaoAK 840539f3651afe19f12cc19a1dc9e0ab");
+				header.setRequestHeader("Authorization","KakaoAK ");
 		    },
 		    success:function(result){
 		    	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스

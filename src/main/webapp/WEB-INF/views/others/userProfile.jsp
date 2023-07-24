@@ -4,18 +4,35 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/mainPage.css?<%=System.currentTimeMillis() %>">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/reviewList.css?<%=System.currentTimeMillis() %>">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="${userpr}${userpp}${userpl}님의 프로필" name="title"/>
+	<jsp:param value="${member.userId}님의 프로필" name="title"/>
 </jsp:include>
-
+<style>
+	.emptystar{
+		opacity:0.15;
+		font-size:17px;
+	}
+	.star{
+		color:RGB(252, 213, 63);
+		font-size:17px;
+	}
+	.reviewRate span{
+		margin-right:-5px;
+	}
+	.gongguName:hover{
+		cursor:pointer;
+		text-decoration:underline;
+	}
+</style>
 	<div align="center" class="mainPage-title">	
-		<h1 id="userId" class="userId">💚 ${userpr}${userpl}${userpp}${member.userId}님의 프로필</h1>
+		<h1 id="userId" class="userId">💚 ${member.userId}님의 프로필</h1>
 	</div>
 	<div align="center">
 		<span class="point">매너온도</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-		<span class="point2">30.5도<img src="${pageContext.request.contextPath}/resources/img/mypage/빈감자 1.png" width="35px"></span>
+		<span class="point2">${member.temperature}도<img src="${pageContext.request.contextPath}/resources/img/mypage/빈감자 1.png" width="35px"></span>
 		<div class="bar">	
 			<div class="bar2" id="bar"></div>
 		</div>
@@ -24,28 +41,37 @@
         <button class="btn reviewBtn readerR" onclick="showLeader();">총대로 받은 리뷰</button>&emsp;&emsp;
         <button class="btn reviewBtn particR" onclick="showParti();">참가자로 받은 리뷰</button>
     </div>
-    
+    <br><br><br>
     <table class="allGGListTable" id="partiReview">
-                <c:if test="${empty partiReview }">
-                <tr>
-                	<td colspan="5">공구에 참여해서 받은 리뷰가 아직 없습니다.</td>
-                </tr>
-                </c:if>
+		<c:if test="${empty partiReview }">
+			<tr>
+				<td colspan="5">공구에 참여해서 받은 리뷰가 아직 없습니다.</td>
+			</tr>
+		</c:if>
         <c:forEach items="${partiReview }" var="plist" varStatus="i">
             <tr class="allGGt" >
                 <td width="10%">${plist.reviewNo }</td>
                 <td width="20%">
-                <c:if test="${fn:length(plist.gongguName) gt 10}">
-                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${plist.gongguNo }'">${fn:substring(plist.gongguName, 0, 10)}⋯</div>
-                </c:if>
-                <c:if test="${fn:length(plist.gongguName) le 10}">
-                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${plist.gongguNo }'">${fn:substring(plist.gongguName, 0, 10)}</div>
-                </c:if>
-                	${plist.reviewWriter }
+	                <c:if test="${fn:length(plist.gongguName) gt 10}">
+	                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${plist.gongguNo }'">${fn:substring(plist.gongguName, 0, 10)}⋯</div>
+	                </c:if>
+	                <c:if test="${fn:length(plist.gongguName) le 10}">
+	                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${plist.gongguNo }'">${plist.gongguName}</div>
+	                </c:if>
+                	작성자: <a href="${pageContext.request.contextPath}/member/userPf.bo?userPr=${plist.reviewWriter }">${plist.reviewWriter }</a>
                 </td>
                 
                 <td width="35%">
-                	<div class="reviewContent" onclick="reviewDetailModal(${plist.reviewNo});"><pre>${plist.reviewContent }</pre></div>
+                	<div class="reviewContent" onclick="reviewDetailModal(${plist.reviewNo});">
+                		<c:choose>
+                			<c:when test="${fn:length(plist.reviewContent) gt 25}">
+                				${fn:substring(plist.reviewContent, 0, 25)}⋯
+                			</c:when>
+                			<c:otherwise>
+			                	${plist.reviewContent }
+                			</c:otherwise>
+                		</c:choose>
+                	</div>
                 </td>
                 <td width="20%"><div class="reviewRate">점수: 
                 <c:forEach begin="1" end="${plist.rate }">
@@ -75,12 +101,21 @@
                 	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${lList.gongguNo }'">${fn:substring(lList.gongguName, 0, 10)}⋯</div>
                 </c:if>
                 <c:if test="${fn:length(lList.gongguName) le 10}">
-                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${lList.gongguNo }'">${fn:substring(lList.gongguName, 0, 10)}</div>
+                	<div class="gongguName" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${lList.gongguNo }'">${lList.gongguName}</div>
                 </c:if>
-                	${lList.reviewWriter }
+                	작성자: <a href="${pageContext.request.contextPath}/member/userPf.bo?userPr=${lList.reviewWriter }">${lList.reviewWriter }</a>
                 </td>
                 <td width="35%">
-                	<div class="reviewContent" onclick="reviewDetailModal(${lList.reviewNo});"><pre>${lList.reviewContent }</pre></div>
+                	<div class="reviewContent" onclick="reviewDetailModal(${lList.reviewNo});">
+                		<c:choose>
+                			<c:when test="${fn:length(lList.reviewContent) gt 25}">
+                				${fn:substring(lList.reviewContent, 0, 25)}⋯
+                			</c:when>
+                			<c:otherwise>
+			                	${lList.reviewContent }
+                			</c:otherwise>
+                		</c:choose>
+                	</div>
                 </td>
                 <td width="20%"><div class="reviewRate">점수:
                 <c:forEach begin="1" end="${lList.rate }">
@@ -98,7 +133,8 @@
         		<!-- 리뷰보기 모달창 -->
 	
 	<div class="modalR" id="reviewDetailModal">
-	  <div class="modalR-dialog">
+		<div class="modal-bg" onclick="mClose()"></div>
+		<div class="modalR-dialog">
 	    <div class="modalR-content">
 	      <div class="modalR-header" style="text-align:center;">
 	        <h4 class="modalR-title">리뷰보기</h4>
@@ -116,12 +152,12 @@
 		                </td>
 					</tr>
 					<tr>
-						<td colspan="2"><span id="reviewContent"></span><br></td>
+						<td colspan="2"><span id="reviewContent"></span></td>
 					</tr>			
 				</table>
 	      </div>
 	      <div class="modalR-footer">
-	        <br><button type="button" class="btn-close" onclick="javascrip:mClose();">닫기</button><br><br>
+	        <button type="button" class="button" onclick="javascrip:mClose();">닫기</button>
 	      </div>
 	    </div>
 	  </div>
@@ -130,7 +166,7 @@
         
 	<script>
 		$(function(){
-			var wid=700/100*${loginMember.temperature}; /* 온도 */
+			var wid=700/100*${member.temperature}; /* 온도 */
 			document.getElementById("bar").style.width=wid;
 		})
 $("#partiReview").css("display", "none");
@@ -150,13 +186,12 @@ function showParti(){
  		
  		$.ajax({
  			type:"get",
- 			url:"${pageContext.request.contextPath}/review/getReview.re",
+ 			url:"${pageContext.request.contextPath}/member/getReview.re",
  			data:{"reviewNo" : reviewNo},
  			success:function(re){
  				review=re.review;
- 				console.log(review.gongguName)
  				document.getElementById("reviewGongguName").innerHTML=review.gongguName;
- 				document.getElementById("reviewWriter").innerHTML=review.reviewWriter;
+ 				document.getElementById("reviewWriter").innerHTML='<a href="${pageContext.request.contextPath}/member/userPf.bo?userPr='+review.reviewWriter+'">'+review.reviewWriter+'</a>';
  				document.getElementById("reviewContent").innerHTML=review.reviewContent;
  				let star='';
  				for(let i=1;i<=review.rate*1;i++){

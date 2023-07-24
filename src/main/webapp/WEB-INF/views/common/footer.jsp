@@ -14,7 +14,7 @@
 			직업정보제공사업 신고번호 2016-서울서초-0051
 		</small></p>
 		<p><small>
-			주소 서울특별시 구로구 디지털로 30길 28, 609호 (당근서비스)<br>
+			주소 서울특별시 구로구 디지털로 30길 28, 609호 (감자서비스)<br>
 			전화 1544-9796고객문의 cs@daangnservice.com
 		</small></p>
 	</div>
@@ -45,6 +45,7 @@ footer {
 	margin-top:25px;
 	font-size: 13px;
 }
+
 </style>
 	</body>
 </html>

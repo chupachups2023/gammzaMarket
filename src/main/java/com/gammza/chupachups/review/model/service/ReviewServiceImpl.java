@@ -46,4 +46,9 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewDao.insertReview(review);
 	}
 
+	@Override
+	public int updateTemperature(HashMap<String, String> updateTemp) {
+		return reviewDao.updateTemperature(updateTemp);
+	}
+
 }

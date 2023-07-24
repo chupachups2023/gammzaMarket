@@ -159,7 +159,6 @@
 			method: "get",
 			dataType: "json",
 			success(result) {
-				console.log(result);
 				const {userId, available} = result; // unpacking 
 				
 				if (available) {
@@ -378,7 +377,7 @@
 	var code = ""; 		/*	인증번호 저장할 곳	 */
 	$('#emlChk').click(function() {
 		var email = $('#email').val();   /* 입력한 이메일 */
-		console.log('완성된 이메일 : ' + email);		/* 이메일 오는지 확인 */
+		/* console.log('완성된 이메일 : ' + email);	 */	/* 이메일 오는지 확인 */
 		var emailAuth = $('.emailAuth')		/* 인증번호 입력 */
 		
 		 var regExp = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.[a-zA-Z]{2,4}$/;
@@ -391,7 +390,7 @@
 				type: 'GET',
 				url: '${pageContext.request.contextPath}/member/mailCheck.me?email=' + email,	/* url을 통해 데이터를 보낼 수 있도록 GET방식, url명을 "mailCheck"로 지정 */
 				success: function(data) {
-					console.log("인증번호 : " + data);
+					/* console.log("인증번호 : " + data); */
 					$('input[name=emailAuthKey]').attr('value', data);
 					emailAuth.attr('disabled', false);		/* 데이터가 성공적으로 들어오면 인증번호 입력란이 활성화되도록 */
 					code = data;

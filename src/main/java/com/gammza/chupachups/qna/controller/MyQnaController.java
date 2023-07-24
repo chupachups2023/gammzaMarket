@@ -2,16 +2,16 @@ package com.gammza.chupachups.qna.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gammza.chupachups.common.model.vo.PageInfo;
@@ -22,14 +22,14 @@ import com.gammza.chupachups.qna.model.vo.Qna;
 
 @Controller
 @RequestMapping("/mypage")
+@SessionAttributes({"loginMember"})
 public class MyQnaController {
 	@Autowired
 	private QnaService qnaService;
 
 	@GetMapping("/myQuestionList.do")
-	public void myQnaList(@RequestParam(defaultValue="1") int nowPage, Model model, HttpSession session) {
-		Member loginMember = (Member) session.getAttribute("loginMember");
-		String userId = loginMember.getUserId();
+	public void myQnaList(@RequestParam(defaultValue="1") int nowPage, Model model, @ModelAttribute("loginMember") Member member) {
+		String userId = member.getUserId();
 		int totalRecord = qnaService.selectMyQnaTotalRecord(userId);
 		int limit = 10;
 		int offset = (nowPage -1) * limit;
@@ -73,11 +73,10 @@ public class MyQnaController {
 	public void questionForm() {}
 	
 	@PostMapping("/insertQuestion.do")
-	public String insertQuestion(Qna qna, HttpSession session, RedirectAttributes redirectAttr) {
+	public String insertQuestion(Qna qna, @ModelAttribute("loginMember") Member member, RedirectAttributes redirectAttr) {
 		
 		//category 0이 나오면 돌려보내기 만들기
-		Member loginMember = (Member) session.getAttribute("loginMember");
-		String userId = loginMember.getUserId();
+		String userId = member.getUserId();
 		
 		qna.setQnaWriter(userId);
 

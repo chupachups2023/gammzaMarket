@@ -6,12 +6,12 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/adminpage/qna.css">
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="1:1문의 상세보기" name="title" />
+	<jsp:param value="1:1문의하기" name="title" />
 </jsp:include>
 
 <body>
 	<div id="questionForm">
-		<h1 align="center">1대1 답변</h1>
+		<h1 align="center">1대1 문의</h1>
 		<br>
 		<form name="questionFrm" method="post" action="${pageContext.request.contextPath}/mypage/insertQuestion.do">
 			<table id="myQuestionT">
@@ -23,7 +23,7 @@
 					<th class="myQtd1"> 문의 카테고리</th>
 					<td class="myQtd2">
 						<select name="qnaCategory" id="cate1" required>
-							<option selected>*선택해주세요</option>
+							<option value="0" selected>*선택해주세요</option>
 							<option value="1">포인트</option>
 							<option value="2">공구총대</option>
 							<option value="3">공구참여</option>

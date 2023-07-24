@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,7 +57,7 @@ public class NoticeController {
 	
 	@PostMapping("/insertNotice.do")
 	public String insertNotice(Notice notice) {
-		System.out.println(notice);
+//		System.out.println(notice);
 		int result = noticeService.insertNotice(notice);
 
 		return "redirect:/adminpage/noticeList.bo";	
@@ -75,7 +74,7 @@ public class NoticeController {
 	@GetMapping("/updateNotice.do")
 	public String updateNotice(@RequestParam int noticeNo, Model model) {
 		model.addAttribute("notice", noticeService.selectOneNotice(noticeNo));
-		System.out.println(noticeNo);
+//		System.out.println(noticeNo);
 		return "adminpage/updateNotice";
 	}	
 	

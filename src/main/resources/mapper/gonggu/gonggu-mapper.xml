@@ -31,7 +31,7 @@
 		)
 	</insert>
 	<select id="selectLastNum" resultType="_int">
-		select gonggu_seq.currval from dual
+		select max(gonggu_no) from gonggu
 	</select>
 	<select id="selectOneGonggu" resultMap="gongguMap">
         select *
@@ -43,39 +43,32 @@
     	select *
     		from gonggu
     		where status=1 and end_status=1
-    	order by pullup_at desc
+    	order by pullup_at desc, gonggu_No desc
     </select>
 
-	<select id="selectTotalRecored" resultType="_int">
+	<select id="selectTotalRecord" resultType="_int">
 		select count(*)
 		from gonggu
 		where status=1
 	</select>
 
 	<select id="selectggListView" resultMap="gongguMap">
-		<if test="sortby.equals('PULLUP_AT')">
-			SELECT  *
-			   FROM   GONGGU
-			 WHERE STATUS = 1 ${endStatus}
-			 	and  0.0359*0.0359>power(( to_number(longitude)-to_number(#{longitude })),2)+power(( to_number(latitude)-to_number(#{latitude })),2)
-			 order by pullup_at desc
-		</if>
-		<if test="sortby.equals('END_TIME')">
-			SELECT  *
-			   FROM   GONGGU
-			 WHERE STATUS = 1 ${endStatus}
-			 	and  0.0359*0.0359>power(( to_number(longitude)-to_number(#{longitude })),2)+power(( to_number(latitude)-to_number(#{latitude })),2)
-			 order by END_TIME
-		</if>
-	</select>
-	<select id="selectggListViewWithEnd" resultMap="gongguMap">
-		SELECT  GONG.GONGGU_NO
-		            ,GONG.GONGGU_NAME
-		            ,GONG.PRICE
-		            ,GONG.PHOTO1, GONG.LOCATION_NO
-		   FROM   GONGGU   GONG
-		 WHERE GONG.STATUS = 1
-		 order by pullup_at desc
+		<choose>
+			<when test="sortby.equals('END_TIME')">
+				SELECT  *
+				   FROM   GONGGU
+				 WHERE STATUS = 1 ${endStatus}
+				 	and  0.0359*0.0359>power(( to_number(longitude)-to_number(#{longitude })),2)+power(( to_number(latitude)-to_number(#{latitude })),2)
+				 order by END_TIME, gonggu_No
+			</when>
+			<otherwise>
+				SELECT  *
+				   FROM   GONGGU
+				 WHERE STATUS = 1 ${endStatus}
+				 	and  0.0359*0.0359>power(( to_number(longitude)-to_number(#{longitude })),2)+power(( to_number(latitude)-to_number(#{latitude })),2)
+				 order by pullup_at desc, gonggu_No desc
+			</otherwise>
+		</choose>
 	</select>
 	<update id="updateGongguCount">
 		update gonggu
@@ -108,30 +101,50 @@
 		 where gonggu_no=#{gongguNo} 
 	</update>
 	<select id="selectLeadGongguList" resultMap="gongguMap">
-		select * from gonggu where GONGGU_WRITER=#{userId} and status=1
-		order by pullup_at desc
+		<choose>
+			<when test="sort.equals('endTime')">
+				select * from gonggu where GONGGU_WRITER=#{userId} and status=1 ${endStatus}
+				order by end_time
+			</when>
+			<otherwise>
+				select * from gonggu where GONGGU_WRITER=#{userId} and status=1 ${endStatus}
+				order by pullup_at desc
+			</otherwise>
+		</choose>
 	</select>
 	<select id="searchGonggu" resultMap="gongguMap">
 		select * 
 			from gonggu
-		  WHERE STATUS = 1 AND END_STATUS = 1
+		  WHERE STATUS = 1 ${endStatus}
 		 	and  0.0359*0.0359>power(( to_number(longitude)-to_number(#{longitude })),2)+power(( to_number(latitude)-to_number(#{latitude })),2)
 		 	${search}
 	</select>
 	
-	<select id="selectGongguTotalRecored" resultType="_int">
+	<select id="selectGongguTotalRecord" resultType="_int">
 		select count(*)
 			from gonggu
 		  where status=1
 		   and gonggu_name = '%' ||  #{gongguName} || '%'
 	</select>
 	<select id="selectOneCategory" resultMap="gongguMap">
-		select *
-		from gonggu
-		where category = #{category} and  0.0359*0.0359>power(( to_number(longitude)-to_number(#{longitude })),2)+power(( to_number(latitude)-to_number(#{latitude })),2)
-			and STATUS = 1 AND END_STATUS = 1
-		order by pullup_at desc
+		<choose>
+			<when test="sort.equals('END_TIME')">
+				select *
+				from gonggu
+				where category = #{category} and  0.0359*0.0359>power(( to_number(longitude)-to_number(#{longitude })),2)+power(( to_number(latitude)-to_number(#{latitude })),2)
+					and STATUS = 1 ${endStatus}
+				order by END_TIME, gonggu_No
+			</when>
+			<otherwise>
+				select *
+				from gonggu
+				where category = #{category} and  0.0359*0.0359>power(( to_number(longitude)-to_number(#{longitude })),2)+power(( to_number(latitude)-to_number(#{latitude })),2)
+					and STATUS = 1 ${endStatus}
+				order by pullup_at desc, gonggu_No desc
+			</otherwise>
+		</choose>
 	</select>
+	
 	<update id="updateGongguStatus">
 		update gonggu
 		set status=0
@@ -142,6 +155,13 @@
 		set pullup_at=sysdate
 		where gonggu_no=#{gongguNo}
 	</update>
+	
+	<select id="selectAllGongguList" resultMap="gongguMap">
+		select * 
+		  from gonggu 
+		where status=1
+	 order by pullup_at desc
+	</select>
 	
 </mapper>  
 

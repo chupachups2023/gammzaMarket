@@ -85,7 +85,7 @@
 		        <input type="hidden" name="legNm" id="legNm">
 			</div>
 		</form>
-		<div class="ggStart-btn"><input type="button" value="공구 시작" onclick="ggRequestFrmSubmit();"></div>
+		<div class="ggStart-btn"><input type="button" value="공구 요청하기" onclick="ggRequestFrmSubmit();"></div>
 	</div>
 <script src="${pageContext.request.contextPath}/resources/js/gonggu/ggWriteMap.js?<%=System.currentTimeMillis() %>"></script>
 <script>

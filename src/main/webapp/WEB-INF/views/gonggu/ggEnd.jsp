@@ -51,10 +51,20 @@
         </div>
         <div class="ggRead-detail">
             <div class="ggRead-price">개당 <fmt:formatNumber type="number" maxFractionDigits="3" value="${gonggu.price}" /> 포인트</div>
-            <div class="ggRead-num">
-                <div>${gonggu.num}개 나눠요<span>/</span></div>
-                <div class="ggRead-on"> 지금 <span>${gonggu.num - partiNum}개</span> 남았어요</div>
-            </div>
+            <c:choose>
+                	<c:when test="${gonggu.type eq 0 }">
+			            <div class="ggRead-num">
+			                <div>${gonggu.num}개 나눠요<span>/</span></div>
+					        <div class="ggRead-on"> 지금 <span>${gonggu.num - partiNum}개</span> 남았어요</div>
+			            </div>
+                	</c:when>
+                	<c:otherwise>
+			            <div class="ggRead-num">
+			                <div>${gonggu.num}명과 나눠요<span>/</span></div>
+					        <div class="ggRead-on"> 지금 <span>${gonggu.num - partiNum}명</span> 남았어요</div>
+			            </div>
+                	</c:otherwise>
+                </c:choose>
             <fmt:parseDate value="${gonggu.endTime }" var="endTime" pattern="yyyy-MM-dd HH:mm"/>
             <div class="ggRead-endtime"><fmt:formatDate value="${endTime }" pattern="yyyy년 MM월 dd일 HH시 mm분"/>까지 기다려요</div>
             <div class="ggRead-lefttime">00일 00시간 00분 남았어요</div>
@@ -129,7 +139,7 @@ const latitude= document.getElementById('latitude').value;
 	type:"get",
 	url:"https://dapi.kakao.com/v2/local/geo/coord2address.json?x="+longitude+"&y="+latitude+"&input_coord=WGS84",
 	beforeSend: function (header) {
-		header.setRequestHeader("Authorization","KakaoAK 840539f3651afe19f12cc19a1dc9e0ab");
+		header.setRequestHeader("Authorization","KakaoAK ");
     },
     success:function(result){
     	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스

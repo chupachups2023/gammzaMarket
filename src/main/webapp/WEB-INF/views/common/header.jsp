@@ -31,7 +31,7 @@
 					<img src="${pageContext.request.contextPath}/resources/img/header/감자마켓.png" alt="logo" class="header-gamza"> 
 					<img src="${pageContext.request.contextPath}/resources/img/header/한글로고2.png" alt="korlogo" class="header-korlogo">
 				</a>
-				<div>
+				<div class="upperIconBox">
 				<c:choose>
 					<c:when test="${empty loginMember}">
 						<button class="header-login btn" id="open-modal">
@@ -47,11 +47,14 @@
 		      			</button>
 					</c:when>
 					<c:otherwise>
+						<div class="notiBox">
+							<img alt="알람" src="https://cdn-icons-png.flaticon.com/512/3247/3247251.png"  class="header-notify" onclick="alarmOpen()">
+							<img alt="" src="https://cdn-icons-png.flaticon.com/512/8804/8804772.png" class="notiRedDot" id="notiRedDot" onclick="alarmOpen()">
+						</div>
 						<a href="${pageContext.request.contextPath}/mypage/mypageMain.me">
 							<img src="${pageContext.request.contextPath}/resources/img/header/loginicon.png" alt="korlogo" class="header-memberLogin" >
 						</a>
 		      			<button class="header-logoutBtn" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.me'">
-		      				<!-- <img src="https://cdn-icons-png.flaticon.com/512/1828/1828427.png" alt="logoutButton"> -->
 		      				<i class="fa-solid fa-right-from-bracket fa-3x" style="color: #f9e8d0;"></i>
 		      			</button>
 					</c:otherwise>
@@ -125,12 +128,12 @@
 								<div class="social-icon">
 									<ul>
 										<li class="login-kakao">
-											<a href="https://kauth.kakao.com/oauth/authorize?client_id=db32886cc653e7c143ebd36f56525b61&redirect_uri=http://localhost:8095/chupachups/auth/kakao/callback&response_type=code">
+											<a href="https://kauth.kakao.com/oauth/authorize?client_id=&redirect_uri=http://localhost:8095/chupachups/auth/kakao/callback&response_type=code">
 												<img src="${pageContext.request.contextPath}/resources/img/header/icon_kakao_long.png" alt="카카오로그인버튼">
 											</a> 
 										</li>
 										<li class="login-naver">
-											<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&state=test&client_id=GQGBjwaCzYQZZ_5XkE2o&state=STATE_STRING&redirect_uri=http://localhost:8095/chupachups/auth/naver/callback">
+											<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&state=test&client_id=&state=STATE_STRING&redirect_uri=http://localhost:8095/chupachups/auth/naver/callback">
 												<img src="${pageContext.request.contextPath}/resources/img/header/icon_naver_long_resize2.png" alt="네이버로그인버튼">
 											</a> 
 									</ul>
@@ -142,6 +145,17 @@
 						</div>
 					</div>
 				</form>
+			</div>
+		</div>
+
+
+		<div class="notiModal" tabindex="-1" id="notiModal">
+			<div class="notiModal-dialog">
+				<div class="notiModal">
+					<div class="notiModal-bg" onclick="alarmOpen();"></div>
+					<div class="notiModal-content" id="notiModal-content">
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -159,8 +173,10 @@
        
 	function viewAllGonggu(){
 		function success(position) {
-		    const latitude = position.coords.latitude;   // 위도(37.xxxx)
-		    const longitude = position.coords.longitude;
+/* 			const latitude = position.latitude; 
+		    const longitude = position.longitude; */
+ 		    const latitude = position.coords.latitude;   // 위도(37.xxxx)
+		    const longitude = position.coords.longitude; 
 		    const memLong="${loginMember.longitude}";
 		    
 		    if(memLong != ""){
@@ -169,7 +185,9 @@
 		   		location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?longitude="+longitude+"&latitude="+latitude;
 		    }
 		}
-	    navigator.geolocation.getCurrentPosition(success);
+	    navigator.geolocation.getCurrentPosition(success); 
+		/* position={"latitude":37.533921602961506, "longitude":126.89677032759451 } */
+        success(position);
 	};
 	
 	function searchEnterEvent(e){
@@ -182,6 +200,123 @@
 			loginFrm.submit();
 		}
 	}
+	
+	function fn_srchGgLst() {
+		var gongguName = document.getElementById('gongguName').value;
+		
+		 function fn_srchGgLst() {
+            var gongguName = document.getElementById('gongguName').value;
+            
+            var url = '${pageContext.request.contextPath}/gonggu/ggSearch.go?gongguName=' + encodeURIComponent(gongguName);
+            location.href = url;
+        }
+		 
+		var url = '${pageContext.request.contextPath}/gonggu/ggSearch.go?gongguName=' + encodeURIComponent(gongguName);
+		const memLong="${loginMember.longitude}";
+	    
+		function success(position) {
+			/* const latitude = position.latitude; 
+		    const longitude = position.longitude; */
+		    const latitude = position.coords.latitude;   
+		    const longitude = position.coords.longitude;
+		    
+		    if(memLong != ""){
+		    	location.href=url;
+		    }else{
+			    location.href=url+"&longitude="+longitude+"&latitude="+latitude;
+		    }
+		};
+    	navigator.geolocation.getCurrentPosition(success);
+		/* position={"latitude":37.533921602961506, "longitude":126.89677032759451 } */
+        success(position);
+	}
+	function fn_click(category) {
+		function success(position) {
+			/* const latitude = position.latitude; 
+		    const longitude = position.longitude; */
+		    const latitude = position.coords.latitude;   // 위도(37.xxxx)
+		    const longitude = position.coords.longitude;
+		    const memLong="${loginMember.longitude}";	//로그인 했니?
+		    
+		    if(memLong != ""){	//했다
+		    	location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category;
+		    }else{		//안했다
+		   		location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category+"&longitude="+longitude+"&latitude="+latitude;
+		    }
+		}
+	    navigator.geolocation.getCurrentPosition(success);
+		/* position={"latitude":37.533921602961506, "longitude":126.89677032759451 } */
+        success(position);
+	}
+	function viewRequest(){
+		function success(position) {
+			/* const latitude = position.latitude; 
+		    const longitude = position.longitude; */
+		    const latitude = position.coords.latitude;   // 위도(37.xxxx)
+		    const longitude = position.coords.longitude;
+			location.href="${pageContext.request.contextPath}/ggRequest/requestView.req?longitude="+longitude+"&latitude="+latitude;
+		}
+		navigator.geolocation.getCurrentPosition(success);
+		/* position={"latitude":37.533921602961506, "longitude":126.89677032759451 } */
+        success(position);
+	}
+	
+	function alarmOpen(){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/notify/selectNotifyList.no",
+			success:function(result){
+				let notifyList=result.notifyList;
+				let str="";
+				if(notifyList.length==0){
+					str="<div class='notiDiv emptyNotify'>아직 알림이 없습니다.</div>";
+				}else{
+					for(let i=0;i<notifyList.length;i++){
+						if(notifyList[i].status==0){
+							str+="<div class='notiDiv'>"
+									+ "<div class='notiContent'><b><a href='${pageContext.request.contextPath}"+notifyList[i].notiContent+"</b></div>"
+									+	'<div class="notiTime">'+notifyList[i].createAt +'</div></div><hr>';
+						}else{
+							str+="<div class='notiDiv'>"
+								+ "<div class='notiContent'><a href='${pageContext.request.contextPath}"+notifyList[i].notiContent+"</div>"
+								+	'<div class="notiTime">'+notifyList[i].createAt +'</div></div><hr>';
+						}
+					}
+				}
+				document.getElementById("notiModal-content").innerHTML=str;
+				
+				$.ajax({
+					url:"${pageContext.request.contextPath}/notify/updateNotifyStatus.no"
+				})
+				
+			}
+		})
+		let display=$("#notiModal").css("display");
+		if(display=="block"){
+			$("#notiModal").css("display","none");
+			$("#notiRedDot").css("display","none");
+		}else{
+			$("#notiModal").css("display","block");
+		}
+	}
+
+	$(function(){
+		if("${loginMember.userId}" != ""){
+			$.ajax({
+				url:"${pageContext.request.contextPath}/notify/selectNewNotify.no",
+				success:function(result){
+					let newNoti=result.newNoti*1;
+					if(newNoti>0){
+						$("#notiRedDot").css("display","block");
+					}else{
+						$("#notiRedDot").css("display","none");
+					}
+				},
+				error: function(){
+					console.log("에러")
+				}
+			})
+		}
+	})
 	
 	const modal = document.getElementById("modal");
 	const openModalBtn = document.getElementById("open-modal");
@@ -202,55 +337,6 @@
 		loginModalClose();
 		loginFrm.submit();
 	});
-	
-	function fn_srchGgLst() {
-		var gongguName = document.getElementById('gongguName').value;
-		
-		 function fn_srchGgLst() {
-            var gongguName = document.getElementById('gongguName').value;
-            
-            var url = '${pageContext.request.contextPath}/gonggu/ggSearch.go?gongguName=' + encodeURIComponent(gongguName);
-            location.href = url;
-        }
-		 
-		var url = '${pageContext.request.contextPath}/gonggu/ggSearch.go?gongguName=' + encodeURIComponent(gongguName);
-		const memLong="${loginMember.longitude}";
-	    
-		function success(position) {
-		    const latitude = position.coords.latitude;   
-		    const longitude = position.coords.longitude;
-		    
-		    if(memLong != ""){
-		    	location.href=url;
-		    }else{
-			    location.href=url+"&longitude="+longitude+"&latitude="+latitude;
-		    }
-		};
-    	navigator.geolocation.getCurrentPosition(success);
-	}
-	function fn_click(category) {
-		function success(position) {
-		    const latitude = position.coords.latitude;   // 위도(37.xxxx)
-		    const longitude = position.coords.longitude;
-		    const memLong="${loginMember.longitude}";	//로그인 했니?
-		    
-		    if(memLong != ""){	//했다
-		    	location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category;
-		    }else{		//안했다
-		   		location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category+"&longitude="+longitude+"&latitude="+latitude;
-		    }
-		}
-	    navigator.geolocation.getCurrentPosition(success);
-	}
-	function viewRequest(){
-		function success(position) {
-		    const latitude = position.coords.latitude;   // 위도(37.xxxx)
-		    const longitude = position.coords.longitude;
-			location.href="${pageContext.request.contextPath}/ggRequest/requestView.req?longitude="+longitude+"&latitude="+latitude;
-		}
-		navigator.geolocation.getCurrentPosition(success);
-	}
-		
 	    </script>
 	</header>
 	<section id='wrapper-whole-section'>

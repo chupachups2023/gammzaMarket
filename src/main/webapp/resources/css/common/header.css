@@ -10,6 +10,9 @@ body, pre{
 textarea{
 	 font-family: 'Apple SD Gothic Neo','MYArirang_gothic','Malgun Gothic',arial,sans-serif;
 }
+body{
+	min-width:650px;
+}
 .header-logos{
     display: flex;
     flex-direction: row;
@@ -22,13 +25,13 @@ textarea{
     width: 170px;
     }
 .header-adminLogin{
-    width: 65px;
+    width: 45px;
     opacity: 0.35;
     margin-right: -7px;
 }
     
 .header-memberLogin {
-	width: 65px;
+	width: 50px;
     opacity: 0.35;
     margin-right: -7px;
 }
@@ -50,11 +53,40 @@ textarea{
 	border: 0;
 	background: transparent;
 }
-
+.notiBox{
+	display:flex;
+	flex-direction:row;
+	align-items: flex-start;
+}
+.header-notify{
+	opacity: 0.35;
+    margin-right: -7px;
+    width:38px;
+    position:reletive;
+}
+.header-notify:hover{
+	cursor:pointer;
+}
+.notiRedDot{
+	width: 28px;
+    position: absolute;
+    right: 220px;
+    top: 30px;
+    display:none;
+}
 .header-loginBtn i {
     cursor: pointer;
 }
-
+.upperIconBox{
+	display:flex;
+	flex-direction:row;
+	align-items: center;
+	width: 150px;
+    justify-content: flex-end;
+}
+.upperIconBox>*{
+	margin:0 5px;
+}
 .header-logoutBtn {
 	border: 0;
 	background: transparent;
@@ -184,25 +216,6 @@ textarea{
     cursor:pointer;
   }
   
-/* #modal {
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: none;
-} */
-/*
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-} */
 .close {
   color: #aaa;
   float: right;
@@ -213,4 +226,45 @@ textarea{
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+#notiModal {
+	position: absolute;
+	z-index: 10;
+	right: 60px;
+	top: 100px;
+	width: 400px;
+    height: 500px;
+	overflow: auto;
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19);
+	display:none;
+	background-color: white;
+}
+.notiModal-content {
+	position: relative;
+	background-color: white;
+	padding: 30px 30px;
+	text-align: center;
+	top: 0;
+	border-radius: 3px;
+}
+.notiDiv{
+	margin:20px auto;
+}
+.notiContent{
+	width:320px;
+	font-size:14px;
+}
+.notiContent:hover{
+	cursor:pointer;
+	text-decoration:underline;
+	text-underline-position:under;
+}
+.notiTime{
+	margin-top:10px;
+	font-size:12px;
+	color:#c0c0c0;
+}
+.notiTime{
+	text-align:right;
 }

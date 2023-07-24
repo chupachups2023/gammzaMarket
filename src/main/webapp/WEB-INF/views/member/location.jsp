@@ -61,39 +61,39 @@ function locationSubmit(){
 
 
 function success(position) {
-    const latitude = position.coords.latitude;   // 위도(37.xxxx)
-    const longitude = position.coords.longitude; // 경도
-	
-  	//kakao REST API에 get 요청을 보낸다.
-    //파라미터 x,y에 lon,lat을 넣어주고 API_KEY를 Authorization헤더에 넣어준다.
+    /* const latitude = position.latitude;   // 위도(37.xxxx)
+    const longitude = position.longitude; // 경도 */
+     const latitude = position.coords.latitude;   // 위도(37.xxxx)
+    const longitude = position.coords.longitude; // 경도 
+    
+    document.getElementById('lon').value=longitude;
+	document.getElementById('lat').value=latitude;
     
     $.ajax({
     	type:"get",
     	url:"https://dapi.kakao.com/v2/local/geo/coord2address.json?x="+longitude+"&y="+latitude+"&input_coord=WGS84",
     	beforeSend: function (header) {
-    		header.setRequestHeader("Authorization","KakaoAK 840539f3651afe19f12cc19a1dc9e0ab");
+    		header.setRequestHeader("Authorization"," ");
         },
         success:function(result){
         	var address=result.documents[0].address.address_name;
         	geoCoe(address);
         	
-        	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-        	var options = { //지도를 생성할 때 필요한 기본 옵션
-        		center: new kakao.maps.LatLng(latitude, longitude), //지도의 중심좌표.
-        		level: 4 //지도의 레벨(확대, 축소 정도);
+        	var container = document.getElementById('map'); 
+        	var options = { 
+        		center: new kakao.maps.LatLng(latitude, longitude), 
+        		level: 4 
         		
         	};
-        	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+        	var map = new kakao.maps.Map(container, options); 
        	    map.setZoomable(false);
        	 	map.setDraggable(false);
         	
-        	//현재 위치로 일단 마커 지정
         	var markerPosition  = new kakao.maps.LatLng(latitude,longitude ); 
         	var marker = new kakao.maps.Marker({
         	    position: markerPosition
         	});
         	marker.setMap(map);
-        	    // 마우스 휠로 지도 확대,축소 가능여부를 설정합니다
         	    
 			getNearDong(latitude,longitude ); 
     		
@@ -113,7 +113,7 @@ function success(position) {
 		        	type:"post",
 		        	url:"https://dapi.kakao.com/v2/local/geo/coord2address.json?x="+latlng.La+"&y="+latlng.Ma+"&input_coord=WGS84",
 		        	beforeSend: function (header) {
-		        		header.setRequestHeader("Authorization","KakaoAK 840539f3651afe19f12cc19a1dc9e0ab");
+		        		header.setRequestHeader("Authorization"," ");
 		            },
 		            success:function(clickresult){
 		            	var clickaddress=clickresult.documents[0].address.address_name;
@@ -167,7 +167,7 @@ function getNearDong(lat, lon){
 
    	// 공공기관 코드 검색
    	places.keywordSearch('행정복지센터', callback, {
-   	    // Map 객체를 지정하지 않았으므로 좌표객체를 생성하여 넘겨준다.
+   	    
    	    location: new kakao.maps.LatLng(lat, lon),
    	    radius:4000,
    	    sort_by:"DISTANCE"
@@ -200,7 +200,8 @@ function getAccessToken(){
 			errCnt = 0;																									
 			accessToken = data.result.accessToken;
 			getUserLocation();
-			
+			/* position={"latitude":37.533921602961506, "longitude":126.89677032759451 } */
+			success(position);
 		},
 		error:function(data) {
 		}
@@ -244,41 +245,6 @@ function geoCoe(address){
  	});																		
 }
 
-function getOnlyGeoCoe(address, arr){
- 	address = encodeURIComponent(address);
- 	var pagenum = '0';
- 	var resultcount = '1';
- 	$.ajax({
- 		type:'GET',
- 		url: 'https://sgisapi.kostat.go.kr/OpenAPI3/addr/geocode.json',
- 		data:{
- 			accessToken : accessToken,
- 			address : address,
- 			pagenum : pagenum,
- 			resultcount : resultcount,
- 		},
- 		success:function(data){
- 			switch (parseInt(data.errCd)){
- 					case 0:
-	     			var resultdata = data.result.resultdata[0];
-	     			var Paramtext=resultdata.sido_nm+"/"+resultdata.sgg_nm+"/"+resultdata.adm_nm+"/"+resultdata.leg_nm;
-	     			
-	     			
-	     			arr.push(Paramtext);
-	     			
- 					break;
- 					case -401:
-                     	errCnt ++;
- 						getAccessToken();
- 					break;																					
- 					case -100:																					
- 					break;																					
- 			}
- 		},																														
- 		error:function(data) {
- 		}																														
- 	});																		
-}
 </script> 
 
 

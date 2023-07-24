@@ -41,36 +41,19 @@ public class ReviewController {
 		ArrayList<Review> recieved=reviewService.selectRecievedReview(member.getUserId());
 		ArrayList<Gonggu> leadedGonggu=reviewService.selectAllMyGonggu(member.getUserId());
 		
-		ArrayList<Review> partiReview=new ArrayList<Review>();
 		ArrayList<Review> leaderReview=new ArrayList<Review>();
-		int count=-1;
 		for(int i=0;i<recieved.size();i++) {
 			for(int j=0;j<leadedGonggu.size();j++) {
 				if(recieved.get(i).getGongguNo()==leadedGonggu.get(j).getGongguNo()) {
 					leaderReview.add(recieved.get(i));
-					count=-1;
+					recieved.remove(i);
+					i--;
 					break;
-				}else {	count=i;}
-			}
-			if(count==i) {
-				partiReview.add(recieved.get(i));
+				}
 			}
 		}
-		model.addAttribute("partiReview", partiReview);
+		model.addAttribute("partiReview", recieved);
 		model.addAttribute("leaderReview", leaderReview);
-		
-		int[] partiStar=new int[partiReview.size()];
-		int[] leaderStar=new int[leaderReview.size()];
-		
-		for(int i=0;i<partiStar.length;i++) {
-			partiStar[i]=partiReview.get(i).getRate();
-		}
-		for(int i=0;i<leaderStar.length;i++) {
-			leaderStar[i]=leaderReview.get(i).getRate();
-		}
-		model.addAttribute("partiStar", partiStar.toString());
-		model.addAttribute("leaderStar", leaderStar.toString());
-		
 		return "/mypage/reviewList";
 	}
 	
@@ -117,8 +100,23 @@ public class ReviewController {
 		review.setReceiverId(receiverId);
 		review.setReviewWriter(userId);
 		
+		
+		
 		int result=reviewService.insertReview(review);
 		if(result>0) {
+			double tempAdjust=0;
+			switch(rate) {
+				case 5: tempAdjust=0.2; break;
+				case 4: tempAdjust=0.1; break;
+				case 3: tempAdjust=0; break;
+				case 2: tempAdjust=-0.1; break;
+				case 1: tempAdjust=-0.2; break;
+			}
+			HashMap<String,String> updateTemp=new HashMap<String,String>();
+			updateTemp.put("rate", String.valueOf(tempAdjust));
+			updateTemp.put("userId", receiverId);
+			int update=reviewService.updateTemperature(updateTemp);
+			
 			model.addAttribute("result", result);
 		}
 		

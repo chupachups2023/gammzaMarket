@@ -58,12 +58,12 @@
 				<c:choose>
 					<c:when test="${p eq pi.nowPage }">
 						<li>
-							<a id="selectedPage" href="${pageContext.request.contextPath}/mypage/likeList.do?nowPage=${p}">${p}</a>
+							<a id="selectedPage" href="${pageContext.request.contextPath}/mypage/likeList.do?nowPage=${p}">[${p}]</a>
 						</li>
 					</c:when>
 					<c:otherwise>
 						<li>
-							<a href="${pageContext.request.contextPath}/mypage/likeList.do?nowPage=${p}">${p}</a>
+							<a href="${pageContext.request.contextPath}/mypage/likeList.do?nowPage=${p}">[${p}]</a>
 						</li>
 					</c:otherwise>
 				</c:choose>
@@ -86,12 +86,13 @@
 	});
 	
 	function delSelZ() {
-		const chkList = document.getElementsByName("delZzim");
-		if(chkList.value != null) {
+		let chkList = $("input[name=delZzim]");
+		if(chkList.is(":checked")){
 			delZFrm.submit();
-		}else {
-			alert("선택된 찜이 없습니다");
+		}else{
+			alert("선택된 공구가 없습니다");
 		}
 	}
+	
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

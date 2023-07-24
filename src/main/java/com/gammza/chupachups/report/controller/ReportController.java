@@ -26,9 +26,8 @@ public class ReportController {
 	@PostMapping("/report/insertReport.do")
 	public String insertReport(Report report, Model model, RedirectAttributes rd) {
 		int result = reportService.insertReport(report);
-		model.addAttribute("report", reportService.insertReport(report));
 		
-		System.out.println(report);
+//		System.out.println(report);
 		
 		rd.addFlashAttribute("msg", "신고가 완료되었습니다.");
 		return "redirect:/";

@@ -17,13 +17,13 @@ public interface PartiDao {
 	
 	int updateMemberPointPlus(HashMap<String, String> updatePoint);
 
-	ArrayList<Gonggu> selectAllPartiList(String userId);
+	ArrayList<Gonggu> selectAllPartiList(HashMap<String, String> listMap);
 
 	Parti selectOneParti(HashMap<String, String> selectParti);
 
 	int updatePartiStatusSelf(HashMap<String, String> map);
 
-	ArrayList<Parti> selectPartiListForLeader(int gongguNo);
+	ArrayList<Parti> selectPartiListForLeader(HashMap<String, String> map);
 
 	int updatePartiStatusByLeader(HashMap<String, String> map);
 	

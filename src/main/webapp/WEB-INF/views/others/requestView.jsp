@@ -47,17 +47,15 @@
 	<div class="writeRequestBtn" onclick="location.href='${pageContext.request.contextPath }/ggRequest/writeRequest.req'"><img alt="글쓰기" src="https://cdn-icons-png.flaticon.com/512/148/148764.png"><div>글쓰기</div></div>
 
 <script>
+let latitude='';
+let longitude='';
+const currSort=document.getElementById("hiddenSort").value;
 
-function success(position) {
-    const latitude = position.coords.latitude;   // 위도(37.xxxx)
-    const longitude = position.coords.longitude;
-	const currSort=document.getElementById("hiddenSort").value;
 	
-	$(":radio[name='request-sort'][value='" + currSort + "']").attr('checked', true);
+$(":radio[name='request-sort'][value='" + currSort + "']").attr('checked', true);
     
 	$("input:radio[name=request-sort]").on('click', function() {
 		let requestSort=$("input:radio[name=request-sort]:checked").val();
-		console.log(requestSort);
 		if ( requestSort == currSort ){
 			return;
 		}else{
@@ -69,8 +67,11 @@ function success(position) {
 				location.href="${pageContext.request.contextPath}/ggRequest/requestView.req?latitude="+latitude+"&longitude="+longitude+"&sort=count"
 			}
 		}
-		
 	});
+	
+function success(position) {
+    latitude = position.coords.latitude;   // 위도(37.xxxx)
+    longitude = position.coords.longitude;
 }
 
 navigator.geolocation.getCurrentPosition(success);

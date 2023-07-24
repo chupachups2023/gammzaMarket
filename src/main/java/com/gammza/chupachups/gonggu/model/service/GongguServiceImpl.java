@@ -41,8 +41,8 @@ public class GongguServiceImpl implements GongguService {
 	}
 
 	@Override
-	public int selectTotalRecored() {
-		return gongguDao.selectTotalRecored();
+	public int selectTotalRecord() {
+		return gongguDao.selectTotalRecord();
 	}
 
 	@Override
@@ -66,8 +66,8 @@ public class GongguServiceImpl implements GongguService {
 	}
 
 	@Override
-	public int selectGongguTotalRecored() {
-		return gongguDao.selectGongguTotalRecored();
+	public int selectGongguTotalRecord() {
+		return gongguDao.selectGongguTotalRecord();
 	}
 
 	@Override
@@ -76,18 +76,23 @@ public class GongguServiceImpl implements GongguService {
 	}
   
   @Override
-	public ArrayList<Gonggu> selectLeadGongguList(String userId) {
-		return gongguDao.selectLeadGongguList(userId);
+	public ArrayList<Gonggu> selectLeadGongguList(HashMap<String, String> listMap) {
+		return gongguDao.selectLeadGongguList(listMap);
 	}
 
-@Override
-public int updateGongguStatus(int gongguNo) {
-	return gongguDao.updateGongguStatus(gongguNo);
-}
-
-@Override
-public int updatepullUpAt(int gongguNo) {
-	return gongguDao.updatepullUpAt(gongguNo);
-}
+	@Override
+	public int updateGongguStatus(int gongguNo) {
+		return gongguDao.updateGongguStatus(gongguNo);
+	}
+	
+	@Override
+	public int updatepullUpAt(int gongguNo) {
+		return gongguDao.updatepullUpAt(gongguNo);
+	}
+	
+	@Override
+	public ArrayList<Gonggu> selectAllGongguList() {
+		return gongguDao.selectAllGongguList();
+  }
 
 }

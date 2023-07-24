@@ -40,7 +40,7 @@ public class LikeListController {
 		String userId = loginMember.getUserId();
 		
 		int totalRecord = likeListService.selectTotalRecord(userId);
-		int limit = 10;
+		int limit = 9;
 		int offset = (nowPage -1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		

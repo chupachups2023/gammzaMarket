@@ -16,4 +16,6 @@ public interface ChatRoomService {
 
 	int insertChatRoom(Gonggu newGonggu);
 
+	int updateSendDate(int gongguNo);
+
 }

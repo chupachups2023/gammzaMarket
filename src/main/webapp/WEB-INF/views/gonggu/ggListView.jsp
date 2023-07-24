@@ -23,39 +23,46 @@
 	   	<div><input type="checkbox" id="withEnd"   <c:if test="${endStatus eq 0 }">checked</c:if>  ><label for="withEnd">마감 공구도 보기</label></div>
    	</div>
 	<div class="likeList">
-       	<c:forEach items="${ggListView}" var="list" varStatus="j">
-			<div class="onelineThreebox" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${list.gongguNo }'">
-				<div class="onelineThreeImg">
-					<img src="${pageContext.request.contextPath}/resources/upload/${list.photo1}" alt="이미지 없음">
-				</div>
-				<div class="onelineThreeTitle">
-					<c:choose>
-						<c:when test="${fn:length(list.gongguName) gt 17}">
-							<div class="ggTitle">${fn:substring(list.gongguName, 0, 17)}⋯</div>
-						</c:when>
-						<c:otherwise>
-							<div class="ggTitle">${list.gongguName}</div>
-						</c:otherwise>
-					</c:choose>
-					<c:choose>
-						<c:when test="${list.endStatus eq 0 }">
-						<div class="when-ggEnd">
-							<div class="ggEnd-tag"><b>마감공구</b></div>
-							<div  style="font-size: 20px;">
-							    <b><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" /></b>
+	<c:choose>
+		<c:when test="${empty ggListView }">
+			<div class="emptyggList"><div>현재 위치에서 조회되는 공구가 없습니다.</div></div>
+		</c:when>
+		<c:otherwise>
+	       	<c:forEach items="${ggListView}" var="list" varStatus="j">
+				<div class="onelineThreebox" onclick="location.href='${pageContext.request.contextPath}/gonggu/ggRead.go?gongguNo=${list.gongguNo }'">
+					<div class="onelineThreeImg">
+						<img src="${pageContext.request.contextPath}/resources/upload/${list.photo1}" alt="이미지 없음">
+					</div>
+					<div class="onelineThreeTitle">
+						<c:choose>
+							<c:when test="${fn:length(list.gongguName) gt 17}">
+								<div class="ggTitle">${fn:substring(list.gongguName, 0, 17)}⋯</div>
+							</c:when>
+							<c:otherwise>
+								<div class="ggTitle">${list.gongguName}</div>
+							</c:otherwise>
+						</c:choose>
+						<c:choose>
+							<c:when test="${list.endStatus eq 0 }">
+							<div class="when-ggEnd">
+								<div class="ggEnd-tag"><b>마감공구</b></div>
+								<div  style="font-size: 20px;">
+								    <b><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" /> P</b>
+								</div>
 							</div>
-						</div>
-						</c:when>
-						<c:otherwise>
-							<div style="font-size: 20px;">
-							    <b><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" /></b>
-							</div>
-						</c:otherwise>
-					</c:choose>
-					<div><small>${list.locationName}</small></div>
-				</div>
-			</div>	
-		</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<div style="font-size: 20px;">
+								    <b><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" /> P</b>
+								</div>
+							</c:otherwise>
+						</c:choose>
+						<div><small>${list.locationName}</small></div>
+					</div>
+				</div>	
+			</c:forEach>
+		</c:otherwise>
+	</c:choose>
 	</div>
 </div>
 <script>
@@ -70,7 +77,7 @@
     	type:"get",
     	url:"https://dapi.kakao.com/v2/local/geo/coord2address.json?x="+longitude+"&y="+latitude+"&input_coord=WGS84",
     	beforeSend: function (header) {
-    		header.setRequestHeader("Authorization","KakaoAK 840539f3651afe19f12cc19a1dc9e0ab");
+    		header.setRequestHeader("Authorization","KakaoAK ");
         },
         success:function(result){
         	var address=result.documents[0].address.address_name;
@@ -82,16 +89,34 @@
 	});
 	function sortByWhat(what){
 		let sortby=what;
-		console.log(sortby);
+		let keywordd="${keyword}";
+		let category="${category}";
 		if($("#withEnd").prop('checked')){
-			location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortby+"&end=0";
+			if(keywordd != ""){
+				location.href="${pageContext.request.contextPath}/gonggu/ggSearch.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortby+"&end=0&gongguName="+keywordd;
+			}else{
+				if(category != ""){
+					location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category+"&latitude="+latitude+"&longitude="+longitude+"&sort="+sortby+"&end=0";
+				}else{
+					location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortby+"&end=0";
+				}
+			}
 		}else{
-			location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortby;
+			if(keywordd != ""){
+				location.href="${pageContext.request.contextPath}/gonggu/ggSearch.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortby+"&gongguName="+keywordd;
+			}else{
+				if(category != ""){
+					location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category+"&latitude="+latitude+"&longitude="+longitude+"&sort="+sortby;
+				}else{
+					location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortby;
+				}
+			}
 		}
 	}
 	$(function(){
 		sortbyy=document.getElementById("sortByHidden").value;
-		console.log(sortbyy)
+		let keywordd="${keyword}";
+		let category="${category}";
 		if(sortbyy=="PULLUP_AT"){
 			$("#pullup").css("font-weight","bold");
 		}else{
@@ -100,9 +125,25 @@
 		
 		$("#withEnd").on('click', function() {
 			if ( $(this).prop('checked') ) {
-				location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortbyy+"&end=0"
+				if(keywordd != ""){
+					location.href="${pageContext.request.contextPath}/gonggu/ggSearch.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortbyy+"&end=0&gongguName="+keywordd
+				}else{
+					if(category != ""){
+						location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category+"&latitude="+latitude+"&longitude="+longitude+"&sort="+sortbyy+"&end=0"
+					}else{
+						location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortbyy+"&end=0"
+					}
+				}
 			} else {
-				location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortbyy
+				if(keywordd != ""){
+					location.href="${pageContext.request.contextPath}/gonggu/ggSearch.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortbyy+"&gongguName="+keywordd
+				}else{
+					if(category != ""){
+						location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category+"&latitude="+latitude+"&longitude="+longitude+"&sort="+sortbyy
+					}else{
+						location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?latitude="+latitude+"&longitude="+longitude+"&sort="+sortbyy
+					}
+				}
 			}
 		});
 	})

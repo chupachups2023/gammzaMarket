@@ -20,4 +20,6 @@ public interface ReviewDao {
 
 	int insertReview(Review review);
 
+	int updateTemperature(HashMap<String, String> updateTemp);
+
 }

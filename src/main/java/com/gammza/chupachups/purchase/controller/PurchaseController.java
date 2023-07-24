@@ -1,10 +1,12 @@
 package com.gammza.chupachups.purchase.controller;
 
 import java.io.IOException;
-import java.util.Locale;
+import java.util.Date;
+import java.util.List;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.gammza.chupachups.common.model.vo.PageInfo;
+import com.gammza.chupachups.common.template.Pagination;
 import com.gammza.chupachups.member.model.service.MemberService;
 import com.gammza.chupachups.member.model.vo.Member;
 import com.gammza.chupachups.purchase.model.service.PurchaseService;
@@ -61,13 +65,67 @@ public class PurchaseController {
 	public void pointPurChk(@RequestParam String pointOrderNum, Model model) {
 		model.addAttribute(pointOrderNum);
 	}
-//	비공개 깃헙이라 넣었지만 restKey는 공개되면 문제가 생길 수 있으니 포폴 사용시 삭제해주세요.
-	private IamportClient client = new IamportClient("0801753876651112","hdMMqurzCCIPb4MfLwsghA1aKzvKJoSmXrpR4jd68bDiZCvciaqVu1lR7HHjrXYzWNuyDHzSWotRohBi");
+//	restKey 삭제
+	private IamportClient client = new IamportClient("","");
 	
+	@PostMapping("/checkUid.do")
+	public void selectPointOrderNum(@RequestParam String pointOrderNum, HttpServletResponse response) throws Exception {
+		int result = purchaseService.selectPointOrderNum(pointOrderNum);
+		response.getWriter().print(result);
+	}
+	
+	/*결제검증*/
 	@ResponseBody
 	@RequestMapping(value="/verifyAmount/{imp_uid}", method = RequestMethod.POST)
 	public IamportResponse<Payment> verifyAmountPOST(@PathVariable(value = "imp_uid") String imp_uid) throws IamportResponseException, IOException {
 		return client.paymentByImpUid(imp_uid);
     }
+	
+	/* 결제내역 목록 */
+	@GetMapping("/checkPayment.do")
+	public void checkPayment(@ModelAttribute("loginMember") Member member, @RequestParam(defaultValue="1") int nowPage, PointPurRec point, Model model) {
+		String userId = member.getUserId();
+		
+		int totalRecord = purchaseService.selectTotalRecord_M(userId);
+		int limit = 10;
+		int offset = (nowPage -1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		PageInfo pi = Pagination.getPageInfo(totalRecord, nowPage, limit, 5);
+		
+		List<PointPurRec> paymentList = purchaseService.selectPaymentRecord(userId, rowBounds);
+		
+		for(int i=0;i<paymentList.size();i++) {
+			Date date = paymentList.get(i).getPurchasedTime();
+			long timeInMilliSeconds = date.getTime();
+	        java.sql.Date purchasedTime = new java.sql.Date(timeInMilliSeconds);
+	        paymentList.get(i).setPurchasedTime(purchasedTime);
+		}
+		model.addAttribute("paymentList", paymentList);
+		model.addAttribute("pi", pi);
+	}
+	
+	@GetMapping("/checkPayment_Ad.do")
+	public String checkPayment_Ad(@RequestParam(defaultValue="1") int nowPage, PointPurRec point, Model model) {
+		int totalRecord = purchaseService.selectTotalRecord();
+		int limit = 10;
+		int offset = (nowPage -1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		PageInfo pi = Pagination.getPageInfo(totalRecord, nowPage, limit, 5);
+		
+		List<PointPurRec> paymentList = purchaseService.selectPaymentRecord_Ad(rowBounds);
+		
+		for(int i=0;i<paymentList.size();i++) {
+			Date date = paymentList.get(i).getPurchasedTime();
+			long timeInMilliSeconds = date.getTime();
+	        java.sql.Date purchasedTime = new java.sql.Date(timeInMilliSeconds);
+	        paymentList.get(i).setPurchasedTime(purchasedTime);
+		}
+		
+		model.addAttribute("paymentList", paymentList);
+		model.addAttribute("pi", pi);
+		return "/adminpage/checkPayment_Ad";
+	}
+	
+
 
 }

@@ -10,7 +10,7 @@
         	type:"get",
         	url:"https://dapi.kakao.com/v2/local/geo/coord2address.json?x="+longitude+"&y="+latitude+"&input_coord=WGS84",
         	beforeSend: function (header) {
-        		header.setRequestHeader("Authorization","KakaoAK 840539f3651afe19f12cc19a1dc9e0ab");
+        		header.setRequestHeader("Authorization","KakaoAK ");
             },
             success:function(result){
             	var address=result.documents[0].address.address_name;
@@ -45,7 +45,7 @@
 			        	type:"get",
 			        	url:"https://dapi.kakao.com/v2/local/geo/coord2address.json?x="+latlng.La+"&y="+latlng.Ma+"&input_coord=WGS84",
 			        	beforeSend: function (header) {
-			        		header.setRequestHeader("Authorization","KakaoAK 840539f3651afe19f12cc19a1dc9e0ab");
+			        		header.setRequestHeader("Authorization","KakaoAK ");
 			            },
 			            success:function(clickresult){
 			            	var clickaddress=clickresult.documents[0].address.address_name;
@@ -91,6 +91,8 @@
 				errCnt = 0;																									
 				accessToken = data.result.accessToken;
 				getUserLocation();
+				/*position={"latitude":37.533921602961506, "longitude":126.89677032759451 }*/
+         		success(position);
 				
 			},
 			error:function(data) {
@@ -126,7 +128,6 @@
      						getAccessToken();
      						console.log(errCnt);
      						
-     						//window.location.reload()
      					break;																					
      					case -100:																					
      					break;																					

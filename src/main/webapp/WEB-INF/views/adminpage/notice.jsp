@@ -58,6 +58,7 @@
 #col-t {
 	font-size: large;
 	font-weight: bolder;
+	height: 50px;
 }
 
 .table {
@@ -67,7 +68,7 @@
 
 .bigtable {
 	height: 400px;
-	width: 60%;
+	width: 100%;
 	margin: 0 auto;
 	display: flex;
 	align-items: center;
@@ -92,6 +93,15 @@ button {
 element.style {
     width: 32px;
 }
+.writeNotice {
+	width: 70px;
+	height: 30px;
+	border: none;
+	border-radius: 4px;
+	background-color: #4caf50;
+	color: white;
+	cursor: pointer;
+}
 </style>
 
 <div id="title">
@@ -104,10 +114,10 @@ element.style {
 				<table class="table">
 					<tbody class="notice">
 						<tr>
-							<th class="col" width="30px">NO</th>
-							<th class="col" width="300px">제목</th>
-							<th class="col" width="200px">작성일</th>
-							<th class="col" width="70px">조회수</th>
+							<th class="col" width="60px">NO</th>
+							<th class="col" width="600px" height="50px">제목</th>
+							<th class="col" width="400px">작성일</th>
+							<th class="col" width="140px">조회수</th>
 						</tr>
 						<c:forEach items="${noticeList}" var="notice">
 							<tr>
@@ -151,9 +161,9 @@ element.style {
 		</c:if>
 	</ul>
 </nav>
-<div>
+<div align="center">
 	<c:if test="${loginMember.userId eq 'admin'}">
-		<button onclick="location.href='${pageContext.request.contextPath}/adminpage/insertNotice.do'">글 작성</button>
+		<button class="writeNotice" onclick="location.href='${pageContext.request.contextPath}/adminpage/insertNotice.do'">글 작성</button>
 	</c:if>
 </div>
 

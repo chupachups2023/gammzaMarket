@@ -6,62 +6,8 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/memberInfo.css?<%=System.currentTimeMillis() %>">
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="제목" name="title"/>
+	<jsp:param value="회원정보" name="title"/>
 </jsp:include>
-<style>
-#title {
-    text-align: center;
-}
-
-#MemInfoContainer {
-    width: 450px; 
-    margin:auto; 
-    margin-top: 20px;
-    background-color: #F9F9F9; 
-    border: 1px solid #E9D296; 
-    border-radius: 30px;
-	padding: 20px;
-}    
-  
-#memInfoTable th {
-    padding: 7px 7px 7px 30px;
-	text-align: justify;
-	width:35%;
-}
-#memInfoTable td {
-    padding: 7px 0;
-	text-align: justify;
-	width:65%;
-}
-.infoInput {
-    background-color: #f9f9f900; 
-    width: 240px;
-    border: none;
-    border-bottom: 1px solid;  
-	resize: none;
-	font-size: 17px;
-}
-.readonlyCursor {
-	cursor: default;
-}
-#infoBtn {
-    text-align: center;
-    margin: auto;
-    margin-top: 20px;
-}
-.bo {
-    width: 130px; 
-    height: 30px; 
-    background: rgba(94, 177, 98, 0.75); 
-    color: white; 
-    border-radius: 30px;
-    border: none;
-    font-size: 17px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-</style>
 <h1 id="title">${member.name} 회원 정보 관리</h1>
 <form name="updateFrm" method="post" action="${pageContext.request.contextPath }/member/memberUpdate_Ad.me">
 	<div id="MemInfoContainer">
@@ -88,22 +34,6 @@
 					<input class="infoInput" name="name" value="${member.name}">
 				</td>
 			</tr>
-			<c:if test="${!empty member.kakaoIdkey}">
-				<tr>
-					<th>카카오 아이디 : </th>
-					<td>
-						<input class="infoInput" name="kakaoIdkey" value="${member.kakaoIdkey}">
-					</td>
-				</tr>
-			</c:if>
-			<c:if test="${!empty member.naverIdkey}">
-				<tr>
-					<th>네이버 아이디 : </th>
-					<td>
-						<input class="infoInput" name="naverIdkey" value="${member.naverIdkey}">
-					</td>
-				</tr>
-			</c:if>
 			<tr>
 				<th>휴대폰 : </th>
 				<td>
@@ -139,7 +69,7 @@
 	<div id="infoBtn">
 		<button type="submit" class="bo">회원정보 수정</button>&emsp;
 		<button type="button" class="bo" onclick="location.href='${pageContext.request.contextPath}/member/memberList.do?nowPage=${nowPage}'">뒤로가기</button>&emsp;
-		<button type="button" class="bo" onclick="${pageContext.request.contextPath}/member/changeStatus_Ad.do?userId=${member.userId}&nowPage=${nowPage}">탈퇴시키기</button>
+		<button type="button" class="bo" onclick="location.href='${pageContext.request.contextPath}/member/changeStatus_Ad.do?userId=${member.userId}&nowPage=${nowPage}'">탈퇴시키기</button>
 	</div>
 	<input type="hidden" name="userId" value="${member.userId}">
 	<input type="hidden" name="userPwd" value="${member.userPwd}">

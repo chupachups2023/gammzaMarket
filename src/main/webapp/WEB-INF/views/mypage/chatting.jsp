@@ -20,14 +20,36 @@
 
 .msgBox {
 	border: 0px solid;
-	height: 5%;
+	height: 7%;
 	width: auto;
 	background-color: bisque;
 	border-radius: 7px;
 }
+.textbox {
+	padding: 10px;
+	max-width:320px;
+}
 
 .body {
 	height: 700px;
+}
+.css-10fmtiz {
+	position: absolute;
+	width: 89%;
+	height: 90px;
+	background-color: whitesmoke;
+	border-radius: 7px 7px 7px 7px;
+	padding : 10px;
+}
+.css-1useanf.disable {
+	margin: 12px 4px 0px;
+	height: 90px;
+}
+.sendDate {
+	color: lightgray;
+}
+.css-v2yhcd{
+	cursor:pointer;
 }
 </style>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
@@ -40,6 +62,11 @@
 			<nav class="css-dcpzrh">
 				<div class="css-fycla4">
 					<div>${loginMember.userId}</div>
+					<div class="css-1c3oejv">
+						<div class="main-title">
+							<span class="temperature">${loginMember.temperature}°C</span>
+						</div>
+					</div>
 				</div>
 				<div class="css-iyc8t">
 					<label class="unread-label common-bg-hover"> <span
@@ -50,34 +77,33 @@
 				<ul tabindex="0" role="list" aria-label="내 채널 리스트"
 					class="css-8lfz6g">
 					<c:forEach items="${chatRoomList}" var="chatRoom">
-						<%-- <c:if test="${parti.status eq 1 or chatRoom.roomOwner eq loginMember.userId}"> </c:if>--%>
 						<li class="css-v2yhcd">
 							<div class="selected css-y6c1l4 chatRoomItem"
 								id="${chatRoom.roomNo}" data-room-no="${chatRoom.roomNo}"
 								data-user-id="${loginMember.userId}">
-								<input type="hidden" class="${chatRoom.roomNo}_roomNo"
-									id="roomNo" value="${chatRoom.roomNo}"> <input
-									type="hidden" id="userId" value="${loginMember.userId}">
-								<div class="preview-title-wrap">
-									<span class="preview-nickname" id="roomOwner">${chatRoom.roomOwner}</span>
-									<div class="sub-text">
-										<span id="gongguNo">${chatRoom.gongguNo}</span> 
-										<span id="lastChat">${chatRoom.lastChat}</span>
-									</div>
-								</div>
-								<c:forEach items="${mainList}" var="list" varStatus="i">
-									<c:if test="${chatRoom.gongguNo eq list.gongguNo }">
-										<img
-											src="${pageContext.request.contextPath}/resources/upload/${list.photo1}"
-											alt="이미지 없음" width="50px">
-									</c:if>
-								</c:forEach>
+										<input type="hidden" class="${chatRoom.roomNo}_roomNo"
+											id="roomNo" value="${chatRoom.roomNo}">
+										<input type="hidden" id="userId" value="${loginMember.userId}">
+										<div class="preview-title-wrap">
+											<span class="preview-nickname" id="roomOwner">${chatRoom.roomOwner}</span>
+											<c:choose>
+												<c:when test="${fn:length(chatRoom.gongguName) gt 10}">
+													<div class="ggTitle gghover">${fn:substring(chatRoom.gongguName, 0, 8)}...</div>
+												</c:when>
+												<c:otherwise>
+													<div class="ggTitle gghover">${chatRoom.gongguName}</div>
+												</c:otherwise>
+											</c:choose>
+											<div class="sub-text">
+											<span id="lastChat_${chatRoom.roomNo}">${chatRoom.lastChat}</span>
+											</div>
+										</div>
+										&emsp;&emsp;&emsp;
+										<img src="${pageContext.request.contextPath}/resources/upload/${chatRoom.photo1}"	alt="이미지 없음" width="50px">
 							</div>
 
 							<div class="common-bg-hover only-hover css-q6qzi5">
-								<span class="option-controller"> <svg width="36"
-										height="36" viewBox="0 0 1024 1024" version="1.1"
-										xmlns="http://www.w3.org/2000/svg"></svg>
+								<span class="option-controller"> <svg width="36" height="36" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"></svg>
 								</span>
 							</div>
 						</li>
@@ -90,7 +116,7 @@
 				<div class="css-1c3oejv">
 					<div class="chat-header-profile">
 						<div class="main-title">
-							<span>${ chatRoom.roomOwner }</span> <span class="temperature">37.8°C</span>
+							<span>${ chatRoom.roomOwner }</span> <span class="temperature">감자마켓에 어서오세요!</span>
 						</div>
 					</div>
 
@@ -101,17 +127,17 @@
 					</div>
 				</div>
 
-				<div id="result" style="height: 500px" width="900px" class="c-List">
+				<div id="result" style="height: 500px; padding-bottom: 70px;" class="c-List">
 					<input type="hidden" id="chatWriter" value="${loginMember.userId}">
 					<input type="hidden" class="${chatRoom.roomNo}_roomNo" id="roomNo"
 						value="${chatRoom.roomNo}">
-					<%-- <jsp:include page="/WEB-INF/views/mypage/chatDetail.jsp" /> --%>
 				</div>
 				<div>
-					<textarea placeholder="메시지를 입력해주세요" id="chatContent"
-						class="css-10fmtiz"></textarea>
-					<button class="disable css-1useanf" onclick="insertMsg();"
-						aria-disabled="true">전송</button>
+				
+					<textarea placeholder="메시지를 입력해주세요" id="chatContent"	class="css-10fmtiz" onkeyup="if(window.event.keyCode==13){insertMsg(roomNo);}"></textarea>
+					<div align="right">
+						<button class="disable css-1useanf" onclick="insertMsg(roomNo);" aria-disabled="true">전송</button>
+					</div>
 				</div>
 			</div>
 		</section>
@@ -123,7 +149,13 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
 	var currentRoomNo = null;
-
+	var window = document.getElementById('result');
+	window.addEventListener("load", function() {
+		scrollToBottom();
+	});
+	window.addEventListener("scroll", function() {
+		scrollToBottom();
+	});
 	$(document).ready(function() {
 		$(".chatRoomItem").click(function() {
 			var roomNo = $(this).data("room-no");
@@ -155,16 +187,17 @@
 						result += "<div id='msgList'>"
 								+ "<div class='chat-msg' id='chat-msg'>"
 								+ "<div align='right' id='chatWriter'>"
+								+ "<div class='sendDate'><small>" + mList.sendDate + "</small></div>"
 								+ "<table class='msgBox'>" + "<tr>"
-								+ "<td align='right' width='90%' height='10%'>"
-								+ mList.chatContent + "</td>" + "</tr>"
+								+ "<td align='right'>" + "<div class='textbox'>"
+								+ mList.chatContent + "</div>" + "</td>" + "</tr>"
 								+ "</table>" + "</div>" + "</div>" + "</div>";
 					} else {
 						result += "<div id='msgList'>"
 								+ "<div class='chat-msg' id='chat-msg'>"
-								+ "<div>" + mList.chatWriter + "</div>"
+								+ "<div>" + mList.chatWriter + "<div class='sendDate'><small>" + mList.sendDate + "</small></div>" + "</div>"
 								+ "<table class='msgBox'>" + "<tr>" + "<td>"
-								+ "<div width='80%'>" + mList.chatContent
+								+ "<div class='textbox'>" + mList.chatContent 
 								+ "</div>" + "</td>" + "</tr>" + "</table>"
 								+ "</div>" + "</div>";
 					}
@@ -176,13 +209,32 @@
 			}
 		});
 	}
+	function loadFirstChatRoom() {
+		var firstChatRoom = $(".chatRoomItem").first();
+		if (firstChatRoom.length > 0) {
+			var roomNo = firstChatRoom.data("room-no");
+			var userId = firstChatRoom.data("user-id");
+			currentRoomNo = roomNo;
+			$("#chatRoomOwner").text(userId);
+			loadChatRoom(roomNo);
+		}
+	}
+
+	loadFirstChatRoom();
+
+	$(".chatRoomItem").click(function() {
+		var roomNo = $(this).data("room-no");
+		var userId = $(this).data("user-id");
+		currentRoomNo = roomNo;
+		$("#chatRoomOwner").text(userId);
+		loadChatRoom(roomNo);
+	});
 	$(function() {
 		$(".selected").click(function() {
 			scrollToBottom();
 		});
 	});
-
-	function insertMsg() {
+	function insertMsg(roomNo) {
 		var chatContent = $("#chatContent").val();
 		var chatWriter = $("#userId").val();
 		var roomNo = $("#roomNo").val();
@@ -192,23 +244,16 @@
 			data : {
 				chatContent : chatContent,
 				chatWriter : chatWriter,
-				roomNo : roomNo
+				roomNo : currentRoomNo
+				
 			},
 			success : function(result) {
-				if (result > 0) {
-					console.log("메시지 전송 성공!");
-					$("#chatContent").val("");
-					msgList(roomNo);
-				} else {
-					console.log("메시지 전송 성공!");
-					$("#chatContent").val("");
-					msgList(roomNo);
-				}
-				scrollToBottom();
+				$("#chatContent").val("");
+				msgList(currentRoomNo);
+				scrollToBottom();		 
 			},
 			error : function() {
-				console.log("메시지 전송 실패");
-				console.log(roomNo);
+				console.log("접속실패");
 			}
 		});
 	}
@@ -217,7 +262,5 @@
 		element.scrollTop = element.scrollHeight;
 	}
 
-	window.addEventListener("load", function() {
-		scrollToBottom();
-	});
+
 </script>

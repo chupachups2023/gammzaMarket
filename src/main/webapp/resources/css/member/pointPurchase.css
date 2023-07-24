@@ -28,10 +28,19 @@
 	text-align: right;
 	font-weight: bold;
 	width: 25%;
+	/* padding:10px; */
 }
-
+.pointPurchaseTable tfoot td, .pointPurchaseTable thead td {
+	padding:10px;
+}
+.form-bottom{
+	display:flex;
+	align-items: flex-end;
+    justify-content: space-between;
+}
 .pointSel {
 	padding: 50px 20px;
+	cursor:pointer;
 }
 
 .pointSel:hover {
@@ -50,12 +59,26 @@
 	text-align: left;
 }
 
+.pg {
+	cursor:pointer;
+}
+
+#priceBtn {
+	border: 2px solid rgba(48, 175, 86, 0.753);
+	border-radius: 5px;
+	width: 40px;
+	font-size: 15px;
+	background-color: white;
+	cursor: pointer;
+}
+
 /* 약관박스 */
 #clause {
 	border: 1px solid;
 	width: 500px;
 	padding: 15px;
 	display: inline-block;
+	padding:20px;
 }
 
 /* 결제버튼 */
@@ -65,7 +88,6 @@
 	width: 80px;
 	font-size: 25px;
 	background-color: white;
-	margin-left: 90%;
 	cursor: pointer;
 }
 
@@ -73,9 +95,97 @@
 	margin-left: 50px;
 }
 
-#viewPg, #viewPrice {
+#viewPg, #viewPrice, #viewPriceEtc {
 	border: none;
 	font-size: 20px;
 	text-align: right;
 	width: 145px;
+}
+#viewPriceEtc {
+	border: none;
+	border-bottom: 1px solid;
+	font-size: 20px;
+	text-align: right;
+	width: 145px;
+}
+#CheckPaymentBtn {
+	margin: 0 0 10px 90%;
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    border-radius: 10px;
+    background: #60b565b7;
+    border:solid 1px #60b565b7;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* checkPayment */
+#paymentRecordSec{
+	width:1200px;
+	margin: 20px auto;
+}
+.pTable{
+    border-collapse: collapse;
+    width:1000px;
+	margin: 0 auto;
+	text-align:center;
+}
+.pTable>thead>tr {
+	border-bottom: solid 3px #808080;
+	font-weight:bold;
+	font-size: 20px;
+}
+.pTable>tbody tr{
+    border-bottom: solid 1px #808080;
+    height:30px;
+}
+.qnaPaging {
+list-style-type: none;
+}
+.qnaPaging a {
+	text-decoration: none;
+	color: black;
+}
+
+.qnaPaging li {
+	display: inline;
+}
+
+#pagingNav {
+	text-align: center;
+}
+
+#selectedPage{
+	color: red;
+	font-weight: bolder;
+}
+
+#PurBackBtn{
+	margin-left:75%;
+	width: 70px;
+	height: 30px;
+	border: none;
+	background-color: gray;
+	color: white;
+	border-radius: 5px;
+	cursor: pointer;
+	
+}
+.purchaseMethod{
+	display:flex;
+	flex-direction:row;
+	justify-content: space-evenly;
+}
+#clauseContent{
+	width:510px;
+	height:130px;
+	overflow-y: scroll;
+}
+#clauseContent *{
+	font-size:13px;
+}
+.clauseCkh-box{
+	margin-top:20px;
 }

@@ -22,9 +22,14 @@
 	</select>
 	<select id="selectWroteReviewCheck" resultType="_int">
 		select count(*) from review
-		where RECEIVER_ID=#{userId} and REVIEW_WRITER=#{loginMemberId}
+		where RECEIVER_ID=#{userId} and REVIEW_WRITER=#{loginMemberId} and gonggu_no=#{gongguNo}
 	</select>
 	<insert id="insertReview">
 		insert into review values ( REVIEW_SEQ.nextval, #{gongguNo}, #{reviewWriter}, #{reviewContent}, #{receiverId}, #{rate}, sysdate )
 	</insert>
+	<update id="updateTemperature">
+		update member
+		set temperature=temperature + #{rate}
+		where user_id=#{userId}
+	</update>
 </mapper>

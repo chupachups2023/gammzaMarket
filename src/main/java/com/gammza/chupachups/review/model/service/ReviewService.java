@@ -19,4 +19,6 @@ public interface ReviewService {
 	int selectWroteReviewCheck(HashMap<String, String> map);
 
 	int insertReview(Review review);
+
+	int updateTemperature(HashMap<String, String> updateTemp);
 }

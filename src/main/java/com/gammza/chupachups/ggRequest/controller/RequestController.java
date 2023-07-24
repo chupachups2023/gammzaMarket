@@ -86,9 +86,6 @@ public class RequestController {
 	public String writeRequest() {
 		return "/others/writeRequest";
 	}
-	
-	
-	
 
 	 //요청 글 작성
 	 @PostMapping("/ggRequestFrm.req")

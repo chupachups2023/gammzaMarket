@@ -1,6 +1,7 @@
  package com.gammza.chupachups.member.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gammza.chupachups.common.model.vo.PageInfo;
@@ -63,44 +65,45 @@ public class MemberController {
 	
 	@PostMapping("/memberLogin.me")
 	public String memberLogin(String userId, String userPwd, Model model, RedirectAttributes redirectAtt,HttpSession session) {
-		System.out.println("userId = " + userId);
-		System.out.println("userPwd = " + userPwd);
-		
 		Member member = memberService.selectOneMember(userId);
-		System.out.println("member = " + member);
-		
 		// 인증
 		if (member != null && passwordEncoder.matches(userPwd, member.getUserPwd())) {
-			model.addAttribute("loginMember", member);	// requestScope => sessionScope 바꾸기
-			
-			Long kakaoIdkey = (Long)session.getAttribute("kakaoIdkey");
-			String naverIdkey = (String)session.getAttribute("naverIdkey");
-			
-			if(kakaoIdkey != null) {
-				HashMap<String,String> map = new HashMap<String,String>();
-				map.put("userId", userId);
-				map.put("kakaoIdkey", String.valueOf(kakaoIdkey));
-				int result=memberService.updateKakaoIdkey(map);
-				member = memberService.selectOneMember(userId);
-				model.addAttribute("loginMember", member);
-				redirectAtt.addFlashAttribute("msg", "카카오 간편로그인 연결이 완료되었습니다.");
-				session.removeAttribute("kakaoIdkey");
+			if(member.getStatus()==0) {
+				redirectAtt.addFlashAttribute("msg", "탈퇴한 회원입니다.");
 				
 				return "redirect:/";
-			}
-			if(naverIdkey != null) {
-				HashMap<String,String> map = new HashMap<String,String>();
-				map.put("userId", userId);
-				map.put("naverIdkey", naverIdkey);
-				int result=memberService.updateNaverIdkey(map);
-				member = memberService.selectOneMember(userId);
-				model.addAttribute("loginMember", member);
-				redirectAtt.addFlashAttribute("msg", "네이버 간편로그인 연결이 완료되었습니다.");
-				session.removeAttribute("naverIdkey");
+			}else {
+				model.addAttribute("loginMember", member);	// requestScope => sessionScope 바꾸기
 				
-				return "redirect:/";
+				Long kakaoIdkey = (Long)session.getAttribute("kakaoIdkey");
+				String naverIdkey = (String)session.getAttribute("naverIdkey");
+				
+				if(kakaoIdkey != null) {
+					HashMap<String,String> map = new HashMap<String,String>();
+					map.put("userId", userId);
+					map.put("kakaoIdkey", String.valueOf(kakaoIdkey));
+					int result=memberService.updateKakaoIdkey(map);
+					member = memberService.selectOneMember(userId);
+					model.addAttribute("loginMember", member);
+					redirectAtt.addFlashAttribute("msg", "카카오 간편로그인 연결이 완료되었습니다.");
+					session.removeAttribute("kakaoIdkey");
+					
+					return "redirect:/";
+				}
+				if(naverIdkey != null) {
+					HashMap<String,String> map = new HashMap<String,String>();
+					map.put("userId", userId);
+					map.put("naverIdkey", naverIdkey);
+					int result=memberService.updateNaverIdkey(map);
+					member = memberService.selectOneMember(userId);
+					model.addAttribute("loginMember", member);
+					redirectAtt.addFlashAttribute("msg", "네이버 간편로그인 연결이 완료되었습니다.");
+					session.removeAttribute("naverIdkey");
+					
+					return "redirect:/";
+				}
+				redirectAtt.addFlashAttribute("msg", member.getName()+ "님 환영합니다💚");
 			}
-			redirectAtt.addFlashAttribute("msg", member.getName()+ "님 환영합니다💚");
 		} else {
 			redirectAtt.addFlashAttribute("msg", "아이디 또는 비밀번호가 맞지 않습니다.");
 		}
@@ -133,7 +136,6 @@ public class MemberController {
 	
 	@PostMapping("/memberEnroll.me") 
 	public String memberEnroll(Member member, RedirectAttributes redirectAtt) {
-		System.out.println("userPass = " + member);
 		
 		// 비밀번호 암호화
 		String rawPassword = member.getUserPwd();
@@ -148,13 +150,10 @@ public class MemberController {
 	@RequestMapping(value = "/mailCheck.me", method = RequestMethod.GET)
 	@ResponseBody
 	public String mailCheck(String email, Model model) throws Exception {
-		System.out.println("이메일 데이터 전송 확인");	// 확인용
-		System.out.println("인증 이메일 : " + email);
 		
 		// 인증번호 생성
 		Random random = new Random();
 		int checkNum = random.nextInt(888888) + 111111;
-		System.out.println("인증번호 : " + checkNum);
 		model.addAttribute("emailAuth", checkNum);
 		
 		// 이메일 전송 내용
@@ -176,13 +175,14 @@ public class MemberController {
 			helper.setText(content, true);
 			mailSender.send(msg);
 		} catch(Exception e) {
-        e.printStackTrace();
-    }
+			e.printStackTrace();
+		}
       return Integer.toString(checkNum);		// ajax를 뷰로 반환시 데이터 타입은 String 타입만 가능
 		
 		//return "redirect:/";		// String 타입으로 반환 후 반환
+	}
       
-      
+   /*   
 	@PostMapping("/memberUpdate.me")
 	public String memberUpdate(Member member, Model model, @RequestParam String newPwd, RedirectAttributes redirectAtt) {
 		if(newPwd.length() > 0) {
@@ -202,6 +202,7 @@ public class MemberController {
 		}
 		return "redirect:/member/memberInfo.me";
 	}
+	*/
 	
 	@PostMapping("/memberUpdate_Ad.me")
 	public String memberUpdate_Ad(Member member, Model model, @RequestParam String newPwd, @RequestParam int nowPage, RedirectAttributes redirectAtt) {
@@ -217,7 +218,7 @@ public class MemberController {
 		} else {
 			redirectAtt.addFlashAttribute("msg", "회원정보 수정 실패");
 		}
-		return "redirect:/member/memberList.do?nowPage="+nowPage;
+		return "redirect:/member/memberInfo_Ad.me?nowPage="+nowPage+"&userId="+ member.getNewUserId();
 	}
 	
 	@GetMapping("/changeStatus.do")
@@ -264,11 +265,13 @@ public class MemberController {
 		response.getWriter().print(result);
 	}
 	
+	/*
 	@GetMapping("/memberInfo.me")
 	public String memberInfo(Model model, @ModelAttribute("loginMember") Member member) { 
 		model.addAttribute("member", member);
 		return "/mypage/memberInfo";
 	}	
+	*/
 	@GetMapping("/memberInfo_Ad.me")
 	public String memberInfo_Ad(Model model, @RequestParam String userId, @RequestParam int nowPage) { 
 		Member member = memberService.selectOneMember(userId);
@@ -276,7 +279,22 @@ public class MemberController {
 		model.addAttribute("nowPage", nowPage);
 		return "/adminpage/memberInfo_Ad";
 	}
+	//관리자 회원추가 페이지 가기
+	@GetMapping("/insertMember_Ad.do") 
+	public void insertMember_Ad() {
+	}
 	
+	
+	// 관리자 회원추가
+	@PostMapping("/insertMember_Ad.do") 
+	public void insertMember_Ad(Member member, RedirectAttributes redirectAtt, HttpServletResponse response) throws Exception {
+		// 비밀번호 암호화
+		String rawPassword = member.getUserPwd();
+		String encodedPassword = passwordEncoder.encode(rawPassword);
+		member.setUserPwd(encodedPassword);
+		int result = memberService.insertMember(member);
+		response.getWriter().print(result);
+	}
 	
 	// 아이디 찾기 
 	@GetMapping("/findId.me")
@@ -288,7 +306,6 @@ public class MemberController {
 	@ResponseBody
 	public String findIdClick(@RequestParam("phone") String phone) {
 		String result = memberService.findIdClick(phone);
-		System.out.println(result);
 		return result;
 	}
 	
@@ -343,7 +360,6 @@ public class MemberController {
 				messageHelper.setText(content);
 				mailSender.send(message);
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
 				e.printStackTrace();
 			}
 			ModelAndView mv = new ModelAndView();
@@ -382,10 +398,8 @@ public class MemberController {
 		int result = memberService.updatePwd(tempMember);
 		
 		if (result > 0) { // 데이터베이스 변경된 행의 수 
-			System.out.println("result: " + result);
 			redirectAtt.addFlashAttribute("msg", "비밀번호 변경이 완료되었습니다.");
 		} else {
-			System.out.println("result: " + result);
 			redirectAtt.addFlashAttribute("msg", "비밀번호 변경 실패");
 			return "member/updatePwd";
 		}
@@ -417,10 +431,7 @@ public class MemberController {
 	
 
 	@GetMapping("/memberInfo.me")
-	public String memberInfo(Model model, HttpSession session) { 
-		Member loginMember = (Member) session.getAttribute("loginMember");
-		String userId = loginMember.getUserId();
-		Member member = memberService.selectOneMember(userId);
+	public String memberInfo(Model model, @ModelAttribute("loginMember") Member member) { 
 		model.addAttribute("member", member);
 		return "/mypage/memberInfo";
 	}
@@ -429,20 +440,99 @@ public class MemberController {
 	@GetMapping("/userPf.bo")
 	public String userPf(Model model, HttpServletRequest request, HttpSession hs) {
 		Review review = (Review)hs.getAttribute("review");
-		
+
+
 		String userpr = request.getParameter("userPr");
 		String userpp = request.getParameter("userPp");
 		String userpl = request.getParameter("userPl");
 		model.addAttribute("userpr", userpr);
 		model.addAttribute("userpp", userpp);
 		model.addAttribute("userpl", userpl);
-		model.addAttribute("review", review);
-		Member loginmember = memberService.selectOneMember(userpl);
-		model.addAttribute("member", loginmember);
-		System.out.println(userpr +" , " + userpp +" , " + userpl);
+		if(userpl != null) {
+			Member loginmember = memberService.selectOneMember(userpl);
+			ArrayList<Review> recieved=reviewService.selectRecievedReview(loginmember.getUserId());
+			ArrayList<Gonggu> leadedGonggu=reviewService.selectAllMyGonggu(loginmember.getUserId());
+			
+			ArrayList<Review> partiReview=new ArrayList<Review>();
+			ArrayList<Review> leaderReview=new ArrayList<Review>();
+			int count=-1;
+			for(int i=0;i<recieved.size();i++) {
+				for(int j=0;j<leadedGonggu.size();j++) {
+					if(recieved.get(i).getGongguNo()==leadedGonggu.get(j).getGongguNo()) {
+						leaderReview.add(recieved.get(i));
+						count=-1;
+						break;
+					}else {	count=i;}
+				}
+				if(count==i) {
+					partiReview.add(recieved.get(i));
+				}
+			}
+			model.addAttribute("member", loginmember);
+			model.addAttribute("review", review);
+			model.addAttribute("partiReview", partiReview);
+			model.addAttribute("leaderReview", leaderReview);
+		} else if(userpr != null) {
+			Member loginmember = memberService.selectOneMember(userpr);
+			ArrayList<Review> recieved=reviewService.selectRecievedReview(loginmember.getUserId());
+			ArrayList<Gonggu> leadedGonggu=reviewService.selectAllMyGonggu(loginmember.getUserId());
+			
+			ArrayList<Review> partiReview=new ArrayList<Review>();
+			ArrayList<Review> leaderReview=new ArrayList<Review>();
+			int count=-1;
+			for(int i=0;i<recieved.size();i++) {
+				for(int j=0;j<leadedGonggu.size();j++) {
+					if(recieved.get(i).getGongguNo()==leadedGonggu.get(j).getGongguNo()) {
+						leaderReview.add(recieved.get(i));
+						count=-1;
+						break;
+					}else {	count=i;}
+				}
+				if(count==i) {
+					partiReview.add(recieved.get(i));
+				}
+			}
+			model.addAttribute("member", loginmember);
+			model.addAttribute("review", review);
+			model.addAttribute("partiReview", partiReview);
+			model.addAttribute("leaderReview", leaderReview);
+		} else if(userpp != null) {
+			Member loginmember = memberService.selectOneMember(userpp);
+			ArrayList<Review> recieved=reviewService.selectRecievedReview(loginmember.getUserId());
+			ArrayList<Gonggu> leadedGonggu=reviewService.selectAllMyGonggu(loginmember.getUserId());
+			
+			ArrayList<Review> partiReview=new ArrayList<Review>();
+			ArrayList<Review> leaderReview=new ArrayList<Review>();
+			int count=-1;
+			for(int i=0;i<recieved.size();i++) {
+				for(int j=0;j<leadedGonggu.size();j++) {
+					if(recieved.get(i).getGongguNo()==leadedGonggu.get(j).getGongguNo()) {
+						leaderReview.add(recieved.get(i));
+						count=-1;
+						break;
+					}else {	count=i;}
+				}
+				if(count==i) {
+					partiReview.add(recieved.get(i));
+				}
+			}
+			model.addAttribute("member", loginmember);
+			model.addAttribute("review", review);
+			model.addAttribute("partiReview", partiReview);
+			model.addAttribute("leaderReview", leaderReview);
+		}
 		return "/others/userProfile";
 	}
 
+	
+	@GetMapping("/getReview.re")
+	public String getReview(@RequestParam int reviewNo, Model model) {
+		Review review=reviewService.selectOneReview(reviewNo);
+		model.addAttribute("review", review);
+		return "jsonView";
+	}
+	
+	
 	@GetMapping("/memberList.do")
 	public String memberList(@RequestParam(defaultValue="1") int nowPage, Model model) {
 		int totalRecord = memberService.selectTotalRecord();
@@ -453,7 +543,6 @@ public class MemberController {
 		PageInfo pi = Pagination.getPageInfo(totalRecord, nowPage, limit, 5);
 		
 		List<Member> memberList = memberService.selectMemberList(rowBounds);
-		System.out.println(memberList);
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("pi", pi);
 		

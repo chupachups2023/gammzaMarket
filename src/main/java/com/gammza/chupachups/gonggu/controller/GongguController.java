@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -48,6 +47,8 @@ import com.gammza.chupachups.location.model.service.LocationService;
 import com.gammza.chupachups.location.model.vo.Location;
 import com.gammza.chupachups.member.model.vo.Member;
 
+import net.sf.json.JSONArray;
+
 @Controller
 @RequestMapping("/gonggu")
 @SessionAttributes({"gonggu"})
@@ -72,16 +73,19 @@ public class GongguController {
 	private RequestService requestService;
 	@Autowired
 	private RequestController requestController;
+	@Autowired
+	private PartiController partiController;
 	
 	//요청하기에서 연동해서 글 쓸 때
 	@GetMapping("/ggWrite.go")
 	public void ggWrite(HttpServletRequest request,Model model) {
 		Map<String, Gonggu> flashMap =(Map<String, Gonggu>) RequestContextUtils.getInputFlashMap(request);
-		Gonggu gonggu=null;
+		Gonggu gonggu=new Gonggu();
 		if(flashMap !=null) {
 			gonggu=flashMap.get("gonggu");
 		}
 		model.addAttribute("gonggu", gonggu);
+		System.out.println("연동해서 글쓰기");
 	}
 
 	@GetMapping("/ggListView.go")
@@ -89,6 +93,10 @@ public class GongguController {
 				@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude,
 				@RequestParam(defaultValue="PULLUP_AT") String sort,@RequestParam(defaultValue="1") int end) {
 		Member loginMember=(Member) session.getAttribute("loginMember");
+		
+		model.addAttribute("category", "");
+		model.addAttribute("gongguName", "");
+		
 		ArrayList<Gonggu> ggListView;
 		ModelAndView mav=new ModelAndView();
 		HashMap<String,String> locationMap=new HashMap<String,String>();
@@ -103,7 +111,6 @@ public class GongguController {
 		
 		if(loginMember !=null) {
 			if(loginMember.getLatitude() == null) {
-				System.out.println(loginMember.getLatitude());
 				redirectAttr.addFlashAttribute("msg","정확한 주변 공구를 보려면 장소 인증을 먼저 해야 합니다.");
 				mav.setView(new RedirectView("/chupachups/location/location.lo"));
 				return mav;
@@ -131,7 +138,43 @@ public class GongguController {
 	}
 	
 	@GetMapping("/mainList.go")
-	public String mainList(Model model) {
+	public String mainList(Model model, HttpSession session, @RequestParam(defaultValue="1") int page) {
+		//소셜 로그인 하려다 취소한 사람 세션에서 지워주기
+		Long kakaoIdkey = (Long)session.getAttribute("kakaoIdkey");
+		String naverIdkey = (String)session.getAttribute("naverIdkey");
+		if(kakaoIdkey != null) {
+			session.removeAttribute("kakaoIdkey");
+		}
+		if(naverIdkey != null) {
+			session.removeAttribute("naverIdkey");
+		}
+		
+		ArrayList<Gonggu> mainList = gongguService.selectMainList();
+		
+		for(int i=0;i<mainList.size();i++) {
+			Location tempLocal=locationService.selectLocationByNo(mainList.get(i).getLocationNo());
+			String locationName=locationController.SelectLocationName(tempLocal);
+			mainList.get(i).setLocationName(locationName);
+			//홈 띄워질 때마다 공구 상태 관리
+			gongguStatusMgr(mainList.get(i).getGongguNo());
+		}
+		
+		int i = page-1;
+		ArrayList<Gonggu> ggListView2 = new ArrayList<Gonggu>();
+		for(int j=0; i<(8*page); i++,j++) {
+			ggListView2.add(j, mainList.get(i));
+		}
+		model.addAttribute("mainList", ggListView2);
+		model.addAttribute("page", page);
+		
+		return "/common/mainpage";
+	}
+	
+	@PostMapping("/mainList.go")
+	public String mainList(Model model, @RequestParam int page) {
+		JSONArray jarr = new JSONArray();
+		String returnVal = "jsonView";
+		
 		ArrayList<Gonggu> mainList = gongguService.selectMainList();
 		for(int i=0;i<mainList.size();i++) {
 			Location tempLocal=locationService.selectLocationByNo(mainList.get(i).getLocationNo());
@@ -140,13 +183,22 @@ public class GongguController {
 			//홈 띄워질 때마다 공구 상태 관리
 			gongguStatusMgr(mainList.get(i).getGongguNo());
 		}
-		model.addAttribute("mainList", mainList);
-		int totalRecord=gongguService.selectTotalRecored();
+		int i = 8*(page-1);
 		
-		PageInfo pi=Pagination.getPageInfo(totalRecord, 1, 1, 8);
-		model.addAttribute("pi", pi);
+		ArrayList<Gonggu> ggListView2 = new ArrayList<Gonggu>();
+		if(mainList.size()>=i+8) {
+			for(int j=0; i<(8*page); i++,j++) {
+				ggListView2.add(j, mainList.get(i));
+			}
+		}else {
+			for(int j=0; i<mainList.size(); i++,j++) {
+				ggListView2.add(j, mainList.get(i));
+			}
+		}
+		jarr.addAll(ggListView2);
+		model.addAttribute("result", jarr);
 		
-		return "/common/mainpage";
+		return "jsonView";
 	}
 	
 	//공구 상태 관리
@@ -158,7 +210,7 @@ public class GongguController {
 		//공구 날짜가 지났는데 상태가 1(진행 중)이면 
 		if(today.isAfter(endTime) && gonggu.getEndStatus()==1) {
 			gongguService.updateEndStatus(gongguNo);
-			new PartiController().nonPartiMemPointMgr(gongguNo);
+			partiController.nonPartiMemPointMgr(gongguNo);
 		}
 	}
 	
@@ -178,16 +230,28 @@ public class GongguController {
 		 gongguService.updateGongguCount(gongguNo);
 		 Gonggu gonggu = gongguService.selectOneGonggu(gongguNo);
 		 
-		 ArrayList<Parti> partiList=partiService.selectPartiListForLeader(gongguNo);
+		 HashMap<String,String> map=new HashMap<String,String>();
+		 map.put("gongguNo", String.valueOf(gongguNo));
+		 map.put("sort", "recent");
+		 ArrayList<Parti> partiList=partiService.selectPartiListForLeader(map);
 		 
 		 int partiNum=0;
+		 int onPartiNum=0;
 		 for(int i=0;i<partiList.size();i++) {
 			 if(partiList.get(i).getStatus()>0) {
 				 partiNum+=partiList.get(i).getNum();
 			 }
+			 if(partiList.get(i).getStatus()==1) {
+				 onPartiNum++;
+			 }
+			 
 		 }
 		 model.addAttribute("partiNum", partiNum);
+		 model.addAttribute("onPartiNum", onPartiNum);
 		 model.addAttribute("gonggu", gonggu);
+		 
+		 //공구 진행 중인 회원 수
+		 
 		 
 		 if(gonggu.getEndStatus()==1) {
 			 return "/gonggu/ggRead"; 
@@ -236,7 +300,9 @@ public class GongguController {
 				e.printStackTrace();
 			}
 		}else {
-			gonggu.setPhoto1(request.getPhoto1());
+			if(request !=null) {
+				gonggu.setPhoto1(request.getPhoto1());
+			}
 		}
 		if(upPhoto2.getSize()>0) {
 			String changeFilename=SpringUtils.changeMultipartFile(upPhoto2);
@@ -250,7 +316,9 @@ public class GongguController {
 				e.printStackTrace();
 			}
 		}else {
-			gonggu.setPhoto2(request.getPhoto2());
+			if(request != null) {
+				gonggu.setPhoto2(request.getPhoto2());
+			}
 		}
 		if(upPhoto3.getSize()>0) {
 			String changeFilename=SpringUtils.changeMultipartFile(upPhoto3);
@@ -264,10 +332,11 @@ public class GongguController {
 				e.printStackTrace();
 			}
 		}else {
-			gonggu.setPhoto3(request.getPhoto3());
+			if(request !=null) {
+				gonggu.setPhoto3(request.getPhoto3());
+			}
 		}
 		if (!photo.isEmpty()) {
-			Collections.sort(photo);
 
 			photo.remove(null);
 
@@ -287,8 +356,17 @@ public class GongguController {
 			int gongguNo=gongguService.selectLastNum();
 			Gonggu newGonggu=gongguService.selectOneGonggu(gongguNo);
 			model.addAttribute("gonggu", newGonggu);
-			chatRoomService.insertChatRoom(newGonggu);
 			
+//			if(memId equals(hostId)) {
+//				System.out.println("자기자신한테 메시지 안돼");
+//				return 원래사이트
+//			} else if(이미 있는 채팅방이면) {
+//				보내주기만 함 생성x
+//				return
+//			} else(관련 채팅방 없으면){
+//				return
+//			}			
+			chatRoomService.insertChatRoom(newGonggu);
 			if(request != null) {
 				requestController.updateRequestReqStatus(request.getRequestNo());
 			}
@@ -329,7 +407,7 @@ public class GongguController {
 		String saveDirectory = application.getRealPath("/resources/upload");
 
 		ArrayList<String> photo = new ArrayList<String>();
-
+		
 		if (upPhoto1.getSize() > 0) {
 			if(Ogonggu.getPhoto1() != null) {
 				File file=new File(saveDirectory, Ogonggu.getPhoto1());
@@ -346,7 +424,9 @@ public class GongguController {
 				e.printStackTrace();
 			}
 		}else {
-			newGonggu.setPhoto1(Ogonggu.getPhoto1());
+			if(Ogonggu.getPhoto1() != null) {
+				photo.add(Ogonggu.getPhoto1());
+			}
 		}
 		if(upPhoto2.getSize()>0) {
 			String changeFilename=SpringUtils.changeMultipartFile(upPhoto2);
@@ -364,7 +444,9 @@ public class GongguController {
 				e.printStackTrace();
 			}
 		}else {
-			newGonggu.setPhoto2(Ogonggu.getPhoto2());
+			if(Ogonggu.getPhoto2() != null) {
+				photo.add(Ogonggu.getPhoto2());
+			}
 		}
 		if(upPhoto3.getSize()>0) {
 			String changeFilename=SpringUtils.changeMultipartFile(upPhoto3);
@@ -382,11 +464,12 @@ public class GongguController {
 				e.printStackTrace();
 			}
 		}else {
-			newGonggu.setPhoto3(Ogonggu.getPhoto3());
+			if(Ogonggu.getPhoto3() != null) {
+				photo.add(Ogonggu.getPhoto3());
+			}
 		}
 		//사진 정렬
 		if (!photo.isEmpty()) {
-			Collections.sort(photo);
 
 			photo.remove(null);
 			
@@ -424,16 +507,24 @@ public class GongguController {
 	
 	 @GetMapping("/ggSearch.go")
 	 public String searchGonggu(@RequestParam("gongguName") String gongguName, Model model,HttpSession session,
-			 @RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude) {
+			 @RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude,
+			 @RequestParam(defaultValue="PULLUP_AT") String sort,@RequestParam(defaultValue="1") int end, RedirectAttributes redirectAttr) {
+		 model.addAttribute("category", "");
 	 	Member mem=(Member)session.getAttribute("loginMember");
 	 	HashMap<String,String> map=new HashMap<String,String>();
-	 	if(mem==null) {
+	 	if(mem !=null) {
+	 		if(mem.getLatitude() == null) {
+	 			redirectAttr.addFlashAttribute("msg","정확한 주변 공구를 보려면 장소 인증을 먼저 해야 합니다.");
+	 			return "redirect:/location/location.lo";
+	 		}else {
+	 			map.put("longitude", mem.getLongitude());
+	 			map.put("latitude", mem.getLatitude());
+	 		}
+	 	}else {
 	 		map.put("longitude", longitude);
 	 		map.put("latitude", latitude);
-	 	}else {
-	 		map.put("longitude", mem.getLongitude());
-	 		map.put("latitude", mem.getLatitude());
 	 	}
+	 	
 		 StringTokenizer st=new StringTokenizer(gongguName);
 		 String searchSql="INTERSECT ";
 		 searchSql+=" SELECT * "
@@ -445,41 +536,89 @@ public class GongguController {
 			 		+ " FROM gonggu "
 			 		+ " where gonggu_name LIKE '%"+st.nextToken()+"%' "; 
 		 }
-		 searchSql+=" order by 22 desc";
+		 if(sort.equals("PULLUP_AT")) {
+			 searchSql+=" order by 22 desc";
+		 }else {
+			 searchSql+=" order by 24";
+		 }
+         
+         model.addAttribute("sortByHidden", sort);
+         String endStatus="AND END_STATUS = 1";
+         if(end == 0) {
+        	 endStatus=" ";
+         }
+         map.put("endStatus", endStatus);
+         model.addAttribute("endStatus", end);
+		 
 		 map.put("search", searchSql);
 		 
 		 ArrayList<Gonggu> ggListView = gongguService.searchGonggu(map);
+		 for(int i=0;i<ggListView.size();i++) {
+				Location tempLocal=locationService.selectLocationByNo(ggListView.get(i).getLocationNo());
+				String locationName=locationController.SelectLocationName(tempLocal);
+				ggListView.get(i).setLocationName(locationName);
+		 }
 		 
 		 model.addAttribute("ggListView", ggListView);
-		 int totalRecord=gongguService.selectGongguTotalRecored();
+		 int totalRecord=gongguService.selectGongguTotalRecord();
 		 
 		 model.addAttribute("keyword", gongguName);
+		 model.addAttribute("location", map);
 		
 		 PageInfo pi=Pagination.getPageInfo(totalRecord, 1, 1, 8);
          model.addAttribute("pi", pi);
+         
+         
          
 		 return "/gonggu/ggListView";
 	 }
 	 
 	 @GetMapping("/categoryList.go")
-	public String categoryList(@RequestParam("category") int category, Model model, HttpSession session,
-			@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude) {
+	public String categoryList(@RequestParam("category") int category, Model model, HttpSession session,RedirectAttributes redirectAttr,
+			@RequestParam(defaultValue="127.0016985") String longitude,@RequestParam(defaultValue="37.5642135") String latitude,
+			@RequestParam(defaultValue="PULLUP_AT") String sort,@RequestParam(defaultValue="1") int end) {
+		 model.addAttribute("gongguName", "");
 	 	Member mem=(Member)session.getAttribute("loginMember");
 	 	HashMap<String,String> map=new HashMap<String,String>();
 	 	if(mem==null) {
 	 		map.put("longitude", longitude);
 	 		map.put("latitude", latitude);
 	 	}else {
-	 		map.put("longitude", mem.getLongitude());
-	 		map.put("latitude", mem.getLatitude());
+	 		if(mem.getLatitude() == null) {
+	 			redirectAttr.addFlashAttribute("msg","정확한 주변 공구를 보려면 장소 인증을 먼저 해야 합니다.");
+	 			return "redirect:/location/location.lo";
+	 		}else {
+	 			map.put("longitude", mem.getLongitude());
+	 			map.put("latitude", mem.getLatitude());
+	 		}
 	 	}
 	 	map.put("category", String.valueOf(category));
+	 	
+	 	map.put("sort", sort);
+        model.addAttribute("sortByHidden", sort);
+        
+        String endStatus="AND END_STATUS = 1";
+        if(end == 0) {
+       	 endStatus=" ";
+        }
+        map.put("endStatus", endStatus);
+        model.addAttribute("endStatus", end);
+		 
+		 
+		 ArrayList<Gonggu> ggListView = gongguService.searchGonggu(map);
+		 for(int i=0;i<ggListView.size();i++) {
+				Location tempLocal=locationService.selectLocationByNo(ggListView.get(i).getLocationNo());
+				String locationName=locationController.SelectLocationName(tempLocal);
+				ggListView.get(i).setLocationName(locationName);
+		 }
 		ArrayList<Gonggu> categoryList = gongguService.selectOneCategory(map);
 		
 		model.addAttribute("ggListView", categoryList);
+		model.addAttribute("location", map);
 		
 		return "/gonggu/ggListView";
 	}
+	 
 	 @GetMapping("/deleteGonggu.go")
 	 public String deleteGonggu(@RequestParam int gongguNo, RedirectAttributes redirectAttr) {
 		 

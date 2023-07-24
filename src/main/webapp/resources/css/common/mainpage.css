@@ -4,6 +4,8 @@
 	background-color: #F9E8D0; 
 	height: 150px;
 	padding: 50px 150px;
+	vertical-align: middle;
+	line-height: 70px;
 }
 .mainHeader-search{
     border-radius: 10px;
@@ -70,6 +72,13 @@
   /* Add styles for each "list-goods" element */
   width: 280px; /* Set the width to occupy 25% of the container with some spacing */
   padding: 10px; /* Add some padding around each element */
+}
+.moreList-row {
+  display: flex; /* Display the elements in a flex container */
+  justify-content: space-between; /* Distribute the elements evenly along the row */
+  margin-bottom: 20px; /* Add some spacing between rows */
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
 .ggImg img {
