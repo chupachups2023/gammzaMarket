@@ -54,22 +54,13 @@
 	
 	<!-- oauth2 login -->
 	<beans:bean id="naverClientID" class="java.lang.String">
-	   <beans:constructor-arg value="GQGBjwaCzYQZZ_5XkE2o" />
+	   <beans:constructor-arg value="{ 애플리케이션 Client ID }" />
     </beans:bean>
 	<beans:bean id="naverClientSecret" class="java.lang.String">
-		<beans:constructor-arg value="y3TAUEyfZu" />
+		<beans:constructor-arg value="{ 애플리케이션 Client Secret }" />
 	</beans:bean>
 	<beans:bean id="naverRedirectUrl" class="java.lang.String">
-		<beans:constructor-arg value="http://localhost:8095/auth/naver/callback" />
+		<beans:constructor-arg value="http://192.168.20.19:8095/chupachups/auth/naver/callback" />
 	</beans:bean>
-
-	<!-- <beans:bean id="naverSns" class="com.gammza.chupachups.auth.SnsValue">
-		<beans:constructor-arg value="naver" />
-		<beans:constructor-arg ref="naverClientID" />
-		<beans:constructor-arg ref="naverClientSecret" />
-		<beans:constructor-arg ref="naverRedirectUrl" />
-	</beans:bean>
-	
-	<beans:bean id="socialService" class="com.gammza.chupachups.auth.model.service.SocialService" /> -->
 	
 </beans:beans>
