@@ -88,7 +88,7 @@
 		<beans:constructor-arg value="{ 애플리케이션 Client Secret }" />
 	</beans:bean>
 	<beans:bean id="naverRedirectUrl" class="java.lang.String">
-		<beans:constructor-arg value="http://192.168.20.19:8095/chupachups/auth/naver/callback" />
+		<beans:constructor-arg value="http://localhost:8095/chupachups/auth/naver/callback" />
 	</beans:bean>
 	
 </beans:beans>
