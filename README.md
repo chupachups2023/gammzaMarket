@@ -31,7 +31,7 @@
 * Server: Apache-Tomcat 9.0
 * Build tool: Maven
 * Version control systems: Git
-* Collaboration: GitHub, <a href="https://www.figma.com/file/3rYgDfOW5JsjZ1JuCJFByb/gamza?type=design&node-id=0%3A1&mode=design&t=6GMxvc00MQyqEXkr-1" target="_blank">Figma</a>, Trello
+* Collaboration: GitHub, <a href="https://www.figma.com/file/3rYgDfOW5JsjZ1JuCJFByb/gamza?type=design&node-id=0%3A1&mode=design&t=6GMxvc00MQyqEXkr-1">Figma</a>, Trello
 
 
 
