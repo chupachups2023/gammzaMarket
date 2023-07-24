@@ -40,11 +40,10 @@ public class SocialController {
 			//@ResponseBody
 			public String kakaoCallback(String code, Member member, Model model, RedirectAttributes redirectAtt, HttpSession session, SessionStatus status) {
 				
-				// POST 방식으로 데이터를 요청(토큰 관련) 
-				/* 
-					(POST이므로 url에 파라미터로 넣을 수도 없고, a 태그로 전달할 수도 없다) 
+				/*
+					POST 방식으로 데이터를 요청(토큰 관련) 
 						-> RestTemplate 클래스 사용  
-						-> HttpURLConnection 도 사용 가능하지만 복잡해짐.. 
+						-> HttpURLConnection 도 사용 가능
 				 */
 				RestTemplate rt = new RestTemplate();
 				
@@ -55,7 +54,7 @@ public class SocialController {
 				// HttpBody object 생성
 				MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
 				params.add("grant_type", "authorization_code");
-				params.add("client_id", "db32886cc653e7c143ebd36f56525b61");
+				params.add("client_id", "{ REST API 키 }");
 				params.add("redirect_uri", "http://192.168.20.19:8095/chupachups/auth/kakao/callback");
 				params.add("code", code);
 
@@ -69,7 +68,6 @@ public class SocialController {
 						kakaoTokenRequest, 
 						String.class); // 응답받을 타입 
 				
-				
 				// 정보를 OAuthToken 객체에 저장 
 				// JSON 데이터를 Java로 처리하기 위해서 바꿔준 것 
 				ObjectMapper objectMapper = new ObjectMapper();
@@ -82,7 +80,6 @@ public class SocialController {
 				} catch (JsonProcessingException e) {
 					e.printStackTrace();
 				}
-
 				// System.out.println("KAKAO ACCESS TOKEN: " + oauthToken.getAccess_token());
 				
 				
@@ -113,10 +110,9 @@ public class SocialController {
 				//System.out.println("KAKAO_IDKEY: " + kakaoProfile.getId());
 				//System.out.println("KAKAO_NICKNAME: " + kakaoProfile.getKakao_account().getProfile().getNickname());
 				
-				
 				// Member
 				// System.out.println("GAMMZA_USERNAME: " + kakaoProfile.getKakao_account().getProfile().getNickname() + "_" + kakaoProfile.getId());
-				UUID garbagePassword = UUID.randomUUID();
+				// UUID garbagePassword = UUID.randomUUID();
 				// System.out.println("GAMMZA_PASSWORD: " + garbagePassword);
 					
 				member.setKakaoIdkey(kakaoProfile.getId());
@@ -137,14 +133,12 @@ public class SocialController {
 					redirectAtt.addFlashAttribute("msg", member.getName()+ "님 환영합니다💚");
 					return "redirect:/";
 				}
-				
 			}
 			
 			 @GetMapping("/socialLogin.me") 
 			 public String socialLogin() {
 				 return "/member/socialLogin"; 
 			 }
-			 
 			
 			/*
 			@GetMapping("/member/insertKakaoMember")
@@ -156,16 +150,16 @@ public class SocialController {
 				return "redirect:/";
 			}
 			
-			
 			/*
-			 * @GetMapping("/member/insertKakaoMember") public String
-			 * insertKakaoMember(Member member, KakaoProfile kakaoProfile, Model model) {
-			 * Member memberCheck = memberService.selectMemberByKakao(kakaoProfile.getId());
-			 * if (memberCheck == null) { int result =
-			 * memberService.insertKakaoMember(member); // model.addAttribute("kakaoIdkey",
-			 * kakaoProfile.getId()); } return "redirect:/"; }
-			 */
-			
+			@GetMapping("/member/insertKakaoMember") 
+			public String insertKakaoMember(Member member, KakaoProfile kakaoProfile, Model model) {
+				Member memberCheck = memberService.selectMemberByKakao(kakaoProfile.getId());
+				if (memberCheck == null) { int result = memberService.insertKakaoMember(member); 
+				model.addAttribute("kakaoIdkey", kakaoProfile.getId()); 
+				} 
+				return "redirect:/";
+			}
+			*/
 			
 
 			// 230711 수정 
@@ -175,21 +169,18 @@ public class SocialController {
 			public String naverCallback(String code, Member member, Model model, RedirectAttributes redirectAtt, HttpSession session) {
 				//System.out.println("NAVER code: " + code);
 				
-				
 				// POST 방식으로 key=value 데이터를 요청 (네이버쪽으로) 
 				RestTemplate rt = new RestTemplate();
-				
 				
 				// HttpHeader object 생성 
 				HttpHeaders headersN1 = new HttpHeaders();
 				headersN1.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 				
-				
 				// HttpBody object 생성 
 				MultiValueMap<String, String> paramsN1 = new LinkedMultiValueMap<String, String>();
 				paramsN1.add("grant_type", "authorization_code");
-				paramsN1.add("client_id", "GQGBjwaCzYQZZ_5XkE2o");
-				paramsN1.add("client_secret", "y3TAUEyfZu");
+				paramsN1.add("client_id", "{ 애플리케이션 Client ID }");
+				paramsN1.add("client_secret", "{ 애플리케이션 Client Secret }");
 				paramsN1.add("redirect_uri", "http://192.168.20.19:8095/chupachups/auth/naver/callback");
 				paramsN1.add("code", code);
 				
@@ -204,7 +195,6 @@ public class SocialController {
 						String.class
 						);
 				
-				
 				// JSON 데이터를 Java object로 처리 
 				ObjectMapper objectMapper2 = new ObjectMapper();
 				OAuthToken oauthToken2 = null;
@@ -216,8 +206,8 @@ public class SocialController {
 				} catch (JsonProcessingException e) {
 					e.printStackTrace();
 				}
-				
 				//System.out.println("NAVER ACCESS TOKEN: " + oauthToken2.getAccess_token());
+
 				
 				
 				RestTemplate rt2 = new RestTemplate();
@@ -227,10 +217,8 @@ public class SocialController {
 				headersN2.add("Authorization", "Bearer " + oauthToken2.getAccess_token());
 				headersN2.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 				
-				
 				// HttpHeader와 HttpBody를 하나의 object에 담음  
 				HttpEntity<MultiValueMap<String, String>> naverProfileRequest2 = new HttpEntity(headersN2);
-				
 				
 				// Http 요청하기: POST 방식으로 & response 변수의 응답 받음  
 				ResponseEntity<String> responseN2 = rt2.exchange(
@@ -239,7 +227,6 @@ public class SocialController {
 						naverProfileRequest2,
 						String.class
 						);
-				
 				
 				// JSON 데이터를 Java object로 처리 
 				ObjectMapper objectMapperN2 = new ObjectMapper();
@@ -263,14 +250,6 @@ public class SocialController {
 				member.setBirthday(naverProfile.getResponse().getBirthday());
 				member.setEmail(naverProfile.getResponse().getEmail());
 //				System.out.println("네이버 member: " + member); 
-				// 신규 회원 (naver_idkey, name, email 빼고 비어있음) -> 회원가입/로그인 페이지로 이동 
-				// -> 이동하면... 아예 신규 회원으로 시작 
-				
-				
-				// 기존 회원이면 로그인 처리 후 메인으로 이동 
-				
-				
-//				System.out.println(member);
 				
 				Member loginMember=memberService.selectMemberByNaver(naverProfile.getResponse().getId());
 				
@@ -283,59 +262,5 @@ public class SocialController {
 					redirectAtt.addFlashAttribute("msg", member.getName()+ "님 환영합니다💚");
 					return "redirect:/";
 				}
-				
-				
-				
-				
-				
-				
-				
-				
-				/*
-				 * if (loginMember == null) { // 네이버 연동을 최초로 하는 신규/기존 회원 (NAVER_IDKEY == NULL)
-				 * model.addAttribute("naverIdkey", naverProfile.getResponse().getId());
-				 * redirectAtt.addFlashAttribute("msg", "네이버 간편로그인 최초 1회 연결이 필요합니다."); return
-				 * "/member/socialLogin"; } else { // 네이버 연동 완료한 회원
-				 * model.addAttribute("loginMember", loginMember); return "redirect:/"; }
-				 */
-				
 			}
-			
-			/*
-			 * @GetMapping("/member/insertNaverMember") public String
-			 * insertNaverMember(Member member, NaverProfile naverProfile) { Member
-			 * memberCheck =
-			 * memberService.selectMemberByNaver(naverProfile.getResponse().getId()); if
-			 * (memberCheck == null) { int result = memberService.insertNaverMember(member);
-			 * } return "redirect:/"; }
-			 */
-				
-				
-				
-				
-				
-				
-				
-				
-				// Model loginMember = model.addAttribute("naverIdkey", naverProfile.getResponse().getId());
-				// System.out.println("loginMember22: " + loginMember);
-				
-				
-//				Member loginMember = memberService.selectMemberByNaver(member.getNaverIdkey());
-//				System.out.println("loginMember: " + loginMember);
-				
-				// Member loginMember = memberService.selectMemberByNaver(naverProfile.getResponse().getId());
-				
-				
-				
-				
-				
-				
-				// return response2.getBody();
-				// return "토큰 요청에 대한 응답: " + responseN2.getBody();
-				// return "redirect:/";
-			}
-	
-
-
-
+}
