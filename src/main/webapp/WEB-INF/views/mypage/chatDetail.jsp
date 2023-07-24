@@ -35,31 +35,3 @@
 	<button class="disable css-1useanf" onclick="insertMsg();"
 		aria-disabled="true">전송</button>
 </div>
-<script>
-/* setInterval(function () {
-    location.reload();
-}, 1000); */
-/* 	$(function() {
-		setInterval("#msgLisg", 1000);
-	});
-
-	function insertMsg() {
-		$.ajax({
-			url : "/mypage/insertMsg.do",
-			data : {
-				chatContent : $("#chatContent").val(),
-				chatWriter : "${loginMember.userId}"
-			},
-			dataType : "post",
-			success : function(result) {
-				if (result > 0) {
-					$("#chatContent").val("");
-					selectMsgList(); // 메시지 전송 후 목록을 다시 가져올 수 있도록 호출
-				}
-			},
-			error : function() {
-				console.log("메시지 전송 실패");
-			}
-		});
-	} */
-</script>

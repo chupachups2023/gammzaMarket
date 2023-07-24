@@ -173,10 +173,10 @@
        
 	function viewAllGonggu(){
 		function success(position) {
-			const latitude = position.latitude; 
-		    const longitude = position.longitude;
-/* 		    const latitude = position.coords.latitude;   // 위도(37.xxxx)
-		    const longitude = position.coords.longitude; */
+/* 			const latitude = position.latitude; 
+		    const longitude = position.longitude; */
+ 		    const latitude = position.coords.latitude;   // 위도(37.xxxx)
+		    const longitude = position.coords.longitude; 
 		    const memLong="${loginMember.longitude}";
 		    
 		    if(memLong != ""){
@@ -185,8 +185,8 @@
 		   		location.href="${pageContext.request.contextPath}/gonggu/ggListView.go?longitude="+longitude+"&latitude="+latitude;
 		    }
 		}
-	    /* navigator.geolocation.getCurrentPosition(success); */
-		position={"latitude":37.533921602961506, "longitude":126.89677032759451 }
+	    navigator.geolocation.getCurrentPosition(success); 
+		/* position={"latitude":37.533921602961506, "longitude":126.89677032759451 } */
         success(position);
 	};
 	
@@ -215,10 +215,10 @@
 		const memLong="${loginMember.longitude}";
 	    
 		function success(position) {
-			const latitude = position.latitude; 
-		    const longitude = position.longitude;/* 
+			/* const latitude = position.latitude; 
+		    const longitude = position.longitude; */
 		    const latitude = position.coords.latitude;   
-		    const longitude = position.coords.longitude; */
+		    const longitude = position.coords.longitude;
 		    
 		    if(memLong != ""){
 		    	location.href=url;
@@ -226,16 +226,16 @@
 			    location.href=url+"&longitude="+longitude+"&latitude="+latitude;
 		    }
 		};
-    	/* navigator.geolocation.getCurrentPosition(success); */
-		position={"latitude":37.533921602961506, "longitude":126.89677032759451 }
+    	navigator.geolocation.getCurrentPosition(success);
+		/* position={"latitude":37.533921602961506, "longitude":126.89677032759451 } */
         success(position);
 	}
 	function fn_click(category) {
 		function success(position) {
-			const latitude = position.latitude; 
-		    const longitude = position.longitude;/* 
+			/* const latitude = position.latitude; 
+		    const longitude = position.longitude; */
 		    const latitude = position.coords.latitude;   // 위도(37.xxxx)
-		    const longitude = position.coords.longitude; */
+		    const longitude = position.coords.longitude;
 		    const memLong="${loginMember.longitude}";	//로그인 했니?
 		    
 		    if(memLong != ""){	//했다
@@ -244,20 +244,20 @@
 		   		location.href="${pageContext.request.contextPath}/gonggu/categoryList.go?category=" + category+"&longitude="+longitude+"&latitude="+latitude;
 		    }
 		}
-	    /* navigator.geolocation.getCurrentPosition(success); */
-		position={"latitude":37.533921602961506, "longitude":126.89677032759451 }
+	    navigator.geolocation.getCurrentPosition(success);
+		/* position={"latitude":37.533921602961506, "longitude":126.89677032759451 } */
         success(position);
 	}
 	function viewRequest(){
 		function success(position) {
-			const latitude = position.latitude; 
-		    const longitude = position.longitude;/* 
+			/* const latitude = position.latitude; 
+		    const longitude = position.longitude; */
 		    const latitude = position.coords.latitude;   // 위도(37.xxxx)
-		    const longitude = position.coords.longitude; */
+		    const longitude = position.coords.longitude;
 			location.href="${pageContext.request.contextPath}/ggRequest/requestView.req?longitude="+longitude+"&latitude="+latitude;
 		}
-		/* navigator.geolocation.getCurrentPosition(success); */
-		position={"latitude":37.533921602961506, "longitude":126.89677032759451 }
+		navigator.geolocation.getCurrentPosition(success);
+		/* position={"latitude":37.533921602961506, "longitude":126.89677032759451 } */
         success(position);
 	}
 	

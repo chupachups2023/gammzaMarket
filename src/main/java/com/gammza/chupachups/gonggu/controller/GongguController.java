@@ -48,7 +48,6 @@ import com.gammza.chupachups.location.model.vo.Location;
 import com.gammza.chupachups.member.model.vo.Member;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("/gonggu")
@@ -86,6 +85,7 @@ public class GongguController {
 			gonggu=flashMap.get("gonggu");
 		}
 		model.addAttribute("gonggu", gonggu);
+		System.out.println("연동해서 글쓰기");
 	}
 
 	@GetMapping("/ggListView.go")
